@@ -13,6 +13,7 @@ export default function ThemeToggle() {
     const initialTheme = savedTheme || 'dark'
     setTheme(initialTheme)
     document.documentElement.setAttribute('data-theme', initialTheme)
+    document.documentElement.className = initialTheme
   }, [])
 
   const toggleTheme = () => {
@@ -20,6 +21,7 @@ export default function ThemeToggle() {
     setTheme(newTheme)
     localStorage.setItem('theme', newTheme)
     document.documentElement.setAttribute('data-theme', newTheme)
+    document.documentElement.className = newTheme
   }
 
   // Prevent hydration mismatch

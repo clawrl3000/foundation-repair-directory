@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://foundationrepairfinder.com/sitemap.xml
+
+# Crawl rate optimization
+Crawl-delay: 1

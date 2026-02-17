@@ -8,10 +8,27 @@ interface Props {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { state } = await params
   const stateName = state.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')
+  const url = `https://foundationrepairfinder.com/${state}`
 
   return {
-    title: `Foundation Repair in ${stateName} — Find Local Contractors`,
-    description: `Find and compare foundation repair contractors across ${stateName}. Browse by city, read reviews, and get free estimates from licensed professionals.`,
+    title: `${stateName} Foundation Repair Contractors | Foundation Repair Directory`,
+    description: `Find trusted foundation repair contractors in ${stateName}. Compare local experts, read verified reviews, and get free estimates for pier & beam, slab, and basement repairs.`,
+    alternates: {
+      canonical: url,
+    },
+    openGraph: {
+      title: `${stateName} Foundation Repair Contractors | Foundation Repair Directory`,
+      description: `Find trusted foundation repair contractors in ${stateName}. Compare local experts, read verified reviews, and get free estimates for pier & beam, slab, and basement repairs.`,
+      url: url,
+      images: [
+        {
+          url: 'https://foundationrepairfinder.com/og-image.jpg',
+          width: 1200,
+          height: 630,
+          alt: `Foundation Repair in ${stateName}`,
+        },
+      ],
+    },
   }
 }
 
@@ -55,7 +72,7 @@ export default async function StatePage({ params }: Props) {
                 href={`/${state}/${citySlug}`}
                 className="p-4 bg-white rounded-lg border hover:border-amber-500 hover:shadow-md transition-all"
               >
-                <h2 className="font-medium text-gray-800">{city}</h2>
+                <h3 className="font-medium text-gray-800">{city}</h3>
                 <p className="text-sm text-gray-500 mt-1">0 contractors</p>
               </Link>
             )
@@ -75,6 +92,31 @@ export default async function StatePage({ params }: Props) {
           </p>
         </section>
       </div>
+
+      {/* Breadcrumb JSON-LD */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://foundationrepairfinder.com"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": `Foundation Repair in ${stateName}`,
+                "item": `https://foundationrepairfinder.com/${state}`
+              }
+            ]
+          }),
+        }}
+      />
     </main>
   )
 }

@@ -9,10 +9,27 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { state, city } = await params
   const cityName = city.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')
   const stateName = state.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')
+  const url = `https://foundationrepairfinder.com/${state}/${city}`
 
   return {
-    title: `Foundation Repair in ${cityName}, ${stateName} — Top Contractors`,
-    description: `Compare the best foundation repair contractors in ${cityName}, ${stateName}. Get free estimates, read reviews, and find licensed professionals near you.`,
+    title: `${cityName} Foundation Repair Contractors | Foundation Repair Directory`,
+    description: `Find top-rated foundation repair contractors in ${cityName}, ${stateName}. Compare local experts, verified reviews, and get free estimates. Licensed professionals for pier & beam, slab, basement repairs.`,
+    alternates: {
+      canonical: url,
+    },
+    openGraph: {
+      title: `${cityName} Foundation Repair Contractors | Foundation Repair Directory`,
+      description: `Find top-rated foundation repair contractors in ${cityName}, ${stateName}. Compare local experts, verified reviews, and get free estimates. Licensed professionals for pier & beam, slab, basement repairs.`,
+      url: url,
+      images: [
+        {
+          url: 'https://foundationrepairfinder.com/og-image.jpg',
+          width: 1200,
+          height: 630,
+          alt: `Foundation Repair in ${cityName}, ${stateName}`,
+        },
+      ],
+    },
   }
 }
 
@@ -68,7 +85,7 @@ export default async function CityPage({ params }: Props) {
             >
               <div className="flex items-start justify-between">
                 <div>
-                  <h2 className="text-xl font-semibold">Example Foundation Repair Co. {i}</h2>
+                  <h3 className="text-xl font-semibold">Example Foundation Repair Co. {i}</h3>
                   <p className="text-gray-500 text-sm mt-1">{cityName}, {stateName}</p>
                   <div className="flex items-center gap-4 mt-2">
                     <div className="flex items-center gap-1">
@@ -132,25 +149,51 @@ export default async function CityPage({ params }: Props) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "ItemList",
-            "name": `Foundation Repair Contractors in ${cityName}, ${stateName}`,
-            "numberOfItems": mockListings.length,
-            "itemListElement": mockListings.map((i) => ({
-              "@type": "ListItem",
-              "position": i,
-              "item": {
-                "@type": "LocalBusiness",
-                "name": `Example Foundation Repair Co. ${i}`,
-                "address": {
-                  "@type": "PostalAddress",
-                  "addressLocality": cityName,
-                  "addressRegion": stateName,
+          __html: JSON.stringify([
+            {
+              "@context": "https://schema.org",
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "Home",
+                  "item": "https://foundationrepairfinder.com"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": `Foundation Repair in ${stateName}`,
+                  "item": `https://foundationrepairfinder.com/${state}`
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": `Foundation Repair in ${cityName}`,
+                  "item": `https://foundationrepairfinder.com/${state}/${city}`
                 }
-              }
-            }))
-          }),
+              ]
+            },
+            {
+              "@context": "https://schema.org",
+              "@type": "ItemList",
+              "name": `Foundation Repair Contractors in ${cityName}, ${stateName}`,
+              "numberOfItems": mockListings.length,
+              "itemListElement": mockListings.map((i) => ({
+                "@type": "ListItem",
+                "position": i,
+                "item": {
+                  "@type": "LocalBusiness",
+                  "name": `Example Foundation Repair Co. ${i}`,
+                  "address": {
+                    "@type": "PostalAddress",
+                    "addressLocality": cityName,
+                    "addressRegion": stateName,
+                  }
+                }
+              }))
+            }
+          ]),
         }}
       />
     </main>

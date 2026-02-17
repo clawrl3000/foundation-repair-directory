@@ -17,10 +17,27 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const businessName = business.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')
   const cityName = city.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')
   const stateName = state.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')
+  const url = `https://foundationrepairfinder.com/${state}/${city}/${business}`
 
   return {
-    title: `${businessName} — Foundation Repair in ${cityName}, ${stateName}`,
-    description: `Get a free estimate from ${businessName} in ${cityName}, ${stateName}. Compare services, warranties, and pricing for foundation repair.`,
+    title: `${businessName} | Foundation Repair in ${cityName}, ${stateName}`,
+    description: `${businessName} offers professional foundation repair services in ${cityName}, ${stateName}. Get free estimates, lifetime warranties, and expert pier & beam, slab, and basement repairs.`,
+    alternates: {
+      canonical: url,
+    },
+    openGraph: {
+      title: `${businessName} | Foundation Repair in ${cityName}, ${stateName}`,
+      description: `${businessName} offers professional foundation repair services in ${cityName}, ${stateName}. Get free estimates, lifetime warranties, and expert pier & beam, slab, and basement repairs.`,
+      url: url,
+      images: [
+        {
+          url: 'https://foundationrepairfinder.com/og-image.jpg',
+          width: 1200,
+          height: 630,
+          alt: `${businessName} - Foundation Repair in ${cityName}`,
+        },
+      ],
+    },
   }
 }
 
@@ -204,24 +221,98 @@ export default async function BusinessPage({ params }: Props) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "LocalBusiness",
-            "name": businessName,
-            "address": {
-              "@type": "PostalAddress",
-              "addressLocality": cityName,
-              "addressRegion": stateName,
-              "addressCountry": "US"
+          __html: JSON.stringify([
+            {
+              "@context": "https://schema.org",
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "Home",
+                  "item": "https://foundationrepairfinder.com"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": `Foundation Repair in ${stateName}`,
+                  "item": `https://foundationrepairfinder.com/${state}`
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": `Foundation Repair in ${cityName}`,
+                  "item": `https://foundationrepairfinder.com/${state}/${city}`
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 4,
+                  "name": businessName,
+                  "item": `https://foundationrepairfinder.com/${state}/${city}/${business}`
+                }
+              ]
             },
-            "@id": `https://foundationrepairfinder.com/${state}/${city}/${business}`,
-            "url": `https://foundationrepairfinder.com/${state}/${city}/${business}`,
-            "aggregateRating": {
-              "@type": "AggregateRating",
-              "ratingValue": "5.0",
-              "reviewCount": "0"
+            {
+              "@context": "https://schema.org",
+              "@type": "LocalBusiness",
+              "@id": `https://foundationrepairfinder.com/${state}/${city}/${business}`,
+              "name": businessName,
+              "description": `Professional foundation repair services in ${cityName}, ${stateName}. Specializing in pier & beam, slab repair, and waterproofing.`,
+              "url": `https://foundationrepairfinder.com/${state}/${city}/${business}`,
+              "telephone": "+1-234-567-8900",
+              "address": {
+                "@type": "PostalAddress",
+                "addressLocality": cityName,
+                "addressRegion": stateName,
+                "addressCountry": "US"
+              },
+              "geo": {
+                "@type": "GeoCoordinates",
+                "latitude": "29.7604",
+                "longitude": "-95.3698"
+              },
+              "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "5.0",
+                "reviewCount": "0",
+                "bestRating": "5",
+                "worstRating": "1"
+              },
+              "priceRange": "$$",
+              "paymentAccepted": "Cash, Credit Card, Check, Financing",
+              "currenciesAccepted": "USD",
+              "hasOfferCatalog": {
+                "@type": "OfferCatalog",
+                "name": "Foundation Repair Services",
+                "itemListElement": [
+                  {
+                    "@type": "Offer",
+                    "itemOffered": {
+                      "@type": "Service",
+                      "name": "Foundation Repair",
+                      "description": "Complete foundation repair and stabilization"
+                    }
+                  },
+                  {
+                    "@type": "Offer",
+                    "itemOffered": {
+                      "@type": "Service",
+                      "name": "Pier & Beam Repair",
+                      "description": "Pier and beam foundation repair and leveling"
+                    }
+                  },
+                  {
+                    "@type": "Offer",
+                    "itemOffered": {
+                      "@type": "Service",
+                      "name": "Slab Repair",
+                      "description": "Concrete slab repair and lifting"
+                    }
+                  }
+                ]
+              }
             }
-          }),
+          ]),
         }}
       />
     </main>
