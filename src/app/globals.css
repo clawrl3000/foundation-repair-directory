@@ -214,6 +214,33 @@ html {
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
 }
 
+/* Hero text — theme-aware */
+[data-theme="dark"] .hero-heading { color: #ffffff; }
+[data-theme="light"] .hero-heading { color: #0f172a; }
+
+[data-theme="dark"] .hero-subtext { color: #cbd5e1; }
+[data-theme="light"] .hero-subtext { color: #475569; }
+
+[data-theme="dark"] .hero-trust-bar { color: rgba(255, 255, 255, 0.7); }
+[data-theme="light"] .hero-trust-bar { color: #475569; }
+
+[data-theme="dark"] .hero-trust-highlight { color: rgba(255, 255, 255, 0.9); }
+[data-theme="light"] .hero-trust-highlight { color: #1e293b; }
+
+[data-theme="dark"] .hero-divider { background: rgba(255, 255, 255, 0.2); }
+[data-theme="light"] .hero-divider { background: rgba(0, 0, 0, 0.15); }
+
+[data-theme="dark"] .hero-badge { color: rgba(255, 255, 255, 0.9); }
+[data-theme="light"] .hero-badge { color: #1e293b; }
+
+/* Light mode hero pattern override */
+[data-theme="light"] .hero-pattern {
+  background-image: 
+    linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
 /* Premium search bar — theme-aware */
 .search-bar {
   background: var(--bg-card);

@@ -52,19 +52,19 @@ export default function HomePage() {
         <div className="relative z-10 max-w-5xl mx-auto px-4 pt-24 pb-20">
           {/* Trust bar */}
           <div className="flex justify-center mb-8">
-            <div className="glass rounded-full px-6 py-2.5 flex items-center gap-6 text-sm text-white/70">
+            <div className="hero-trust-bar glass rounded-full px-6 py-2.5 flex items-center gap-6 text-sm">
               <span className="flex items-center gap-1.5">
                 <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
-                <span className="font-medium text-white/90">4,200+ Contractors</span>
+                <span className="font-medium hero-trust-highlight">4,200+ Contractors</span>
               </span>
-              <span className="w-px h-4 bg-white/20"></span>
+              <span className="w-px h-4 hero-divider"></span>
               <span>All 50 States</span>
-              <span className="w-px h-4 bg-white/20"></span>
+              <span className="w-px h-4 hero-divider"></span>
               <span>100% Free</span>
             </div>
           </div>
 
-          <h1 className="text-4xl md:text-6xl font-bold text-center text-white leading-tight mb-6">
+          <h1 className="text-4xl md:text-6xl font-bold text-center leading-tight mb-6 hero-heading">
             Find Trusted Foundation
             <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-amber-500">
@@ -72,7 +72,7 @@ export default function HomePage() {
             </span>
           </h1>
           
-          <p className="text-lg md:text-xl text-center text-slate-300 mb-10 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-lg md:text-xl text-center mb-10 max-w-2xl mx-auto leading-relaxed hero-subtext">
             Compare licensed professionals, see real pricing data, and get free estimates. 
             Your home's foundation is too important to trust to just anyone.
           </p>
@@ -103,7 +103,7 @@ export default function HomePage() {
               { icon: '★', label: 'Rated by Homeowners', color: 'amber' },
               { icon: '🛡️', label: 'Warranty Tracked', color: 'blue' },
             ].map((signal) => (
-              <div key={signal.label} className="glass rounded-xl px-5 py-3 flex items-center gap-3 text-white/90">
+              <div key={signal.label} className="hero-badge glass rounded-xl px-5 py-3 flex items-center gap-3">
                 <span className="text-lg">{signal.icon}</span>
                 <span className="text-sm font-medium">{signal.label}</span>
               </div>
@@ -321,10 +321,10 @@ export default function HomePage() {
       <section className="hero-gradient py-20 px-4 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-96 h-96 bg-amber-500/5 rounded-full blur-3xl"></div>
         <div className="relative z-10 max-w-3xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            Don't Wait Until It Gets Worse
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 hero-heading">
+            Don&#39;t Wait Until It Gets Worse
           </h2>
-          <p className="text-lg text-slate-300 mb-8 max-w-xl mx-auto">
+          <p className="text-lg mb-8 max-w-xl mx-auto hero-subtext">
             Foundation problems only get more expensive over time. Find a trusted contractor today and get a free inspection.
           </p>
           <div className="search-bar inline-flex items-center p-2 max-w-lg w-full">
