@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Manrope } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const manrope = Manrope({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://foundationrepairfinder.com'),
@@ -33,6 +33,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        {/* Google Fonts */}
+        <link
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+          rel="stylesheet"
+        />
         {/* Prevent flash of incorrect theme */}
         <script
           dangerouslySetInnerHTML={{
@@ -65,7 +70,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={inter.className}>
+      <body className={manrope.className}>
         {children}
       </body>
     </html>

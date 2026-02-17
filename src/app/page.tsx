@@ -22,382 +22,427 @@ const TOP_STATES = [
 ]
 
 const SERVICES = [
-  { name: 'Pier & Beam Repair', slug: 'pier-and-beam-repair', icon: '🏗️', desc: 'Stabilize settling pier & beam foundations with steel or concrete piers' },
-  { name: 'Slab Foundation Repair', slug: 'slab-foundation-repair', icon: '🧱', desc: 'Fix cracking and shifting concrete slab foundations' },
-  { name: 'Basement Waterproofing', slug: 'basement-waterproofing', icon: '💧', desc: 'Prevent water damage with interior and exterior drainage systems' },
-  { name: 'Foundation Crack Repair', slug: 'foundation-crack-repair', icon: '🔨', desc: 'Seal and repair structural and non-structural foundation cracks' },
-  { name: 'House Leveling', slug: 'house-leveling', icon: '📐', desc: 'Level uneven floors caused by foundation settlement' },
-  { name: 'Crawl Space Repair', slug: 'crawl-space-repair', icon: '🏠', desc: 'Encapsulation, support jacks, and moisture control' },
+  { name: 'Pier & Beam Repair', slug: 'pier-and-beam-repair', icon: 'architecture', desc: 'Stabilize settling pier & beam foundations with steel or concrete piers' },
+  { name: 'Slab Foundation Repair', slug: 'slab-foundation-repair', icon: 'layers', desc: 'Fix cracking and shifting concrete slab foundations' },
+  { name: 'Basement Waterproofing', slug: 'basement-waterproofing', icon: 'water_drop', desc: 'Prevent water damage with interior and exterior drainage systems' },
+  { name: 'Foundation Crack Repair', slug: 'foundation-crack-repair', icon: 'build', desc: 'Seal and repair structural and non-structural foundation cracks' },
+  { name: 'House Leveling', slug: 'house-leveling', icon: 'straighten', desc: 'Level uneven floors caused by foundation settlement' },
+  { name: 'Crawl Space Repair', slug: 'crawl-space-repair', icon: 'grid_guides', desc: 'Encapsulation, support jacks, and moisture control' },
 ]
 
 export default function HomePage() {
   return (
-    <main className="min-h-screen" style={{ background: 'var(--bg-primary)' }}>
-      {/* Header with theme toggle */}
-      <header className="absolute top-0 left-0 right-0 z-20 p-4">
-        <div className="max-w-5xl mx-auto flex justify-between items-center">
-          <div className="text-xl font-bold" style={{ color: 'var(--text-primary)' }}>
-            Foundation Repair Directory
-          </div>
-          <ThemeToggle />
-        </div>
-      </header>
-
-      {/* Hero Section — Multi-layer depth */}
-      <section className="hero-gradient hero-pattern relative overflow-hidden">
-        {/* Decorative orbs */}
-        <div className="absolute top-20 left-10 w-72 h-72 bg-amber-500/5 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-10 right-10 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl"></div>
-        
-        <div className="relative z-10 max-w-5xl mx-auto px-4 pt-24 pb-20">
-          {/* Trust bar */}
-          <div className="flex justify-center mb-8">
-            <div className="hero-trust-bar glass rounded-full px-6 py-2.5 flex items-center gap-6 text-sm">
-              <span className="flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
-                <span className="font-medium hero-trust-highlight">4,200+ Contractors</span>
-              </span>
-              <span className="w-px h-4 hero-divider"></span>
-              <span>All 50 States</span>
-              <span className="w-px h-4 hero-divider"></span>
-              <span>100% Free</span>
+    <div className="relative flex min-h-screen flex-col">
+      {/* Navigation - Sticky Header with Blur */}
+      <header className="sticky top-0 z-50 w-full sticky-header">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-10">
+          <div className="flex items-center gap-3">
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-white">
+              <span className="material-symbols-outlined text-2xl">foundation</span>
             </div>
-          </div>
-
-          <h1 className="text-4xl md:text-6xl font-bold text-center leading-tight mb-6 hero-heading">
-            Find Trusted Foundation
-            <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-amber-500">
-              Repair Contractors
+            <span className="text-xl font-extrabold tracking-tight text-white">
+              Foundation<span className="text-primary">Dir</span>
             </span>
-          </h1>
-          
-          <p className="text-lg md:text-xl text-center mb-10 max-w-2xl mx-auto leading-relaxed hero-subtext">
-            Compare licensed professionals, see real pricing data, and get free estimates. 
-            Your home's foundation is too important to trust to just anyone.
-          </p>
-          
-          {/* Search Bar */}
-          <div className="max-w-2xl mx-auto mb-12">
-            <div className="search-bar flex items-center p-2">
-              <div className="flex items-center gap-3 flex-1 px-4">
-                <svg className="w-5 h-5 text-slate-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
-                <input
-                  type="text"
-                  placeholder="Enter your city or ZIP code..."
-                  className="flex-1 py-3 text-gray-800 text-lg focus:outline-none bg-transparent"
-                />
-              </div>
-              <button className="btn-primary px-8 py-3.5 text-lg whitespace-nowrap">
-                Find Contractors
-              </button>
-            </div>
           </div>
-          
-          {/* Trust Signals — Floating cards */}
-          <div className="flex flex-wrap justify-center gap-4">
-            {[
-              { icon: '✓', label: 'Verified & Licensed', color: 'green' },
-              { icon: '★', label: 'Rated by Homeowners', color: 'amber' },
-              { icon: '🛡️', label: 'Warranty Tracked', color: 'blue' },
-            ].map((signal) => (
-              <div key={signal.label} className="hero-badge glass rounded-xl px-5 py-3 flex items-center gap-3">
-                <span className="text-lg">{signal.icon}</span>
-                <span className="text-sm font-medium">{signal.label}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Social proof bar */}
-      <div style={{ background: 'var(--bg-secondary)', borderBottom: '1px solid var(--border-primary)' }} className="py-4">
-        <div className="max-w-5xl mx-auto px-4 flex flex-wrap justify-center gap-8 text-sm" style={{ color: 'var(--text-tertiary)' }}>
-          <div className="flex items-center gap-2">
-            <span className="font-bold text-lg" style={{ color: 'var(--text-primary)' }}>4,200+</span>
-            <span>Contractors Listed</span>
-          </div>
-          <div className="w-px h-6" style={{ background: 'var(--border-primary)' }}></div>
-          <div className="flex items-center gap-2">
-            <span className="font-bold text-lg" style={{ color: 'var(--text-primary)' }}>50</span>
-            <span>States Covered</span>
-          </div>
-          <div className="w-px h-6" style={{ background: 'var(--border-primary)' }}></div>
-          <div className="flex items-center gap-2">
-            <span className="font-bold text-lg" style={{ color: 'var(--text-primary)' }}>12,000+</span>
-            <span>Homeowners Helped</span>
-          </div>
-          <div className="w-px h-6" style={{ background: 'var(--border-primary)' }}></div>
-          <div className="flex items-center gap-2">
-            <span className="stars text-lg">★★★★★</span>
-            <span>4.8 Average Rating</span>
-          </div>
-        </div>
-      </div>
-
-      {/* Services Grid — Cards with depth */}
-      <section className="py-20 px-4" style={{ background: 'var(--bg-secondary)' }}>
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-12">
-            <span className="text-amber-600 font-semibold text-sm tracking-wide uppercase">Services</span>
-            <h2 className="text-3xl md:text-4xl font-bold mt-2 mb-4" style={{ color: 'var(--text-primary)' }}>
-              What Type of Repair Do You Need?
-            </h2>
-            <p className="max-w-xl mx-auto" style={{ color: 'var(--text-secondary)' }}>
-              Find contractors who specialize in your specific foundation issue
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {SERVICES.map((service) => (
-              <Link 
-                key={service.slug}
-                href={`/services/${service.slug}`}
-                className="card-elevated p-6 group cursor-pointer"
-              >
-                <div className="icon-container icon-amber mb-4">
-                  <span className="text-xl">{service.icon}</span>
-                </div>
-                <h3 className="text-lg font-semibold group-hover:text-amber-600 transition-colors" style={{ color: 'var(--text-primary)' }}>
-                  {service.name}
-                </h3>
-                <p className="text-sm mt-2 leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-                  {service.desc}
-                </p>
-                <div className="mt-4 flex items-center text-amber-600 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity">
-                  Find specialists
-                  <svg className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Browse by State — Clean grid */}
-      <section className="py-20 px-4" style={{ background: 'var(--bg-tertiary)' }}>
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-12">
-            <span className="text-amber-600 font-semibold text-sm tracking-wide uppercase">Browse</span>
-            <h2 className="text-3xl md:text-4xl font-bold mt-2 mb-4" style={{ color: 'var(--text-primary)' }}>
-              Foundation Repair by State
-            </h2>
-            <p style={{ color: 'var(--text-secondary)' }}>Find contractors in your area</p>
-          </div>
-          
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {TOP_STATES.map((state) => (
-              <Link
-                key={state.slug}
-                href={`/${state.slug}`}
-                className="card-elevated flex items-center gap-3 p-4 group"
-              >
-                <span className="text-xs font-bold text-amber-600 bg-amber-50 px-2.5 py-1.5 rounded-lg border border-amber-100 group-hover:bg-amber-500 group-hover:text-white transition-colors">
-                  {state.abbr}
-                </span>
-                <div>
-                  <span className="font-medium text-sm" style={{ color: 'var(--text-primary)' }}>{state.name}</span>
-                  <span className="block text-xs" style={{ color: 'var(--text-tertiary)' }}>{state.count} contractors</span>
-                </div>
-              </Link>
-            ))}
-          </div>
-          
-          <div className="text-center mt-8">
-            <Link href="/states" className="btn-secondary inline-block text-sm">
-              View All 50 States →
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* How It Works — Step cards */}
-      <section className="py-20 px-4" style={{ background: 'var(--bg-secondary)' }}>
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-14">
-            <span className="text-amber-600 font-semibold text-sm tracking-wide uppercase">How It Works</span>
-            <h2 className="text-3xl md:text-4xl font-bold mt-2" style={{ color: 'var(--text-primary)' }}>
-              Three Steps to a Solid Foundation
-            </h2>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              {
-                step: '01',
-                icon: '🔍',
-                title: 'Search Your Area',
-                desc: 'Enter your city or ZIP code to find foundation repair contractors who serve your neighborhood.',
-              },
-              {
-                step: '02', 
-                icon: '⚖️',
-                title: 'Compare & Evaluate',
-                desc: 'Review services, warranties, pricing data, and ratings. Filter by repair type to find the right fit.',
-              },
-              {
-                step: '03',
-                icon: '📞',
-                title: 'Get Free Estimates',
-                desc: 'Contact contractors directly or request free quotes. No obligation, no hidden fees.',
-              },
-            ].map((item) => (
-              <div key={item.step} className="relative">
-                <div className="card-elevated p-8 text-center h-full">
-                  <span className="absolute -top-4 left-1/2 -translate-x-1/2 text-xs font-bold text-white bg-gradient-to-r from-amber-500 to-amber-600 px-4 py-1.5 rounded-full shadow-lg shadow-amber-500/20">
-                    Step {item.step}
-                  </span>
-                  <div className="icon-container icon-amber mx-auto mt-4 mb-5 w-14 h-14 text-2xl">
-                    {item.icon}
-                  </div>
-                  <h3 className="font-semibold text-lg mb-3" style={{ color: 'var(--text-primary)' }}>{item.title}</h3>
-                  <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>{item.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Cost Section — Premium data cards */}
-      <section className="py-20 px-4" style={{ background: 'var(--bg-tertiary)' }}>
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-12">
-            <span className="text-amber-600 font-semibold text-sm tracking-wide uppercase">Pricing Guide</span>
-            <h2 className="text-3xl md:text-4xl font-bold mt-2 mb-4" style={{ color: 'var(--text-primary)' }}>
-              Foundation Repair Costs in 2026
-            </h2>
-            <p className="max-w-xl mx-auto" style={{ color: 'var(--text-secondary)' }}>
-              Real pricing data from contractors nationwide. Know what to expect before you call.
-            </p>
-          </div>
-          
-          <div className="card-elevated p-8 md:p-10">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
-              {[
-                { label: 'Average Repair', range: '$4,500 – $12,000', sublabel: 'Most common' },
-                { label: 'Minor Cracks', range: '$500 – $2,500', sublabel: 'Simple fixes' },
-                { label: 'Major Structural', range: '$10,000 – $30,000', sublabel: 'Full restoration' },
-                { label: 'Per Pier', range: '$1,000 – $3,000', sublabel: 'Industry standard' },
-              ].map((stat) => (
-                <div key={stat.label} className="stat-card text-center">
-                  <p className="text-xs uppercase tracking-wide" style={{ color: 'var(--text-tertiary)' }}>{stat.label}</p>
-                  <p className="text-xl md:text-2xl font-bold text-amber-600 mt-1">{stat.range}</p>
-                  <p className="text-xs mt-1" style={{ color: 'var(--text-tertiary)' }}>{stat.sublabel}</p>
-                </div>
-              ))}
-            </div>
-            
-            <div className="section-divider mb-8"></div>
-            
-            <h3 className="font-semibold text-lg mb-4" style={{ color: 'var(--text-primary)' }}>What Affects Your Cost?</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-              {[
-                { icon: '🔧', factor: 'Type of repair', detail: 'Pier installation costs more than crack sealing' },
-                { icon: '📊', factor: 'Severity of damage', detail: 'Minor cracks vs. major structural shifting' },
-                { icon: '🏠', factor: 'Foundation type', detail: 'Slab, pier & beam, or basement' },
-                { icon: '📍', factor: 'Your location', detail: 'Soil conditions and labor costs vary by region' },
-                { icon: '📏', factor: 'Home size', detail: 'Larger homes need more piers and materials' },
-                { icon: '🚧', factor: 'Accessibility', detail: 'Easy access vs. confined spaces' },
-              ].map((item) => (
-                <div key={item.factor} className="factor-item flex items-start gap-3 p-3 rounded-xl transition-colors">
-                  <span className="text-lg">{item.icon}</span>
-                  <div>
-                    <span className="font-medium text-sm" style={{ color: 'var(--text-primary)' }}>{item.factor}</span>
-                    <span className="block text-xs" style={{ color: 'var(--text-secondary)' }}>{item.detail}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="hero-gradient py-20 px-4 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-amber-500/5 rounded-full blur-3xl"></div>
-        <div className="relative z-10 max-w-3xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 hero-heading">
-            Don&#39;t Wait Until It Gets Worse
-          </h2>
-          <p className="text-lg mb-8 max-w-xl mx-auto hero-subtext">
-            Foundation problems only get more expensive over time. Find a trusted contractor today and get a free inspection.
-          </p>
-          <div className="search-bar inline-flex items-center p-2 max-w-lg w-full">
-            <input
-              type="text"
-              placeholder="Enter your ZIP code..."
-              className="flex-1 px-4 py-3 text-gray-800 focus:outline-none bg-transparent"
-            />
-            <button className="btn-primary px-6 py-3 whitespace-nowrap">
-              Get Free Estimates
+          <nav className="hidden md:flex items-center gap-8">
+            <a className="text-sm font-semibold text-slate-300 hover:text-primary transition-colors" href="#">Find Contractors</a>
+            <a className="text-sm font-semibold text-slate-300 hover:text-primary transition-colors" href="#">For Pros</a>
+            <a className="text-sm font-semibold text-slate-300 hover:text-primary transition-colors" href="#">Resources</a>
+          </nav>
+          <div className="flex items-center gap-4">
+            <ThemeToggle />
+            <button className="text-sm font-bold text-white hover:text-primary transition-colors">Login</button>
+            <button className="rounded-lg bg-primary px-5 py-2.5 text-sm font-bold text-white shadow-lg shadow-primary/20 hover:bg-primary/90 transition-all">
+              Join as Pro
             </button>
           </div>
         </div>
-      </section>
+      </header>
 
-      {/* Footer */}
-      <footer className="pt-16 pb-8 px-4" style={{ background: 'var(--bg-tertiary)', borderTop: '1px solid var(--border-primary)' }}>
-        <div className="max-w-5xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
-            <div>
-              <h3 className="font-bold text-lg mb-4" style={{ color: 'var(--text-primary)' }}>Foundation Repair Directory</h3>
-              <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-                The most comprehensive directory of foundation repair contractors in the United States. 
-                Compare, evaluate, and connect with licensed professionals.
-              </p>
+      <main className="flex-1">
+        {/* Hero Section */}
+        <section className="relative hero-gradient overflow-hidden border-b border-glass-stroke py-20 lg:py-32">
+          <div className="mx-auto max-w-5xl px-6 text-center">
+            <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 mb-8">
+              <span className="material-symbols-outlined text-primary text-sm">verified_user</span>
+              <span className="text-xs font-bold uppercase tracking-wider text-primary">Certified & Licensed Networks Only</span>
             </div>
-            <div>
-              <h3 className="font-semibold mb-4" style={{ color: 'var(--text-primary)' }}>Services</h3>
-              <ul className="space-y-2 text-sm">
-                {SERVICES.map(s => (
-                  <li key={s.slug}>
-                    <Link href={`/services/${s.slug}`} className="hover:text-amber-400 transition-colors" style={{ color: 'var(--text-secondary)' }}>
-                      {s.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
+            
+            <h1 className="text-4xl font-extrabold tracking-tight text-white sm:text-6xl lg:text-7xl mb-6">
+              Find Trusted Foundation <br className="hidden lg:block"/> Repair Experts Near You
+            </h1>
+            
+            <p className="mx-auto max-w-2xl text-lg text-slate-400 mb-10 leading-relaxed">
+              Compare the top-rated local specialists in minutes. Verified reviews. <br className="hidden sm:block"/> Expert analysis. Guaranteed structural integrity.
+            </p>
+
+            {/* Search Box */}
+            <div className="mx-auto max-w-xl">
+              <div className="search-bar flex flex-col sm:flex-row gap-3 p-2 shadow-2xl">
+                <div className="relative flex flex-1 items-center">
+                  <span className="material-symbols-outlined absolute left-4 text-slate-500">location_on</span>
+                  <input 
+                    className="w-full rounded-lg border-0 bg-transparent py-4 pl-12 text-white placeholder-slate-500 focus:ring-2 focus:ring-primary focus:outline-none" 
+                    placeholder="Enter ZIP code" 
+                    type="text"
+                  />
+                </div>
+                <button className="btn-primary flex items-center justify-center gap-2 px-8 py-4 text-base font-bold shadow-lg shadow-amber-accent/10">
+                  <span className="material-symbols-outlined">search</span>
+                  Search
+                </button>
+              </div>
             </div>
-            <div>
-              <h3 className="font-semibold mb-4" style={{ color: 'var(--text-primary)' }}>Top States</h3>
-              <ul className="space-y-2 text-sm">
-                {TOP_STATES.slice(0, 6).map(s => (
-                  <li key={s.slug}>
-                    <Link href={`/${s.slug}`} className="hover:text-amber-400 transition-colors" style={{ color: 'var(--text-secondary)' }}>
-                      {s.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <h3 className="font-semibold mb-4" style={{ color: 'var(--text-primary)' }}>Resources</h3>
-              <ul className="space-y-2 text-sm">
-                <li><Link href="/cost/foundation-repair" className="hover:text-amber-400 transition-colors" style={{ color: 'var(--text-secondary)' }}>Cost Guide</Link></li>
-                <li><Link href="/services" className="hover:text-amber-400 transition-colors" style={{ color: 'var(--text-secondary)' }}>All Services</Link></li>
-                <li><Link href="/states" className="hover:text-amber-400 transition-colors" style={{ color: 'var(--text-secondary)' }}>All States</Link></li>
-                <li><Link href="/about" className="hover:text-amber-400 transition-colors" style={{ color: 'var(--text-secondary)' }}>About Us</Link></li>
-                <li><Link href="/contact" className="hover:text-amber-400 transition-colors" style={{ color: 'var(--text-secondary)' }}>Contact</Link></li>
-              </ul>
+
+            {/* Trust Indicators */}
+            <div className="mt-16 trust-stats">
+              <div className="trust-stat">
+                <span className="text-2xl font-bold text-white">10,000+</span>
+                <span className="text-xs font-medium text-slate-500 uppercase tracking-widest">Verified Pros</span>
+              </div>
+              <div className="trust-stat">
+                <span className="text-2xl font-bold text-white">50</span>
+                <span className="text-xs font-medium text-slate-500 uppercase tracking-widest">States Covered</span>
+              </div>
+              <div className="trust-stat">
+                <span className="text-2xl font-bold text-white">2M+</span>
+                <span className="text-xs font-medium text-slate-500 uppercase tracking-widest">Homes Saved</span>
+              </div>
+              <div className="trust-stat">
+                <span className="text-2xl font-bold text-white">4.9/5</span>
+                <span className="text-xs font-medium text-slate-500 uppercase tracking-widest">User Rating</span>
+              </div>
             </div>
           </div>
-          
-          <div className="section-divider mb-8"></div>
-          
-          <div className="flex flex-col md:flex-row justify-between items-center text-xs" style={{ color: 'var(--text-tertiary)' }}>
-            <p>© 2026 Foundation Repair Directory. All rights reserved.</p>
-            <div className="flex gap-6 mt-4 md:mt-0">
-              <Link href="/privacy" className="hover:text-amber-400 transition-colors" style={{ color: 'var(--text-tertiary)' }}>Privacy Policy</Link>
-              <Link href="/terms" className="hover:text-amber-400 transition-colors" style={{ color: 'var(--text-tertiary)' }}>Terms of Service</Link>
+
+          {/* Background Decoration */}
+          <div className="absolute -top-24 -left-24 h-96 w-96 rounded-full bg-primary/5 blur-[120px]"></div>
+          <div className="absolute -bottom-24 -right-24 h-96 w-96 rounded-full bg-amber-accent/5 blur-[120px]"></div>
+        </section>
+
+        {/* Featured Contractors */}
+        <section className="py-20 lg:py-24" style={{ background: 'var(--bg-primary)' }}>
+          <div className="mx-auto max-w-7xl px-6 lg:px-10">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+              <div>
+                <h2 className="section-header">Top-Rated Local Specialists</h2>
+                <p className="section-subtext">Showing the highest-rated foundation experts currently available in your area.</p>
+              </div>
+              <button className="flex items-center gap-2 text-primary font-bold hover:underline">
+                View All Contractors
+                <span className="material-symbols-outlined">arrow_forward</span>
+              </button>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {/* Card 1 */}
+              <div className="contractor-card group">
+                <div className="relative h-48 w-full overflow-hidden">
+                  <div className="h-full w-full bg-gradient-to-br from-slate-600 to-slate-800 flex items-center justify-center text-slate-400">
+                    <span className="material-symbols-outlined text-6xl">foundation</span>
+                  </div>
+                  <div className="absolute top-4 right-4 premium-badge">
+                    Premium Partner
+                  </div>
+                </div>
+                <div className="flex flex-1 flex-col p-6">
+                  <div className="flex items-start justify-between mb-4">
+                    <div>
+                      <h3 className="text-lg font-bold text-white">Precision Foundation Pros</h3>
+                      <div className="flex items-center gap-1 mt-1">
+                        <div className="flex text-amber-accent">
+                          <span className="material-symbols-outlined text-sm star-filled">star</span>
+                          <span className="material-symbols-outlined text-sm star-filled">star</span>
+                          <span className="material-symbols-outlined text-sm star-filled">star</span>
+                          <span className="material-symbols-outlined text-sm star-filled">star</span>
+                          <span className="material-symbols-outlined text-sm star-filled">star</span>
+                        </div>
+                        <span className="text-xs font-semibold text-slate-400">(124 reviews)</span>
+                      </div>
+                    </div>
+                    <div className="verified-badge">
+                      <span className="material-symbols-outlined">verified</span>
+                    </div>
+                  </div>
+                  <div className="flex flex-wrap gap-2 mb-6">
+                    <span className="service-tag">Slab Jacking</span>
+                    <span className="service-tag">Pier & Beam</span>
+                    <span className="service-tag">Waterproofing</span>
+                  </div>
+                  <div className="mt-auto flex gap-3">
+                    <button className="btn-primary flex-1 py-3 text-sm font-bold transition-colors">
+                      Contact Now
+                    </button>
+                    <button className="btn-secondary flex items-center justify-center px-4 py-3 transition-colors">
+                      <span className="material-symbols-outlined">info</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Card 2 */}
+              <div className="contractor-card group">
+                <div className="relative h-48 w-full overflow-hidden">
+                  <div className="h-full w-full bg-gradient-to-br from-slate-600 to-slate-800 flex items-center justify-center text-slate-400">
+                    <span className="material-symbols-outlined text-6xl">engineering</span>
+                  </div>
+                </div>
+                <div className="flex flex-1 flex-col p-6">
+                  <div className="flex items-start justify-between mb-4">
+                    <div>
+                      <h3 className="text-lg font-bold text-white">Solid Ground Engineering</h3>
+                      <div className="flex items-center gap-1 mt-1">
+                        <div className="flex text-amber-accent">
+                          <span className="material-symbols-outlined text-sm star-filled">star</span>
+                          <span className="material-symbols-outlined text-sm star-filled">star</span>
+                          <span className="material-symbols-outlined text-sm star-filled">star</span>
+                          <span className="material-symbols-outlined text-sm star-filled">star</span>
+                          <span className="material-symbols-outlined text-sm text-slate-500">star</span>
+                        </div>
+                        <span className="text-xs font-semibold text-slate-400">(98 reviews)</span>
+                      </div>
+                    </div>
+                    <div className="verified-badge">
+                      <span className="material-symbols-outlined">verified</span>
+                    </div>
+                  </div>
+                  <div className="flex flex-wrap gap-2 mb-6">
+                    <span className="service-tag">Leveling</span>
+                    <span className="service-tag">Crack Repair</span>
+                  </div>
+                  <div className="mt-auto flex gap-3">
+                    <button className="btn-primary flex-1 py-3 text-sm font-bold transition-colors">
+                      Contact Now
+                    </button>
+                    <button className="btn-secondary flex items-center justify-center px-4 py-3 transition-colors">
+                      <span className="material-symbols-outlined">info</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Card 3 */}
+              <div className="contractor-card group">
+                <div className="relative h-48 w-full overflow-hidden">
+                  <div className="h-full w-full bg-gradient-to-br from-slate-600 to-slate-800 flex items-center justify-center text-slate-400">
+                    <span className="material-symbols-outlined text-6xl">home_repair_service</span>
+                  </div>
+                </div>
+                <div className="flex flex-1 flex-col p-6">
+                  <div className="flex items-start justify-between mb-4">
+                    <div>
+                      <h3 className="text-lg font-bold text-white">Atlas Pier Specialists</h3>
+                      <div className="flex items-center gap-1 mt-1">
+                        <div className="flex text-amber-accent">
+                          <span className="material-symbols-outlined text-sm star-filled">star</span>
+                          <span className="material-symbols-outlined text-sm star-filled">star</span>
+                          <span className="material-symbols-outlined text-sm star-filled">star</span>
+                          <span className="material-symbols-outlined text-sm star-filled">star</span>
+                          <span className="material-symbols-outlined text-sm star-filled">star</span>
+                        </div>
+                        <span className="text-xs font-semibold text-slate-400">(56 reviews)</span>
+                      </div>
+                    </div>
+                    <div className="verified-badge">
+                      <span className="material-symbols-outlined">verified</span>
+                    </div>
+                  </div>
+                  <div className="flex flex-wrap gap-2 mb-6">
+                    <span className="service-tag">Basement Repair</span>
+                    <span className="service-tag">Sealing</span>
+                    <span className="service-tag">Helical Piers</span>
+                  </div>
+                  <div className="mt-auto flex gap-3">
+                    <button className="btn-primary flex-1 py-3 text-sm font-bold transition-colors">
+                      Contact Now
+                    </button>
+                    <button className="btn-secondary flex items-center justify-center px-4 py-3 transition-colors">
+                      <span className="material-symbols-outlined">info</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Repair Types Section */}
+        <section className="py-20 lg:py-24" style={{ background: 'var(--bg-secondary)' }}>
+          <div className="mx-auto max-w-7xl px-6 lg:px-10">
+            <div className="text-center mb-12">
+              <h2 className="section-header">Common Foundation Repair Types</h2>
+              <p className="section-subtext max-w-2xl mx-auto">
+                Understanding the right solution for your home is the first step toward a permanent fix.
+              </p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {SERVICES.slice(0, 4).map((service) => (
+                <Link 
+                  key={service.slug}
+                  href={`/services/${service.slug}`}
+                  className="step-card group cursor-pointer"
+                >
+                  <div className="step-icon">
+                    <span className="material-symbols-outlined text-3xl">{service.icon}</span>
+                  </div>
+                  <h3 className="text-white text-xl font-bold mb-3">{service.name}</h3>
+                  <p className="text-slate-400 text-sm leading-relaxed mb-4">{service.desc}</p>
+                  <span className="text-primary text-sm font-bold flex items-center gap-1 hover:underline">
+                    Learn More <span className="material-symbols-outlined text-xs">arrow_forward</span>
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Cost Guide Section */}
+        <section className="py-20 lg:py-24" style={{ background: 'var(--bg-tertiary)' }}>
+          <div className="mx-auto max-w-7xl px-6 lg:px-10">
+            <div className="text-center mb-12">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-accent/10 border border-amber-accent/20 text-amber-accent text-xs font-bold uppercase tracking-widest mb-4">
+                <span className="material-symbols-outlined text-sm">payments</span> Pricing Intelligence
+              </div>
+              <h2 className="section-header">Foundation Repair Cost Guide</h2>
+              <p className="section-subtext max-w-2xl mx-auto">
+                Estimated market averages for common foundation services. Actual costs vary based on location and severity.
+              </p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div className="cost-card hover:border-amber-accent/30 transition-colors">
+                <span className="text-slate-500 text-xs font-bold uppercase tracking-wide">Minor Repair</span>
+                <h4 className="text-white text-lg font-bold mt-1">Crack Injection</h4>
+                <div className="text-2xl font-black text-amber-accent mt-3 mb-1">$400 – $800</div>
+                <p className="text-slate-500 text-xs">Per injection site</p>
+              </div>
+              <div className="cost-card hover:border-amber-accent/30 transition-colors">
+                <span className="text-slate-500 text-xs font-bold uppercase tracking-wide">Moderate Repair</span>
+                <h4 className="text-white text-lg font-bold mt-1">Slab Jacking</h4>
+                <div className="text-2xl font-black text-amber-accent mt-3 mb-1">$500 – $1,500</div>
+                <p className="text-slate-500 text-xs">Per 100 sq. ft. area</p>
+              </div>
+              <div className="cost-card hover:border-amber-accent/30 transition-colors">
+                <span className="text-slate-500 text-xs font-bold uppercase tracking-wide">Major Structural</span>
+                <h4 className="text-white text-lg font-bold mt-1">Piering</h4>
+                <div className="text-2xl font-black text-amber-accent mt-3 mb-1">$1,000 – $3,000</div>
+                <p className="text-slate-500 text-xs">Per pier installed</p>
+              </div>
+              <div className="cost-card hover:border-amber-accent/30 transition-colors">
+                <span className="text-slate-500 text-xs font-bold uppercase tracking-wide">Preventative</span>
+                <h4 className="text-white text-lg font-bold mt-1">Basement Sealing</h4>
+                <div className="text-2xl font-black text-amber-accent mt-3 mb-1">$2,000 – $6,000</div>
+                <p className="text-slate-500 text-xs">Full perimeter system</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* How It Works Section */}
+        <section className="py-20 lg:py-24" style={{ background: 'var(--bg-secondary)' }}>
+          <div className="mx-auto max-w-7xl px-6 lg:px-10">
+            <div className="text-center mb-16">
+              <h2 className="section-header">How It Works</h2>
+              <p className="section-subtext max-w-2xl mx-auto">Getting your home back on solid ground is simpler than you think. Follow our four-step process to find the right expert.</p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 relative">
+              {[
+                { step: '1', icon: 'search', title: 'Search', desc: 'Find local foundation experts near you by entering your zip code.' },
+                { step: '2', icon: 'rule', title: 'Compare', desc: 'Review ratings, past project photos, and structural specialties.' },
+                { step: '3', icon: 'forum', title: 'Contact', desc: 'Get free inspections and competitive quotes from top contractors.' },
+                { step: '4', icon: 'house_with_shield', title: 'Get Repaired', desc: 'Secure your home\'s long-term value and your family\'s safety.' },
+              ].map((item) => (
+                <div key={item.step} className="step-card">
+                  <div className="step-icon">
+                    <span className="material-symbols-outlined text-3xl">{item.icon}</span>
+                  </div>
+                  <h3 className="text-xl font-bold mb-2">{item.step}. {item.title}</h3>
+                  <p className="text-slate-500 text-sm leading-relaxed">{item.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Browse by State */}
+        <section className="py-20 lg:py-24" style={{ background: 'var(--bg-tertiary)' }}>
+          <div className="mx-auto max-w-7xl px-6 lg:px-10">
+            <div className="text-center mb-12">
+              <h2 className="section-header">National Coverage. Local Expertise.</h2>
+              <p className="section-subtext">Whether you're dealing with expansive clay soils in Texas or freezing cycles in the Midwest, we connect you with experts who understand your local geography.</p>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              {TOP_STATES.slice(0, 8).map((state) => (
+                <Link
+                  key={state.slug}
+                  href={`/${state.slug}`}
+                  className="glass-card flex items-center gap-3 p-4 group"
+                >
+                  <span className="text-xs font-bold text-amber-accent bg-amber-accent/10 px-2.5 py-1.5 rounded-lg border border-amber-accent/30 group-hover:bg-amber-accent group-hover:text-slate-900 transition-colors">
+                    {state.abbr}
+                  </span>
+                  <div>
+                    <span className="font-medium text-sm text-white">{state.name}</span>
+                    <span className="block text-xs text-slate-400">{state.count} contractors</span>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Urgency CTA Section */}
+        <section className="relative overflow-hidden py-24 px-6 md:px-20 lg:px-40" style={{ background: '#0f172a' }}>
+          <div className="absolute inset-0 opacity-10 pointer-events-none" 
+               style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #1152d4 1px, transparent 0)', backgroundSize: '40px 40px' }}></div>
+          <div className="max-w-5xl mx-auto relative z-10 flex flex-col items-center text-center">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-accent/10 border border-amber-accent/30 text-amber-accent mb-8">
+              <span className="material-symbols-outlined text-sm">warning</span>
+              <span className="text-xs font-bold uppercase tracking-wider">Urgent Structural Alert</span>
+            </div>
+            <h2 className="text-4xl md:text-6xl font-black text-white leading-tight mb-6 max-w-4xl">
+              Structural damage <span className="text-amber-accent">doesn't wait.</span> Neither should you.
+            </h2>
+            <p className="text-slate-300 text-lg md:text-xl max-w-2xl mb-12 leading-relaxed">
+              Minor cracks today become major structural failures tomorrow. Average repair costs double every 18 months when left untreated.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 w-full justify-center">
+              <button className="bg-primary hover:bg-primary/90 text-white font-bold py-5 px-10 rounded-xl transition-all shadow-lg shadow-primary/25 text-lg flex items-center justify-center gap-3">
+                Find a Pro Now
+                <span className="material-symbols-outlined">arrow_forward</span>
+              </button>
+              <button className="btn-secondary py-5 px-10 text-lg">
+                View Pricing Guide
+              </button>
+            </div>
+            <p className="mt-8 text-slate-500 text-sm flex items-center gap-2">
+              <span className="material-symbols-outlined text-primary text-base">verified_user</span>
+              Free inspections available from certified local pros
+            </p>
+          </div>
+        </section>
+      </main>
+
+      {/* Footer */}
+      <footer className="pt-16 pb-8 px-6 lg:px-10" style={{ background: 'var(--bg-primary)', borderTop: '1px solid var(--border-primary)' }}>
+        <div className="max-w-7xl mx-auto">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+            <div className="flex items-center gap-3">
+              <div className="flex h-8 w-8 items-center justify-center rounded bg-slate-800 text-white">
+                <span className="material-symbols-outlined text-lg">foundation</span>
+              </div>
+              <span className="font-bold tracking-tight text-white">Foundation Directory</span>
+            </div>
+            <div className="flex gap-8 text-sm text-slate-500">
+              <a className="hover:text-white transition-colors" href="#">Privacy Policy</a>
+              <a className="hover:text-white transition-colors" href="#">Terms of Service</a>
+              <a className="hover:text-white transition-colors" href="#">Contact Us</a>
+            </div>
+            <div className="text-sm text-slate-500">
+              © 2024 Foundation Directory. All rights reserved.
             </div>
           </div>
         </div>
       </footer>
-    </main>
+    </div>
   )
 }
