@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import ThemeToggle from '@/components/ThemeToggle'
 
 export const metadata = {
   title: 'Foundation Repair Directory — Find Trusted Contractors Near You',
@@ -31,7 +32,17 @@ const SERVICES = [
 
 export default function HomePage() {
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen" style={{ background: 'var(--bg-primary)' }}>
+      {/* Header with theme toggle */}
+      <header className="absolute top-0 left-0 right-0 z-20 p-4">
+        <div className="max-w-5xl mx-auto flex justify-between items-center">
+          <div className="text-xl font-bold" style={{ color: 'var(--text-primary)' }}>
+            Foundation Repair Directory
+          </div>
+          <ThemeToggle />
+        </div>
+      </header>
+
       {/* Hero Section — Multi-layer depth */}
       <section className="hero-gradient hero-pattern relative overflow-hidden">
         {/* Decorative orbs */}
@@ -102,23 +113,23 @@ export default function HomePage() {
       </section>
 
       {/* Social proof bar */}
-      <div className="bg-white border-b py-4">
-        <div className="max-w-5xl mx-auto px-4 flex flex-wrap justify-center gap-8 text-sm text-slate-500">
+      <div style={{ background: 'var(--bg-secondary)', borderBottom: '1px solid var(--border-primary)' }} className="py-4">
+        <div className="max-w-5xl mx-auto px-4 flex flex-wrap justify-center gap-8 text-sm" style={{ color: 'var(--text-tertiary)' }}>
           <div className="flex items-center gap-2">
-            <span className="font-bold text-slate-800 text-lg">4,200+</span>
+            <span className="font-bold text-lg" style={{ color: 'var(--text-primary)' }}>4,200+</span>
             <span>Contractors Listed</span>
           </div>
-          <div className="w-px h-6 bg-slate-200"></div>
+          <div className="w-px h-6" style={{ background: 'var(--border-primary)' }}></div>
           <div className="flex items-center gap-2">
-            <span className="font-bold text-slate-800 text-lg">50</span>
+            <span className="font-bold text-lg" style={{ color: 'var(--text-primary)' }}>50</span>
             <span>States Covered</span>
           </div>
-          <div className="w-px h-6 bg-slate-200"></div>
+          <div className="w-px h-6" style={{ background: 'var(--border-primary)' }}></div>
           <div className="flex items-center gap-2">
-            <span className="font-bold text-slate-800 text-lg">12,000+</span>
+            <span className="font-bold text-lg" style={{ color: 'var(--text-primary)' }}>12,000+</span>
             <span>Homeowners Helped</span>
           </div>
-          <div className="w-px h-6 bg-slate-200"></div>
+          <div className="w-px h-6" style={{ background: 'var(--border-primary)' }}></div>
           <div className="flex items-center gap-2">
             <span className="stars text-lg">★★★★★</span>
             <span>4.8 Average Rating</span>
@@ -127,14 +138,14 @@ export default function HomePage() {
       </div>
 
       {/* Services Grid — Cards with depth */}
-      <section className="py-20 px-4 bg-white">
+      <section className="py-20 px-4" style={{ background: 'var(--bg-secondary)' }}>
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12">
             <span className="text-amber-600 font-semibold text-sm tracking-wide uppercase">Services</span>
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mt-2 mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold mt-2 mb-4" style={{ color: 'var(--text-primary)' }}>
               What Type of Repair Do You Need?
             </h2>
-            <p className="text-slate-500 max-w-xl mx-auto">
+            <p className="max-w-xl mx-auto" style={{ color: 'var(--text-secondary)' }}>
               Find contractors who specialize in your specific foundation issue
             </p>
           </div>
@@ -149,10 +160,10 @@ export default function HomePage() {
                 <div className="icon-container icon-amber mb-4">
                   <span className="text-xl">{service.icon}</span>
                 </div>
-                <h3 className="text-lg font-semibold text-slate-900 group-hover:text-amber-600 transition-colors">
+                <h3 className="text-lg font-semibold group-hover:text-amber-600 transition-colors" style={{ color: 'var(--text-primary)' }}>
                   {service.name}
                 </h3>
-                <p className="text-slate-500 text-sm mt-2 leading-relaxed">
+                <p className="text-sm mt-2 leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
                   {service.desc}
                 </p>
                 <div className="mt-4 flex items-center text-amber-600 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity">
@@ -168,14 +179,14 @@ export default function HomePage() {
       </section>
 
       {/* Browse by State — Clean grid */}
-      <section className="py-20 px-4 bg-slate-50">
+      <section className="py-20 px-4" style={{ background: 'var(--bg-tertiary)' }}>
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12">
             <span className="text-amber-600 font-semibold text-sm tracking-wide uppercase">Browse</span>
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mt-2 mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold mt-2 mb-4" style={{ color: 'var(--text-primary)' }}>
               Foundation Repair by State
             </h2>
-            <p className="text-slate-500">Find contractors in your area</p>
+            <p style={{ color: 'var(--text-secondary)' }}>Find contractors in your area</p>
           </div>
           
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -189,8 +200,8 @@ export default function HomePage() {
                   {state.abbr}
                 </span>
                 <div>
-                  <span className="font-medium text-slate-800 text-sm">{state.name}</span>
-                  <span className="block text-xs text-slate-400">{state.count} contractors</span>
+                  <span className="font-medium text-sm" style={{ color: 'var(--text-primary)' }}>{state.name}</span>
+                  <span className="block text-xs" style={{ color: 'var(--text-tertiary)' }}>{state.count} contractors</span>
                 </div>
               </Link>
             ))}
@@ -205,11 +216,11 @@ export default function HomePage() {
       </section>
 
       {/* How It Works — Step cards */}
-      <section className="py-20 px-4 bg-white">
+      <section className="py-20 px-4" style={{ background: 'var(--bg-secondary)' }}>
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-14">
             <span className="text-amber-600 font-semibold text-sm tracking-wide uppercase">How It Works</span>
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mt-2">
+            <h2 className="text-3xl md:text-4xl font-bold mt-2" style={{ color: 'var(--text-primary)' }}>
               Three Steps to a Solid Foundation
             </h2>
           </div>
@@ -243,8 +254,8 @@ export default function HomePage() {
                   <div className="icon-container icon-amber mx-auto mt-4 mb-5 w-14 h-14 text-2xl">
                     {item.icon}
                   </div>
-                  <h3 className="font-semibold text-lg text-slate-900 mb-3">{item.title}</h3>
-                  <p className="text-slate-500 text-sm leading-relaxed">{item.desc}</p>
+                  <h3 className="font-semibold text-lg mb-3" style={{ color: 'var(--text-primary)' }}>{item.title}</h3>
+                  <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>{item.desc}</p>
                 </div>
               </div>
             ))}
@@ -253,14 +264,14 @@ export default function HomePage() {
       </section>
 
       {/* Cost Section — Premium data cards */}
-      <section className="py-20 px-4 bg-slate-50">
+      <section className="py-20 px-4" style={{ background: 'var(--bg-tertiary)' }}>
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
             <span className="text-amber-600 font-semibold text-sm tracking-wide uppercase">Pricing Guide</span>
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mt-2 mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold mt-2 mb-4" style={{ color: 'var(--text-primary)' }}>
               Foundation Repair Costs in 2026
             </h2>
-            <p className="text-slate-500 max-w-xl mx-auto">
+            <p className="max-w-xl mx-auto" style={{ color: 'var(--text-secondary)' }}>
               Real pricing data from contractors nationwide. Know what to expect before you call.
             </p>
           </div>
@@ -274,16 +285,16 @@ export default function HomePage() {
                 { label: 'Per Pier', range: '$1,000 – $3,000', sublabel: 'Industry standard' },
               ].map((stat) => (
                 <div key={stat.label} className="stat-card text-center">
-                  <p className="text-xs text-slate-500 uppercase tracking-wide">{stat.label}</p>
+                  <p className="text-xs uppercase tracking-wide" style={{ color: 'var(--text-tertiary)' }}>{stat.label}</p>
                   <p className="text-xl md:text-2xl font-bold text-amber-600 mt-1">{stat.range}</p>
-                  <p className="text-xs text-slate-400 mt-1">{stat.sublabel}</p>
+                  <p className="text-xs mt-1" style={{ color: 'var(--text-tertiary)' }}>{stat.sublabel}</p>
                 </div>
               ))}
             </div>
             
             <div className="section-divider mb-8"></div>
             
-            <h3 className="font-semibold text-lg text-slate-900 mb-4">What Affects Your Cost?</h3>
+            <h3 className="font-semibold text-lg mb-4" style={{ color: 'var(--text-primary)' }}>What Affects Your Cost?</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               {[
                 { icon: '🔧', factor: 'Type of repair', detail: 'Pier installation costs more than crack sealing' },
@@ -293,11 +304,11 @@ export default function HomePage() {
                 { icon: '📏', factor: 'Home size', detail: 'Larger homes need more piers and materials' },
                 { icon: '🚧', factor: 'Accessibility', detail: 'Easy access vs. confined spaces' },
               ].map((item) => (
-                <div key={item.factor} className="flex items-start gap-3 p-3 rounded-xl hover:bg-slate-50 transition-colors">
+                <div key={item.factor} className="factor-item flex items-start gap-3 p-3 rounded-xl transition-colors">
                   <span className="text-lg">{item.icon}</span>
                   <div>
-                    <span className="font-medium text-slate-800 text-sm">{item.factor}</span>
-                    <span className="block text-xs text-slate-500">{item.detail}</span>
+                    <span className="font-medium text-sm" style={{ color: 'var(--text-primary)' }}>{item.factor}</span>
+                    <span className="block text-xs" style={{ color: 'var(--text-secondary)' }}>{item.detail}</span>
                   </div>
                 </div>
               ))}
@@ -330,22 +341,22 @@ export default function HomePage() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-slate-900 text-slate-400 pt-16 pb-8 px-4">
+      <footer className="pt-16 pb-8 px-4" style={{ background: 'var(--bg-tertiary)', borderTop: '1px solid var(--border-primary)' }}>
         <div className="max-w-5xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
             <div>
-              <h3 className="text-white font-bold text-lg mb-4">Foundation Repair Directory</h3>
-              <p className="text-sm leading-relaxed">
+              <h3 className="font-bold text-lg mb-4" style={{ color: 'var(--text-primary)' }}>Foundation Repair Directory</h3>
+              <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
                 The most comprehensive directory of foundation repair contractors in the United States. 
                 Compare, evaluate, and connect with licensed professionals.
               </p>
             </div>
             <div>
-              <h3 className="text-white font-semibold mb-4">Services</h3>
+              <h3 className="font-semibold mb-4" style={{ color: 'var(--text-primary)' }}>Services</h3>
               <ul className="space-y-2 text-sm">
                 {SERVICES.map(s => (
                   <li key={s.slug}>
-                    <Link href={`/services/${s.slug}`} className="hover:text-amber-400 transition-colors">
+                    <Link href={`/services/${s.slug}`} className="hover:text-amber-400 transition-colors" style={{ color: 'var(--text-secondary)' }}>
                       {s.name}
                     </Link>
                   </li>
@@ -353,11 +364,11 @@ export default function HomePage() {
               </ul>
             </div>
             <div>
-              <h3 className="text-white font-semibold mb-4">Top States</h3>
+              <h3 className="font-semibold mb-4" style={{ color: 'var(--text-primary)' }}>Top States</h3>
               <ul className="space-y-2 text-sm">
                 {TOP_STATES.slice(0, 6).map(s => (
                   <li key={s.slug}>
-                    <Link href={`/${s.slug}`} className="hover:text-amber-400 transition-colors">
+                    <Link href={`/${s.slug}`} className="hover:text-amber-400 transition-colors" style={{ color: 'var(--text-secondary)' }}>
                       {s.name}
                     </Link>
                   </li>
@@ -365,24 +376,24 @@ export default function HomePage() {
               </ul>
             </div>
             <div>
-              <h3 className="text-white font-semibold mb-4">Resources</h3>
+              <h3 className="font-semibold mb-4" style={{ color: 'var(--text-primary)' }}>Resources</h3>
               <ul className="space-y-2 text-sm">
-                <li><Link href="/cost/foundation-repair" className="hover:text-amber-400 transition-colors">Cost Guide</Link></li>
-                <li><Link href="/services" className="hover:text-amber-400 transition-colors">All Services</Link></li>
-                <li><Link href="/states" className="hover:text-amber-400 transition-colors">All States</Link></li>
-                <li><Link href="/about" className="hover:text-amber-400 transition-colors">About Us</Link></li>
-                <li><Link href="/contact" className="hover:text-amber-400 transition-colors">Contact</Link></li>
+                <li><Link href="/cost/foundation-repair" className="hover:text-amber-400 transition-colors" style={{ color: 'var(--text-secondary)' }}>Cost Guide</Link></li>
+                <li><Link href="/services" className="hover:text-amber-400 transition-colors" style={{ color: 'var(--text-secondary)' }}>All Services</Link></li>
+                <li><Link href="/states" className="hover:text-amber-400 transition-colors" style={{ color: 'var(--text-secondary)' }}>All States</Link></li>
+                <li><Link href="/about" className="hover:text-amber-400 transition-colors" style={{ color: 'var(--text-secondary)' }}>About Us</Link></li>
+                <li><Link href="/contact" className="hover:text-amber-400 transition-colors" style={{ color: 'var(--text-secondary)' }}>Contact</Link></li>
               </ul>
             </div>
           </div>
           
           <div className="section-divider mb-8"></div>
           
-          <div className="flex flex-col md:flex-row justify-between items-center text-xs text-slate-500">
+          <div className="flex flex-col md:flex-row justify-between items-center text-xs" style={{ color: 'var(--text-tertiary)' }}>
             <p>© 2026 Foundation Repair Directory. All rights reserved.</p>
             <div className="flex gap-6 mt-4 md:mt-0">
-              <Link href="/privacy" className="hover:text-slate-300">Privacy Policy</Link>
-              <Link href="/terms" className="hover:text-slate-300">Terms of Service</Link>
+              <Link href="/privacy" className="hover:text-amber-400 transition-colors" style={{ color: 'var(--text-tertiary)' }}>Privacy Policy</Link>
+              <Link href="/terms" className="hover:text-amber-400 transition-colors" style={{ color: 'var(--text-tertiary)' }}>Terms of Service</Link>
             </div>
           </div>
         </div>

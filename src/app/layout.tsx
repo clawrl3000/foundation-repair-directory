@@ -33,6 +33,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        {/* Prevent flash of incorrect theme */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                const theme = localStorage.getItem('theme') || 'dark';
+                document.documentElement.setAttribute('data-theme', theme);
+              })();
+            `,
+          }}
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
