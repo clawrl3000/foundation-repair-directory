@@ -174,7 +174,7 @@ export default function HomePageClient() {
           {/* Hero Section - With background image */}
           <section className="relative overflow-hidden border-b border-slate-200 py-20 lg:py-32">
             <div className="absolute inset-0">
-              <img src="https://images.unsplash.com/photo-1631634569454-80db45f0dc56?w=1920&q=80" alt="Professional foundation repair team installing concrete piers under house" className="h-full w-full object-cover" />
+              <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1920&q=80" alt="Professional foundation repair team installing concrete piers under house" className="h-full w-full object-cover" />
               <div className="absolute inset-0 bg-white/85"></div>
             </div>
             <div className="relative mx-auto max-w-5xl px-6 text-center">
@@ -275,7 +275,7 @@ export default function HomePageClient() {
                 {/* Card 1 - Light mode card */}
                 <div className="bg-white border border-slate-200 group flex flex-col rounded-xl overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-primary/10 hover:scale-[1.02] hover-lift animate-on-scroll">
                   <div className="relative h-48 w-full overflow-hidden image-zoom">
-                    <img className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Professional foundation repair team installing hydraulic piers under house foundation" src="https://images.unsplash.com/photo-1566834750323-76eb9dcee89d?w=800&q=80"/>
+                    <img className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Professional foundation repair team installing hydraulic piers under house foundation" src="https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=800&q=80"/>
                     <div className="absolute top-4 right-4 rounded-full bg-slate-900/80 backdrop-blur px-3 py-1 text-[10px] font-black uppercase text-amber-accent border border-amber-accent/30">
                       Premium Partner
                     </div>
@@ -340,7 +340,7 @@ export default function HomePageClient() {
                 {/* Card 2 - Light mode card */}
                 <div className="bg-white border border-slate-200 group flex flex-col rounded-xl overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-primary/10 hover:scale-[1.02] hover-lift animate-on-scroll animate-delay-200">
                   <div className="relative h-48 w-full overflow-hidden image-zoom">
-                    <img className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Foundation crack repair with professional epoxy injection equipment" src="https://images.unsplash.com/photo-1611273426858-450d8e3c9fce?w=800&q=80"/>
+                    <img className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Foundation crack repair with professional epoxy injection equipment" src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=800&q=80"/>
                     <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   </div>
                   <div className="flex flex-1 flex-col p-6">
@@ -399,7 +399,7 @@ export default function HomePageClient() {
                 {/* Card 3 - Light mode card */}
                 <div className="bg-white border border-slate-200 group flex flex-col rounded-xl overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-primary/10 hover:scale-[1.02] hover-lift animate-on-scroll animate-delay-400">
                   <div className="relative h-48 w-full overflow-hidden image-zoom">
-                    <img className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Professional basement waterproofing and drainage system installation with modern equipment" src="https://images.unsplash.com/photo-1619228372473-3c2333d8c75f?w=800&q=80"/>
+                    <img className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Professional basement waterproofing and drainage system installation with modern equipment" src="https://images.unsplash.com/photo-1517581177682-a085bb7ffb15?w=800&q=80"/>
                     <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   </div>
                   <div className="flex flex-1 flex-col p-6">
@@ -489,7 +489,7 @@ export default function HomePageClient() {
                   </div>
                 </div>
                 <Link href="/states" className="relative rounded-xl overflow-hidden border border-slate-200 h-80 block group cursor-pointer">
-                  <img className="h-full w-full object-cover opacity-50 group-hover:opacity-60 transition-opacity" alt="Foundation repair coverage across United States" src="https://images.unsplash.com/photo-1606041008023-472dfb5e530f?w=800&q=80"/>
+                  <img className="h-full w-full object-cover opacity-50 group-hover:opacity-60 transition-opacity" alt="Foundation repair coverage across United States" src="https://images.unsplash.com/photo-1513467535987-fd81bc7d62f8?w=800&q=80"/>
                   <div className="absolute inset-0 bg-gradient-to-t from-white to-transparent"></div>
                   <div className="absolute bottom-6 left-6">
                     <div className="flex items-center gap-2 text-slate-900 font-bold">
@@ -611,7 +611,7 @@ export default function HomePageClient() {
                   <div className="flex items-center gap-4 mb-6">
                     <div className="w-16 h-16 rounded-full overflow-hidden bg-slate-200">
                       <img 
-                        src="https://images.unsplash.com/photo-1494790108755-2616b612b789?w=150&q=80" 
+                        src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&q=80" 
                         alt="Sarah Martinez, Dallas homeowner" 
                         className="w-full h-full object-cover"
                       />
@@ -641,7 +641,7 @@ export default function HomePageClient() {
                   <div className="flex items-center gap-4 mb-6">
                     <div className="w-16 h-16 rounded-full overflow-hidden bg-slate-200">
                       <img 
-                        src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&q=80" 
+                        src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&q=80" 
                         alt="James Rodriguez, Atlanta homeowner" 
                         className="w-full h-full object-cover"
                       />
@@ -671,7 +671,7 @@ export default function HomePageClient() {
                   <div className="flex items-center gap-4 mb-6">
                     <div className="w-16 h-16 rounded-full overflow-hidden bg-slate-200">
                       <img 
-                        src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&q=80" 
+                        src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&q=80" 
                         alt="Maria Lopez, Phoenix homeowner" 
                         className="w-full h-full object-cover"
                       />
