@@ -172,34 +172,34 @@ export default function HomePageClient() {
         
         <main className="flex-1">
           {/* Hero Section - With background image */}
-          <section className="relative overflow-hidden border-b border-slate-200 py-20 lg:py-32">
+          <section className="relative overflow-hidden py-24 lg:py-36">
             <div className="absolute inset-0">
               <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1920&q=80" alt="Professional foundation repair team installing concrete piers under house" className="h-full w-full object-cover" />
-              <div className="absolute inset-0 bg-white/85"></div>
+              <div className="absolute inset-0 bg-gradient-to-b from-slate-900/80 via-slate-900/70 to-slate-900/90"></div>
             </div>
             <div className="relative mx-auto max-w-5xl px-6 text-center">
-              <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 mb-8">
-                <span className="material-symbols-outlined text-primary text-sm">verified_user</span>
-                <span className="text-xs font-bold uppercase tracking-wider text-primary">Certified & Licensed Networks Only</span>
+              <div className="inline-flex items-center gap-2 rounded-full border border-amber-400/40 bg-amber-400/15 px-4 py-1.5 mb-8 backdrop-blur-sm">
+                <span className="material-symbols-outlined text-amber-400 text-sm">verified_user</span>
+                <span className="text-xs font-bold uppercase tracking-wider text-amber-300">Certified & Licensed Networks Only</span>
               </div>
-              <h1 className="text-4xl font-extrabold tracking-tight text-slate-900 sm:text-6xl lg:text-7xl mb-6">
+              <h1 className="text-4xl font-extrabold tracking-tight text-white sm:text-6xl lg:text-7xl mb-6 drop-shadow-lg">
                 Scout the Best Foundation <br className="hidden lg:block"/> Repair Pros Near You
               </h1>
-              <p className="mx-auto max-w-2xl text-lg text-slate-600 mb-6 leading-relaxed">
-                Foundation cracks spread <strong className="text-red-600">40% faster in winter</strong>. Don't wait — get multiple quotes from <br className="hidden sm:block"/> certified contractors in 24 hours.
+              <p className="mx-auto max-w-2xl text-lg text-slate-200 mb-6 leading-relaxed">
+                Foundation cracks spread <strong className="text-amber-400">40% faster in winter</strong>. Don't wait — get multiple quotes from <br className="hidden sm:block"/> certified contractors in 24 hours.
               </p>
               <div className="mx-auto max-w-lg mb-10">
-                <div className="flex items-center justify-center gap-6 text-sm text-slate-600">
+                <div className="flex items-center justify-center gap-6 text-sm text-slate-300">
                   <div className="flex items-center gap-2">
-                    <span className="material-symbols-outlined text-green-600 text-base">verified</span>
+                    <span className="material-symbols-outlined text-green-400 text-base">verified</span>
                     <span className="font-medium">Licensed & Insured</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="material-symbols-outlined text-green-600 text-base">schedule</span>
+                    <span className="material-symbols-outlined text-green-400 text-base">schedule</span>
                     <span className="font-medium">24hr Response</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="material-symbols-outlined text-green-600 text-base">shield</span>
+                    <span className="material-symbols-outlined text-green-400 text-base">shield</span>
                     <span className="font-medium">Warranty Backed</span>
                   </div>
                 </div>
@@ -234,27 +234,27 @@ export default function HomePageClient() {
               {/* Trust Indicators - Direct port from Stitch */}
               <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8">
                 <div className="flex flex-col items-center gap-1">
-                  <span className="text-2xl font-bold text-slate-900">10,000+</span>
-                  <span className="text-xs font-medium text-slate-500 uppercase tracking-widest">Verified Pros</span>
+                  <span className="text-2xl font-bold text-white">10,000+</span>
+                  <span className="text-xs font-medium text-slate-400 uppercase tracking-widest">Verified Pros</span>
                 </div>
-                <div className="flex flex-col items-center gap-1 border-l border-slate-200">
-                  <span className="text-2xl font-bold text-slate-900">50</span>
-                  <span className="text-xs font-medium text-slate-500 uppercase tracking-widest">States Covered</span>
+                <div className="flex flex-col items-center gap-1 border-l border-white/20">
+                  <span className="text-2xl font-bold text-white">50</span>
+                  <span className="text-xs font-medium text-slate-400 uppercase tracking-widest">States Covered</span>
                 </div>
-                <div className="flex flex-col items-center gap-1 border-l border-slate-200">
-                  <span className="text-2xl font-bold text-slate-900">2M+</span>
-                  <span className="text-xs font-medium text-slate-500 uppercase tracking-widest">Homes Saved</span>
+                <div className="flex flex-col items-center gap-1 border-l border-white/20">
+                  <span className="text-2xl font-bold text-white">2M+</span>
+                  <span className="text-xs font-medium text-slate-400 uppercase tracking-widest">Homes Saved</span>
                 </div>
-                <div className="flex flex-col items-center gap-1 border-l border-slate-200">
-                  <span className="text-2xl font-bold text-slate-900">4.9/5</span>
-                  <span className="text-xs font-medium text-slate-500 uppercase tracking-widest">User Rating</span>
+                <div className="flex flex-col items-center gap-1 border-l border-white/20">
+                  <span className="text-2xl font-bold text-white">4.9/5</span>
+                  <span className="text-xs font-medium text-slate-400 uppercase tracking-widest">User Rating</span>
                 </div>
               </div>
             </div>
             
             {/* Background Decoration - Direct port from Stitch */}
-            <div className="absolute -top-24 -left-24 h-96 w-96 rounded-full bg-primary/5 blur-[120px]"></div>
-            <div className="absolute -bottom-24 -right-24 h-96 w-96 rounded-full bg-amber-accent/5 blur-[120px]"></div>
+            <div className="absolute -top-24 -left-24 h-96 w-96 rounded-full bg-amber-500/10 blur-[120px]"></div>
+            <div className="absolute -bottom-24 -right-24 h-96 w-96 rounded-full bg-primary/10 blur-[120px]"></div>
           </section>
           
           {/* Featured Contractors - Light mode */}
