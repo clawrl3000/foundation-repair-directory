@@ -36,6 +36,10 @@ export default function HomePageClient() {
   const [selectedBusiness, setSelectedBusiness] = useState<{id: string, name: string} | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [formStep, setFormStep] = useState(1)
+  const [selectedService, setSelectedService] = useState('')
+  const [location, setLocation] = useState('')
+  const [showTrustPopup, setShowTrustPopup] = useState(false)
 
   const openLeadForm = (businessId?: string, businessName?: string) => {
     if (businessId && businessName) {
@@ -86,6 +90,15 @@ export default function HomePageClient() {
     }
   }, [])
 
+  // Dynamic trust popup after 5 seconds of browsing
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowTrustPopup(true)
+    }, 5000)
+
+    return () => clearTimeout(timer)
+  }, [])
+
   return (
     <div className="relative flex min-h-screen flex-col">
         {/* Navigation - Dark nav with fixed links */}
@@ -116,53 +129,55 @@ export default function HomePageClient() {
           </div>
         </header>
         
-        {/* Mobile Menu - Enhanced with smooth transitions */}
-        <div className={`md:hidden overflow-hidden transition-all duration-300 ease-out ${
-          mobileMenuOpen ? 'max-h-64 opacity-100' : 'max-h-0 opacity-0'
-        }`}>
-          <div className="bg-[#101622] border-b border-slate-700 py-6">
+        {/* Enhanced Mobile Menu with iOS-style animation */}
+        {mobileMenuOpen && <div className="mobile-menu-backdrop fixed inset-0 z-40" onClick={() => setMobileMenuOpen(false)} />}
+        <div className={`md:hidden fixed left-0 right-0 z-50 mobile-menu ${mobileMenuOpen ? 'open' : ''}`}>
+          <div className="bg-[#101622]/95 backdrop-blur-xl border-b border-slate-700 py-8 shadow-2xl">
             <div className="mx-auto max-w-7xl px-6 flex flex-col gap-6">
               <Link 
-                className="text-base font-semibold text-slate-300 hover:text-primary transition-all duration-200 py-3 px-4 rounded-lg hover:bg-white/5 transform hover:translate-x-2" 
+                className="text-base font-semibold text-slate-300 hover:text-primary transition-all duration-300 py-4 px-6 rounded-xl hover:bg-white/10 transform hover:translate-x-2 hover:scale-105 mobile-touch-target" 
                 href="/states"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 <span className="flex items-center gap-3">
-                  <span className="material-symbols-outlined text-lg">search</span>
+                  <span className="material-symbols-outlined text-xl">search</span>
                   Find Contractors
                 </span>
               </Link>
               <Link 
-                className="text-base font-semibold text-slate-300 hover:text-primary transition-all duration-200 py-3 px-4 rounded-lg hover:bg-white/5 transform hover:translate-x-2" 
+                className="text-base font-semibold text-slate-300 hover:text-primary transition-all duration-300 py-4 px-6 rounded-xl hover:bg-white/10 transform hover:translate-x-2 hover:scale-105 mobile-touch-target" 
                 href="/auth/signup"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 <span className="flex items-center gap-3">
-                  <span className="material-symbols-outlined text-lg">business</span>
+                  <span className="material-symbols-outlined text-xl">business</span>
                   For Contractors
                 </span>
               </Link>
               <Link 
-                className="text-base font-semibold text-slate-300 hover:text-primary transition-all duration-200 py-3 px-4 rounded-lg hover:bg-white/5 transform hover:translate-x-2" 
+                className="text-base font-semibold text-slate-300 hover:text-primary transition-all duration-300 py-4 px-6 rounded-xl hover:bg-white/10 transform hover:translate-x-2 hover:scale-105 mobile-touch-target" 
                 href="/services"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 <span className="flex items-center gap-3">
-                  <span className="material-symbols-outlined text-lg">info</span>
+                  <span className="material-symbols-outlined text-xl">info</span>
                   Resources
                 </span>
               </Link>
               
-              {/* Mobile CTA */}
-              <div className="pt-4 border-t border-slate-700">
+              {/* Mobile CTA with enhanced styling */}
+              <div className="pt-6 border-t border-slate-700">
                 <button 
                   onClick={() => {
                     openLeadForm()
                     setMobileMenuOpen(false)
                   }}
-                  className="w-full bg-amber-500 text-white py-4 px-6 rounded-lg font-bold hover:bg-amber-600 transition-all duration-200 transform hover:scale-105 shadow-lg btn-primary relative overflow-hidden"
+                  className="w-full bg-amber-500 text-white py-5 px-8 rounded-xl font-bold hover:bg-amber-600 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-amber-500/25 btn-primary relative overflow-hidden mobile-touch-target"
                 >
-                  <span className="relative z-10">Get Free Estimates</span>
+                  <span className="relative z-10 flex items-center justify-center gap-2">
+                    <span className="material-symbols-outlined">verified</span>
+                    Get Free Estimates
+                  </span>
                 </button>
               </div>
             </div>
@@ -187,47 +202,170 @@ export default function HomePageClient() {
               <p className="mx-auto max-w-2xl text-lg text-slate-200 mb-6 leading-relaxed">
                 Foundation cracks spread <strong className="text-amber-400">40% faster in winter</strong>. Don't wait — get multiple quotes from <br className="hidden sm:block"/> certified contractors in 24 hours.
               </p>
-              <div className="mx-auto max-w-lg mb-10">
-                <div className="flex items-center justify-center gap-6 text-sm text-slate-300">
-                  <div className="flex items-center gap-2">
-                    <span className="material-symbols-outlined text-green-400 text-base">verified</span>
-                    <span className="font-medium">Licensed & Insured</span>
+              {/* Trust Badges Above-the-Fold */}
+              <div className="mx-auto max-w-2xl mb-8">
+                <div className="flex items-center justify-center gap-8 text-sm text-slate-300 mb-6">
+                  <div className="flex items-center gap-2 trust-pulse">
+                    <span className="material-symbols-outlined text-blue-400 text-base">verified_user</span>
+                    <span className="font-medium">BBB A+ Rated</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="material-symbols-outlined text-green-400 text-base">schedule</span>
-                    <span className="font-medium">24hr Response</span>
+                    <span className="material-symbols-outlined text-green-400 text-base">security</span>
+                    <span className="font-medium">$2M+ Insured</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="material-symbols-outlined text-green-400 text-base">shield</span>
-                    <span className="font-medium">Warranty Backed</span>
+                    <span className="material-symbols-outlined text-amber-400 text-base">workspace_premium</span>
+                    <span className="font-medium">5yr Warranty</span>
+                  </div>
+                </div>
+                
+                {/* Urgency Indicators */}
+                <div className="flex items-center justify-center gap-6 text-sm text-slate-200 bg-slate-800/50 rounded-full px-6 py-3 backdrop-blur-sm border border-slate-700/50">
+                  <div className="flex items-center gap-2">
+                    <div className="availability-dot"></div>
+                    <span className="font-medium">127 contractors available now</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="material-symbols-outlined text-amber-400 text-base">schedule</span>
+                    <span className="font-medium">Response in &lt;24hrs</span>
                   </div>
                 </div>
               </div>
               
-              {/* Search Box - Direct port from Stitch */}
-              <div className="mx-auto max-w-xl">
-                <div className="flex flex-col sm:flex-row gap-3 rounded-xl bg-white p-2 border border-slate-300 shadow-lg">
-                  <div className="relative flex flex-1 items-center">
-                    <span className="material-symbols-outlined absolute left-4 text-slate-500">location_on</span>
-                    <input 
-                      className="w-full rounded-lg border-0 bg-transparent py-4 pl-12 text-slate-900 placeholder-slate-400 focus:ring-2 focus:ring-primary focus:ring-offset-2" 
-                      placeholder="Enter your ZIP code or city" 
-                      type="text"
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-                    />
+              {/* Progressive Lead Capture Form */}
+              <div className="mx-auto max-w-2xl">
+                {formStep === 1 && (
+                  <div className="progressive-form-step active">
+                    <div className="bg-white/95 backdrop-blur-sm p-8 rounded-2xl shadow-2xl border border-white/20">
+                      <h3 className="font-bold text-slate-900 mb-6 text-xl text-center">What type of foundation issue do you have?</h3>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        {SERVICES.map((service) => (
+                          <button
+                            key={service.slug}
+                            onClick={() => {
+                              setSelectedService(service.slug)
+                              setFormStep(2)
+                            }}
+                            className={`service-card p-6 rounded-xl border-2 text-left transition-all duration-200 hover:scale-105 mobile-touch-target ${
+                              selectedService === service.slug 
+                                ? 'selected border-primary bg-primary/5' 
+                                : 'border-slate-200 hover:border-primary/50 bg-white'
+                            }`}
+                          >
+                            <div className="flex items-center gap-3 mb-3">
+                              <span className="material-symbols-outlined text-primary text-2xl">{service.icon}</span>
+                              <span className="font-bold text-slate-900">{service.name}</span>
+                            </div>
+                            <p className="text-sm text-slate-600 leading-relaxed">{service.desc}</p>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
                   </div>
-                  <button 
-                    onClick={handleSearch}
-                    className="flex items-center justify-center gap-2 rounded-lg bg-amber-500 px-8 py-4 text-base font-bold text-white hover:bg-amber-600 transition-all duration-200 shadow-lg shadow-amber-500/25 transform hover:scale-105 active:scale-95 btn-primary relative overflow-hidden"
-                  >
-                    <span className="relative z-10 flex items-center gap-2">
-                      <span className="material-symbols-outlined">search</span>
-                      Find Contractors
-                    </span>
-                  </button>
-                </div>
+                )}
+                
+                {formStep === 2 && (
+                  <div className="progressive-form-step active">
+                    <div className="bg-white/95 backdrop-blur-sm p-8 rounded-2xl shadow-2xl border border-white/20">
+                      <div className="flex items-center justify-between mb-6">
+                        <button 
+                          onClick={() => setFormStep(1)}
+                          className="flex items-center gap-2 text-slate-600 hover:text-primary transition-colors"
+                        >
+                          <span className="material-symbols-outlined">arrow_back</span>
+                          Back
+                        </button>
+                        <div className="flex gap-2">
+                          <div className="w-2 h-2 rounded-full bg-primary"></div>
+                          <div className="w-2 h-2 rounded-full bg-primary"></div>
+                          <div className="w-2 h-2 rounded-full bg-slate-300"></div>
+                        </div>
+                      </div>
+                      <h3 className="font-bold text-slate-900 mb-6 text-xl text-center">Where is your property located?</h3>
+                      <div className="relative">
+                        <span className="material-symbols-outlined absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-500">location_on</span>
+                        <input 
+                          className="w-full rounded-xl border-2 border-slate-200 bg-white py-4 pl-12 pr-4 text-slate-900 placeholder-slate-400 focus:ring-2 focus:ring-primary focus:border-primary transition-all mobile-touch-target form-input" 
+                          placeholder="Enter your ZIP code or city" 
+                          type="text"
+                          value={location}
+                          onChange={(e) => setLocation(e.target.value)}
+                          onKeyDown={(e) => e.key === 'Enter' && location.trim() && setFormStep(3)}
+                        />
+                        {location.length >= 5 && (
+                          <div className="form-feedback text-success-green">
+                            <span className="material-symbols-outlined text-sm">check_circle</span>
+                            Great! We'll match you within 24 hours
+                          </div>
+                        )}
+                      </div>
+                      <button 
+                        onClick={() => location.trim() && setFormStep(3)}
+                        disabled={!location.trim()}
+                        className="w-full mt-6 bg-amber-500 text-white py-4 px-6 rounded-xl font-bold hover:bg-amber-600 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-amber-500/25 btn-primary relative overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed mobile-touch-target"
+                      >
+                        <span className="relative z-10">Continue</span>
+                      </button>
+                    </div>
+                  </div>
+                )}
+                
+                {formStep === 3 && (
+                  <div className="progressive-form-step active">
+                    <div className="bg-white/95 backdrop-blur-sm p-8 rounded-2xl shadow-2xl border border-white/20">
+                      <div className="flex items-center justify-between mb-6">
+                        <button 
+                          onClick={() => setFormStep(2)}
+                          className="flex items-center gap-2 text-slate-600 hover:text-primary transition-colors"
+                        >
+                          <span className="material-symbols-outlined">arrow_back</span>
+                          Back
+                        </button>
+                        <div className="flex gap-2">
+                          <div className="w-2 h-2 rounded-full bg-primary"></div>
+                          <div className="w-2 h-2 rounded-full bg-primary"></div>
+                          <div className="w-2 h-2 rounded-full bg-primary"></div>
+                        </div>
+                      </div>
+                      <h3 className="font-bold text-slate-900 mb-6 text-xl text-center">Get your free estimates!</h3>
+                      <div className="space-y-4">
+                        <div>
+                          <input 
+                            className="w-full rounded-xl border-2 border-slate-200 bg-white py-4 px-4 text-slate-900 placeholder-slate-400 focus:ring-2 focus:ring-primary focus:border-primary transition-all mobile-touch-target form-input" 
+                            placeholder="Your name" 
+                            type="text"
+                          />
+                        </div>
+                        <div>
+                          <input 
+                            className="w-full rounded-xl border-2 border-slate-200 bg-white py-4 px-4 text-slate-900 placeholder-slate-400 focus:ring-2 focus:ring-primary focus:border-primary transition-all mobile-touch-target form-input" 
+                            placeholder="Phone number" 
+                            type="tel"
+                          />
+                        </div>
+                        <div>
+                          <input 
+                            className="w-full rounded-xl border-2 border-slate-200 bg-white py-4 px-4 text-slate-900 placeholder-slate-400 focus:ring-2 focus:ring-primary focus:border-primary transition-all mobile-touch-target form-input" 
+                            placeholder="Email address" 
+                            type="email"
+                          />
+                        </div>
+                      </div>
+                      <button 
+                        onClick={() => openLeadForm()}
+                        className="w-full mt-6 bg-green-600 text-white py-4 px-6 rounded-xl font-bold hover:bg-green-700 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-green-600/25 btn-success relative overflow-hidden mobile-touch-target success-glow"
+                      >
+                        <span className="relative z-10 flex items-center justify-center gap-2">
+                          <span className="material-symbols-outlined">verified</span>
+                          Get My Free Estimates
+                        </span>
+                      </button>
+                      <p className="text-center text-xs text-slate-500 mt-4">
+                        100% free • No obligation • Get quotes in 24 hours
+                      </p>
+                    </div>
+                  </div>
+                )}
               </div>
               
               {/* Trust Indicators - Direct port from Stitch */}
@@ -281,6 +419,22 @@ export default function HomePageClient() {
                     <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   </div>
                   <div className="flex flex-1 flex-col p-6">
+                    {/* Enhanced availability indicators */}
+                    <div className="flex items-center gap-4 text-xs text-slate-500 mb-4">
+                      <div className="flex items-center gap-1">
+                        <div className="availability-dot"></div>
+                        <span className="font-medium text-green-700">Available today</span>
+                      </div>
+                      <div className="response-time-indicator">
+                        <span className="material-symbols-outlined text-xs">schedule</span>
+                        <span>Responds in 2hrs</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <span className="material-symbols-outlined text-xs">handyman</span>
+                        <span className="font-medium">8 jobs this week</span>
+                      </div>
+                    </div>
+                    
                     <div className="flex items-start justify-between mb-4">
                       <div className="flex-1">
                         <Link href="/texas/houston/precision-foundation-pros" className="text-lg font-bold text-slate-900 hover:text-primary transition-colors">
@@ -343,6 +497,22 @@ export default function HomePageClient() {
                     <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   </div>
                   <div className="flex flex-1 flex-col p-6">
+                    {/* Enhanced availability indicators */}
+                    <div className="flex items-center gap-4 text-xs text-slate-500 mb-4">
+                      <div className="flex items-center gap-1">
+                        <div className="w-2 h-2 bg-amber-500 rounded-full"></div>
+                        <span className="font-medium text-amber-700">Next available: Tomorrow</span>
+                      </div>
+                      <div className="response-time-indicator">
+                        <span className="material-symbols-outlined text-xs">schedule</span>
+                        <span>Responds in 4hrs</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <span className="material-symbols-outlined text-xs">handyman</span>
+                        <span className="font-medium">5 jobs this week</span>
+                      </div>
+                    </div>
+                    
                     <div className="flex items-start justify-between mb-4">
                       <div className="flex-1">
                         <Link href="/texas/houston/solid-ground-engineering" className="text-lg font-bold text-slate-900 hover:text-primary transition-colors">
@@ -402,6 +572,22 @@ export default function HomePageClient() {
                     <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   </div>
                   <div className="flex flex-1 flex-col p-6">
+                    {/* Enhanced availability indicators */}
+                    <div className="flex items-center gap-4 text-xs text-slate-500 mb-4">
+                      <div className="flex items-center gap-1">
+                        <div className="availability-dot"></div>
+                        <span className="font-medium text-green-700">Available today</span>
+                      </div>
+                      <div className="response-time-indicator">
+                        <span className="material-symbols-outlined text-xs">schedule</span>
+                        <span>Responds in 1hr</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <span className="material-symbols-outlined text-xs">handyman</span>
+                        <span className="font-medium">12 jobs this week</span>
+                      </div>
+                    </div>
+                    
                     <div className="flex items-start justify-between mb-4">
                       <div className="flex-1">
                         <Link href="/texas/houston/atlas-pier-specialists" className="text-lg font-bold text-slate-900 hover:text-primary transition-colors">
@@ -937,6 +1123,30 @@ export default function HomePageClient() {
           businessId={selectedBusiness?.id}
           businessName={selectedBusiness?.name}
         />
+        
+        {/* Dynamic Trust Popup */}
+        {showTrustPopup && (
+          <div className={`trust-popup ${showTrustPopup ? 'show' : ''}`}>
+            <div className="bg-green-600 text-white p-6 rounded-xl shadow-2xl border border-green-500/30">
+              <div className="flex items-start gap-3">
+                <div className="flex-shrink-0">
+                  <span className="material-symbols-outlined text-2xl">verified</span>
+                </div>
+                <div className="flex-1">
+                  <div className="font-bold mb-1">All contractors verified</div>
+                  <div className="text-sm opacity-90 mb-3">Licensed, insured & background checked</div>
+                  <button
+                    onClick={() => setShowTrustPopup(false)}
+                    className="text-xs text-green-200 hover:text-white transition-colors flex items-center gap-1"
+                  >
+                    <span className="material-symbols-outlined text-sm">close</span>
+                    Dismiss
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
   )
 }
