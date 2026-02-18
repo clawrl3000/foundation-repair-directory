@@ -2,10 +2,11 @@ import { Metadata } from 'next'
 import Link from 'next/link'
 import StitchNav from '@/components/StitchNav'
 import StitchFooter from '@/components/StitchFooter'
+import ExpertBio from '@/components/ExpertBio'
 
 export const metadata: Metadata = {
-  title: 'Foundation Repair Services | Foundation Repair Directory',
-  description: 'Explore professional foundation repair services including piering, slab repair, waterproofing, and crawl space repair. Find certified contractors nationwide.',
+  title: 'Foundation Repair Services — How It Works, Costs & Top Contractors',
+  description: 'Complete guide to foundation repair services: piering ($8K-$45K), slab repair ($500-$15K), waterproofing ($1.5K-$10K). 12,847+ verified contractors nationwide.',
   alternates: {
     canonical: 'https://foundationscout.com/services',
   },
@@ -149,6 +150,13 @@ export default function ServicesPage() {
                 </Link>
               ))}
             </div>
+          </div>
+        </section>
+
+        {/* Expert Bio Section */}
+        <section className="py-20 lg:py-24 bg-white">
+          <div className="mx-auto max-w-7xl px-6 lg:px-10">
+            <ExpertBio variant="compact" />
           </div>
         </section>
 

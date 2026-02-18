@@ -13,8 +13,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const url = `https://foundationscout.com/cost/${state}/foundation-repair-cost`
 
   return {
-    title: `Foundation Repair Cost in ${stateName} 2024 | Pricing Guide`,
-    description: `Complete foundation repair cost guide for ${stateName}. Average prices for pier installation, slab repair, and waterproofing. Get free local estimates.`,
+    title: `Foundation Repair Cost in ${stateName} (2026) — Average Prices & Free Quotes`,
+    description: `Complete foundation repair cost guide for ${stateName}: pier installation $8K-$25K, slab repair $500-$15K, waterproofing $1.5K-$10K. Get free estimates from licensed contractors.`,
     alternates: {
       canonical: url,
     },

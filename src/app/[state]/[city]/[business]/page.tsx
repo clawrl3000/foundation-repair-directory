@@ -1,10 +1,11 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
-import { createClient } from '@/lib/supabase-server'
+import { supabaseAdmin } from '@/lib/supabase-admin'
 import { generateBreadcrumbSchema, jsonLdScript } from '@/lib/structured-data'
 import { notFound } from 'next/navigation'
 import StitchNav from '@/components/StitchNav'
 import StitchFooter from '@/components/StitchFooter'
+import BusinessImage from '@/components/BusinessImage'
 
 interface Props {
   params: Promise<{
@@ -14,18 +15,30 @@ interface Props {
   }>
 }
 
+interface Review {
+  id: string
+  reviewer_name: string | null
+  rating: number | null
+  review_text: string
+  source: string
+  review_date: string | null
+  created_at: string
+}
+
 interface BusinessData {
   id: string
   name: string
   slug: string
   phone?: string
+  website_url?: string
   address?: string
+  latitude?: number
+  longitude?: number
   description?: string
   rating?: number
   review_count: number
   is_verified: boolean
   year_established?: number
-  website?: string
   email?: string
   city: {
     name: string
@@ -38,6 +51,8 @@ interface BusinessData {
   }
   services: { name: string; slug: string }[]
   features: { name: string; slug: string }[]
+  reviews: Review[]
+  images?: { url: string; alt_text?: string; source?: string }[]
 }
 
 // Fallback business data for demo purposes
@@ -55,7 +70,9 @@ const FALLBACK_BUSINESS_DATA: Record<string, Record<string, Record<string, Busin
         review_count: 127,
         is_verified: true,
         year_established: 2003,
-        website: 'https://houstonFoundationExperts.com',
+        website_url: 'https://houstonFoundationExperts.com',
+        latitude: 29.7604,
+        longitude: -95.3698,
         email: 'info@houstonfoundationexperts.com',
         city: {
           name: 'Houston',
@@ -77,7 +94,28 @@ const FALLBACK_BUSINESS_DATA: Record<string, Record<string, Record<string, Busin
           { name: 'Free Estimates', slug: 'free-estimates' },
           { name: 'Lifetime Warranty', slug: 'lifetime-warranty' },
           { name: '24/7 Emergency Service', slug: 'emergency-service' }
-        ]
+        ],
+        reviews: [
+          {
+            id: '1',
+            reviewer_name: 'Sarah Johnson',
+            rating: 5,
+            review_text: 'Excellent service! The team was professional, on time, and did outstanding work on our foundation. Highly recommend.',
+            source: 'google',
+            review_date: '2024-01-15',
+            created_at: '2024-01-15T10:00:00Z'
+          },
+          {
+            id: '2',
+            reviewer_name: 'Mike Thompson',
+            rating: 5,
+            review_text: 'Very satisfied with their foundation repair work. The warranty gives us peace of mind.',
+            source: 'website',
+            review_date: '2024-01-10',
+            created_at: '2024-01-10T14:30:00Z'
+          }
+        ],
+        images: []
       }
     }
   }
@@ -85,7 +123,7 @@ const FALLBACK_BUSINESS_DATA: Record<string, Record<string, Record<string, Busin
 
 async function getBusinessData(stateSlug: string, citySlug: string, businessSlug: string): Promise<BusinessData | null> {
   try {
-    const supabase = await createClient()
+    const supabase = supabaseAdmin
     
     const { data: business, error } = await supabase
       .from('businesses')
@@ -100,17 +138,33 @@ async function getBusinessData(stateSlug: string, citySlug: string, businessSlug
             slug
           )
         ),
-        business_services!inner (
+        business_services (
           services (
             name,
             slug
           )
         ),
-        business_features!inner (
+        business_features (
           features (
             name,
             slug
           )
+        ),
+        business_images (
+          url,
+          alt_text,
+          source,
+          is_primary,
+          sort_order
+        ),
+        reviews (
+          id,
+          reviewer_name,
+          rating,
+          review_text,
+          source,
+          review_date,
+          created_at
         )
       `)
       .eq('slug', businessSlug)
@@ -123,11 +177,29 @@ async function getBusinessData(stateSlug: string, citySlug: string, businessSlug
       return FALLBACK_BUSINESS_DATA[stateSlug]?.[citySlug]?.[businessSlug] || null
     }
 
+    // Sort images by sort_order, with primary images first
+    const sortedImages = business.business_images?.sort((a: any, b: any) => {
+      if (a.is_primary && !b.is_primary) return -1
+      if (!a.is_primary && b.is_primary) return 1
+      return (a.sort_order || 0) - (b.sort_order || 0)
+    }) || []
+
+    const citiesData = business.cities as any
+    // Sort reviews by date, most recent first
+    const sortedReviews = business.reviews?.sort((a: any, b: any) => 
+      new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+    ) || []
+
     return {
       ...business,
-      city: business.cities as any,
+      city: {
+        ...citiesData,
+        state: citiesData.states,
+      },
       services: business.business_services?.map((bs: any) => bs.services) || [],
-      features: business.business_features?.map((bf: any) => bf.features) || []
+      features: business.business_features?.map((bf: any) => bf.features) || [],
+      reviews: sortedReviews,
+      images: sortedImages
     }
   } catch (error) {
     console.error('Database error, using fallback data:', error)
@@ -150,8 +222,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const url = `https://foundationscout.com/${state}/${city}/${business}`
 
   return {
-    title: `${name} - Foundation Repair in ${cityInfo.name}, ${cityInfo.state.abbreviation} | Foundation Repair Directory`,
-    description: description || `Professional foundation repair services by ${name} in ${cityInfo.name}, ${cityInfo.state.name}. Get free estimates and expert foundation solutions.`,
+    title: `${name} — Foundation Repair in ${cityInfo.name}, ${cityInfo.state.abbreviation} | Reviews & Quotes`,
+    description: description || `${name} provides professional foundation repair in ${cityInfo.name}, ${cityInfo.state.abbreviation}. Licensed, insured. Get free estimates and read verified reviews.`,
     alternates: {
       canonical: url,
     },
@@ -179,7 +251,7 @@ export default async function BusinessPage({ params }: Props) {
     notFound()
   }
 
-  const { name, description, phone, address, rating, review_count, is_verified, year_established, website, city: cityInfo, services, features } = businessData
+  const { name, description, phone, website_url, address, latitude, longitude, rating, review_count, is_verified, year_established, city: cityInfo, services, features, reviews, images } = businessData
   
   // Generate structured data
   const breadcrumbs = [
@@ -215,9 +287,16 @@ export default async function BusinessPage({ params }: Props) {
               <div className="flex flex-col lg:flex-row gap-8 items-start">
                 {/* Business Image */}
                 <div className="w-full lg:w-64 h-48 lg:h-64 rounded-xl overflow-hidden">
-                  <div className="h-full w-full bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center">
-                    <span className="material-symbols-outlined text-8xl text-slate-400">foundation</span>
-                  </div>
+                  <BusinessImage
+                    businessId={businessData.id}
+                    businessName={name}
+                    latitude={latitude}
+                    longitude={longitude}
+                    photoReference={images?.[0]?.source === 'google_places' ? images[0].url : undefined}
+                    alt={images?.[0]?.alt_text || `${name} photo`}
+                    className="h-full w-full"
+                    size="large"
+                  />
                 </div>
                 
                 {/* Business Info */}
@@ -282,14 +361,15 @@ export default async function BusinessPage({ params }: Props) {
                         {phone}
                       </a>
                     )}
-                    {website && (
+                    {website_url && (
                       <a 
-                        href={website}
+                        href={website_url}
                         target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center justify-center rounded-lg border border-slate-300 bg-slate-50 px-4 py-4 text-slate-700 hover:bg-slate-100 transition-colors"
+                        rel="nofollow noopener noreferrer"
+                        className="flex-1 flex items-center justify-center gap-2 rounded-lg border border-slate-300 bg-slate-50 px-6 py-4 text-slate-700 font-bold hover:bg-slate-100 transition-colors"
                       >
-                        <span className="material-symbols-outlined">open_in_new</span>
+                        <span className="material-symbols-outlined text-lg">open_in_new</span>
+                        Visit Website
                       </a>
                     )}
                   </div>
@@ -334,8 +414,100 @@ export default async function BusinessPage({ params }: Props) {
           </div>
         </section>
 
+        {/* Reviews */}
+        {reviews && reviews.length > 0 && (
+          <section className="py-20 lg:py-24 bg-slate-50">
+            <div className="mx-auto max-w-7xl px-6 lg:px-10">
+              <div className="text-center mb-12">
+                <h2 className="text-3xl font-bold text-slate-900 mb-4">Customer Reviews</h2>
+                <p className="text-slate-600 text-lg">
+                  See what our customers are saying about {name}
+                </p>
+              </div>
+              
+              <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+                {reviews.slice(0, 6).map((review) => (
+                  <div 
+                    key={review.id} 
+                    className="bg-white border border-slate-200 rounded-xl shadow-sm p-6 hover:shadow-md transition-shadow"
+                  >
+                    {/* Rating */}
+                    {review.rating && (
+                      <div className="flex items-center gap-2 mb-3">
+                        <div className="flex text-amber-500">
+                          {[...Array(5)].map((_, i) => (
+                            <span 
+                              key={i} 
+                              className={`material-symbols-outlined text-lg ${
+                                i < review.rating! ? 'fill-1' : 'text-slate-300'
+                              }`}
+                            >
+                              star
+                            </span>
+                          ))}
+                        </div>
+                        <span className="text-sm text-slate-600">
+                          {review.rating}/5
+                        </span>
+                      </div>
+                    )}
+                    
+                    {/* Review Text */}
+                    <p className="text-slate-700 leading-relaxed mb-4">
+                      "{review.review_text}"
+                    </p>
+                    
+                    {/* Reviewer Info */}
+                    <div className="flex items-center justify-between pt-4 border-t border-slate-100">
+                      <div>
+                        {review.reviewer_name && (
+                          <p className="font-medium text-slate-900">
+                            {review.reviewer_name}
+                          </p>
+                        )}
+                        {review.review_date && (
+                          <p className="text-sm text-slate-500">
+                            {new Date(review.review_date).toLocaleDateString('en-US', {
+                              year: 'numeric',
+                              month: 'long',
+                              day: 'numeric'
+                            })}
+                          </p>
+                        )}
+                      </div>
+                      
+                      {/* Source Badge */}
+                      <div className="flex items-center gap-1">
+                        <span className={`px-2 py-1 text-xs font-medium rounded-full ${
+                          review.source === 'google' 
+                            ? 'bg-blue-100 text-blue-700 border border-blue-200'
+                            : review.source === 'website'
+                            ? 'bg-green-100 text-green-700 border border-green-200'
+                            : 'bg-gray-100 text-gray-700 border border-gray-200'
+                        }`}>
+                          {review.source === 'google' ? '📍 Google' : 
+                           review.source === 'website' ? '🌐 Website' : 
+                           review.source.charAt(0).toUpperCase() + review.source.slice(1)}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              
+              {reviews.length > 6 && (
+                <div className="text-center mt-8">
+                  <p className="text-slate-600">
+                    Showing {Math.min(6, reviews.length)} of {reviews.length} reviews
+                  </p>
+                </div>
+              )}
+            </div>
+          </section>
+        )}
+
         {/* Contact Information */}
-        <section className="py-20 lg:py-24 bg-slate-50">
+        <section className="py-20 lg:py-24 bg-white">
           <div className="mx-auto max-w-7xl px-6 lg:px-10">
             <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-8 lg:p-12">
               <h2 className="text-3xl font-bold text-slate-900 mb-8 text-center">Contact {name}</h2>

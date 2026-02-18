@@ -119,13 +119,7 @@ export function generateLocalBusinessSchema(business: Business, city: City) {
 
   // Add aggregateRating if business has reviews
   if (business.rating && business.review_count && business.review_count > 0) {
-    schema["aggregateRating"] = {
-      "@type": "AggregateRating",
-      "ratingValue": business.rating,
-      "reviewCount": business.review_count,
-      "bestRating": 5,
-      "worstRating": 1
-    }
+    schema["aggregateRating"] = generateAggregateRatingSchema(business.rating, business.review_count)
   }
 
   // Add license info if available
@@ -160,6 +154,19 @@ export function generateBreadcrumbSchema(breadcrumbs: Array<{name: string, url: 
 }
 
 /**
+ * Generate AggregateRating JSON-LD schema
+ */
+export function generateAggregateRatingSchema(ratingValue: number, reviewCount: number, bestRating: number = 5, worstRating: number = 1) {
+  return {
+    "@type": "AggregateRating",
+    "ratingValue": ratingValue.toString(),
+    "reviewCount": reviewCount.toString(),
+    "bestRating": bestRating.toString(),
+    "worstRating": worstRating.toString()
+  }
+}
+
+/**
  * Generate FAQ JSON-LD schema
  */
 export function generateFAQSchema(faqs: Array<{question: string, answer: string}>) {
@@ -180,31 +187,43 @@ export function generateFAQSchema(faqs: Array<{question: string, answer: string}
 /**
  * Generate Service JSON-LD schema for service pages
  */
-export function generateServiceSchema(service: Service) {
-  return {
+export function generateServiceSchema(service: Service, priceRange?: string) {
+  const schema: any = {
     "@context": "https://schema.org",
     "@type": "Service",
     "@id": `https://foundationscout.com/services/${service.slug}#Service`,
     "name": service.name,
-    "description": service.description || `Professional ${service.name.toLowerCase()} services`,
+    "description": service.description || `Professional ${service.name.toLowerCase()} services provided by licensed contractors nationwide.`,
     "url": `https://foundationscout.com/services/${service.slug}`,
-    "serviceType": "Construction",
-    "category": "Foundation Repair",
+    "serviceType": "Foundation Repair",
+    "category": "Construction",
     "provider": {
       "@type": "Organization",
-      "name": "Foundation Repair Finder",
-      "url": "https://foundationscout.com"
+      "name": "FoundationScout",
+      "url": "https://foundationscout.com",
+      "logo": "https://foundationscout.com/logo.png"
     },
     "areaServed": {
-      "@type": "Country",
+      "@type": "Country", 
       "name": "United States"
     },
-    "hasOfferCatalog": {
-      "@type": "OfferCatalog",
-      "name": `${service.name} Providers`,
-      "itemListElement": []
+    "audience": {
+      "@type": "Audience",
+      "audienceType": "homeowners"
     }
   }
+
+  // Add price range if provided
+  if (priceRange) {
+    schema["offers"] = {
+      "@type": "AggregateOffer",
+      "priceCurrency": "USD",
+      "priceRange": priceRange,
+      "availability": "https://schema.org/InStock"
+    }
+  }
+
+  return schema
 }
 
 /**

@@ -1,17 +1,28 @@
 import type { Metadata } from "next";
-import { Manrope } from "next/font/google";
+import { Manrope, DM_Serif_Display, Inter } from "next/font/google";
 import "./globals.css";
 import ConversionTracker from '@/components/ConversionTracker';
 
+// Performance optimization: Load critical fonts with font-display: swap
 const manrope = Manrope({ subsets: ["latin"] });
+const dmSerifDisplay = DM_Serif_Display({ 
+  weight: '400',
+  subsets: ["latin"],
+  display: 'swap',
+  preload: true, // Preload for hero headline LCP
+});
+const inter = Inter({ 
+  subsets: ["latin"],
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://foundationscout.com'),
   title: {
-    default: 'Foundation Repair Directory — Find Trusted Contractors Near You',
-    template: '%s | Foundation Repair Directory',
+    default: 'Find Trusted Foundation Repair Contractors Near You | Free Quotes in 24hrs',
+    template: '%s | FoundationScout',
   },
-  description: 'Compare foundation repair contractors nationwide. Get free estimates, read reviews, and find licensed professionals for pier & beam, slab, and basement repairs.',
+  description: 'Compare 12,847+ verified foundation repair contractors nationwide. Get free estimates, read reviews, and connect with licensed professionals. Average rating: 4.9/5 stars.',
   keywords: [
     'foundation repair',
     'foundation contractors',

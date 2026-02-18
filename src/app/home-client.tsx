@@ -6,6 +6,7 @@ import { useState, useEffect, useRef } from 'react'
 // ThemeToggle removed - using light mode only
 import AuthButton from '@/components/AuthButton'
 import LeadForm from '@/components/LeadForm'
+import ExpertBio from '@/components/ExpertBio'
 import { trackButtonClick, trackSearch } from '@/components/ConversionTracker'
 
 const TOP_STATES = [
@@ -37,6 +38,14 @@ export default function HomePageClient() {
   const [searchQuery, setSearchQuery] = useState('')
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [showTrustPopup, setShowTrustPopup] = useState(false)
+  const [heroImageIndex, setHeroImageIndex] = useState(0)
+  
+  const heroImages = [
+    { src: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&q=80', alt: 'Foundation repair contractor inspecting a home' },
+    { src: 'https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=800&q=80', alt: 'Professional foundation repair team at work' },
+    { src: 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=800&q=80', alt: 'Foundation crack repair with professional equipment' },
+    { src: 'https://images.unsplash.com/photo-1517581177682-a085bb7ffb15?w=800&q=80', alt: 'Basement waterproofing and drainage installation' },
+  ]
 
   const openLeadForm = (businessId?: string, businessName?: string) => {
     if (businessId && businessName) {
@@ -52,13 +61,81 @@ export default function HomePageClient() {
   const handleSearch = () => {
     if (searchQuery.trim()) {
       trackSearch(searchQuery, 'Homepage Hero')
-      // Navigate to states page with search parameter for future filtering implementation
-      router.push(`/states?q=${encodeURIComponent(searchQuery.trim())}`)
+      const query = searchQuery.trim()
+      
+      // Check if it's a ZIP code (5 digits)
+      const zipRegex = /^\d{5}(-\d{4})?$/
+      
+      if (zipRegex.test(query)) {
+        // ZIP code search - implement actual ZIP to location mapping
+        const zipToStateMapping = getStateFromZip(query)
+        if (zipToStateMapping) {
+          router.push(`/${zipToStateMapping.stateSlug}?zip=${encodeURIComponent(query)}`)
+        } else {
+          // Fallback if ZIP not found
+          router.push(`/states?q=${encodeURIComponent(query)}`)
+        }
+      } else {
+        // City/State search
+        const cityState = query.toLowerCase()
+        // Try to match against our states
+        const matchedState = TOP_STATES.find(state => 
+          cityState.includes(state.name.toLowerCase()) || 
+          cityState.includes(state.abbr.toLowerCase())
+        )
+        
+        if (matchedState) {
+          router.push(`/${matchedState.slug}?q=${encodeURIComponent(query)}`)
+        } else {
+          // General search
+          router.push(`/states?q=${encodeURIComponent(query)}`)
+        }
+      }
     } else {
       // If no search term entered, show all available states
       router.push('/states')
     }
   }
+
+  // Helper function to map ZIP codes to states (sample implementation)
+  const getStateFromZip = (zip: string) => {
+    const zipCode = zip.substring(0, 5)
+    const firstDigit = zipCode.charAt(0)
+    
+    // Basic ZIP to state mapping based on first digit
+    const zipToStateMap: { [key: string]: { stateSlug: string, stateName: string } } = {
+      '0': { stateSlug: 'massachusetts', stateName: 'Massachusetts' }, // 00-09 Northeast
+      '1': { stateSlug: 'new-york', stateName: 'New York' }, // 10-19 NY, PA, DE
+      '2': { stateSlug: 'virginia', stateName: 'Virginia' }, // 20-29 DC, MD, VA, WV
+      '3': { stateSlug: 'florida', stateName: 'Florida' }, // 30-39 Southeast
+      '4': { stateSlug: 'georgia', stateName: 'Georgia' }, // 40-49 Southeast
+      '5': { stateSlug: 'ohio', stateName: 'Ohio' }, // 50-59 Midwest
+      '6': { stateSlug: 'texas', stateName: 'Texas' }, // 60-69 Great Lakes/Plains
+      '7': { stateSlug: 'texas', stateName: 'Texas' }, // 70-79 South Central
+      '8': { stateSlug: 'california', stateName: 'California' }, // 80-89 Western
+      '9': { stateSlug: 'california', stateName: 'California' }, // 90-99 West Coast
+    }
+    
+    // Find matching state in our TOP_STATES
+    const stateMapping = zipToStateMap[firstDigit]
+    if (stateMapping) {
+      const fullStateInfo = TOP_STATES.find(state => 
+        state.slug === stateMapping.stateSlug || 
+        state.name.toLowerCase().includes(stateMapping.stateName.toLowerCase())
+      )
+      return fullStateInfo ? { stateSlug: fullStateInfo.slug, stateName: fullStateInfo.name } : stateMapping
+    }
+    
+    return null
+  }
+
+  // Hero image rotation
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setHeroImageIndex((prev) => (prev + 1) % heroImages.length)
+    }, 5000)
+    return () => clearInterval(interval)
+  }, [heroImages.length])
 
   // Scroll-triggered animations
   useEffect(() => {
@@ -99,37 +176,38 @@ export default function HomePageClient() {
   return (
     <div className="relative flex min-h-screen flex-col">
         {/* Navigation - Dark nav with fixed links */}
-        <header className="sticky top-0 z-50 w-full border-b border-slate-200 bg-[#101622]/95 backdrop-blur-md">
+        <header className="absolute top-0 left-0 right-0 z-50 w-full">
           <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-10">
             <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-white">
+              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-amber-500 text-slate-900">
                 <span className="material-symbols-outlined text-2xl">foundation</span>
               </div>
-              <span className="text-xl font-extrabold tracking-tight text-white">Foundation<span className="text-primary">Scout</span></span>
+              <span className="text-xl font-extrabold tracking-tight text-white">Foundation<span className="text-amber-400">Scout</span></span>
             </div>
             <nav className="hidden md:flex items-center gap-8">
-              <Link className="text-sm font-semibold text-slate-300 hover:text-primary transition-colors" href="/states">Find Contractors</Link>
-              <Link className="text-sm font-semibold text-slate-300 hover:text-primary transition-colors" href="/auth/signup">For Pros</Link>
-              <Link className="text-sm font-semibold text-slate-300 hover:text-primary transition-colors" href="/services">Resources</Link>
+              <Link className="text-sm font-semibold text-white hover:text-amber-400 transition-colors" href="/states">Find Contractors</Link>
+              <Link className="text-sm font-semibold text-white border border-white/30 hover:border-amber-400 hover:text-amber-400 px-4 py-1.5 rounded-lg transition-colors" href="/auth/signup">For Pros</Link>
+              <Link className="text-sm font-semibold text-white hover:text-amber-400 transition-colors" href="/services">Resources</Link>
             </nav>
             <div className="flex items-center gap-4">
               <AuthButton />
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="md:hidden flex items-center justify-center w-10 h-10 rounded-lg bg-white/10 text-white hover:bg-white/20 transition-colors"
+                className="md:hidden flex items-center justify-center w-10 h-10 rounded-lg bg-white/10 text-white hover:bg-white/20 transition-all duration-300 relative overflow-hidden group"
               >
-                <span className="material-symbols-outlined">
+                <span className={`material-symbols-outlined transition-all duration-300 ${mobileMenuOpen ? 'rotate-180 scale-90' : 'rotate-0 scale-100'}`}>
                   {mobileMenuOpen ? 'close' : 'menu'}
                 </span>
+                <div className={`absolute inset-0 bg-primary/20 rounded-lg transition-all duration-300 ${mobileMenuOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-0'}`}></div>
               </button>
             </div>
           </div>
         </header>
         
         {/* Enhanced Mobile Menu with iOS-style animation */}
-        {mobileMenuOpen && <div className="mobile-menu-backdrop fixed inset-0 z-40" onClick={() => setMobileMenuOpen(false)} />}
-        <div className={`md:hidden fixed left-0 right-0 z-50 mobile-menu ${mobileMenuOpen ? 'open' : ''}`}>
-          <div className="bg-[#101622]/95 backdrop-blur-xl border-b border-slate-700 py-8 shadow-2xl">
+        <div className={`mobile-menu-backdrop fixed inset-0 z-40 transition-all duration-300 ${mobileMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`} onClick={() => setMobileMenuOpen(false)} />
+        <div className={`md:hidden fixed left-0 right-0 z-50 mobile-menu transition-all duration-300 ease-out ${mobileMenuOpen ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'}`}>
+          <div className="bg-[#101622]/98 backdrop-blur-xl border-b border-slate-700/50 py-8 shadow-2xl">
             <div className="mx-auto max-w-7xl px-6 flex flex-col gap-6">
               <Link 
                 className="text-base font-semibold text-slate-300 hover:text-primary transition-all duration-300 py-4 px-6 rounded-xl hover:bg-white/10 transform hover:translate-x-2 hover:scale-105 mobile-touch-target" 
@@ -169,7 +247,7 @@ export default function HomePageClient() {
                     openLeadForm()
                     setMobileMenuOpen(false)
                   }}
-                  className="w-full bg-amber-500 text-white py-5 px-8 rounded-xl font-bold hover:bg-amber-600 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-amber-500/25 btn-primary relative overflow-hidden mobile-touch-target"
+                  className="w-full btn-primary py-5 px-8 mobile-touch-target"
                 >
                   <span className="relative z-10 flex items-center justify-center gap-2">
                     <span className="material-symbols-outlined">verified</span>
@@ -182,105 +260,107 @@ export default function HomePageClient() {
         </div>
         
         <main className="flex-1">
-          {/* Hero Section - With background image */}
-          <section className="relative overflow-hidden py-24 lg:py-36">
-            <div className="absolute inset-0">
-              <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1920&q=80" alt="Professional foundation repair team installing concrete piers under house" className="h-full w-full object-cover" />
-              <div className="absolute inset-0 bg-gradient-to-b from-slate-900/80 via-slate-900/70 to-slate-900/90"></div>
-            </div>
-            <div className="relative mx-auto max-w-5xl px-6 text-center">
-              <div className="inline-flex items-center gap-2 rounded-full border border-amber-400/40 bg-amber-400/15 px-4 py-1.5 mb-8 backdrop-blur-sm">
-                <span className="material-symbols-outlined text-amber-400 text-sm">verified_user</span>
-                <span className="text-xs font-bold uppercase tracking-wider text-amber-300">Certified & Licensed Networks Only</span>
-              </div>
-              <h1 className="text-4xl font-extrabold tracking-tight text-white sm:text-6xl lg:text-7xl mb-6 drop-shadow-lg">
-                Scout the Best Foundation <br className="hidden lg:block"/> Repair Pros Near You
-              </h1>
-              <p className="mx-auto max-w-2xl text-lg text-slate-200 mb-6 leading-relaxed">
-                Foundation cracks spread <strong className="text-amber-400">40% faster in winter</strong>. Don't wait — get multiple quotes from <br className="hidden sm:block"/> certified contractors in 24 hours.
-              </p>
-              {/* Trust Badges Above-the-Fold */}
-              <div className="mx-auto max-w-2xl mb-8">
-                <div className="flex items-center justify-center gap-8 text-sm text-slate-300 mb-6">
-                  <div className="flex items-center gap-2 trust-pulse">
-                    <span className="material-symbols-outlined text-blue-400 text-base">verified_user</span>
-                    <span className="font-medium">BBB A+ Rated</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="material-symbols-outlined text-green-400 text-base">security</span>
-                    <span className="font-medium">$2M+ Insured</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="material-symbols-outlined text-amber-400 text-base">workspace_premium</span>
-                    <span className="font-medium">5yr Warranty</span>
-                  </div>
-                </div>
+
+          {/* Hero Section */}
+          <section className="relative bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 overflow-hidden">
+            <div className="mx-auto max-w-7xl px-6 lg:px-10">
+              <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center pt-24 sm:pt-28 lg:pt-32 pb-12 sm:pb-16 lg:pb-20">
                 
-                {/* Urgency Indicators */}
-                <div className="flex items-center justify-center gap-6 text-sm text-slate-200 bg-slate-800/50 rounded-full px-6 py-3 backdrop-blur-sm border border-slate-700/50">
-                  <div className="flex items-center gap-2">
-                    <div className="availability-dot"></div>
-                    <span className="font-medium">127 contractors available now</span>
+                {/* Left side - Text */}
+                <div className="space-y-6 lg:space-y-8">
+                  <div className="inline-flex items-center gap-2 rounded-full bg-amber-500/10 border border-amber-500/20 px-4 py-1.5 text-sm text-amber-400 font-medium">
+                    <span className="w-2 h-2 bg-amber-400 rounded-full"></span>
+                    Licensed &bull; Insured &bull; Verified
                   </div>
-                  <div className="flex items-center gap-2">
-                    <span className="material-symbols-outlined text-amber-400 text-base">schedule</span>
-                    <span className="font-medium">Response in &lt;24hrs</span>
+
+                  <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight text-white leading-[1.08]">
+                    Don&apos;t let foundation cracks{' '}
+                    <span className="text-amber-400">destroy your home&apos;s value.</span>
+                  </h1>
+
+                  <p className="text-lg lg:text-xl text-slate-300 leading-relaxed max-w-xl">
+                    Foundation damage spreads <strong className="text-amber-400">40% faster in winter</strong>. Get matched with certified contractors in your area in 24 hours — before small cracks become major repairs.
+                  </p>
+
+                  {/* Search */}
+                  <div className="max-w-xl space-y-3">
+                    <div className="flex flex-col sm:flex-row gap-3">
+                      <div className="relative flex-1">
+                        <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">location_on</span>
+                        <input
+                          className="w-full rounded-xl border border-slate-600 bg-slate-800/80 py-4 pl-12 pr-4 text-white placeholder-slate-400 text-base focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                          placeholder="Enter your ZIP code"
+                          type="text"
+                          value={searchQuery}
+                          onChange={(e) => setSearchQuery(e.target.value)}
+                          onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+                        />
+                      </div>
+                      <button
+                        onClick={handleSearch}
+                        className="bg-amber-500 hover:bg-amber-600 active:bg-amber-700 text-slate-900 font-bold px-8 py-4 rounded-xl text-base transition-colors duration-200 flex items-center justify-center gap-2 whitespace-nowrap"
+                      >
+                        <span className="material-symbols-outlined text-xl">search</span>
+                        Get my contractor matches
+                      </button>
+                    </div>
+                    <div className="flex flex-wrap gap-4 text-sm text-slate-400">
+                      <span className="flex items-center gap-1"><span className="material-symbols-outlined text-amber-500 text-base">check_circle</span> Free quotes</span>
+                      <span className="flex items-center gap-1"><span className="material-symbols-outlined text-amber-500 text-base">check_circle</span> No obligation</span>
+                      <span className="flex items-center gap-1"><span className="material-symbols-outlined text-amber-500 text-base">check_circle</span> Takes 2 minutes</span>
+                    </div>
+                    <p className="text-xs text-amber-400/70 flex items-center gap-1">
+                      <span className="material-symbols-outlined text-sm">schedule</span>
+                      Don&apos;t wait — cracks spread fastest in cold weather
+                    </p>
+                  </div>
+
+                  {/* Stats */}
+                  <div className="flex gap-8 pt-4 border-t border-slate-700/50">
+                    <div>
+                      <div className="text-2xl font-bold text-white">12,847+</div>
+                      <div className="text-xs text-slate-400 uppercase tracking-wider">Licensed Contractors</div>
+                    </div>
+                    <div>
+                      <div className="text-2xl font-bold text-white">50</div>
+                      <div className="text-xs text-slate-400 uppercase tracking-wider">States</div>
+                    </div>
+                    <div>
+                      <div className="text-2xl font-bold text-white">4.9&#9733;</div>
+                      <div className="text-xs text-slate-400 uppercase tracking-wider">Avg Rating</div>
+                    </div>
                   </div>
                 </div>
-              </div>
-              
-              {/* Search Box */}
-              <div className="mx-auto max-w-xl">
-                <div className="flex flex-col sm:flex-row gap-3 rounded-xl bg-white p-2 border border-slate-300 shadow-lg">
-                  <div className="relative flex flex-1 items-center">
-                    <span className="material-symbols-outlined absolute left-4 text-slate-500">location_on</span>
-                    <input 
-                      className="w-full rounded-lg border-0 bg-transparent py-4 pl-12 text-slate-900 placeholder-slate-400 focus:ring-2 focus:ring-primary focus:ring-offset-2 mobile-touch-target form-input" 
-                      placeholder="Enter your ZIP code or city" 
-                      type="text"
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-                    />
+
+                {/* Right side - Rotating Images */}
+                <div className="hidden lg:block relative">
+                  <div className="relative rounded-2xl overflow-hidden shadow-2xl h-[380px]">
+                    {heroImages.map((img, i) => (
+                      <img
+                        key={img.src}
+                        src={img.src}
+                        alt={img.alt}
+                        className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${i === heroImageIndex ? 'opacity-100' : 'opacity-0'}`}
+                      />
+                    ))}
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900/40 to-transparent"></div>
                   </div>
-                  <button 
-                    onClick={handleSearch}
-                    className="flex items-center justify-center gap-2 rounded-lg bg-amber-500 px-8 py-4 text-base font-bold text-white hover:bg-amber-600 transition-all duration-200 shadow-lg shadow-amber-500/25 transform hover:scale-105 active:scale-95 btn-primary relative overflow-hidden mobile-touch-target"
-                  >
-                    <span className="relative z-10 flex items-center gap-2">
-                      <span className="material-symbols-outlined">search</span>
-                      Find Contractors
-                    </span>
-                  </button>
-                </div>
-              </div>
-              
-              {/* Trust Indicators - Direct port from Stitch */}
-              <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8">
-                <div className="flex flex-col items-center gap-1">
-                  <span className="text-2xl font-bold text-white">10,000+</span>
-                  <span className="text-xs font-medium text-slate-400 uppercase tracking-widest">Verified Pros</span>
-                </div>
-                <div className="flex flex-col items-center gap-1 border-l border-white/20">
-                  <span className="text-2xl font-bold text-white">50</span>
-                  <span className="text-xs font-medium text-slate-400 uppercase tracking-widest">States Covered</span>
-                </div>
-                <div className="flex flex-col items-center gap-1 border-l border-white/20">
-                  <span className="text-2xl font-bold text-white">2M+</span>
-                  <span className="text-xs font-medium text-slate-400 uppercase tracking-widest">Homes Saved</span>
-                </div>
-                <div className="flex flex-col items-center gap-1 border-l border-white/20">
-                  <span className="text-2xl font-bold text-white">4.9/5</span>
-                  <span className="text-xs font-medium text-slate-400 uppercase tracking-widest">User Rating</span>
+                  <div className="absolute -bottom-4 -left-6 bg-white rounded-xl shadow-xl px-5 py-4 border border-slate-100">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
+                        <span className="material-symbols-outlined text-green-600">verified</span>
+                      </div>
+                      <div>
+                        <div className="text-sm font-bold text-slate-900">Pre-screened pros</div>
+                        <div className="text-xs text-slate-500">Licensed &amp; insured only</div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-            
-            {/* Background Decoration - Direct port from Stitch */}
-            <div className="absolute -top-24 -left-24 h-96 w-96 rounded-full bg-amber-500/10 blur-[120px]"></div>
-            <div className="absolute -bottom-24 -right-24 h-96 w-96 rounded-full bg-primary/10 blur-[120px]"></div>
           </section>
-          
+
           {/* Featured Contractors - Light mode */}
           <section className="py-20 lg:py-24 bg-white">
             <div className="mx-auto max-w-7xl px-6 lg:px-10">
@@ -366,11 +446,12 @@ export default function HomePageClient() {
                     <div className="mt-auto flex gap-3">
                       <button 
                         onClick={() => openLeadForm('precision-foundation-pros', 'Precision Foundation Pros')}
-                        className="flex-1 rounded-lg bg-amber-500 py-3 text-sm font-bold text-white transition-all duration-200 hover:bg-amber-600 hover:shadow-lg hover:shadow-amber-500/25 transform hover:scale-[1.02] active:scale-95 btn-primary relative overflow-hidden"
+                        className="flex-1 btn-primary"
                       >
-                        <span className="relative z-10">Contact Now</span>
+                        <span className="material-symbols-outlined">contact_support</span>
+                        Contact Now
                       </button>
-                      <Link href="/texas/houston/precision-foundation-pros" className="flex items-center justify-center rounded-lg bg-slate-100 border border-slate-200 px-4 py-3 text-slate-600 hover:bg-slate-200 transition-colors">
+                      <Link href="/texas/houston/precision-foundation-pros" className="btn-outline">
                         <span className="material-symbols-outlined">info</span>
                       </Link>
                     </div>
@@ -441,11 +522,12 @@ export default function HomePageClient() {
                     <div className="mt-auto flex gap-3">
                       <button 
                         onClick={() => openLeadForm('solid-ground-engineering', 'Solid Ground Engineering')}
-                        className="flex-1 rounded-lg bg-amber-500 py-3 text-sm font-bold text-white transition-all duration-200 hover:bg-amber-600 hover:shadow-lg hover:shadow-amber-500/25 transform hover:scale-[1.02] active:scale-95 btn-primary relative overflow-hidden"
+                        className="flex-1 btn-primary"
                       >
-                        <span className="relative z-10">Contact Now</span>
+                        <span className="material-symbols-outlined">contact_support</span>
+                        Contact Now
                       </button>
-                      <Link href="/texas/houston/solid-ground-engineering" className="flex items-center justify-center rounded-lg bg-slate-100 border border-slate-200 px-4 py-3 text-slate-600 hover:bg-slate-200 transition-colors">
+                      <Link href="/texas/houston/solid-ground-engineering" className="btn-outline">
                         <span className="material-symbols-outlined">info</span>
                       </Link>
                     </div>
@@ -519,11 +601,12 @@ export default function HomePageClient() {
                     <div className="mt-auto flex gap-3">
                       <button 
                         onClick={() => openLeadForm('atlas-pier-specialists', 'Atlas Pier Specialists')}
-                        className="flex-1 rounded-lg bg-amber-500 py-3 text-sm font-bold text-white transition-all duration-200 hover:bg-amber-600 hover:shadow-lg hover:shadow-amber-500/25 transform hover:scale-[1.02] active:scale-95 btn-primary relative overflow-hidden"
+                        className="flex-1 btn-primary"
                       >
-                        <span className="relative z-10">Contact Now</span>
+                        <span className="material-symbols-outlined">contact_support</span>
+                        Contact Now
                       </button>
-                      <Link href="/texas/houston/atlas-pier-specialists" className="flex items-center justify-center rounded-lg bg-slate-100 border border-slate-200 px-4 py-3 text-slate-600 hover:bg-slate-200 transition-colors">
+                      <Link href="/texas/houston/atlas-pier-specialists" className="btn-outline">
                         <span className="material-symbols-outlined">info</span>
                       </Link>
                     </div>
@@ -787,6 +870,87 @@ export default function HomePageClient() {
             </div>
           </section>
           
+          {/* Expert Bio Section */}
+          <section className="py-20 lg:py-24 bg-white">
+            <div className="mx-auto max-w-7xl px-6 lg:px-10">
+              <ExpertBio />
+            </div>
+          </section>
+
+          {/* Internal Links Section - All States & Services */}
+          <section className="py-20 lg:py-24 bg-slate-50 border-y border-slate-200">
+            <div className="mx-auto max-w-7xl px-6 lg:px-10">
+              {/* All 50 States Grid */}
+              <div className="mb-16">
+                <h2 className="text-3xl font-bold text-slate-900 mb-6 text-center">Foundation Repair by State</h2>
+                <p className="text-slate-600 text-center mb-10 max-w-2xl mx-auto">
+                  Find licensed foundation repair contractors in every state. Click your state to browse local experts.
+                </p>
+                <div className="grid grid-cols-2 md:grid-cols-5 lg:grid-cols-10 gap-2 text-sm">
+                  {[
+                    { name: 'Alabama', slug: 'alabama' }, { name: 'Alaska', slug: 'alaska' }, { name: 'Arizona', slug: 'arizona' },
+                    { name: 'Arkansas', slug: 'arkansas' }, { name: 'California', slug: 'california' }, { name: 'Colorado', slug: 'colorado' },
+                    { name: 'Connecticut', slug: 'connecticut' }, { name: 'Delaware', slug: 'delaware' }, { name: 'Florida', slug: 'florida' },
+                    { name: 'Georgia', slug: 'georgia' }, { name: 'Hawaii', slug: 'hawaii' }, { name: 'Idaho', slug: 'idaho' },
+                    { name: 'Illinois', slug: 'illinois' }, { name: 'Indiana', slug: 'indiana' }, { name: 'Iowa', slug: 'iowa' },
+                    { name: 'Kansas', slug: 'kansas' }, { name: 'Kentucky', slug: 'kentucky' }, { name: 'Louisiana', slug: 'louisiana' },
+                    { name: 'Maine', slug: 'maine' }, { name: 'Maryland', slug: 'maryland' }, { name: 'Massachusetts', slug: 'massachusetts' },
+                    { name: 'Michigan', slug: 'michigan' }, { name: 'Minnesota', slug: 'minnesota' }, { name: 'Mississippi', slug: 'mississippi' },
+                    { name: 'Missouri', slug: 'missouri' }, { name: 'Montana', slug: 'montana' }, { name: 'Nebraska', slug: 'nebraska' },
+                    { name: 'Nevada', slug: 'nevada' }, { name: 'New Hampshire', slug: 'new-hampshire' }, { name: 'New Jersey', slug: 'new-jersey' },
+                    { name: 'New Mexico', slug: 'new-mexico' }, { name: 'New York', slug: 'new-york' }, { name: 'North Carolina', slug: 'north-carolina' },
+                    { name: 'North Dakota', slug: 'north-dakota' }, { name: 'Ohio', slug: 'ohio' }, { name: 'Oklahoma', slug: 'oklahoma' },
+                    { name: 'Oregon', slug: 'oregon' }, { name: 'Pennsylvania', slug: 'pennsylvania' }, { name: 'Rhode Island', slug: 'rhode-island' },
+                    { name: 'South Carolina', slug: 'south-carolina' }, { name: 'South Dakota', slug: 'south-dakota' }, { name: 'Tennessee', slug: 'tennessee' },
+                    { name: 'Texas', slug: 'texas' }, { name: 'Utah', slug: 'utah' }, { name: 'Vermont', slug: 'vermont' },
+                    { name: 'Virginia', slug: 'virginia' }, { name: 'Washington', slug: 'washington' }, { name: 'West Virginia', slug: 'west-virginia' },
+                    { name: 'Wisconsin', slug: 'wisconsin' }, { name: 'Wyoming', slug: 'wyoming' }
+                  ].map((state) => (
+                    <Link
+                      key={state.slug}
+                      href={`/${state.slug}`}
+                      className="text-center p-3 bg-white border border-slate-200 rounded-lg hover:bg-amber-50 hover:border-amber-300 hover:text-amber-700 transition-all duration-200 font-medium"
+                    >
+                      {state.name}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+
+              {/* Major Services Grid */}
+              <div>
+                <h2 className="text-3xl font-bold text-slate-900 mb-6 text-center">Foundation Repair Services</h2>
+                <p className="text-slate-600 text-center mb-10 max-w-2xl mx-auto">
+                  Comprehensive foundation repair solutions from certified professionals.
+                </p>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                  {[
+                    { name: 'Foundation Piering', slug: 'piering', icon: 'architecture', desc: 'Steel piers and helical piers' },
+                    { name: 'Slab Repair', slug: 'slab-repair', icon: 'layers', desc: 'Concrete lifting and leveling' },
+                    { name: 'Basement Waterproofing', slug: 'waterproofing', icon: 'water_drop', desc: 'Moisture control systems' },
+                    { name: 'Crawl Space Repair', slug: 'crawl-space', icon: 'grid_guides', desc: 'Encapsulation and support' },
+                    { name: 'Crack Repair', slug: 'crack-repair', icon: 'build', desc: 'Professional crack sealing' },
+                    { name: 'House Leveling', slug: 'house-leveling', icon: 'balance', desc: 'Complete home releveling' },
+                    { name: 'Foundation Inspection', slug: 'inspection', icon: 'visibility', desc: 'Professional evaluations' },
+                    { name: 'Soil Stabilization', slug: 'soil-stabilization', icon: 'terrain', desc: 'Ground improvement' }
+                  ].map((service) => (
+                    <Link
+                      key={service.slug}
+                      href={`/services/${service.slug}`}
+                      className="bg-white border border-slate-200 rounded-xl p-6 text-center hover:bg-amber-50 hover:border-amber-300 hover:shadow-lg transition-all duration-200"
+                    >
+                      <div className="inline-flex items-center justify-center w-12 h-12 bg-amber-100 rounded-lg mb-4 text-amber-600">
+                        <span className="material-symbols-outlined text-xl">{service.icon}</span>
+                      </div>
+                      <h3 className="text-lg font-bold text-slate-900 mb-2">{service.name}</h3>
+                      <p className="text-sm text-slate-600">{service.desc}</p>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </section>
+
           {/* Urgency CTA Section - Dark Blue */}
           <section className="relative overflow-hidden py-24 lg:py-28 px-6 md:px-20 lg:px-40 bg-[#0f172a]">
             <div className="absolute inset-0 opacity-5 pointer-events-none" 

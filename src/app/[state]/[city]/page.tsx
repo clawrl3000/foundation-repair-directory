@@ -1,10 +1,11 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
-import { createClient } from '@/lib/supabase-server'
+import { supabaseAdmin } from '@/lib/supabase-admin'
 import { generateBreadcrumbSchema, jsonLdScript } from '@/lib/structured-data'
 import { notFound } from 'next/navigation'
 import StitchNav from '@/components/StitchNav'
 import StitchFooter from '@/components/StitchFooter'
+import BusinessImage from '@/components/BusinessImage'
 
 // Force dynamic rendering to avoid cookies issue during static generation
 export const dynamic = 'force-dynamic'
@@ -18,7 +19,10 @@ interface BusinessListing {
   name: string
   slug: string
   phone?: string
+  website_url?: string
   address?: string
+  latitude?: number
+  longitude?: number
   description?: string
   rating?: number
   review_count: number
@@ -26,6 +30,7 @@ interface BusinessListing {
   year_established?: number
   services: { name: string; slug: string }[]
   features: { name: string; slug: string; value: string }[]
+  images?: { url: string; alt_text?: string; source?: string }[]
 }
 
 interface CityPageData {
@@ -123,7 +128,7 @@ const FALLBACK_CITY_DATA: Record<string, Record<string, CityPageData>> = {
 
 async function getCityData(stateSlug: string, citySlug: string): Promise<CityPageData | null> {
   try {
-    const supabase = await createClient()
+    const supabase = supabaseAdmin
     
     // First get city and state info
     const { data: cityData, error: cityError } = await supabase
@@ -157,24 +162,34 @@ async function getCityData(stateSlug: string, citySlug: string): Promise<CityPag
         name,
         slug,
         phone,
+        website_url,
         address,
+        latitude,
+        longitude,
         description,
         rating,
         review_count,
         is_verified,
         year_established,
-        business_services!inner (
+        business_services (
           services (
             name,
             slug
           )
         ),
-        business_features!inner (
+        business_features (
           features (
             name,
             slug
           ),
           value
+        ),
+        business_images (
+          url,
+          alt_text,
+          source,
+          is_primary,
+          sort_order
         )
       `)
       .eq('city_id', cityData.id)
@@ -183,11 +198,21 @@ async function getCityData(stateSlug: string, citySlug: string): Promise<CityPag
       .order('rating', { ascending: false })
       .limit(20)
 
-    const formattedBusinesses = businesses?.map((biz: any) => ({
-      ...biz,
-      services: biz.business_services?.map((bs: any) => bs.services) || [],
-      features: biz.business_features?.map((bf: any) => ({ ...bf.features, value: bf.value })) || []
-    })) || []
+    const formattedBusinesses = businesses?.map((biz: any) => {
+      // Sort images by sort_order, with primary images first
+      const sortedImages = biz.business_images?.sort((a: any, b: any) => {
+        if (a.is_primary && !b.is_primary) return -1
+        if (!a.is_primary && b.is_primary) return 1
+        return (a.sort_order || 0) - (b.sort_order || 0)
+      }) || []
+
+      return {
+        ...biz,
+        services: biz.business_services?.map((bs: any) => bs.services) || [],
+        features: biz.business_features?.map((bf: any) => ({ ...bf.features, value: bf.value })) || [],
+        images: sortedImages
+      }
+    }) || []
 
     return {
       city: cityData,
@@ -234,8 +259,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const url = `https://foundationscout.com/${state}/${city}`
 
   return {
-    title: `${cityInfo.name} Foundation Repair Contractors | Foundation Repair Directory`,
-    description: `Find top-rated foundation repair contractors in ${cityInfo.name}, ${stateInfo.abbreviation}. Compare local experts, verified reviews, and get free estimates. Licensed professionals for pier & beam, slab, basement repairs.`,
+    title: `${cityInfo.name}, ${stateInfo.abbreviation} Foundation Repair — Compare Top-Rated Contractors`,
+    description: `Find verified foundation repair contractors in ${cityInfo.name}, ${stateInfo.abbreviation}. Compare ratings, read reviews, get free quotes. Licensed professionals for pier & beam, slab, basement repairs.`,
     alternates: {
       canonical: url,
     },
@@ -334,11 +359,18 @@ export default async function CityPage({ params }: Props) {
                     href={`/${state}/${city}/${business.slug}`}
                     className="bg-white border border-slate-200 rounded-xl shadow-sm group flex flex-col lg:flex-row overflow-hidden transition-all hover:-translate-y-1 hover:shadow-lg hover:border-amber-300"
                   >
-                    {/* Business Image Placeholder */}
+                    {/* Business Image */}
                     <div className="relative h-48 lg:h-auto lg:w-64 overflow-hidden">
-                      <div className="h-full w-full bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center">
-                        <span className="material-symbols-outlined text-6xl text-slate-400">foundation</span>
-                      </div>
+                      <BusinessImage
+                        businessId={business.id}
+                        businessName={business.name}
+                        latitude={business.latitude}
+                        longitude={business.longitude}
+                        photoReference={business.images?.[0]?.source === 'google_places' ? business.images[0].url : undefined}
+                        alt={business.images?.[0]?.alt_text || `${business.name} photo`}
+                        className="h-full w-full"
+                        size="medium"
+                      />
                       {business.is_verified && (
                         <div className="absolute top-4 right-4 rounded-full bg-green-100 backdrop-blur px-3 py-1 text-[10px] font-black uppercase text-green-700 border border-green-300">
                           Verified Pro
@@ -413,6 +445,17 @@ export default async function CityPage({ params }: Props) {
                             className="flex-1 text-center border border-blue-500 text-blue-600 px-6 py-3 rounded-lg text-base font-bold hover:bg-blue-50 transition-colors"
                           >
                             {business.phone}
+                          </a>
+                        )}
+                        {business.website_url && (
+                          <a 
+                            href={business.website_url}
+                            target="_blank"
+                            rel="nofollow noopener noreferrer"
+                            className="flex items-center justify-center rounded-lg border border-slate-300 bg-slate-50 px-4 py-3 text-slate-700 hover:bg-slate-100 transition-colors"
+                            title="Visit website"
+                          >
+                            <span className="material-symbols-outlined">open_in_new</span>
                           </a>
                         )}
                         <button className="flex items-center justify-center rounded-lg border border-slate-300 bg-slate-50 px-4 py-3 text-slate-700 hover:bg-slate-100 transition-colors">

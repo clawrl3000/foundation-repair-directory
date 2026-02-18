@@ -1,9 +1,10 @@
 import { Metadata } from 'next'
 import HomePageClient from './home-client'
+import { generateFAQSchema, jsonLdScript } from '@/lib/structured-data'
 
 export const metadata: Metadata = {
-  title: 'Foundation Repair Directory — Find Trusted Contractors Near You',
-  description: 'Compare foundation repair contractors nationwide. Get free estimates, read reviews, and find licensed professionals for pier & beam, slab, and basement repairs.',
+  title: 'Find Trusted Foundation Repair Contractors Near You | Free Quotes in 24hrs',
+  description: 'Compare 12,847+ verified foundation repair contractors nationwide. Get free estimates, read reviews, and connect with licensed professionals. Average rating: 4.9/5 stars.',
   alternates: {
     canonical: 'https://foundationscout.com',
   },
@@ -23,9 +24,41 @@ export const metadata: Metadata = {
 }
 
 export default function HomePage() {
+  // FAQ data for schema markup
+  const faqs = [
+    {
+      question: "How much does foundation repair cost?",
+      answer: "Foundation repair costs typically range from $3,500 to $15,000 depending on the type and severity of damage. Minor crack repairs may cost $300-$2,000, while major structural repairs like piering can cost $8,000-$45,000. Factors include foundation type, soil conditions, extent of damage, and local labor rates."
+    },
+    {
+      question: "How do I know if my foundation needs repair?",
+      answer: "Common signs include: cracks in walls or ceilings, doors and windows that stick, uneven or sagging floors, gaps between walls and ceiling/floor, cracks in the foundation itself, water intrusion in basements, and visible settling or tilting. Schedule a professional inspection if you notice multiple warning signs."
+    },
+    {
+      question: "What are signs of foundation problems?",
+      answer: "Key warning signs include: hairline or stair-step cracks in walls, horizontal cracks in foundation walls, doors and windows that don't close properly, sloping or uneven floors, gaps around window frames or exterior doors, water damage or moisture in basements, and nail pops in drywall."
+    },
+    {
+      question: "How long does foundation repair take?",
+      answer: "Most foundation repairs take 1-5 days to complete. Minor crack repairs can be finished in a few hours, while major pier installations may take 3-7 days depending on the number of piers needed. Weather conditions, accessibility, and permit requirements can affect timelines."
+    },
+    {
+      question: "Does homeowners insurance cover foundation repair?",
+      answer: "Standard homeowners insurance typically does NOT cover foundation repair caused by settling, soil movement, or normal wear. However, sudden damage from covered perils like burst pipes or natural disasters may be covered. Check your specific policy and consider separate foundation coverage if available in your area."
+    }
+  ]
+
+  const faqSchema = generateFAQSchema(faqs)
+
   return (
     <div className="bg-white font-display text-slate-900 antialiased overflow-x-hidden">
       <HomePageClient />
+      
+      {/* FAQ Schema */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={jsonLdScript(faqSchema)}
+      />
     </div>
   )
 }

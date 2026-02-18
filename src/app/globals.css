@@ -1,7 +1,32 @@
+/* Google Fonts - Font Pairing for Authority with Performance */
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600;700;800&display=swap') layer(fonts);
+
 @import "tailwindcss";
 
-/* CSS Variables */
+/* Critical inline hero styles for LCP optimization */
+.hero-critical {
+  min-height: 100svh;
+  min-height: 100vh; /* Fallback */
+}
+
+@supports (height: 100svh) {
+  .hero-critical {
+    min-height: 100svh;
+  }
+}
+
+/* Font loading optimization */
+@font-face {
+  font-family: 'DM Serif Display';
+  font-display: swap;
+  src: url('https://fonts.gstatic.com/s/dmserifDisplay/v15/-nFnOHM81r4j6k0gjAW3mujVU2B2K_3p0Q.woff2') format('woff2');
+  font-weight: 400;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* CSS Variables - 60/30/10 Color System */
 :root {
+  /* Legacy colors */
   --primary: #1152d4;
   --amber-accent: #f59e0b;
   --trust-blue: #1e40af;
@@ -10,9 +35,238 @@
   --urgency-red: #dc2626;
   --urgency-orange: #ea580c;
   --premium-gold: #d97706;
+  
+  /* 60/30/10 System */
+  --dominant-900: #0f0e0a;
+  --dominant-800: #1c1815;
+  --dominant-700: #2d2722;
+  --secondary-100: #faf9f7;
+  --secondary-200: #f1f0ec;
+  --secondary-300: #e6e4df;
+  --accent-500: #f59e0b;
+  --accent-600: #d97706;
+  --accent-700: #b45309;
+  
+  /* Animation curves */
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-out-smooth: cubic-bezier(0.33, 1, 0.68, 1);
   --ease-bounce: cubic-bezier(0.68, -0.6, 0.32, 1.6);
+}
+
+/* Atmospheric Effects */
+
+/* Subtle grain overlay for tactile warmth */
+.grain-overlay {
+  position: relative;
+}
+
+.grain-overlay::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.06;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Gradient mesh background */
+.gradient-mesh {
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(217, 119, 6, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(120, 53, 15, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(45, 39, 34, 0.8) 0%, transparent 50%),
+    linear-gradient(135deg, #0f0e0a 0%, #1c1815 50%, #2d2722 100%);
+}
+
+/* Layered shadows system */
+.shadow-layered-sm {
+  box-shadow: 
+    0 1px 3px rgba(0, 0, 0, 0.12),
+    0 1px 2px rgba(0, 0, 0, 0.24),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+.shadow-layered {
+  box-shadow: 
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06),
+    0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+.shadow-layered-lg {
+  box-shadow: 
+    0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05),
+    0 20px 25px -5px rgba(0, 0, 0, 0.15),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+/* ENTRANCE ANIMATION SYSTEM - Staggered narrative sequence */
+/* Easing: cubic-bezier(0.16, 1, 0.3, 1) - Ease out expo */
+:root {
+  --entrance-ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Default: Elements are hidden until animation triggers */
+.entrance-fade { opacity: 0; }
+.entrance-slide-up { 
+  opacity: 0; 
+  transform: translateY(30px);
+}
+.entrance-scale { 
+  opacity: 0; 
+  transform: scale(0.8);
+}
+
+/* Animation classes - GPU composited (opacity + transform only) */
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
+@keyframes slideUpFade {
+  to { 
+    opacity: 1; 
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleInFade {
+  to { 
+    opacity: 1; 
+    transform: scale(1);
+  }
+}
+
+/* Staggered entrance sequence - Total < 1.2s */
+.entrance-bg {
+  animation: fadeIn 0.4s var(--entrance-ease) forwards;
+}
+
+.entrance-headline {
+  animation: slideUpFade 0.6s var(--entrance-ease) 0.1s forwards;
+}
+
+.entrance-subhead {
+  animation: fadeIn 0.4s var(--entrance-ease) 0.3s forwards;
+}
+
+.entrance-cta {
+  animation: scaleInFade 0.5s var(--entrance-ease) 0.5s forwards;
+}
+
+.entrance-supporting {
+  animation: fadeIn 0.4s var(--entrance-ease) 0.7s forwards;
+}
+
+/* Respect user preferences */
+@media (prefers-reduced-motion: reduce) {
+  .entrance-fade,
+  .entrance-slide-up,
+  .entrance-scale,
+  .entrance-bg,
+  .entrance-headline,
+  .entrance-subhead,
+  .entrance-cta,
+  .entrance-supporting {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* CTA Hover Effects - Scale + shadow + color shift */
+.cta-primary {
+  transition: all 0.2s var(--entrance-ease);
+  will-change: transform, box-shadow, background-color;
+}
+
+.cta-primary:hover {
+  transform: scale(1.03);
+  box-shadow: 
+    0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05),
+    0 20px 25px -5px rgba(245, 158, 11, 0.25);
+}
+
+.cta-primary:active {
+  transform: scale(0.98);
+}
+
+/* Performance: GPU layer promotion for animated elements */
+.entrance-headline,
+.entrance-cta,
+.cta-primary {
+  will-change: transform, opacity;
+}
+
+/* Mobile-optimized breakpoints - 375px+ compatibility */
+@media (max-width: 767px) {
+  /* Remove decorative elements on mobile */
+  .mobile-hide { display: none !important; }
+  
+  /* Full-width CTA on mobile */
+  .mobile-full-width { width: 100% !important; }
+  
+  /* Stack everything vertically */
+  .mobile-stack {
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem !important;
+  }
+  
+  /* Mobile headline optimization - ensure readability */
+  .mobile-headline {
+    font-size: 2rem !important; /* 32px */
+    line-height: 1.1 !important;
+    letter-spacing: -0.025em !important;
+    word-wrap: break-word;
+    hyphens: auto;
+  }
+  
+  /* Ensure no horizontal overflow at 375px */
+  .hero-critical {
+    overflow-x: hidden;
+  }
+  
+  /* Tighter mobile spacing */
+  .mobile-tight-spacing {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+}
+
+/* Ultra-small screens (iPhone SE, etc.) */
+@media (max-width: 374px) {
+  .mobile-headline {
+    font-size: 1.75rem !important; /* 28px */
+  }
+  
+  .mobile-tight-spacing {
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  /* Tablet optimizations */
+  .tablet-headline {
+    font-size: 2.5rem; /* 40px */
+  }
+}
+
+@media (min-width: 1024px) and (max-width: 1439px) {
+  /* Desktop optimizations */
+  .desktop-headline {
+    font-size: 3.5rem; /* 56px */
+  }
+}
+
+@media (min-width: 1440px) {
+  /* Wide screen: prevent over-stretching */
+  .wide-container {
+    max-width: 1440px !important;
+  }
 }
 
 /* Material Symbols */
@@ -142,7 +396,9 @@
   box-shadow: 0 0 30px rgba(17, 82, 212, 0.3);
 }
 
-/* Enhanced Button hover effects with gradients and psychology */
+/* Standardized Button Hierarchy System */
+
+/* Primary CTA Buttons - Most important actions */
 .btn-primary {
   position: relative;
   overflow: hidden;
@@ -150,12 +406,27 @@
   box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
   transform: translateY(0);
   transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  border: none;
+  color: white;
+  font-weight: 700;
+  border-radius: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.875rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
 }
 
 .btn-primary:hover {
   background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
   box-shadow: 0 6px 20px rgba(245, 158, 11, 0.6);
   transform: translateY(-2px);
+}
+
+.btn-primary:active {
+  transform: translateY(0) scale(0.98);
 }
 
 .btn-primary::before {
@@ -171,6 +442,90 @@
 
 .btn-primary:hover::before {
   left: 100%;
+}
+
+/* Secondary Buttons - Supporting actions */
+.btn-secondary {
+  position: relative;
+  background: transparent;
+  border: 2px solid #e2e8f0;
+  color: #64748b;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.875rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.btn-secondary:hover {
+  border-color: #1152d4;
+  color: #1152d4;
+  background: rgba(17, 82, 212, 0.05);
+  transform: translateY(-1px);
+}
+
+.btn-secondary:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* Outline Buttons - Subtle actions */
+.btn-outline {
+  position: relative;
+  background: transparent;
+  border: 1px solid #cbd5e1;
+  color: #475569;
+  font-weight: 500;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
+  transition: all 0.2s ease;
+}
+
+.btn-outline:hover {
+  border-color: #94a3b8;
+  background: #f8fafc;
+  color: #334155;
+}
+
+.btn-outline:active {
+  transform: scale(0.98);
+}
+
+/* Ghost Buttons - Minimal styling */
+.btn-ghost {
+  position: relative;
+  background: transparent;
+  border: none;
+  color: #64748b;
+  font-weight: 500;
+  border-radius: 0.375rem;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
+  transition: all 0.2s ease;
+}
+
+.btn-ghost:hover {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+.btn-ghost:active {
+  transform: scale(0.96);
 }
 
 /* Trust/Security buttons (blue psychology) */
@@ -298,21 +653,16 @@
     justify-content: center;
   }
   
-  /* Mobile menu improvements */
+  /* Enhanced mobile menu animations */
   .mobile-menu {
-    transform: translateY(-100%);
-    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     backdrop-filter: blur(20px);
-  }
-  
-  .mobile-menu.open {
-    transform: translateY(0);
+    will-change: transform, opacity;
   }
   
   .mobile-menu-backdrop {
-    background: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(8px);
-    transition: opacity 0.3s ease;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(12px);
+    will-change: opacity;
   }
   
   /* Trust badges mobile layout */

@@ -1,9 +1,5 @@
 import { MetadataRoute } from 'next'
-import { createClient } from '@supabase/supabase-js'
-
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-const supabase = createClient(supabaseUrl, supabaseKey)
+import { supabaseAdmin as supabase } from '@/lib/supabase-admin'
 
 const SERVICES = [
   { slug: 'foundation-repair', lastModified: '2026-02-17' },

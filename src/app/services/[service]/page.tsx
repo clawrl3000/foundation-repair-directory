@@ -3,6 +3,8 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import StitchNav from '@/components/StitchNav'
 import StitchFooter from '@/components/StitchFooter'
+import { generateServiceSchema, jsonLdScript } from '@/lib/structured-data'
+import ExpertBio from '@/components/ExpertBio'
 
 interface Props {
   params: Promise<{ service: string }>
@@ -37,7 +39,7 @@ const SERVICES_DATA = {
     ]
   },
   'slab-repair': {
-    name: 'Slab Foundation Repair', 
+    name: 'Slab Foundation Repair',
     description: 'Expert slab foundation repair including slab jacking, polyurethane injection, and concrete crack repair.',
     icon: 'layers',
     longDescription: 'Slab foundation problems can cause uneven floors, cracks in walls, and doors that won\'t close properly. Our contractors specialize in slab lifting, crack repair, and permanent slab stabilization.',
@@ -71,7 +73,7 @@ const SERVICES_DATA = {
     benefits: [
       'Prevents basement flooding',
       'Eliminates mold and mildew',
-      'Protects foundation integrity', 
+      'Protects foundation integrity',
       'Improves indoor air quality',
       'Increases home value'
     ],
@@ -93,7 +95,7 @@ const SERVICES_DATA = {
   'crawl-space': {
     name: 'Crawl Space Repair',
     description: 'Crawl space encapsulation, support beam repair, and moisture control systems.',
-    icon: 'grid_guides', 
+    icon: 'grid_guides',
     longDescription: 'Crawl space problems can affect your entire home. We provide crawl space encapsulation, support beam reinforcement, and moisture control to create a healthy, stable foundation.',
     benefits: [
       'Eliminates musty odors',
@@ -176,7 +178,7 @@ const SERVICES_DATA = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { service } = await params
   const serviceData = SERVICES_DATA[service as keyof typeof SERVICES_DATA]
-  
+
   if (!serviceData) {
     return {
       title: 'Service Not Found',
@@ -185,7 +187,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   const url = `https://foundationscout.com/services/${service}`
-  
+
   return {
     title: `${serviceData.name} Services | Foundation Repair Directory`,
     description: serviceData.description,
@@ -216,10 +218,17 @@ export default async function ServicePage({ params }: Props) {
     notFound()
   }
 
+  // Generate service schema
+  const serviceSchema = generateServiceSchema({
+    name: serviceData.name,
+    slug: service,
+    description: serviceData.longDescription
+  })
+
   return (
     <div className="relative flex min-h-screen flex-col bg-white font-display text-slate-900 antialiased overflow-x-hidden">
       <StitchNav />
-      
+
       {/* Breadcrumbs */}
       <nav className="border-b border-slate-200 bg-slate-50 px-6 py-4">
         <div className="max-w-7xl mx-auto flex items-center gap-2 text-sm text-slate-600">
@@ -336,7 +345,7 @@ export default async function ServicePage({ params }: Props) {
             <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-8 lg:p-12 text-center">
               <h2 className="text-3xl font-bold text-slate-900 mb-6">Ready to Get Started?</h2>
               <p className="text-slate-600 text-lg mb-8 max-w-2xl mx-auto">
-                Connect with certified {serviceData.name.toLowerCase()} contractors in your area. 
+                Connect with certified {serviceData.name.toLowerCase()} contractors in your area.
                 Get free estimates and compare services from top-rated professionals.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -361,46 +370,45 @@ export default async function ServicePage({ params }: Props) {
       {/* JSON-LD Schema */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify([
-            {
-              "@context": "https://schema.org",
-              "@type": "BreadcrumbList",
-              "itemListElement": [
-                {
-                  "@type": "ListItem",
-                  "position": 1,
-                  "name": "Home",
-                  "item": "https://foundationscout.com"
-                },
-                {
-                  "@type": "ListItem", 
-                  "position": 2,
-                  "name": "Services",
-                  "item": "https://foundationscout.com/services"
-                },
-                {
-                  "@type": "ListItem",
-                  "position": 3,
-                  "name": serviceData.name,
-                  "item": `https://foundationscout.com/services/${service}`
-                }
-              ]
-            },
-            {
-              "@context": "https://schema.org",
-              "@type": "FAQPage",
-              "mainEntity": serviceData.faqs.map(faq => ({
-                "@type": "Question",
-                "name": faq.question,
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": faq.answer
-                }
-              }))
-            }
-          ]),
-        }}
+        dangerouslySetInnerHTML={jsonLdScript([
+          {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://foundationscout.com"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Services",
+                "item": "https://foundationscout.com/services"
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": serviceData.name,
+                "item": `https://foundationscout.com/services/${service}`
+              }
+            ]
+          },
+          serviceSchema,
+          {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": serviceData.faqs.map(faq => ({
+              "@type": "Question",
+              "name": faq.question,
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": faq.answer
+              }
+            }))
+          }
+        ])}
       />
     </div>
   )

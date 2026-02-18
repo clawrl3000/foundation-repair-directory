@@ -1,0 +1,114 @@
+2026-02-18 10:08:35,275 - WARNING - No ANTHROPIC_API_KEY found - will use rule-based extraction
+2026-02-18 10:08:35,275 - INFO - Starting Foundation Scout Business Data Scraper
+2026-02-18 10:08:35,518 - INFO - HTTP Request: GET https://hocipkeeikriqyojiboj.supabase.co/rest/v1/states?select=id&abbreviation=eq.TX "HTTP/2 200 OK"
+2026-02-18 10:08:35,623 - INFO - HTTP Request: GET https://hocipkeeikriqyojiboj.supabase.co/rest/v1/businesses?select=id%2Cname%2Cslug%2Cwebsite_url&state_id=eq.43&website_url=not.is.null "HTTP/2 200 OK"
+2026-02-18 10:08:35,636 - INFO - Found 31 Texas businesses with websites
+2026-02-18 10:08:35,637 - INFO - Limited to first 2 businesses
+2026-02-18 10:08:35,637 - INFO - 
+Processing 1/2: Advanced Foundation Repair Austin
+2026-02-18 10:08:35,637 - INFO - 
+============================================================
+2026-02-18 10:08:35,637 - INFO - Processing: Advanced Foundation Repair Austin
+2026-02-18 10:08:35,637 - INFO - Website: https://foundationrepairs.com/texas/austin-foundation-repair/
+2026-02-18 10:08:35,637 - INFO - Scraping: https://foundationrepairs.com/texas/austin-foundation-repair/
+2026-02-18 10:08:35,946 - INFO - Extracted 4226 characters from https://foundationrepairs.com/texas/austin-foundation-repair/
+2026-02-18 10:08:35,946 - INFO - Rule-based extracted: 2 services, 0 features, 0 reviews
+2026-02-18 10:08:35,946 - INFO - 
+Processing 2/2: Quality Foundation Repair
+2026-02-18 10:08:35,946 - INFO - 
+============================================================
+2026-02-18 10:08:35,946 - INFO - Processing: Quality Foundation Repair
+2026-02-18 10:08:35,946 - INFO - Website: https://qualityfoundationrepairaustin.com/
+2026-02-18 10:08:35,947 - INFO - Scraping: https://qualityfoundationrepairaustin.com/
+2026-02-18 10:08:36,283 - INFO - Extracted 5485 characters from https://qualityfoundationrepairaustin.com/
+2026-02-18 10:08:36,283 - INFO - Rule-based extracted: 5 services, 1 features, 0 reviews
+2026-02-18 10:08:36,284 - INFO - 
+============================================================
+2026-02-18 10:08:36,284 - INFO - SCRAPING COMPLETE
+2026-02-18 10:08:36,284 - INFO - Successful: 2
+2026-02-18 10:08:36,284 - INFO - Failed: 0
+2026-02-18 10:08:36,284 - INFO - Total: 2
+2026-02-18 10:08:50,236 - WARNING - No ANTHROPIC_API_KEY found - will use rule-based extraction
+2026-02-18 10:08:50,237 - INFO - Starting Foundation Scout Business Data Scraper
+2026-02-18 10:08:50,426 - INFO - HTTP Request: GET https://hocipkeeikriqyojiboj.supabase.co/rest/v1/states?select=id&abbreviation=eq.TX "HTTP/2 200 OK"
+2026-02-18 10:08:50,531 - INFO - HTTP Request: GET https://hocipkeeikriqyojiboj.supabase.co/rest/v1/businesses?select=id%2Cname%2Cslug%2Cwebsite_url&state_id=eq.43&website_url=not.is.null "HTTP/2 200 OK"
+2026-02-18 10:08:50,532 - INFO - Found 31 Texas businesses with websites
+2026-02-18 10:08:50,532 - INFO - Limited to first 3 businesses
+2026-02-18 10:08:50,532 - INFO - 
+Processing 1/3: Advanced Foundation Repair Austin
+2026-02-18 10:08:50,533 - INFO - 
+============================================================
+2026-02-18 10:08:50,533 - INFO - Processing: Advanced Foundation Repair Austin
+2026-02-18 10:08:50,533 - INFO - Website: https://foundationrepairs.com/texas/austin-foundation-repair/
+2026-02-18 10:08:50,533 - INFO - Scraping: https://foundationrepairs.com/texas/austin-foundation-repair/
+2026-02-18 10:08:50,805 - INFO - Extracted 4226 characters from https://foundationrepairs.com/texas/austin-foundation-repair/
+2026-02-18 10:08:50,806 - INFO - Rule-based extracted: 2 services, 0 features, 0 reviews
+2026-02-18 10:08:50,881 - INFO - HTTP Request: GET https://hocipkeeikriqyojiboj.supabase.co/rest/v1/services?select=id&name=eq.Foundation+Repair "HTTP/2 200 OK"
+2026-02-18 10:08:51,001 - INFO - HTTP Request: POST https://hocipkeeikriqyojiboj.supabase.co/rest/v1/business_services "HTTP/2 201 Created"
+2026-02-18 10:08:51,090 - INFO - HTTP Request: GET https://hocipkeeikriqyojiboj.supabase.co/rest/v1/services?select=id&name=eq.Drainage "HTTP/2 200 OK"
+2026-02-18 10:08:51,207 - INFO - HTTP Request: POST https://hocipkeeikriqyojiboj.supabase.co/rest/v1/services "HTTP/2 201 Created"
+2026-02-18 10:08:51,334 - INFO - HTTP Request: POST https://hocipkeeikriqyojiboj.supabase.co/rest/v1/business_services "HTTP/2 201 Created"
+2026-02-18 10:08:51,352 - INFO - Saved data for business a38545aa-ce32-42a2-86ba-1daafc742523
+2026-02-18 10:08:53,354 - INFO - 
+Processing 2/3: Quality Foundation Repair
+2026-02-18 10:08:53,354 - INFO - 
+============================================================
+2026-02-18 10:08:53,354 - INFO - Processing: Quality Foundation Repair
+2026-02-18 10:08:53,354 - INFO - Website: https://qualityfoundationrepairaustin.com/
+2026-02-18 10:08:53,354 - INFO - Scraping: https://qualityfoundationrepairaustin.com/
+2026-02-18 10:08:53,669 - INFO - Extracted 5485 characters from https://qualityfoundationrepairaustin.com/
+2026-02-18 10:08:53,669 - INFO - Rule-based extracted: 5 services, 1 features, 0 reviews
+2026-02-18 10:08:53,738 - INFO - HTTP Request: GET https://hocipkeeikriqyojiboj.supabase.co/rest/v1/services?select=id&name=eq.Pier+And+Beam+Repair "HTTP/2 200 OK"
+2026-02-18 10:08:53,832 - INFO - HTTP Request: POST https://hocipkeeikriqyojiboj.supabase.co/rest/v1/services "HTTP/2 409 Conflict"
+2026-02-18 10:08:53,848 - ERROR - Error saving service Pier And Beam Repair: {'message': 'duplicate key value violates unique constraint "services_slug_key"', 'code': '23505', 'hint': None, 'details': 'Key (slug)=(pier-and-beam-repair) already exists.'}
+2026-02-18 10:08:53,917 - INFO - HTTP Request: GET https://hocipkeeikriqyojiboj.supabase.co/rest/v1/services?select=id&name=eq.Foundation+Repair "HTTP/2 200 OK"
+2026-02-18 10:08:53,980 - INFO - HTTP Request: POST https://hocipkeeikriqyojiboj.supabase.co/rest/v1/business_services "HTTP/2 201 Created"
+2026-02-18 10:08:54,054 - INFO - HTTP Request: GET https://hocipkeeikriqyojiboj.supabase.co/rest/v1/services?select=id&name=eq.House+Leveling "HTTP/2 200 OK"
+2026-02-18 10:08:54,135 - INFO - HTTP Request: POST https://hocipkeeikriqyojiboj.supabase.co/rest/v1/business_services "HTTP/2 201 Created"
+2026-02-18 10:08:54,202 - INFO - HTTP Request: GET https://hocipkeeikriqyojiboj.supabase.co/rest/v1/services?select=id&name=eq.Underpinning "HTTP/2 200 OK"
+2026-02-18 10:08:54,291 - INFO - HTTP Request: POST https://hocipkeeikriqyojiboj.supabase.co/rest/v1/business_services "HTTP/2 201 Created"
+2026-02-18 10:08:54,367 - INFO - HTTP Request: GET https://hocipkeeikriqyojiboj.supabase.co/rest/v1/services?select=id&name=eq.Crawl+Space "HTTP/2 200 OK"
+2026-02-18 10:08:54,469 - INFO - HTTP Request: POST https://hocipkeeikriqyojiboj.supabase.co/rest/v1/services "HTTP/2 201 Created"
+2026-02-18 10:08:54,583 - INFO - HTTP Request: POST https://hocipkeeikriqyojiboj.supabase.co/rest/v1/business_services "HTTP/2 201 Created"
+2026-02-18 10:08:54,655 - INFO - HTTP Request: GET https://hocipkeeikriqyojiboj.supabase.co/rest/v1/features?select=id&name=eq.Free+Estimate "HTTP/2 200 OK"
+2026-02-18 10:08:54,727 - INFO - HTTP Request: POST https://hocipkeeikriqyojiboj.supabase.co/rest/v1/features "HTTP/2 201 Created"
+2026-02-18 10:08:54,847 - INFO - HTTP Request: POST https://hocipkeeikriqyojiboj.supabase.co/rest/v1/business_features "HTTP/2 201 Created"
+2026-02-18 10:08:54,864 - INFO - Saved data for business 557420cf-7cb6-4162-9a66-3fe31c911bb5
+2026-02-18 10:08:56,926 - INFO - 
+Processing 3/3: Total Foundation Repair Austin
+2026-02-18 10:08:56,926 - INFO - 
+============================================================
+2026-02-18 10:08:56,926 - INFO - Processing: Total Foundation Repair Austin
+2026-02-18 10:08:56,926 - INFO - Website: https://totalfoundationrepairaustin.com/
+2026-02-18 10:08:56,926 - INFO - Scraping: https://totalfoundationrepairaustin.com/
+2026-02-18 10:08:57,463 - INFO - Extracted 8003 characters from https://totalfoundationrepairaustin.com/
+2026-02-18 10:08:57,463 - INFO - Rule-based extracted: 8 services, 1 features, 0 reviews
+2026-02-18 10:08:57,522 - INFO - HTTP Request: GET https://hocipkeeikriqyojiboj.supabase.co/rest/v1/services?select=id&name=eq.Pier+And+Beam+Repair "HTTP/2 200 OK"
+2026-02-18 10:08:57,598 - INFO - HTTP Request: POST https://hocipkeeikriqyojiboj.supabase.co/rest/v1/services "HTTP/2 409 Conflict"
+2026-02-18 10:08:57,613 - ERROR - Error saving service Pier And Beam Repair: {'message': 'duplicate key value violates unique constraint "services_slug_key"', 'code': '23505', 'hint': None, 'details': 'Key (slug)=(pier-and-beam-repair) already exists.'}
+2026-02-18 10:08:57,671 - INFO - HTTP Request: GET https://hocipkeeikriqyojiboj.supabase.co/rest/v1/services?select=id&name=eq.Slab+Repair "HTTP/2 200 OK"
+2026-02-18 10:08:57,766 - INFO - HTTP Request: POST https://hocipkeeikriqyojiboj.supabase.co/rest/v1/services "HTTP/2 201 Created"
+2026-02-18 10:08:57,833 - INFO - HTTP Request: POST https://hocipkeeikriqyojiboj.supabase.co/rest/v1/business_services "HTTP/2 201 Created"
+2026-02-18 10:08:57,885 - INFO - HTTP Request: GET https://hocipkeeikriqyojiboj.supabase.co/rest/v1/services?select=id&name=eq.Foundation+Repair "HTTP/2 200 OK"
+2026-02-18 10:08:57,960 - INFO - HTTP Request: POST https://hocipkeeikriqyojiboj.supabase.co/rest/v1/business_services "HTTP/2 201 Created"
+2026-02-18 10:08:58,036 - INFO - HTTP Request: GET https://hocipkeeikriqyojiboj.supabase.co/rest/v1/services?select=id&name=eq.House+Leveling "HTTP/2 200 OK"
+2026-02-18 10:08:58,099 - INFO - HTTP Request: POST https://hocipkeeikriqyojiboj.supabase.co/rest/v1/business_services "HTTP/2 201 Created"
+2026-02-18 10:08:58,162 - INFO - HTTP Request: GET https://hocipkeeikriqyojiboj.supabase.co/rest/v1/services?select=id&name=eq.Foundation+Leveling "HTTP/2 200 OK"
+2026-02-18 10:08:58,219 - INFO - HTTP Request: POST https://hocipkeeikriqyojiboj.supabase.co/rest/v1/services "HTTP/2 201 Created"
+2026-02-18 10:08:58,298 - INFO - HTTP Request: POST https://hocipkeeikriqyojiboj.supabase.co/rest/v1/business_services "HTTP/2 201 Created"
+2026-02-18 10:08:58,374 - INFO - HTTP Request: GET https://hocipkeeikriqyojiboj.supabase.co/rest/v1/services?select=id&name=eq.Crack+Repair "HTTP/2 200 OK"
+2026-02-18 10:08:58,449 - INFO - HTTP Request: POST https://hocipkeeikriqyojiboj.supabase.co/rest/v1/services "HTTP/2 201 Created"
+2026-02-18 10:08:58,519 - INFO - HTTP Request: POST https://hocipkeeikriqyojiboj.supabase.co/rest/v1/business_services "HTTP/2 201 Created"
+2026-02-18 10:08:58,604 - INFO - HTTP Request: GET https://hocipkeeikriqyojiboj.supabase.co/rest/v1/services?select=id&name=eq.Basement+Waterproofing "HTTP/2 200 OK"
+2026-02-18 10:08:58,688 - INFO - HTTP Request: POST https://hocipkeeikriqyojiboj.supabase.co/rest/v1/business_services "HTTP/2 201 Created"
+2026-02-18 10:08:58,743 - INFO - HTTP Request: GET https://hocipkeeikriqyojiboj.supabase.co/rest/v1/services?select=id&name=eq.Crawl+Space "HTTP/2 200 OK"
+2026-02-18 10:08:58,806 - INFO - HTTP Request: POST https://hocipkeeikriqyojiboj.supabase.co/rest/v1/business_services "HTTP/2 201 Created"
+2026-02-18 10:08:58,884 - INFO - HTTP Request: GET https://hocipkeeikriqyojiboj.supabase.co/rest/v1/features?select=id&name=eq.Free+Estimate "HTTP/2 200 OK"
+2026-02-18 10:08:58,947 - INFO - HTTP Request: POST https://hocipkeeikriqyojiboj.supabase.co/rest/v1/business_features "HTTP/2 201 Created"
+2026-02-18 10:08:58,963 - INFO - Saved data for business 3cb5f0d1-f53d-4b91-8148-02f668f09818
+2026-02-18 10:09:00,984 - INFO - 
+============================================================
+2026-02-18 10:09:00,984 - INFO - SCRAPING COMPLETE
+2026-02-18 10:09:00,984 - INFO - Successful: 3
+2026-02-18 10:09:00,984 - INFO - Failed: 0
+2026-02-18 10:09:00,984 - INFO - Total: 3
