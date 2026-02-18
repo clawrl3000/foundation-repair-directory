@@ -161,9 +161,9 @@ export default function HomePageClient() {
                     openLeadForm()
                     setMobileMenuOpen(false)
                   }}
-                  className="w-full bg-primary text-white py-4 px-6 rounded-lg font-bold hover:bg-blue-700 transition-all duration-200 transform hover:scale-105 shadow-lg"
+                  className="w-full bg-amber-500 text-white py-4 px-6 rounded-lg font-bold hover:bg-amber-600 transition-all duration-200 transform hover:scale-105 shadow-lg btn-primary relative overflow-hidden"
                 >
-                  Get Free Estimates
+                  <span className="relative z-10">Get Free Estimates</span>
                 </button>
               </div>
             </div>
@@ -174,7 +174,7 @@ export default function HomePageClient() {
           {/* Hero Section - With background image */}
           <section className="relative overflow-hidden border-b border-slate-200 py-20 lg:py-32">
             <div className="absolute inset-0">
-              <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=1920&q=80" alt="Foundation repair specialists working on concrete foundation" className="h-full w-full object-cover" />
+              <img src="https://images.unsplash.com/photo-1631634569454-80db45f0dc56?w=1920&q=80" alt="Professional foundation repair team installing concrete piers under house" className="h-full w-full object-cover" />
               <div className="absolute inset-0 bg-white/85"></div>
             </div>
             <div className="relative mx-auto max-w-5xl px-6 text-center">
@@ -221,10 +221,12 @@ export default function HomePageClient() {
                   </div>
                   <button 
                     onClick={handleSearch}
-                    className="flex items-center justify-center gap-2 rounded-lg bg-[#f59e0b] px-8 py-4 text-base font-bold text-slate-900 hover:bg-amber-400 transition-all shadow-lg shadow-amber-400/10"
+                    className="flex items-center justify-center gap-2 rounded-lg bg-amber-500 px-8 py-4 text-base font-bold text-white hover:bg-amber-600 transition-all duration-200 shadow-lg shadow-amber-500/25 transform hover:scale-105 active:scale-95 btn-primary relative overflow-hidden"
                   >
-                    <span className="material-symbols-outlined">search</span>
-                    Find Contractors
+                    <span className="relative z-10 flex items-center gap-2">
+                      <span className="material-symbols-outlined">search</span>
+                      Find Contractors
+                    </span>
                   </button>
                 </div>
               </div>
@@ -271,12 +273,13 @@ export default function HomePageClient() {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 
                 {/* Card 1 - Light mode card */}
-                <div className="bg-white border border-slate-200 group flex flex-col rounded-xl overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-primary/10 hover-lift animate-on-scroll">
-                  <div className="relative h-48 w-full overflow-hidden">
-                    <img className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Professional foundation repair team installing concrete piers" src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&q=80"/>
+                <div className="bg-white border border-slate-200 group flex flex-col rounded-xl overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-primary/10 hover:scale-[1.02] hover-lift animate-on-scroll">
+                  <div className="relative h-48 w-full overflow-hidden image-zoom">
+                    <img className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Professional foundation repair team installing hydraulic piers under house foundation" src="https://images.unsplash.com/photo-1566834750323-76eb9dcee89d?w=800&q=80"/>
                     <div className="absolute top-4 right-4 rounded-full bg-slate-900/80 backdrop-blur px-3 py-1 text-[10px] font-black uppercase text-amber-accent border border-amber-accent/30">
                       Premium Partner
                     </div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   </div>
                   <div className="flex flex-1 flex-col p-6">
                     <div className="flex items-start justify-between mb-4">
@@ -323,9 +326,9 @@ export default function HomePageClient() {
                     <div className="mt-auto flex gap-3">
                       <button 
                         onClick={() => openLeadForm('precision-foundation-pros', 'Precision Foundation Pros')}
-                        className="flex-1 rounded-lg bg-amber-500 py-3 text-sm font-bold text-white transition-all duration-200 hover:bg-amber-600 hover:shadow-lg transform hover:scale-105 active:scale-95 btn-primary"
+                        className="flex-1 rounded-lg bg-amber-500 py-3 text-sm font-bold text-white transition-all duration-200 hover:bg-amber-600 hover:shadow-lg hover:shadow-amber-500/25 transform hover:scale-[1.02] active:scale-95 btn-primary relative overflow-hidden"
                       >
-                        Contact Now
+                        <span className="relative z-10">Contact Now</span>
                       </button>
                       <Link href="/texas/houston/precision-foundation-pros" className="flex items-center justify-center rounded-lg bg-slate-100 border border-slate-200 px-4 py-3 text-slate-600 hover:bg-slate-200 transition-colors">
                         <span className="material-symbols-outlined">info</span>
@@ -335,9 +338,10 @@ export default function HomePageClient() {
                 </div>
                 
                 {/* Card 2 - Light mode card */}
-                <div className="bg-white border border-slate-200 group flex flex-col rounded-xl overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-primary/10 hover-lift animate-on-scroll animate-delay-200">
-                  <div className="relative h-48 w-full overflow-hidden">
-                    <img className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Foundation crack repair with epoxy injection" src="https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=800&q=80"/>
+                <div className="bg-white border border-slate-200 group flex flex-col rounded-xl overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-primary/10 hover:scale-[1.02] hover-lift animate-on-scroll animate-delay-200">
+                  <div className="relative h-48 w-full overflow-hidden image-zoom">
+                    <img className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Foundation crack repair with professional epoxy injection equipment" src="https://images.unsplash.com/photo-1611273426858-450d8e3c9fce?w=800&q=80"/>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   </div>
                   <div className="flex flex-1 flex-col p-6">
                     <div className="flex items-start justify-between mb-4">
@@ -381,9 +385,9 @@ export default function HomePageClient() {
                     <div className="mt-auto flex gap-3">
                       <button 
                         onClick={() => openLeadForm('solid-ground-engineering', 'Solid Ground Engineering')}
-                        className="flex-1 rounded-lg bg-amber-500 py-3 text-sm font-bold text-white transition-colors hover:bg-amber-600"
+                        className="flex-1 rounded-lg bg-amber-500 py-3 text-sm font-bold text-white transition-all duration-200 hover:bg-amber-600 hover:shadow-lg hover:shadow-amber-500/25 transform hover:scale-[1.02] active:scale-95 btn-primary relative overflow-hidden"
                       >
-                        Contact Now
+                        <span className="relative z-10">Contact Now</span>
                       </button>
                       <Link href="/texas/houston/solid-ground-engineering" className="flex items-center justify-center rounded-lg bg-slate-100 border border-slate-200 px-4 py-3 text-slate-600 hover:bg-slate-200 transition-colors">
                         <span className="material-symbols-outlined">info</span>
@@ -393,9 +397,10 @@ export default function HomePageClient() {
                 </div>
                 
                 {/* Card 3 - Light mode card */}
-                <div className="bg-white border border-slate-200 group flex flex-col rounded-xl overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-primary/10 hover-lift animate-on-scroll animate-delay-400">
-                  <div className="relative h-48 w-full overflow-hidden">
-                    <img className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Foundation waterproofing and drainage system installation" src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=800&q=80"/>
+                <div className="bg-white border border-slate-200 group flex flex-col rounded-xl overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-primary/10 hover:scale-[1.02] hover-lift animate-on-scroll animate-delay-400">
+                  <div className="relative h-48 w-full overflow-hidden image-zoom">
+                    <img className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Professional basement waterproofing and drainage system installation with modern equipment" src="https://images.unsplash.com/photo-1619228372473-3c2333d8c75f?w=800&q=80"/>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   </div>
                   <div className="flex flex-1 flex-col p-6">
                     <div className="flex items-start justify-between mb-4">
@@ -442,9 +447,9 @@ export default function HomePageClient() {
                     <div className="mt-auto flex gap-3">
                       <button 
                         onClick={() => openLeadForm('atlas-pier-specialists', 'Atlas Pier Specialists')}
-                        className="flex-1 rounded-lg bg-amber-500 py-3 text-sm font-bold text-white transition-colors hover:bg-amber-600"
+                        className="flex-1 rounded-lg bg-amber-500 py-3 text-sm font-bold text-white transition-all duration-200 hover:bg-amber-600 hover:shadow-lg hover:shadow-amber-500/25 transform hover:scale-[1.02] active:scale-95 btn-primary relative overflow-hidden"
                       >
-                        Contact Now
+                        <span className="relative z-10">Contact Now</span>
                       </button>
                       <Link href="/texas/houston/atlas-pier-specialists" className="flex items-center justify-center rounded-lg bg-slate-100 border border-slate-200 px-4 py-3 text-slate-600 hover:bg-slate-200 transition-colors">
                         <span className="material-symbols-outlined">info</span>
@@ -456,8 +461,8 @@ export default function HomePageClient() {
             </div>
           </section>
           
-          {/* Location Section Teaser - Light mode */}
-          <section className="bg-slate-50 py-20 border-y border-slate-200">
+          {/* Location Section Teaser - Enhanced with animations */}
+          <section className="bg-slate-50 py-20 lg:py-28 border-y border-slate-200 animate-on-scroll">
             <div className="mx-auto max-w-7xl px-6 lg:px-10">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 <div>
@@ -506,63 +511,72 @@ export default function HomePageClient() {
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 relative">
                 {/* Step 1 */}
-                <div className="flex flex-col items-center text-center group">
-                  <div className="size-16 rounded-full bg-white/10 flex items-center justify-center mb-6 border border-white/30 group-hover:bg-primary group-hover:text-white transition-colors duration-300">
+                <div className="flex flex-col items-center text-center group animate-on-scroll animate-delay-100">
+                  <div className="size-20 rounded-full bg-white/10 flex items-center justify-center mb-6 border-2 border-white/30 group-hover:bg-amber-500 group-hover:border-amber-400 group-hover:scale-110 transition-all duration-300 relative">
                     <span className="material-symbols-outlined text-3xl text-white group-hover:text-white">search</span>
+                    <div className="absolute -top-2 -right-2 bg-amber-500 text-slate-900 rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">1</div>
                   </div>
-                  <h3 className="text-xl font-bold mb-2 text-white">1. Search</h3>
-                  <p className="text-slate-300 text-sm leading-relaxed">Find local foundation experts near you by entering your zip code.</p>
+                  <h3 className="text-xl font-bold mb-3 text-white group-hover:text-amber-400 transition-colors">Search</h3>
+                  <p className="text-slate-300 text-sm leading-relaxed">Find certified foundation experts in your area by entering your ZIP code.</p>
                 </div>
                 
                 {/* Step 2 */}
-                <div className="flex flex-col items-center text-center group">
-                  <div className="size-16 rounded-full bg-white/10 flex items-center justify-center mb-6 border border-white/30 group-hover:bg-primary group-hover:text-white transition-colors duration-300">
+                <div className="flex flex-col items-center text-center group animate-on-scroll animate-delay-200">
+                  <div className="size-20 rounded-full bg-white/10 flex items-center justify-center mb-6 border-2 border-white/30 group-hover:bg-amber-500 group-hover:border-amber-400 group-hover:scale-110 transition-all duration-300 relative">
                     <span className="material-symbols-outlined text-3xl text-white group-hover:text-white">rule</span>
+                    <div className="absolute -top-2 -right-2 bg-amber-500 text-slate-900 rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">2</div>
                   </div>
-                  <h3 className="text-xl font-bold mb-2 text-white">2. Compare</h3>
-                  <p className="text-slate-300 text-sm leading-relaxed">Review ratings, past project photos, and structural specialties.</p>
+                  <h3 className="text-xl font-bold mb-3 text-white group-hover:text-amber-400 transition-colors">Compare</h3>
+                  <p className="text-slate-300 text-sm leading-relaxed">Review ratings, past project photos, and structural specialties to find your match.</p>
                 </div>
                 
                 {/* Step 3 */}
-                <div className="flex flex-col items-center text-center group">
-                  <div className="size-16 rounded-full bg-white/10 flex items-center justify-center mb-6 border border-white/30 group-hover:bg-primary group-hover:text-white transition-colors duration-300">
+                <div className="flex flex-col items-center text-center group animate-on-scroll animate-delay-300">
+                  <div className="size-20 rounded-full bg-white/10 flex items-center justify-center mb-6 border-2 border-white/30 group-hover:bg-amber-500 group-hover:border-amber-400 group-hover:scale-110 transition-all duration-300 relative">
                     <span className="material-symbols-outlined text-3xl text-white group-hover:text-white">forum</span>
+                    <div className="absolute -top-2 -right-2 bg-amber-500 text-slate-900 rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">3</div>
                   </div>
-                  <h3 className="text-xl font-bold mb-2 text-white">3. Contact</h3>
-                  <p className="text-slate-300 text-sm leading-relaxed">Get free inspections and competitive quotes from top contractors.</p>
+                  <h3 className="text-xl font-bold mb-3 text-white group-hover:text-amber-400 transition-colors">Contact</h3>
+                  <p className="text-slate-300 text-sm leading-relaxed">Get free inspections and competitive quotes from verified professionals.</p>
                 </div>
                 
                 {/* Step 4 */}
-                <div className="flex flex-col items-center text-center group">
-                  <div className="size-16 rounded-full bg-white/10 flex items-center justify-center mb-6 border border-white/30 group-hover:bg-primary group-hover:text-white transition-colors duration-300">
+                <div className="flex flex-col items-center text-center group animate-on-scroll animate-delay-400">
+                  <div className="size-20 rounded-full bg-white/10 flex items-center justify-center mb-6 border-2 border-white/30 group-hover:bg-amber-500 group-hover:border-amber-400 group-hover:scale-110 transition-all duration-300 relative">
                     <span className="material-symbols-outlined text-3xl text-white group-hover:text-white">house_with_shield</span>
+                    <div className="absolute -top-2 -right-2 bg-amber-500 text-slate-900 rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">4</div>
                   </div>
-                  <h3 className="text-xl font-bold mb-2 text-white">4. Get Repaired</h3>
-                  <p className="text-slate-300 text-sm leading-relaxed">Secure your home's long-term value and your family's safety.</p>
+                  <h3 className="text-xl font-bold mb-3 text-white group-hover:text-amber-400 transition-colors">Get Protected</h3>
+                  <p className="text-slate-300 text-sm leading-relaxed">Secure your home's foundation and protect your family's most valuable asset.</p>
                 </div>
               </div>
             </div>
           </section>
           
-          {/* Repair Types Section */}
-          <section className="py-20 lg:py-24 px-6 md:px-20 lg:px-40 bg-white">
+          {/* Repair Types Section - Enhanced with dopamine animations */}
+          <section className="py-20 lg:py-28 px-6 md:px-20 lg:px-40 bg-white animate-on-scroll">
             <div className="max-w-7xl mx-auto">
-              <div className="text-center mb-12">
+              <div className="text-center mb-16 animate-on-scroll">
+                <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-2 mb-6">
+                  <span className="material-symbols-outlined text-primary text-sm">construction</span>
+                  <span className="text-xs font-bold uppercase tracking-wider text-primary">Expert Solutions</span>
+                </div>
                 <h2 className="text-slate-900 text-3xl md:text-4xl font-extrabold leading-tight tracking-tight mb-4">Common Foundation Repair Types</h2>
-                <p className="text-slate-600 text-lg max-w-2xl mx-auto">
+                <p className="text-slate-600 text-lg max-w-2xl mx-auto leading-relaxed">
                   Understanding the right solution for your home is the first step toward a permanent fix. Explore our professional repair services.
                 </p>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                {SERVICES.map((service) => (
-                  <div key={service.slug} className="group flex flex-col bg-slate-50 border border-slate-200 rounded-xl p-6 transition-all hover:border-primary/50 hover:shadow-xl hover:shadow-primary/5">
-                    <div className="size-14 rounded-lg bg-primary/10 flex items-center justify-center mb-6 text-primary group-hover:bg-primary group-hover:text-white transition-all">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                {SERVICES.map((service, index) => (
+                  <div key={service.slug} className={`group flex flex-col bg-slate-50 border-2 border-slate-200 rounded-xl p-6 transition-all duration-300 hover:border-primary/50 hover:shadow-xl hover:shadow-primary/10 hover:-translate-y-2 hover:scale-105 animate-on-scroll animate-delay-${(index + 1) * 100}`}>
+                    <div className="size-16 rounded-xl bg-primary/10 flex items-center justify-center mb-6 text-primary group-hover:bg-amber-500 group-hover:text-white transition-all duration-300 group-hover:scale-110">
                       <span className="material-symbols-outlined text-3xl">{service.icon}</span>
                     </div>
-                    <h3 className="text-slate-900 text-xl font-bold mb-3">{service.name}</h3>
-                    <p className="text-slate-600 text-sm leading-relaxed mb-4">{service.desc}</p>
-                    <Link className="mt-auto text-primary text-sm font-bold flex items-center gap-1 hover:underline" href={`/services/${service.slug}`}>
-                      Learn More <span className="material-symbols-outlined text-xs">arrow_forward</span>
+                    <h3 className="text-slate-900 text-xl font-bold mb-3 group-hover:text-primary transition-colors">{service.name}</h3>
+                    <p className="text-slate-600 text-sm leading-relaxed mb-6 flex-1">{service.desc}</p>
+                    <Link className="mt-auto text-primary text-sm font-bold flex items-center gap-2 hover:gap-3 hover:text-amber-600 transition-all duration-200 group/link" href={`/services/${service.slug}`}>
+                      Learn More 
+                      <span className="material-symbols-outlined text-sm group-hover/link:translate-x-1 transition-transform">arrow_forward</span>
                     </Link>
                   </div>
                 ))}
@@ -578,18 +592,22 @@ export default function HomePageClient() {
             </div>
           </section>
           
-          {/* Testimonials Section - Redesigned with photos */}
-          <section className="py-20 lg:py-24 px-6 bg-slate-50 animate-on-scroll">
+          {/* Testimonials Section - Enhanced with dopamine-triggering animations */}
+          <section className="py-20 lg:py-28 px-6 bg-slate-50 animate-on-scroll">
             <div className="max-w-6xl mx-auto">
-              <div className="text-center mb-16">
+              <div className="text-center mb-16 animate-on-scroll">
+                <div className="inline-flex items-center gap-2 rounded-full border border-green-500/30 bg-green-50 px-4 py-2 mb-6">
+                  <span className="material-symbols-outlined text-green-600 text-sm">reviews</span>
+                  <span className="text-xs font-bold uppercase tracking-wider text-green-700">Success Stories</span>
+                </div>
                 <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight mb-4 text-slate-900">Real Stories from Real Homeowners</h2>
-                <p className="text-slate-600 max-w-2xl mx-auto text-lg">
-                  Thousands of homeowners have trusted FoundationScout to connect them with expert contractors.
+                <p className="text-slate-600 max-w-2xl mx-auto text-lg leading-relaxed">
+                  Thousands of homeowners have trusted FoundationScout to connect them with expert contractors who deliver exceptional results.
                 </p>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {/* Testimonial 1 */}
-                <div className="bg-white border border-slate-200 rounded-2xl p-8 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 hover-lift">
+                <div className="bg-white border border-slate-200 rounded-2xl p-8 shadow-sm hover:shadow-xl hover:-translate-y-2 hover:scale-105 transition-all duration-300 hover-lift animate-on-scroll animate-delay-100">
                   <div className="flex items-center gap-4 mb-6">
                     <div className="w-16 h-16 rounded-full overflow-hidden bg-slate-200">
                       <img 
@@ -619,7 +637,7 @@ export default function HomePageClient() {
                 </div>
                 
                 {/* Testimonial 2 */}
-                <div className="bg-white border border-slate-200 rounded-2xl p-8 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 hover-lift">
+                <div className="bg-white border border-slate-200 rounded-2xl p-8 shadow-sm hover:shadow-xl hover:-translate-y-2 hover:scale-105 transition-all duration-300 hover-lift animate-on-scroll animate-delay-200">
                   <div className="flex items-center gap-4 mb-6">
                     <div className="w-16 h-16 rounded-full overflow-hidden bg-slate-200">
                       <img 
@@ -649,7 +667,7 @@ export default function HomePageClient() {
                 </div>
                 
                 {/* Testimonial 3 */}
-                <div className="bg-white border border-slate-200 rounded-2xl p-8 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 hover-lift">
+                <div className="bg-white border border-slate-200 rounded-2xl p-8 shadow-sm hover:shadow-xl hover:-translate-y-2 hover:scale-105 transition-all duration-300 hover-lift animate-on-scroll animate-delay-300">
                   <div className="flex items-center gap-4 mb-6">
                     <div className="w-16 h-16 rounded-full overflow-hidden bg-slate-200">
                       <img 
@@ -688,9 +706,9 @@ export default function HomePageClient() {
                 <div>
                   <button 
                     onClick={() => openLeadForm()}
-                    className="bg-primary text-white px-8 py-4 rounded-lg font-bold hover:bg-blue-700 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                    className="bg-amber-500 text-white px-8 py-4 rounded-lg font-bold hover:bg-amber-600 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-amber-500/25 btn-primary relative overflow-hidden"
                   >
-                    Get Your Free Inspection Today
+                    <span className="relative z-10">Get Your Free Inspection Today</span>
                   </button>
                 </div>
               </div>
@@ -728,56 +746,73 @@ export default function HomePageClient() {
             </div>
           </section>
           
-          {/* Trust Badges Row - Redesigned to look more authentic */}
-          <section className="py-20 px-6 bg-slate-50 border-t border-slate-200 animate-on-scroll">
+          {/* Trust Badges Row - Enhanced with dopamine-triggering animations */}
+          <section className="py-20 lg:py-28 px-6 bg-gradient-to-br from-slate-50 to-white border-t border-slate-200 animate-on-scroll">
             <div className="max-w-6xl mx-auto text-center">
-              <h3 className="text-2xl font-bold text-slate-900 mb-4">Trusted by Industry Leaders</h3>
-              <p className="text-slate-600 mb-12 max-w-2xl mx-auto">Our network partners maintain the highest standards of professionalism, licensing, and insurance coverage.</p>
+              <div className="inline-flex items-center gap-2 rounded-full border border-green-500/30 bg-green-50 px-4 py-2 mb-6">
+                <span className="material-symbols-outlined text-green-600 text-sm">verified_user</span>
+                <span className="text-xs font-bold uppercase tracking-wider text-green-700">Industry-Verified Standards</span>
+              </div>
+              <h3 className="text-3xl font-bold text-slate-900 mb-4">Backed by the Best in the Industry</h3>
+              <p className="text-slate-600 mb-16 max-w-2xl mx-auto text-lg leading-relaxed">Every contractor in our network meets rigorous professional standards and carries comprehensive insurance coverage.</p>
               
               <div className="grid grid-cols-2 md:grid-cols-4 gap-8 items-center">
-                <div className="group">
-                  <div className="h-24 bg-white border border-slate-200 rounded-xl shadow-sm flex flex-col items-center justify-center p-4 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="material-symbols-outlined text-blue-600 text-xl">verified_user</span>
-                      <span className="text-sm font-bold text-slate-900">BBB</span>
+                <div className="group animate-on-scroll">
+                  <div className="h-32 bg-white border-2 border-slate-200 rounded-xl shadow-lg flex flex-col items-center justify-center p-6 hover:shadow-xl hover:-translate-y-2 hover:border-blue-300 hover:shadow-blue-100/50 transition-all duration-300 hover:scale-105">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="material-symbols-outlined text-blue-600 text-2xl animate-pulse-gentle">verified_user</span>
+                      <span className="text-lg font-black text-slate-900">BBB</span>
                     </div>
-                    <span className="text-xs text-slate-600 font-medium">Accredited Business</span>
-                    <div className="flex text-yellow-400 text-xs mt-1">
-                      <span>★★★★★</span>
+                    <span className="text-xs text-slate-600 font-semibold">Accredited Business</span>
+                    <div className="flex text-yellow-400 text-sm mt-2">
+                      <span className="material-symbols-outlined text-sm fill-1">star</span>
+                      <span className="material-symbols-outlined text-sm fill-1">star</span>
+                      <span className="material-symbols-outlined text-sm fill-1">star</span>
+                      <span className="material-symbols-outlined text-sm fill-1">star</span>
+                      <span className="material-symbols-outlined text-sm fill-1">star</span>
                     </div>
                   </div>
                 </div>
                 
-                <div className="group">
-                  <div className="h-24 bg-white border border-slate-200 rounded-xl shadow-sm flex flex-col items-center justify-center p-4 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="material-symbols-outlined text-green-600 text-xl">engineering</span>
-                      <span className="text-sm font-bold text-slate-900">ICC-ES</span>
+                <div className="group animate-on-scroll animate-delay-200">
+                  <div className="h-32 bg-white border-2 border-slate-200 rounded-xl shadow-lg flex flex-col items-center justify-center p-6 hover:shadow-xl hover:-translate-y-2 hover:border-green-300 hover:shadow-green-100/50 transition-all duration-300 hover:scale-105">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="material-symbols-outlined text-green-600 text-2xl">engineering</span>
+                      <span className="text-lg font-black text-slate-900">ICC-ES</span>
                     </div>
-                    <span className="text-xs text-slate-600 font-medium">Code Certified</span>
-                    <span className="text-xs text-green-600 font-semibold mt-1">✓ VERIFIED</span>
+                    <span className="text-xs text-slate-600 font-semibold">Code Certified</span>
+                    <div className="flex items-center gap-1 mt-2">
+                      <span className="material-symbols-outlined text-green-600 text-sm">check_circle</span>
+                      <span className="text-xs text-green-600 font-bold">VERIFIED</span>
+                    </div>
                   </div>
                 </div>
                 
-                <div className="group">
-                  <div className="h-24 bg-white border border-slate-200 rounded-xl shadow-sm flex flex-col items-center justify-center p-4 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="material-symbols-outlined text-blue-600 text-xl">security</span>
-                      <span className="text-sm font-bold text-slate-900">INSURED</span>
+                <div className="group animate-on-scroll animate-delay-300">
+                  <div className="h-32 bg-white border-2 border-slate-200 rounded-xl shadow-lg flex flex-col items-center justify-center p-6 hover:shadow-xl hover:-translate-y-2 hover:border-blue-300 hover:shadow-blue-100/50 transition-all duration-300 hover:scale-105">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="material-symbols-outlined text-blue-600 text-2xl">security</span>
+                      <span className="text-lg font-black text-slate-900">INSURED</span>
                     </div>
-                    <span className="text-xs text-slate-600 font-medium">$2M+ Coverage</span>
-                    <span className="text-xs text-blue-600 font-semibold mt-1">BONDED</span>
+                    <span className="text-xs text-slate-600 font-semibold">$2M+ Coverage</span>
+                    <div className="flex items-center gap-1 mt-2">
+                      <span className="material-symbols-outlined text-blue-600 text-sm">shield</span>
+                      <span className="text-xs text-blue-600 font-bold">BONDED</span>
+                    </div>
                   </div>
                 </div>
                 
-                <div className="group">
-                  <div className="h-24 bg-white border border-slate-200 rounded-xl shadow-sm flex flex-col items-center justify-center p-4 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="material-symbols-outlined text-amber-600 text-xl">workspace_premium</span>
-                      <span className="text-sm font-bold text-slate-900">WARRANTY</span>
+                <div className="group animate-on-scroll animate-delay-400">
+                  <div className="h-32 bg-white border-2 border-slate-200 rounded-xl shadow-lg flex flex-col items-center justify-center p-6 hover:shadow-xl hover:-translate-y-2 hover:border-amber-300 hover:shadow-amber-100/50 transition-all duration-300 hover:scale-105">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="material-symbols-outlined text-amber-600 text-2xl">workspace_premium</span>
+                      <span className="text-lg font-black text-slate-900">WARRANTY</span>
                     </div>
-                    <span className="text-xs text-slate-600 font-medium">5-Year Guarantee</span>
-                    <span className="text-xs text-amber-600 font-semibold mt-1">BACKED</span>
+                    <span className="text-xs text-slate-600 font-semibold">5-Year Guarantee</span>
+                    <div className="flex items-center gap-1 mt-2">
+                      <span className="material-symbols-outlined text-amber-600 text-sm">verified</span>
+                      <span className="text-xs text-amber-600 font-bold">BACKED</span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -805,10 +840,12 @@ export default function HomePageClient() {
                 <div className="mt-6">
                   <button 
                     onClick={() => openLeadForm()}
-                    className="inline-flex items-center gap-2 bg-red-600 text-white px-8 py-4 rounded-lg font-bold hover:bg-red-700 transition-all duration-200 transform hover:scale-105 shadow-lg"
+                    className="inline-flex items-center gap-2 bg-red-600 text-white px-8 py-4 rounded-lg font-bold hover:bg-red-700 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-red-600/25 btn-primary relative overflow-hidden"
                   >
-                    <span className="material-symbols-outlined">schedule</span>
-                    Get Emergency Inspection Today
+                    <span className="relative z-10 flex items-center gap-2">
+                      <span className="material-symbols-outlined">schedule</span>
+                      Get Emergency Inspection Today
+                    </span>
                   </button>
                 </div>
               </div>
@@ -853,7 +890,7 @@ export default function HomePageClient() {
               <div>
                 <h4 className="text-sm font-bold uppercase tracking-widest text-slate-900 mb-6">Quick Links</h4>
                 <ul className="flex flex-col gap-4 text-sm text-slate-600">
-                  <li><Link className="hover:text-amber-600 transition-colors" href="/">About FoundationDir</Link></li>
+                  <li><Link className="hover:text-amber-600 transition-colors" href="/">About FoundationScout</Link></li>
                   <li><Link className="hover:text-amber-600 transition-colors" href="/auth/signup">Contractor Portal</Link></li>
                   <li><Link className="hover:text-amber-600 transition-colors" href="/services">Industry Resources</Link></li>
                   <li><Link className="hover:text-amber-600 transition-colors" href="/auth/signup">Partner Program</Link></li>
@@ -883,7 +920,7 @@ export default function HomePageClient() {
             
             {/* Footer Bottom */}
             <div className="pt-8 border-t border-slate-200 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-500">
-              <p>© 2025 Foundation Directory. All rights reserved.</p>
+              <p>© 2025 FoundationScout. All rights reserved.</p>
               <div className="flex gap-6">
                 <Link className="hover:text-amber-600" href="#">Privacy Policy</Link>
                 <Link className="hover:text-amber-600" href="#">Terms of Service</Link>
