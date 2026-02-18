@@ -36,9 +36,6 @@ export default function HomePageClient() {
   const [selectedBusiness, setSelectedBusiness] = useState<{id: string, name: string} | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [formStep, setFormStep] = useState(1)
-  const [selectedService, setSelectedService] = useState('')
-  const [location, setLocation] = useState('')
   const [showTrustPopup, setShowTrustPopup] = useState(false)
 
   const openLeadForm = (businessId?: string, businessName?: string) => {
@@ -232,140 +229,30 @@ export default function HomePageClient() {
                 </div>
               </div>
               
-              {/* Progressive Lead Capture Form */}
-              <div className="mx-auto max-w-2xl">
-                {formStep === 1 && (
-                  <div className="progressive-form-step active">
-                    <div className="bg-white/95 backdrop-blur-sm p-8 rounded-2xl shadow-2xl border border-white/20">
-                      <h3 className="font-bold text-slate-900 mb-6 text-xl text-center">What type of foundation issue do you have?</h3>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        {SERVICES.map((service) => (
-                          <button
-                            key={service.slug}
-                            onClick={() => {
-                              setSelectedService(service.slug)
-                              setFormStep(2)
-                            }}
-                            className={`service-card p-6 rounded-xl border-2 text-left transition-all duration-200 hover:scale-105 mobile-touch-target ${
-                              selectedService === service.slug 
-                                ? 'selected border-primary bg-primary/5' 
-                                : 'border-slate-200 hover:border-primary/50 bg-white'
-                            }`}
-                          >
-                            <div className="flex items-center gap-3 mb-3">
-                              <span className="material-symbols-outlined text-primary text-2xl">{service.icon}</span>
-                              <span className="font-bold text-slate-900">{service.name}</span>
-                            </div>
-                            <p className="text-sm text-slate-600 leading-relaxed">{service.desc}</p>
-                          </button>
-                        ))}
-                      </div>
-                    </div>
+              {/* Search Box */}
+              <div className="mx-auto max-w-xl">
+                <div className="flex flex-col sm:flex-row gap-3 rounded-xl bg-white p-2 border border-slate-300 shadow-lg">
+                  <div className="relative flex flex-1 items-center">
+                    <span className="material-symbols-outlined absolute left-4 text-slate-500">location_on</span>
+                    <input 
+                      className="w-full rounded-lg border-0 bg-transparent py-4 pl-12 text-slate-900 placeholder-slate-400 focus:ring-2 focus:ring-primary focus:ring-offset-2 mobile-touch-target form-input" 
+                      placeholder="Enter your ZIP code or city" 
+                      type="text"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+                    />
                   </div>
-                )}
-                
-                {formStep === 2 && (
-                  <div className="progressive-form-step active">
-                    <div className="bg-white/95 backdrop-blur-sm p-8 rounded-2xl shadow-2xl border border-white/20">
-                      <div className="flex items-center justify-between mb-6">
-                        <button 
-                          onClick={() => setFormStep(1)}
-                          className="flex items-center gap-2 text-slate-600 hover:text-primary transition-colors"
-                        >
-                          <span className="material-symbols-outlined">arrow_back</span>
-                          Back
-                        </button>
-                        <div className="flex gap-2">
-                          <div className="w-2 h-2 rounded-full bg-primary"></div>
-                          <div className="w-2 h-2 rounded-full bg-primary"></div>
-                          <div className="w-2 h-2 rounded-full bg-slate-300"></div>
-                        </div>
-                      </div>
-                      <h3 className="font-bold text-slate-900 mb-6 text-xl text-center">Where is your property located?</h3>
-                      <div className="relative">
-                        <span className="material-symbols-outlined absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-500">location_on</span>
-                        <input 
-                          className="w-full rounded-xl border-2 border-slate-200 bg-white py-4 pl-12 pr-4 text-slate-900 placeholder-slate-400 focus:ring-2 focus:ring-primary focus:border-primary transition-all mobile-touch-target form-input" 
-                          placeholder="Enter your ZIP code or city" 
-                          type="text"
-                          value={location}
-                          onChange={(e) => setLocation(e.target.value)}
-                          onKeyDown={(e) => e.key === 'Enter' && location.trim() && setFormStep(3)}
-                        />
-                        {location.length >= 5 && (
-                          <div className="form-feedback text-success-green">
-                            <span className="material-symbols-outlined text-sm">check_circle</span>
-                            Great! We'll match you within 24 hours
-                          </div>
-                        )}
-                      </div>
-                      <button 
-                        onClick={() => location.trim() && setFormStep(3)}
-                        disabled={!location.trim()}
-                        className="w-full mt-6 bg-amber-500 text-white py-4 px-6 rounded-xl font-bold hover:bg-amber-600 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-amber-500/25 btn-primary relative overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed mobile-touch-target"
-                      >
-                        <span className="relative z-10">Continue</span>
-                      </button>
-                    </div>
-                  </div>
-                )}
-                
-                {formStep === 3 && (
-                  <div className="progressive-form-step active">
-                    <div className="bg-white/95 backdrop-blur-sm p-8 rounded-2xl shadow-2xl border border-white/20">
-                      <div className="flex items-center justify-between mb-6">
-                        <button 
-                          onClick={() => setFormStep(2)}
-                          className="flex items-center gap-2 text-slate-600 hover:text-primary transition-colors"
-                        >
-                          <span className="material-symbols-outlined">arrow_back</span>
-                          Back
-                        </button>
-                        <div className="flex gap-2">
-                          <div className="w-2 h-2 rounded-full bg-primary"></div>
-                          <div className="w-2 h-2 rounded-full bg-primary"></div>
-                          <div className="w-2 h-2 rounded-full bg-primary"></div>
-                        </div>
-                      </div>
-                      <h3 className="font-bold text-slate-900 mb-6 text-xl text-center">Get your free estimates!</h3>
-                      <div className="space-y-4">
-                        <div>
-                          <input 
-                            className="w-full rounded-xl border-2 border-slate-200 bg-white py-4 px-4 text-slate-900 placeholder-slate-400 focus:ring-2 focus:ring-primary focus:border-primary transition-all mobile-touch-target form-input" 
-                            placeholder="Your name" 
-                            type="text"
-                          />
-                        </div>
-                        <div>
-                          <input 
-                            className="w-full rounded-xl border-2 border-slate-200 bg-white py-4 px-4 text-slate-900 placeholder-slate-400 focus:ring-2 focus:ring-primary focus:border-primary transition-all mobile-touch-target form-input" 
-                            placeholder="Phone number" 
-                            type="tel"
-                          />
-                        </div>
-                        <div>
-                          <input 
-                            className="w-full rounded-xl border-2 border-slate-200 bg-white py-4 px-4 text-slate-900 placeholder-slate-400 focus:ring-2 focus:ring-primary focus:border-primary transition-all mobile-touch-target form-input" 
-                            placeholder="Email address" 
-                            type="email"
-                          />
-                        </div>
-                      </div>
-                      <button 
-                        onClick={() => openLeadForm()}
-                        className="w-full mt-6 bg-green-600 text-white py-4 px-6 rounded-xl font-bold hover:bg-green-700 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-green-600/25 btn-success relative overflow-hidden mobile-touch-target success-glow"
-                      >
-                        <span className="relative z-10 flex items-center justify-center gap-2">
-                          <span className="material-symbols-outlined">verified</span>
-                          Get My Free Estimates
-                        </span>
-                      </button>
-                      <p className="text-center text-xs text-slate-500 mt-4">
-                        100% free • No obligation • Get quotes in 24 hours
-                      </p>
-                    </div>
-                  </div>
-                )}
+                  <button 
+                    onClick={handleSearch}
+                    className="flex items-center justify-center gap-2 rounded-lg bg-amber-500 px-8 py-4 text-base font-bold text-white hover:bg-amber-600 transition-all duration-200 shadow-lg shadow-amber-500/25 transform hover:scale-105 active:scale-95 btn-primary relative overflow-hidden mobile-touch-target"
+                  >
+                    <span className="relative z-10 flex items-center gap-2">
+                      <span className="material-symbols-outlined">search</span>
+                      Find Contractors
+                    </span>
+                  </button>
+                </div>
               </div>
               
               {/* Trust Indicators - Direct port from Stitch */}
