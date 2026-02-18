@@ -71,7 +71,6 @@ export default function HomePageClient() {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           const element = entry.target as HTMLElement
-          element.classList.remove('animate-on-scroll')
           element.classList.add('animate-fade-up')
           observer.unobserve(element)
         }
