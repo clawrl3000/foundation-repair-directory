@@ -13,120 +13,25 @@
 }
 
 /* Stitch Export Styles - Direct Port */
-.glass-card {
-    background: rgba(25, 34, 51, 0.6);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
 
 .hero-gradient {
     background: radial-gradient(circle at top right, rgba(17, 82, 212, 0.15), transparent), 
                 radial-gradient(circle at bottom left, rgba(17, 82, 212, 0.05), transparent);
 }
 
-/* Theme Toggle - Keep working */
-.theme-toggle-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  transition: all 0.2s ease;
-  cursor: pointer;
-}
+/* Theme toggle styles removed */
 
-.theme-toggle-btn:hover {
-  background: rgba(255, 255, 255, 0.12);
-  transform: translateY(-1px);
-}
-
-/* Light theme overrides */
-[data-theme="light"] {
-  --background-dark: #ffffff;
-}
-
-[data-theme="light"] .hero-gradient {
-  background: radial-gradient(circle at top right, rgba(17, 82, 212, 0.08), transparent), 
-              radial-gradient(circle at bottom left, rgba(245, 158, 11, 0.08), transparent),
-              linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
-}
-
-[data-theme="light"] .glass-card {
-  background: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-}
-
-[data-theme="light"] body {
-  background: #f6f6f8;
-  color: #1e293b;
-}
-
-[data-theme="light"] .bg-background-dark {
-  background: #ffffff !important;
-}
-
-[data-theme="light"] .text-white {
-  color: #1e293b !important;
-}
-
-[data-theme="light"] .text-slate-300 {
-  color: #475569 !important;
-}
-
-[data-theme="light"] .text-slate-400 {
-  color: #64748b !important;
-}
-
-[data-theme="light"] .text-slate-500 {
-  color: #64748b !important;
-}
-
-[data-theme="light"] .bg-slate-900\/50 {
-  background: rgba(255, 255, 255, 0.9) !important;
-  border: 1px solid rgba(0, 0, 0, 0.1) !important;
-}
-
-[data-theme="light"] .bg-slate-900\/30 {
-  background: #f1f5f9 !important;
-}
-
-[data-theme="light"] .bg-background-dark\/80 {
-  background: rgba(255, 255, 255, 0.8) !important;
-}
-
-[data-theme="light"] .border-glass-stroke {
-  border-color: rgba(0, 0, 0, 0.1) !important;
-}
-
-[data-theme="light"] .bg-slate-800 {
-  background: #f1f5f9 !important;
-}
-
-[data-theme="light"] .bg-slate-800\/50 {
-  background: #f1f5f9 !important;
-}
-
-[data-theme="light"] .theme-toggle-btn {
-  background: rgba(0, 0, 0, 0.05);
-  border: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-[data-theme="light"] .theme-toggle-btn:hover {
-  background: rgba(0, 0, 0, 0.08);
-}
+/* Light theme overrides removed - using light mode only */
 
 /* Material Symbols */
 .material-symbols-outlined {
   font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+/* Filled stars - Direct port from Stitch */
+.material-symbols-outlined.fill-1,
+.fill-1 {
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24 !important;
 }
 
 /* Ensure font family */

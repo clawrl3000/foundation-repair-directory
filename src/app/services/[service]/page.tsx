@@ -1,5 +1,8 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
+import { notFound } from 'next/navigation'
+import StitchNav from '@/components/StitchNav'
+import StitchFooter from '@/components/StitchFooter'
 
 interface Props {
   params: Promise<{ service: string }>
@@ -113,6 +116,60 @@ const SERVICES_DATA = {
         answer: 'Modern building science favors encapsulation over ventilation. Encapsulated crawl spaces provide better moisture control and energy efficiency than traditional vented crawl spaces.'
       }
     ]
+  },
+  'crack-repair': {
+    name: 'Foundation Crack Repair',
+    description: 'Professional crack injection and sealing to prevent water intrusion.',
+    icon: 'build',
+    longDescription: 'Foundation cracks can allow water intrusion and indicate structural problems. Our contractors use professional crack injection techniques to permanently seal foundation cracks.',
+    benefits: [
+      'Prevents water damage',
+      'Stops crack expansion',
+      'Quick repair process',
+      'Cost-effective solution',
+      'Permanent results'
+    ],
+    faqs: [
+      {
+        question: 'When should I be concerned about foundation cracks?',
+        answer: 'Horizontal cracks, cracks wider than 1/4 inch, or cracks that are growing should be evaluated by a professional immediately as they may indicate serious structural issues.'
+      },
+      {
+        question: 'How much does crack repair cost?',
+        answer: 'Foundation crack repair typically costs $300-$2,000 depending on the size, location, and number of cracks being repaired.'
+      },
+      {
+        question: 'What causes foundation cracks?',
+        answer: 'Foundation cracks are commonly caused by soil settlement, hydrostatic pressure, freeze-thaw cycles, or structural overloading.'
+      }
+    ]
+  },
+  'house-leveling': {
+    name: 'House Leveling',
+    description: 'Complete home releveling using hydraulic jacks and permanent support systems.',
+    icon: 'balance',
+    longDescription: 'House leveling restores your home to its proper position and prevents further structural damage. Our contractors use hydraulic jacks and permanent support systems for long-lasting results.',
+    benefits: [
+      'Restores structural integrity',
+      'Fixes doors and windows',
+      'Prevents further damage',
+      'Increases home value',
+      'Expert installation'
+    ],
+    faqs: [
+      {
+        question: 'How do I know if my house needs leveling?',
+        answer: 'Signs include doors and windows that stick, visible cracks in walls, uneven floors, and gaps between walls and ceilings or floors.'
+      },
+      {
+        question: 'How much does house leveling cost?',
+        answer: 'House leveling costs $5,000-$25,000 depending on the size of the home, extent of settlement, and repair method used.'
+      },
+      {
+        question: 'How long does house leveling take?',
+        answer: 'Most house leveling projects take 1-3 days to complete, though extensive repairs may take up to a week.'
+      }
+    ]
   }
 }
 
@@ -156,65 +213,150 @@ export default async function ServicePage({ params }: Props) {
   const serviceData = SERVICES_DATA[service as keyof typeof SERVICES_DATA]
 
   if (!serviceData) {
-    return <div>Service not found</div>
+    notFound()
   }
 
   return (
-    <main className="min-h-screen bg-gray-50">
+    <div className="relative flex min-h-screen flex-col bg-white font-display text-slate-900 antialiased overflow-x-hidden">
+      <StitchNav />
+      
       {/* Breadcrumbs */}
-      <nav className="bg-white border-b px-4 py-3">
-        <div className="max-w-5xl mx-auto flex items-center gap-2 text-sm text-gray-500">
-          <Link href="/" className="hover:text-amber-600">Home</Link>
+      <nav className="border-b border-slate-200 bg-slate-50 px-6 py-4">
+        <div className="max-w-7xl mx-auto flex items-center gap-2 text-sm text-slate-600">
+          <Link href="/" className="hover:text-amber-600 transition-colors">Home</Link>
           <span>/</span>
-          <Link href="/services" className="hover:text-amber-600">Services</Link>
+          <Link href="/services" className="hover:text-amber-600 transition-colors">Services</Link>
           <span>/</span>
-          <span className="text-gray-800">{serviceData.name}</span>
+          <span className="text-slate-900 font-medium">{serviceData.name}</span>
         </div>
       </nav>
 
-      <div className="max-w-5xl mx-auto py-8 px-4">
+      <main className="flex-1">
         {/* Hero Section */}
-        <div className="bg-white rounded-xl p-8 shadow-sm mb-8">
-          <div className="flex items-center gap-4 mb-4">
-            <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
-              <span className="material-symbols-outlined text-2xl text-primary">{serviceData.icon}</span>
+        <section className="py-20 lg:py-24 bg-slate-50">
+          <div className="mx-auto max-w-7xl px-6 lg:px-10">
+            <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-8 lg:p-12">
+              <div className="flex items-center gap-6 mb-6">
+                <div className="size-16 rounded-lg bg-amber-100 flex items-center justify-center border border-amber-200">
+                  <span className="material-symbols-outlined text-4xl text-amber-600">{serviceData.icon}</span>
+                </div>
+                <div>
+                  <h1 className="text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl">{serviceData.name}</h1>
+                  <p className="text-amber-600 mt-2">Professional repair services nationwide</p>
+                </div>
+              </div>
+              <p className="text-slate-600 text-lg leading-relaxed mb-8">
+                {serviceData.longDescription}
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-bold shadow-lg transition-all">
+                  Find {serviceData.name} Contractors
+                </button>
+                <button className="bg-amber-500 hover:bg-amber-600 text-white px-8 py-4 rounded-lg font-bold transition-all">
+                  Get Free Estimate
+                </button>
+              </div>
             </div>
-            <h1 className="text-3xl font-bold">{serviceData.name}</h1>
           </div>
-          <p className="text-gray-600 text-lg leading-relaxed mb-6">
-            {serviceData.longDescription}
-          </p>
-          <button className="bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-lg font-semibold">
-            Find {serviceData.name} Contractors
-          </button>
-        </div>
+        </section>
 
         {/* Benefits Section */}
-        <div className="bg-white rounded-xl p-8 shadow-sm mb-8">
-          <h2 className="text-2xl font-bold mb-6">Benefits of {serviceData.name}</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {serviceData.benefits.map((benefit, index) => (
-              <div key={index} className="flex items-center gap-3 p-4 bg-green-50 rounded-lg">
-                <span className="text-green-600 text-xl">✓</span>
-                <span className="font-medium">{benefit}</span>
+        <section className="py-20 lg:py-24 bg-white border-y border-slate-200">
+          <div className="mx-auto max-w-7xl px-6 lg:px-10">
+            <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-8 lg:p-12">
+              <h2 className="text-3xl font-bold text-slate-900 mb-8">Benefits of {serviceData.name}</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {serviceData.benefits.map((benefit, index) => (
+                  <div key={index} className="flex items-center gap-4 p-4 rounded-lg bg-slate-50 border border-slate-200">
+                    <div className="flex-shrink-0">
+                      <div className="size-8 rounded-full bg-green-100 flex items-center justify-center border border-green-200">
+                        <span className="material-symbols-outlined text-green-600 text-lg">check</span>
+                      </div>
+                    </div>
+                    <span className="text-slate-900 font-medium">{benefit}</span>
+                  </div>
+                ))}
               </div>
-            ))}
+            </div>
           </div>
-        </div>
+        </section>
+
+        {/* Process Section */}
+        <section className="py-20 lg:py-24 bg-slate-50">
+          <div className="mx-auto max-w-7xl px-6 lg:px-10">
+            <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-8 lg:p-12">
+              <h2 className="text-3xl font-bold text-slate-900 mb-8 text-center">How {serviceData.name} Works</h2>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div className="text-center">
+                  <div className="size-16 rounded-full bg-amber-100 flex items-center justify-center mx-auto mb-4 border border-amber-200">
+                    <span className="material-symbols-outlined text-3xl text-amber-600">search</span>
+                  </div>
+                  <h3 className="text-xl font-bold text-slate-900 mb-3">1. Inspection</h3>
+                  <p className="text-slate-600">Professional assessment of your foundation issues and repair requirements.</p>
+                </div>
+                <div className="text-center">
+                  <div className="size-16 rounded-full bg-amber-100 flex items-center justify-center mx-auto mb-4 border border-amber-200">
+                    <span className="material-symbols-outlined text-3xl text-amber-600">engineering</span>
+                  </div>
+                  <h3 className="text-xl font-bold text-slate-900 mb-3">2. Installation</h3>
+                  <p className="text-slate-600">Expert installation using professional-grade equipment and materials.</p>
+                </div>
+                <div className="text-center">
+                  <div className="size-16 rounded-full bg-amber-100 flex items-center justify-center mx-auto mb-4 border border-amber-200">
+                    <span className="material-symbols-outlined text-3xl text-amber-600">verified</span>
+                  </div>
+                  <h3 className="text-xl font-bold text-slate-900 mb-3">3. Warranty</h3>
+                  <p className="text-slate-600">Comprehensive warranties and ongoing support for your peace of mind.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
 
         {/* FAQ Section */}
-        <div className="bg-white rounded-xl p-8 shadow-sm">
-          <h2 className="text-2xl font-bold mb-6">Frequently Asked Questions</h2>
-          <div className="space-y-6">
-            {serviceData.faqs.map((faq, index) => (
-              <div key={index} className="border-b border-gray-200 pb-6 last:border-b-0">
-                <h3 className="text-lg font-semibold mb-3">{faq.question}</h3>
-                <p className="text-gray-700 leading-relaxed">{faq.answer}</p>
+        <section className="py-20 lg:py-24 bg-white border-y border-slate-200">
+          <div className="mx-auto max-w-7xl px-6 lg:px-10">
+            <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-8 lg:p-12">
+              <h2 className="text-3xl font-bold text-slate-900 mb-8">Frequently Asked Questions</h2>
+              <div className="space-y-6">
+                {serviceData.faqs.map((faq, index) => (
+                  <div key={index} className="bg-slate-50 border border-slate-200 rounded-xl p-6">
+                    <h3 className="text-xl font-bold text-slate-900 mb-4">{faq.question}</h3>
+                    <p className="text-slate-600 leading-relaxed">{faq.answer}</p>
+                  </div>
+                ))}
               </div>
-            ))}
+            </div>
           </div>
-        </div>
-      </div>
+        </section>
+
+        {/* CTA Section */}
+        <section className="py-20 lg:py-24 bg-slate-50">
+          <div className="mx-auto max-w-7xl px-6 lg:px-10">
+            <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-8 lg:p-12 text-center">
+              <h2 className="text-3xl font-bold text-slate-900 mb-6">Ready to Get Started?</h2>
+              <p className="text-slate-600 text-lg mb-8 max-w-2xl mx-auto">
+                Connect with certified {serviceData.name.toLowerCase()} contractors in your area. 
+                Get free estimates and compare services from top-rated professionals.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-8 rounded-lg transition-all shadow-lg">
+                  Find Local Contractors
+                </button>
+                <button className="bg-amber-500 hover:bg-amber-600 text-white font-bold py-4 px-8 rounded-lg transition-all">
+                  Get Free Quote
+                </button>
+              </div>
+              <p className="mt-6 text-slate-500 text-sm flex items-center justify-center gap-2">
+                <span className="material-symbols-outlined text-amber-600 text-base">verified_user</span>
+                Free inspections available from certified local pros
+              </p>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <StitchFooter />
 
       {/* JSON-LD Schema */}
       <script
@@ -260,6 +402,6 @@ export default async function ServicePage({ params }: Props) {
           ]),
         }}
       />
-    </main>
+    </div>
   )
 }

@@ -1,32 +1,254 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
+import { createClient } from '@/lib/supabase-server'
+import { generateBreadcrumbSchema, jsonLdScript } from '@/lib/structured-data'
+import { notFound } from 'next/navigation'
+import StitchNav from '@/components/StitchNav'
+import StitchFooter from '@/components/StitchFooter'
+
+// Force dynamic rendering to avoid cookies issue during static generation
+export const dynamic = 'force-dynamic'
 
 interface Props {
   params: Promise<{ state: string; city: string }>
 }
 
+interface BusinessListing {
+  id: string
+  name: string
+  slug: string
+  phone?: string
+  address?: string
+  description?: string
+  rating?: number
+  review_count: number
+  is_verified: boolean
+  year_established?: number
+  services: { name: string; slug: string }[]
+  features: { name: string; slug: string; value: string }[]
+}
+
+interface CityPageData {
+  city: {
+    id: number
+    name: string
+    slug: string
+  }
+  state: {
+    id: number
+    name: string
+    abbreviation: string
+    slug: string
+  }
+  businesses: BusinessListing[]
+}
+
+// Fallback data for demo/testing purposes
+const FALLBACK_CITY_DATA: Record<string, Record<string, CityPageData>> = {
+  'texas': {
+    'houston': {
+      city: { id: 1, name: 'Houston', slug: 'houston' },
+      state: { id: 1, name: 'Texas', abbreviation: 'TX', slug: 'texas' },
+      businesses: [
+        {
+          id: '1',
+          name: 'Houston Foundation Experts',
+          slug: 'houston-foundation-experts',
+          phone: '(713) 555-0123',
+          address: '1234 Main St',
+          description: 'Leading foundation repair specialists in Houston with over 20 years of experience serving residential and commercial properties.',
+          rating: 4.8,
+          review_count: 127,
+          is_verified: true,
+          year_established: 2003,
+          services: [
+            { name: 'Pier & Beam Repair', slug: 'pier-beam-repair' },
+            { name: 'Slab Foundation Repair', slug: 'slab-repair' }
+          ],
+          features: [
+            { name: 'Licensed & Insured', slug: 'licensed-insured', value: 'Yes' },
+            { name: 'Free Estimates', slug: 'free-estimates', value: 'Yes' }
+          ]
+        },
+        {
+          id: '2',
+          name: 'Texas Foundation Solutions',
+          slug: 'texas-foundation-solutions',
+          phone: '(713) 555-0456',
+          address: '5678 Oak Ave',
+          description: 'Comprehensive foundation repair and waterproofing services throughout Houston and surrounding areas.',
+          rating: 4.6,
+          review_count: 89,
+          is_verified: true,
+          year_established: 2010,
+          services: [
+            { name: 'Foundation Leveling', slug: 'foundation-leveling' },
+            { name: 'Waterproofing', slug: 'waterproofing' }
+          ],
+          features: [
+            { name: 'Lifetime Warranty', slug: 'lifetime-warranty', value: 'Yes' },
+            { name: '24/7 Emergency Service', slug: 'emergency-service', value: 'Yes' }
+          ]
+        }
+      ]
+    },
+    'dallas': {
+      city: { id: 2, name: 'Dallas', slug: 'dallas' },
+      state: { id: 1, name: 'Texas', abbreviation: 'TX', slug: 'texas' },
+      businesses: [
+        {
+          id: '3',
+          name: 'Dallas Foundation Pros',
+          slug: 'dallas-foundation-pros',
+          phone: '(214) 555-0789',
+          address: '9012 Elm St',
+          description: 'Trusted foundation repair contractors serving the Dallas metroplex for over 15 years.',
+          rating: 4.9,
+          review_count: 156,
+          is_verified: true,
+          year_established: 2008,
+          services: [
+            { name: 'Concrete Lifting', slug: 'concrete-lifting' },
+            { name: 'Crack Repair', slug: 'crack-repair' }
+          ],
+          features: [
+            { name: 'Same Day Service', slug: 'same-day-service', value: 'Yes' },
+            { name: 'Money Back Guarantee', slug: 'money-back-guarantee', value: 'Yes' }
+          ]
+        }
+      ]
+    }
+  }
+}
+
+async function getCityData(stateSlug: string, citySlug: string): Promise<CityPageData | null> {
+  try {
+    const supabase = await createClient()
+    
+    // First get city and state info
+    const { data: cityData, error: cityError } = await supabase
+      .from('cities')
+      .select(`
+        id,
+        name,
+        slug,
+        states!inner (
+          id,
+          name,
+          abbreviation,
+          slug
+        )
+      `)
+      .eq('slug', citySlug)
+      .eq('states.slug', stateSlug)
+      .single()
+
+    if (cityError || !cityData) {
+      // Fallback to hardcoded city data
+      const fallbackData = FALLBACK_CITY_DATA[stateSlug]?.[citySlug]
+      return fallbackData || null
+    }
+
+    // Get businesses for this city
+    const { data: businesses, error: businessError } = await supabase
+      .from('businesses')
+      .select(`
+        id,
+        name,
+        slug,
+        phone,
+        address,
+        description,
+        rating,
+        review_count,
+        is_verified,
+        year_established,
+        business_services!inner (
+          services (
+            name,
+            slug
+          )
+        ),
+        business_features!inner (
+          features (
+            name,
+            slug
+          ),
+          value
+        )
+      `)
+      .eq('city_id', cityData.id)
+      .eq('is_active', true)
+      .order('is_featured', { ascending: false })
+      .order('rating', { ascending: false })
+      .limit(20)
+
+    const formattedBusinesses = businesses?.map((biz: any) => ({
+      ...biz,
+      services: biz.business_services?.map((bs: any) => bs.services) || [],
+      features: biz.business_features?.map((bf: any) => ({ ...bf.features, value: bf.value })) || []
+    })) || []
+
+    return {
+      city: cityData,
+      state: cityData.states as any,
+      businesses: formattedBusinesses
+    }
+  } catch (error) {
+    console.error('Database error, using fallback data:', error)
+    // Fallback to hardcoded city data
+    const fallbackData = FALLBACK_CITY_DATA[stateSlug]?.[citySlug]
+    return fallbackData || null
+  }
+}
+
+// Generate static params for common city combinations
+export async function generateStaticParams() {
+  // Return common state/city combinations to pre-generate
+  return [
+    { state: 'texas', city: 'houston' },
+    { state: 'texas', city: 'dallas' },
+    { state: 'texas', city: 'austin' },
+    { state: 'texas', city: 'san-antonio' },
+    { state: 'california', city: 'los-angeles' },
+    { state: 'california', city: 'san-francisco' },
+    { state: 'california', city: 'san-diego' },
+    { state: 'florida', city: 'miami' },
+    { state: 'florida', city: 'orlando' },
+    { state: 'florida', city: 'tampa' },
+  ]
+}
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { state, city } = await params
-  const cityName = city.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')
-  const stateName = state.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')
+  
+  const pageData = await getCityData(state, city)
+  if (!pageData) {
+    return {
+      title: 'City Not Found',
+      description: 'The requested city page could not be found.',
+    }
+  }
+
+  const { city: cityInfo, state: stateInfo } = pageData
   const url = `https://foundationrepairfinder.com/${state}/${city}`
 
   return {
-    title: `${cityName} Foundation Repair Contractors | Foundation Repair Directory`,
-    description: `Find top-rated foundation repair contractors in ${cityName}, ${stateName}. Compare local experts, verified reviews, and get free estimates. Licensed professionals for pier & beam, slab, basement repairs.`,
+    title: `${cityInfo.name} Foundation Repair Contractors | Foundation Repair Directory`,
+    description: `Find top-rated foundation repair contractors in ${cityInfo.name}, ${stateInfo.abbreviation}. Compare local experts, verified reviews, and get free estimates. Licensed professionals for pier & beam, slab, basement repairs.`,
     alternates: {
       canonical: url,
     },
     openGraph: {
-      title: `${cityName} Foundation Repair Contractors | Foundation Repair Directory`,
-      description: `Find top-rated foundation repair contractors in ${cityName}, ${stateName}. Compare local experts, verified reviews, and get free estimates. Licensed professionals for pier & beam, slab, basement repairs.`,
+      title: `${cityInfo.name} Foundation Repair Contractors | Foundation Repair Directory`,
+      description: `Find top-rated foundation repair contractors in ${cityInfo.name}, ${stateInfo.abbreviation}. Compare local experts, verified reviews, and get free estimates.`,
       url: url,
       images: [
         {
           url: 'https://foundationrepairfinder.com/og-image.jpg',
           width: 1200,
           height: 630,
-          alt: `Foundation Repair in ${cityName}, ${stateName}`,
+          alt: `Foundation Repair in ${cityInfo.name}, ${stateInfo.name}`,
         },
       ],
     },
@@ -35,167 +257,277 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function CityPage({ params }: Props) {
   const { state, city } = await params
-  const cityName = city.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')
-  const stateName = state.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')
+  
+  const pageData = await getCityData(state, city)
+  if (!pageData) {
+    notFound()
+  }
 
-  // TODO: Fetch from Supabase
-  const mockListings = [1, 2, 3, 4, 5]
+  const { city: cityInfo, state: stateInfo, businesses } = pageData
+  
+  // Generate structured data
+  const breadcrumbs = [
+    { name: 'Home', url: 'https://foundationrepairfinder.com' },
+    { name: `Foundation Repair in ${stateInfo.name}`, url: `https://foundationrepairfinder.com/${state}` },
+    { name: `Foundation Repair in ${cityInfo.name}`, url: `https://foundationrepairfinder.com/${state}/${city}` }
+  ]
+  const breadcrumbSchema = generateBreadcrumbSchema(breadcrumbs)
 
   return (
-    <main className="min-h-screen bg-gray-50">
+    <div className="relative flex min-h-screen flex-col bg-white font-display text-slate-900 antialiased overflow-x-hidden">
+      <StitchNav />
+
       {/* Breadcrumbs */}
-      <nav className="bg-white border-b px-4 py-3">
-        <div className="max-w-5xl mx-auto flex items-center gap-2 text-sm text-gray-500">
-          <Link href="/" className="hover:text-amber-600">Home</Link>
+      <nav className="border-b border-slate-200 bg-slate-50 px-6 py-4">
+        <div className="max-w-7xl mx-auto flex items-center gap-2 text-sm text-slate-600">
+          <Link href="/" className="hover:text-amber-600 transition-colors">Home</Link>
           <span>/</span>
-          <Link href={`/${state}`} className="hover:text-amber-600">{stateName}</Link>
+          <Link href={`/${state}`} className="hover:text-amber-600 transition-colors">{stateInfo.name}</Link>
           <span>/</span>
-          <span className="text-gray-800">{cityName}</span>
+          <span className="text-slate-900 font-medium">{cityInfo.name}</span>
         </div>
       </nav>
 
-      <div className="max-w-5xl mx-auto py-8 px-4">
-        <h1 className="text-3xl font-bold mb-2">
-          Foundation Repair in {cityName}, {stateName}
-        </h1>
-        <p className="text-gray-600 mb-8">
-          Compare {mockListings.length} licensed foundation repair contractors in {cityName}. 
-          Get free estimates and find the right professional for your project.
-        </p>
+      <main className="flex-1">
+        {/* Hero Section */}
+        <section className="py-20 lg:py-24 bg-slate-50">
+          <div className="mx-auto max-w-7xl px-6 lg:px-10">
+            <h1 className="text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl lg:text-6xl mb-6">
+              Foundation Repair in {cityInfo.name}, {stateInfo.abbreviation}
+            </h1>
+            <p className="text-slate-600 text-lg mb-12 max-w-3xl leading-relaxed">
+              {businesses.length > 0 ? (
+                <>Compare {businesses.length} licensed foundation repair contractors in {cityInfo.name}. 
+                Get free estimates and find the right professional for your project.</>
+              ) : (
+                <>Foundation repair contractors in {cityInfo.name}, {stateInfo.abbreviation}. 
+                Get free estimates from qualified professionals in your area.</>
+              )}
+            </p>
+          </div>
+        </section>
 
         {/* Filters */}
-        <div className="flex flex-wrap gap-3 mb-8">
-          {['All Services', 'Pier & Beam', 'Slab Repair', 'Crack Repair', 'Waterproofing'].map((filter) => (
-            <button
-              key={filter}
-              className="px-4 py-2 rounded-full border border-gray-300 text-sm hover:border-amber-500 hover:text-amber-600 transition-colors"
-            >
-              {filter}
-            </button>
-          ))}
-        </div>
-
-        {/* Listings */}
-        <div className="space-y-4">
-          {mockListings.map((i) => (
-            <Link
-              key={i}
-              href={`/${state}/${city}/example-contractor-${i}`}
-              className="block bg-white rounded-xl p-6 shadow-sm border hover:shadow-md hover:border-amber-200 transition-all"
-            >
-              <div className="flex items-start justify-between">
-                <div>
-                  <h3 className="text-xl font-semibold">Example Foundation Repair Co. {i}</h3>
-                  <p className="text-gray-500 text-sm mt-1">{cityName}, {stateName}</p>
-                  <div className="flex items-center gap-4 mt-2">
-                    <div className="flex items-center gap-1">
-                      <span className="text-amber-500">★★★★★</span>
-                      <span className="text-gray-500 text-sm">5.0 (0 reviews)</span>
-                    </div>
-                    <span className="text-green-600 text-sm">✓ Verified</span>
-                  </div>
-                  <div className="flex flex-wrap gap-2 mt-3">
-                    {['Free Inspection', 'Lifetime Warranty', 'Licensed'].map((tag) => (
-                      <span key={tag} className="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-                <button className="bg-amber-500 hover:bg-amber-600 text-white px-6 py-2 rounded-lg text-sm font-medium transition-colors whitespace-nowrap">
-                  Get Estimate
+        <section className="py-8 border-b border-slate-200 bg-white">
+          <div className="mx-auto max-w-7xl px-6 lg:px-10">
+            <div className="flex flex-wrap gap-3">
+              {['All Services', 'Pier & Beam', 'Slab Repair', 'Crack Repair', 'Waterproofing'].map((filter) => (
+                <button
+                  key={filter}
+                  className="px-4 py-2 rounded-full border border-slate-300 text-sm hover:border-amber-500 hover:text-amber-600 text-slate-700 transition-colors bg-slate-50"
+                >
+                  {filter}
                 </button>
-              </div>
-            </Link>
-          ))}
-        </div>
-
-        {/* City Content (SEO) */}
-        <section className="mt-12 bg-white rounded-xl p-8 shadow-sm">
-          <h2 className="text-2xl font-bold mb-4">
-            About Foundation Repair in {cityName}
-          </h2>
-          <p className="text-gray-700 leading-relaxed">
-            {cityName}, {stateName} homeowners face unique foundation challenges due to local soil conditions 
-            and climate. Whether you're dealing with settling, cracks, or water damage, finding a qualified 
-            foundation repair contractor is essential to protecting your investment. Our directory helps you 
-            compare local professionals, their services, warranties, and pricing to make an informed decision.
-          </p>
-          <h3 className="text-lg font-semibold mt-6 mb-3">
-            Average Foundation Repair Costs in {cityName}
-          </h3>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="text-center p-3 bg-amber-50 rounded-lg">
-              <p className="text-xs text-gray-500">Minor Repair</p>
-              <p className="font-bold text-amber-600">$500–$2,000</p>
-            </div>
-            <div className="text-center p-3 bg-amber-50 rounded-lg">
-              <p className="text-xs text-gray-500">Average Repair</p>
-              <p className="font-bold text-amber-600">$4,500–$8,000</p>
-            </div>
-            <div className="text-center p-3 bg-amber-50 rounded-lg">
-              <p className="text-xs text-gray-500">Major Repair</p>
-              <p className="font-bold text-amber-600">$10,000–$20,000</p>
-            </div>
-            <div className="text-center p-3 bg-amber-50 rounded-lg">
-              <p className="text-xs text-gray-500">Per Pier</p>
-              <p className="font-bold text-amber-600">$1,000–$3,000</p>
+              ))}
             </div>
           </div>
         </section>
-      </div>
 
-      {/* JSON-LD */}
+        {/* Business Listings */}
+        <section className="py-20 lg:py-24 bg-white">
+          <div className="mx-auto max-w-7xl px-6 lg:px-10">
+            {businesses.length > 0 ? (
+              <div className="space-y-6">
+                {businesses.map((business) => (
+                  <Link
+                    key={business.id}
+                    href={`/${state}/${city}/${business.slug}`}
+                    className="bg-white border border-slate-200 rounded-xl shadow-sm group flex flex-col lg:flex-row overflow-hidden transition-all hover:-translate-y-1 hover:shadow-lg hover:border-amber-300"
+                  >
+                    {/* Business Image Placeholder */}
+                    <div className="relative h-48 lg:h-auto lg:w-64 overflow-hidden">
+                      <div className="h-full w-full bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center">
+                        <span className="material-symbols-outlined text-6xl text-slate-400">foundation</span>
+                      </div>
+                      {business.is_verified && (
+                        <div className="absolute top-4 right-4 rounded-full bg-green-100 backdrop-blur px-3 py-1 text-[10px] font-black uppercase text-green-700 border border-green-300">
+                          Verified Pro
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Business Details */}
+                    <div className="flex flex-1 flex-col p-6 lg:p-8">
+                      <div className="flex items-start justify-between mb-4">
+                        <div className="flex-1">
+                          <h3 className="text-2xl font-bold text-slate-900 group-hover:text-amber-600 transition-colors mb-2">
+                            {business.name}
+                          </h3>
+                          <p className="text-slate-500 text-sm mb-2">
+                            {business.address ? `${business.address}, ` : ''}{cityInfo.name}, {stateInfo.abbreviation}
+                          </p>
+                          
+                          {/* Rating */}
+                          {business.rating && business.review_count > 0 && (
+                            <div className="flex items-center gap-2 mb-3">
+                              <div className="flex text-amber-500">
+                                {[...Array(5)].map((_, i) => (
+                                  <span 
+                                    key={i} 
+                                    className={`material-symbols-outlined text-sm ${i < Math.round(business.rating!) ? 'fill-1' : ''}`}
+                                  >
+                                    star
+                                  </span>
+                                ))}
+                              </div>
+                              <span className="text-slate-600 text-sm">
+                                {business.rating} ({business.review_count} reviews)
+                              </span>
+                            </div>
+                          )}
+                        </div>
+                        
+                        <div className="flex items-center gap-2 text-slate-500 text-xs ml-4">
+                          {business.year_established && (
+                            <span>Est. {business.year_established}</span>
+                          )}
+                        </div>
+                      </div>
+                      
+                      {business.description && (
+                        <p className="text-slate-600 mb-4 leading-relaxed">{business.description}</p>
+                      )}
+                      
+                      {/* Services & Features */}
+                      <div className="flex flex-wrap gap-2 mb-6">
+                        {business.services.slice(0, 2).map((service) => (
+                          <span key={service.slug} className="px-3 py-1 bg-amber-100 text-amber-700 text-xs rounded-full border border-amber-200">
+                            {service.name}
+                          </span>
+                        ))}
+                        {business.features.slice(0, 3).map((feature) => (
+                          <span key={feature.slug} className="px-3 py-1 bg-slate-100 text-slate-700 text-xs rounded-full border border-slate-200">
+                            {feature.name}
+                          </span>
+                        ))}
+                      </div>
+
+                      {/* Action Buttons */}
+                      <div className="mt-auto flex flex-col sm:flex-row gap-3">
+                        <button className="flex-1 rounded-lg bg-amber-500 py-3 px-6 text-base font-bold text-white transition-colors hover:bg-amber-600">
+                          Get Free Estimate
+                        </button>
+                        {business.phone && (
+                          <a 
+                            href={`tel:${business.phone}`}
+                            className="flex-1 text-center border border-blue-500 text-blue-600 px-6 py-3 rounded-lg text-base font-bold hover:bg-blue-50 transition-colors"
+                          >
+                            {business.phone}
+                          </a>
+                        )}
+                        <button className="flex items-center justify-center rounded-lg border border-slate-300 bg-slate-50 px-4 py-3 text-slate-700 hover:bg-slate-100 transition-colors">
+                          <span className="material-symbols-outlined">info</span>
+                        </button>
+                      </div>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            ) : (
+              <div className="bg-white border border-slate-200 rounded-xl shadow-sm text-center py-16">
+                <div className="max-w-md mx-auto">
+                  <span className="material-symbols-outlined text-6xl text-slate-400 mb-4 block">search_off</span>
+                  <h3 className="text-xl font-bold text-slate-900 mb-4">No Foundation Repair Contractors Found</h3>
+                  <p className="text-slate-600 mb-6">
+                    We don't have any foundation repair contractors listed in {cityInfo.name} yet.
+                  </p>
+                  <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                    <Link 
+                      href={`/${state}`}
+                      className="rounded-lg bg-blue-600 py-3 px-6 text-white font-bold hover:bg-blue-700 transition-colors"
+                    >
+                      Browse {stateInfo.name} Cities
+                    </Link>
+                    <button className="rounded-lg border border-slate-300 py-3 px-6 text-slate-700 font-bold hover:bg-slate-50 transition-colors">
+                      List Your Business
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        </section>
+
+        {/* City Information */}
+        <section className="py-20 lg:py-24 bg-slate-50 border-y border-slate-200">
+          <div className="mx-auto max-w-7xl px-6 lg:px-10">
+            <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-8 lg:p-12">
+              <h2 className="text-3xl font-bold text-slate-900 mb-6">
+                About Foundation Repair in {cityInfo.name}
+              </h2>
+              <p className="text-slate-600 leading-relaxed mb-8">
+                {cityInfo.name}, {stateInfo.name} homeowners face unique foundation challenges due to local soil conditions 
+                and climate. Whether you're dealing with settling, cracks, or water damage, finding a qualified 
+                foundation repair contractor is essential to protecting your investment. Our directory helps you 
+                compare local professionals, their services, warranties, and pricing to make an informed decision.
+              </p>
+              
+              <h3 className="text-xl font-bold text-slate-900 mb-6">
+                Average Foundation Repair Costs in {cityInfo.name}
+              </h3>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div className="text-center p-4 bg-slate-50 border border-slate-200 rounded-lg">
+                  <p className="text-xs text-slate-500 mb-2">Minor Repair</p>
+                  <p className="text-xl font-bold text-amber-600">$500–$2,000</p>
+                </div>
+                <div className="text-center p-4 bg-slate-50 border border-slate-200 rounded-lg">
+                  <p className="text-xs text-slate-500 mb-2">Average Repair</p>
+                  <p className="text-xl font-bold text-amber-600">$4,500–$8,000</p>
+                </div>
+                <div className="text-center p-4 bg-slate-50 border border-slate-200 rounded-lg">
+                  <p className="text-xs text-slate-500 mb-2">Major Repair</p>
+                  <p className="text-xl font-bold text-amber-600">$10,000–$20,000</p>
+                </div>
+                <div className="text-center p-4 bg-slate-50 border border-slate-200 rounded-lg">
+                  <p className="text-xs text-slate-500 mb-2">Per Pier</p>
+                  <p className="text-xl font-bold text-amber-600">$1,000–$3,000</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <StitchFooter />
+
+      {/* JSON-LD Schema */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify([
-            {
-              "@context": "https://schema.org",
-              "@type": "BreadcrumbList",
-              "itemListElement": [
-                {
-                  "@type": "ListItem",
-                  "position": 1,
-                  "name": "Home",
-                  "item": "https://foundationrepairfinder.com"
-                },
-                {
-                  "@type": "ListItem",
-                  "position": 2,
-                  "name": `Foundation Repair in ${stateName}`,
-                  "item": `https://foundationrepairfinder.com/${state}`
-                },
-                {
-                  "@type": "ListItem",
-                  "position": 3,
-                  "name": `Foundation Repair in ${cityName}`,
-                  "item": `https://foundationrepairfinder.com/${state}/${city}`
-                }
-              ]
-            },
-            {
-              "@context": "https://schema.org",
-              "@type": "ItemList",
-              "name": `Foundation Repair Contractors in ${cityName}, ${stateName}`,
-              "numberOfItems": mockListings.length,
-              "itemListElement": mockListings.map((i) => ({
-                "@type": "ListItem",
-                "position": i,
-                "item": {
-                  "@type": "LocalBusiness",
-                  "name": `Example Foundation Repair Co. ${i}`,
-                  "address": {
-                    "@type": "PostalAddress",
-                    "addressLocality": cityName,
-                    "addressRegion": stateName,
-                  }
-                }
-              }))
-            }
-          ]),
-        }}
+        dangerouslySetInnerHTML={jsonLdScript(breadcrumbSchema)}
       />
-    </main>
+      {businesses.length > 0 && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={jsonLdScript({
+            "@context": "https://schema.org",
+            "@type": "ItemList",
+            "name": `Foundation Repair Contractors in ${cityInfo.name}, ${stateInfo.name}`,
+            "numberOfItems": businesses.length,
+            "itemListElement": businesses.map((business, index) => ({
+              "@type": "ListItem",
+              "position": index + 1,
+              "item": {
+                "@type": "LocalBusiness",
+                "name": business.name,
+                "url": `https://foundationrepairfinder.com/${state}/${city}/${business.slug}`,
+                "telephone": business.phone,
+                "address": {
+                  "@type": "PostalAddress",
+                  "streetAddress": business.address,
+                  "addressLocality": cityInfo.name,
+                  "addressRegion": stateInfo.abbreviation,
+                  "addressCountry": "US"
+                },
+                "aggregateRating": business.rating && business.review_count > 0 ? {
+                  "@type": "AggregateRating",
+                  "ratingValue": business.rating,
+                  "reviewCount": business.review_count
+                } : undefined
+              }
+            }))
+          })}
+        />
+      )}
+    </div>
   )
 }

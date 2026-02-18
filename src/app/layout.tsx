@@ -12,17 +12,57 @@ export const metadata: Metadata = {
     template: '%s | Foundation Repair Directory',
   },
   description: 'Compare foundation repair contractors nationwide. Get free estimates, read reviews, and find licensed professionals for pier & beam, slab, and basement repairs.',
+  keywords: [
+    'foundation repair',
+    'foundation contractors',
+    'pier and beam',
+    'slab repair',
+    'basement waterproofing',
+    'house leveling',
+    'foundation crack repair',
+    'crawl space repair'
+  ],
+  authors: [{ name: 'Foundation Repair Directory' }],
+  creator: 'Foundation Repair Directory',
+  publisher: 'Foundation Repair Directory',
+  alternates: {
+    canonical: 'https://foundationrepairfinder.com',
+  },
   openGraph: {
     type: 'website',
     locale: 'en_US',
+    url: 'https://foundationrepairfinder.com',
     siteName: 'Foundation Repair Directory',
+    title: 'Foundation Repair Directory — Find Trusted Contractors Near You',
+    description: 'Compare foundation repair contractors nationwide. Get free estimates, read reviews, and find licensed professionals for pier & beam, slab, and basement repairs.',
+    images: [
+      {
+        url: '/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Foundation Repair Directory - Find Trusted Contractors',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
+    title: 'Foundation Repair Directory — Find Trusted Contractors Near You',
+    description: 'Compare foundation repair contractors nationwide. Get free estimates, read reviews, and find licensed professionals.',
+    images: ['/og-image.jpg'],
   },
   robots: {
     index: true,
     follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  verification: {
+    google: process.env.GOOGLE_SITE_VERIFICATION,
   },
 };
 
@@ -32,7 +72,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en">
       <head>
         {/* Favicon */}
         <link rel="icon" type="image/x-icon" href="/favicon.ico" />
@@ -45,18 +85,7 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
           rel="stylesheet"
         />
-        {/* Prevent flash of incorrect theme */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function() {
-                const theme = localStorage.getItem('theme') || 'dark';
-                document.documentElement.setAttribute('data-theme', theme);
-                document.documentElement.className = theme;
-              })();
-            `,
-          }}
-        />
+        {/* Light mode - no theme switching needed */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -89,7 +118,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={`${manrope.className} bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased overflow-x-hidden`}>
+      <body className={`${manrope.className} bg-white font-display text-slate-900 antialiased overflow-x-hidden`}>
         <ConversionTracker gaId={process.env.NEXT_PUBLIC_GA_ID} />
         {children}
       </body>

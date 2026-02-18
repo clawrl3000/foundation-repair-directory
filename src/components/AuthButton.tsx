@@ -81,7 +81,7 @@ export default function AuthButton() {
       </Link>
       <Link
         href="/auth/signup"
-        className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors"
+        className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-bold rounded-md text-slate-900 bg-[#f59e0b] hover:bg-amber-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500 transition-colors shadow-sm"
       >
         Join as Pro
       </Link>

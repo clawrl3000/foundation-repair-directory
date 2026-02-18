@@ -99,13 +99,13 @@ export default function LeadForm({ isOpen, onClose, businessId, businessName }: 
       />
       
       {/* Modal */}
-      <div className="relative w-full max-w-md mx-4 bg-background-dark border border-glass-stroke rounded-lg shadow-xl">
+      <div className="relative w-full max-w-md mx-4 bg-white border border-slate-200 rounded-lg shadow-xl">
         {success ? (
           // Success state
           <div className="p-6 text-center">
             <span className="material-symbols-outlined text-green-400 text-6xl mb-4">check_circle</span>
-            <h3 className="text-xl font-bold text-white mb-2">Request Submitted!</h3>
-            <p className="text-slate-300 mb-6">
+            <h3 className="text-xl font-bold text-slate-900 mb-2">Request Submitted!</h3>
+            <p className="text-slate-600 mb-6">
               We'll connect you with {businessName ? businessName : 'qualified contractors'} in your area shortly.
             </p>
             <button
@@ -119,16 +119,16 @@ export default function LeadForm({ isOpen, onClose, businessId, businessName }: 
           // Form state
           <>
             {/* Header */}
-            <div className="flex items-center justify-between p-6 border-b border-glass-stroke">
+            <div className="flex items-center justify-between p-6 border-b border-slate-200">
               <div>
-                <h3 className="text-lg font-semibold text-white">Get Free Estimates</h3>
+                <h3 className="text-lg font-semibold text-slate-900">Get Free Estimates</h3>
                 {businessName && (
-                  <p className="text-sm text-slate-400">Connect with {businessName}</p>
+                  <p className="text-sm text-slate-600">Connect with {businessName}</p>
                 )}
               </div>
               <button
                 onClick={handleClose}
-                className="text-slate-400 hover:text-white transition-colors"
+                className="text-slate-400 hover:text-slate-900 transition-colors"
               >
                 <span className="material-symbols-outlined">close</span>
               </button>
@@ -137,7 +137,7 @@ export default function LeadForm({ isOpen, onClose, businessId, businessName }: 
             {/* Form */}
             <form onSubmit={handleSubmit} className="p-6 space-y-4">
               {error && (
-                <div className="p-3 rounded-md bg-red-900/20 border border-red-800/30">
+                <div className="p-3 rounded-md bg-red-50 border border-red-200">
                   <div className="flex">
                     <span className="material-symbols-outlined text-red-400 text-sm mr-2">error</span>
                     <div className="text-sm text-red-300">{error}</div>
@@ -147,7 +147,7 @@ export default function LeadForm({ isOpen, onClose, businessId, businessName }: 
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-slate-300 mb-1">
+                  <label htmlFor="name" className="block text-sm font-medium text-slate-700 mb-1">
                     Name *
                   </label>
                   <input
@@ -156,13 +156,13 @@ export default function LeadForm({ isOpen, onClose, businessId, businessName }: 
                     required
                     value={formData.name}
                     onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
-                    className="w-full px-3 py-2 border border-glass-stroke rounded-md placeholder-slate-500 text-white bg-background-dark/50 focus:outline-none focus:ring-primary focus:border-primary text-sm"
+                    className="w-full px-3 py-2 border border-slate-300 rounded-md placeholder-slate-400 text-slate-900 bg-white focus:outline-none focus:ring-primary focus:border-primary text-sm"
                     placeholder="Your name"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="zip" className="block text-sm font-medium text-slate-300 mb-1">
+                  <label htmlFor="zip" className="block text-sm font-medium text-slate-700 mb-1">
                     ZIP Code *
                   </label>
                   <input
@@ -171,14 +171,14 @@ export default function LeadForm({ isOpen, onClose, businessId, businessName }: 
                     required
                     value={formData.zip}
                     onChange={(e) => setFormData(prev => ({ ...prev, zip: e.target.value }))}
-                    className="w-full px-3 py-2 border border-glass-stroke rounded-md placeholder-slate-500 text-white bg-background-dark/50 focus:outline-none focus:ring-primary focus:border-primary text-sm"
+                    className="w-full px-3 py-2 border border-slate-300 rounded-md placeholder-slate-400 text-slate-900 bg-white focus:outline-none focus:ring-primary focus:border-primary text-sm"
                     placeholder="12345"
                   />
                 </div>
               </div>
 
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-slate-300 mb-1">
+                <label htmlFor="email" className="block text-sm font-medium text-slate-700 mb-1">
                   Email *
                 </label>
                 <input
@@ -187,13 +187,13 @@ export default function LeadForm({ isOpen, onClose, businessId, businessName }: 
                   required
                   value={formData.email}
                   onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
-                  className="w-full px-3 py-2 border border-glass-stroke rounded-md placeholder-slate-500 text-white bg-background-dark/50 focus:outline-none focus:ring-primary focus:border-primary text-sm"
+                  className="w-full px-3 py-2 border border-slate-300 rounded-md placeholder-slate-400 text-slate-900 bg-white focus:outline-none focus:ring-primary focus:border-primary text-sm"
                   placeholder="your@email.com"
                 />
               </div>
 
               <div>
-                <label htmlFor="phone" className="block text-sm font-medium text-slate-300 mb-1">
+                <label htmlFor="phone" className="block text-sm font-medium text-slate-700 mb-1">
                   Phone
                 </label>
                 <input
@@ -201,13 +201,13 @@ export default function LeadForm({ isOpen, onClose, businessId, businessName }: 
                   type="tel"
                   value={formData.phone}
                   onChange={(e) => setFormData(prev => ({ ...prev, phone: e.target.value }))}
-                  className="w-full px-3 py-2 border border-glass-stroke rounded-md placeholder-slate-500 text-white bg-background-dark/50 focus:outline-none focus:ring-primary focus:border-primary text-sm"
+                  className="w-full px-3 py-2 border border-slate-300 rounded-md placeholder-slate-400 text-slate-900 bg-white focus:outline-none focus:ring-primary focus:border-primary text-sm"
                   placeholder="(555) 123-4567"
                 />
               </div>
 
               <div>
-                <label htmlFor="service_needed" className="block text-sm font-medium text-slate-300 mb-1">
+                <label htmlFor="service_needed" className="block text-sm font-medium text-slate-700 mb-1">
                   Service Needed *
                 </label>
                 <select
@@ -215,7 +215,7 @@ export default function LeadForm({ isOpen, onClose, businessId, businessName }: 
                   required
                   value={formData.service_needed}
                   onChange={(e) => setFormData(prev => ({ ...prev, service_needed: e.target.value }))}
-                  className="w-full px-3 py-2 border border-glass-stroke rounded-md text-white bg-background-dark/50 focus:outline-none focus:ring-primary focus:border-primary text-sm"
+                  className="w-full px-3 py-2 border border-slate-300 rounded-md text-slate-900 bg-white focus:outline-none focus:ring-primary focus:border-primary text-sm"
                 >
                   <option value="">Select a service</option>
                   {SERVICE_TYPES.map((service) => (
@@ -227,14 +227,14 @@ export default function LeadForm({ isOpen, onClose, businessId, businessName }: 
               </div>
 
               <div>
-                <label htmlFor="urgency" className="block text-sm font-medium text-slate-300 mb-1">
+                <label htmlFor="urgency" className="block text-sm font-medium text-slate-700 mb-1">
                   Urgency
                 </label>
                 <select
                   id="urgency"
                   value={formData.urgency}
                   onChange={(e) => setFormData(prev => ({ ...prev, urgency: e.target.value }))}
-                  className="w-full px-3 py-2 border border-glass-stroke rounded-md text-white bg-background-dark/50 focus:outline-none focus:ring-primary focus:border-primary text-sm"
+                  className="w-full px-3 py-2 border border-slate-300 rounded-md text-slate-900 bg-white focus:outline-none focus:ring-primary focus:border-primary text-sm"
                 >
                   {URGENCY_LEVELS.map((level) => (
                     <option key={level.value} value={level.value}>
@@ -245,7 +245,7 @@ export default function LeadForm({ isOpen, onClose, businessId, businessName }: 
               </div>
 
               <div>
-                <label htmlFor="message" className="block text-sm font-medium text-slate-300 mb-1">
+                <label htmlFor="message" className="block text-sm font-medium text-slate-700 mb-1">
                   Tell us about your project
                 </label>
                 <textarea
@@ -253,7 +253,7 @@ export default function LeadForm({ isOpen, onClose, businessId, businessName }: 
                   rows={3}
                   value={formData.message}
                   onChange={(e) => setFormData(prev => ({ ...prev, message: e.target.value }))}
-                  className="w-full px-3 py-2 border border-glass-stroke rounded-md placeholder-slate-500 text-white bg-background-dark/50 focus:outline-none focus:ring-primary focus:border-primary text-sm"
+                  className="w-full px-3 py-2 border border-slate-300 rounded-md placeholder-slate-400 text-slate-900 bg-white focus:outline-none focus:ring-primary focus:border-primary text-sm"
                   placeholder="Describe the foundation issue you're experiencing..."
                 />
               </div>
@@ -266,7 +266,7 @@ export default function LeadForm({ isOpen, onClose, businessId, businessName }: 
                 {loading ? 'Submitting...' : 'Get Free Estimates'}
               </button>
 
-              <p className="text-xs text-slate-400 text-center">
+              <p className="text-xs text-slate-500 text-center">
                 By submitting, you agree to be contacted by foundation repair contractors in your area.
               </p>
             </form>

@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 
 export default function HomePage() {
   return (
-    <div className="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased overflow-x-hidden">
+    <div className="bg-white font-display text-slate-900 antialiased overflow-x-hidden">
       <HomePageClient />
     </div>
   )

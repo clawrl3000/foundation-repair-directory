@@ -1,5 +1,7 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
+import StitchNav from '@/components/StitchNav'
+import StitchFooter from '@/components/StitchFooter'
 
 interface Props {
   params: Promise<{ state: string }>
@@ -37,13 +39,13 @@ export default async function FoundationRepairCostPage({ params }: Props) {
   const stateName = state.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')
 
   const costData = {
-    'Minor Repairs': { min: 500, max: 2000, description: 'Small cracks, minor settling' },
-    'Moderate Repairs': { min: 2000, max: 8000, description: 'Multiple cracks, some settlement' },
-    'Major Repairs': { min: 8000, max: 25000, description: 'Significant settlement, extensive piering' },
-    'Pier Installation': { min: 1000, max: 3000, description: 'Per pier (8-15 typically needed)' },
-    'Slab Jacking': { min: 500, max: 1500, description: 'Per affected area' },
-    'Waterproofing': { min: 1500, max: 10000, description: 'Basement or crawl space' },
-    'Crack Injection': { min: 300, max: 800, description: 'Per linear foot' }
+    'Minor Repairs': { min: 500, max: 2000, description: 'Small cracks, minor settling', icon: 'build' },
+    'Moderate Repairs': { min: 2000, max: 8000, description: 'Multiple cracks, some settlement', icon: 'engineering' },
+    'Major Repairs': { min: 8000, max: 25000, description: 'Significant settlement, extensive piering', icon: 'foundation' },
+    'Pier Installation': { min: 1000, max: 3000, description: 'Per pier (8-15 typically needed)', icon: 'architecture' },
+    'Slab Jacking': { min: 500, max: 1500, description: 'Per affected area', icon: 'layers' },
+    'Waterproofing': { min: 1500, max: 10000, description: 'Basement or crawl space', icon: 'water_drop' },
+    'Crack Injection': { min: 300, max: 800, description: 'Per linear foot', icon: 'healing' }
   }
 
   const faqs = [
@@ -70,100 +72,226 @@ export default async function FoundationRepairCostPage({ params }: Props) {
   ]
 
   return (
-    <main className="min-h-screen bg-gray-50">
+    <div className="relative flex min-h-screen flex-col bg-white font-display text-slate-900 antialiased overflow-x-hidden">
+      <StitchNav />
+      
       {/* Breadcrumbs */}
-      <nav className="bg-white border-b px-4 py-3">
-        <div className="max-w-5xl mx-auto flex items-center gap-2 text-sm text-gray-500">
-          <Link href="/" className="hover:text-amber-600">Home</Link>
+      <nav className="border-b border-slate-200 bg-slate-50 px-6 py-4">
+        <div className="max-w-7xl mx-auto flex items-center gap-2 text-sm text-slate-600">
+          <Link href="/" className="hover:text-amber-600 transition-colors">Home</Link>
           <span>/</span>
-          <Link href="/cost" className="hover:text-amber-600">Pricing</Link>
+          <Link href="/cost" className="hover:text-amber-600 transition-colors">Pricing</Link>
           <span>/</span>
-          <Link href={`/cost/${state}`} className="hover:text-amber-600">{stateName}</Link>
+          <Link href={`/cost/${state}`} className="hover:text-amber-600 transition-colors">{stateName}</Link>
           <span>/</span>
-          <span className="text-gray-800">Foundation Repair Cost</span>
+          <span className="text-slate-900 font-medium">Foundation Repair Cost</span>
         </div>
       </nav>
 
-      <div className="max-w-5xl mx-auto py-8 px-4">
-        <h1 className="text-3xl font-bold mb-2">
-          Foundation Repair Cost in {stateName} (2024)
-        </h1>
-        <p className="text-gray-600 mb-8">
-          Complete pricing guide for foundation repair services in {stateName}. 
-          Compare costs, get free estimates, and understand what affects pricing.
-        </p>
+      <main className="flex-1">
+        {/* Hero Section */}
+        <section className="py-20 lg:py-24 bg-slate-50">
+          <div className="mx-auto max-w-7xl px-6 lg:px-10">
+            <h1 className="text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl lg:text-6xl mb-6">
+              Foundation Repair Cost in {stateName}
+            </h1>
+            <div className="inline-flex items-center gap-2 rounded-full border border-amber-500 bg-amber-100 px-4 py-1.5 mb-8">
+              <span className="material-symbols-outlined text-amber-600 text-sm">paid</span>
+              <span className="text-xs font-bold uppercase tracking-wider text-amber-700">2024 Pricing Guide</span>
+            </div>
+            <p className="text-slate-600 text-lg mb-12 max-w-3xl leading-relaxed">
+              Complete pricing guide for foundation repair services in {stateName}. 
+              Compare costs, get free estimates, and understand what affects pricing in your area.
+            </p>
+          </div>
+        </section>
 
         {/* Cost Overview */}
-        <div className="bg-white rounded-xl p-8 shadow-sm mb-8">
-          <h2 className="text-2xl font-bold mb-6">Average Foundation Repair Costs in {stateName}</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {Object.entries(costData).map(([service, data]) => (
-              <div key={service} className="border border-gray-200 rounded-lg p-4">
-                <div className="flex justify-between items-start mb-2">
-                  <h3 className="font-semibold">{service}</h3>
-                  <span className="text-green-600 font-bold">
-                    ${data.min.toLocaleString()} - ${data.max.toLocaleString()}
-                  </span>
-                </div>
-                <p className="text-sm text-gray-600">{data.description}</p>
+        <section className="py-20 lg:py-24 bg-white">
+          <div className="mx-auto max-w-7xl px-6 lg:px-10">
+            <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-8 lg:p-12">
+              <div className="flex items-center gap-3 mb-8">
+                <span className="material-symbols-outlined text-4xl text-amber-600">payments</span>
+                <h2 className="text-3xl font-bold text-slate-900">Average Foundation Repair Costs in {stateName}</h2>
               </div>
-            ))}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {Object.entries(costData).map(([service, data]) => (
+                  <div key={service} className="bg-slate-50 border border-slate-200 rounded-xl p-6 hover:border-amber-300 hover:shadow-sm transition-all">
+                    <div className="flex items-center gap-3 mb-4">
+                      <span className="material-symbols-outlined text-2xl text-amber-600">{data.icon}</span>
+                      <h3 className="font-bold text-slate-900 text-lg">{service}</h3>
+                    </div>
+                    <div className="text-2xl font-black text-amber-600 mb-2">
+                      ${data.min.toLocaleString()} - ${data.max.toLocaleString()}
+                    </div>
+                    <p className="text-slate-600 text-sm">{data.description}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
-        </div>
+        </section>
 
         {/* Cost Factors */}
-        <div className="bg-white rounded-xl p-8 shadow-sm mb-8">
-          <h2 className="text-2xl font-bold mb-6">What Affects Foundation Repair Costs?</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <h3 className="font-semibold mb-3">Foundation Issues</h3>
-              <ul className="space-y-2 text-gray-700">
-                <li>• Extent of settling or movement</li>
-                <li>• Number and size of cracks</li>
-                <li>• Foundation type (slab, pier & beam, basement)</li>
-                <li>• Age and condition of existing foundation</li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="font-semibold mb-3">Site Conditions</h3>
-              <ul className="space-y-2 text-gray-700">
-                <li>• Soil type and stability</li>
-                <li>• Accessibility around foundation</li>
-                <li>• Depth to stable bearing strata</li>
-                <li>• Local building codes and permits</li>
-              </ul>
+        <section className="py-20 lg:py-24 bg-slate-50 border-y border-slate-200">
+          <div className="mx-auto max-w-7xl px-6 lg:px-10">
+            <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-8 lg:p-12">
+              <h2 className="text-3xl font-bold text-slate-900 mb-8 text-center">What Affects Foundation Repair Costs?</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div className="text-center">
+                  <div className="size-16 rounded-full bg-amber-100 flex items-center justify-center mx-auto mb-4 border border-amber-200">
+                    <span className="material-symbols-outlined text-3xl text-amber-600">foundation</span>
+                  </div>
+                  <h3 className="font-bold text-slate-900 text-xl mb-4">Foundation Issues</h3>
+                  <ul className="space-y-2 text-slate-600 text-sm text-left">
+                    <li>• Extent of settling or movement</li>
+                    <li>• Number and size of cracks</li>
+                    <li>• Foundation type</li>
+                    <li>• Age and condition</li>
+                  </ul>
+                </div>
+                <div className="text-center">
+                  <div className="size-16 rounded-full bg-amber-100 flex items-center justify-center mx-auto mb-4 border border-amber-200">
+                    <span className="material-symbols-outlined text-3xl text-amber-600">terrain</span>
+                  </div>
+                  <h3 className="font-bold text-slate-900 text-xl mb-4">Site Conditions</h3>
+                  <ul className="space-y-2 text-slate-600 text-sm text-left">
+                    <li>• Soil type and stability</li>
+                    <li>• Accessibility around foundation</li>
+                    <li>• Depth to stable bearing strata</li>
+                    <li>• Local building codes</li>
+                  </ul>
+                </div>
+                <div className="text-center">
+                  <div className="size-16 rounded-full bg-amber-100 flex items-center justify-center mx-auto mb-4 border border-amber-200">
+                    <span className="material-symbols-outlined text-3xl text-amber-600">engineering</span>
+                  </div>
+                  <h3 className="font-bold text-slate-900 text-xl mb-4">Repair Method</h3>
+                  <ul className="space-y-2 text-slate-600 text-sm text-left">
+                    <li>• Type of repair needed</li>
+                    <li>• Materials and equipment</li>
+                    <li>• Complexity of installation</li>
+                    <li>• Warranty coverage</li>
+                  </ul>
+                </div>
+                <div className="text-center">
+                  <div className="size-16 rounded-full bg-amber-100 flex items-center justify-center mx-auto mb-4 border border-amber-200">
+                    <span className="material-symbols-outlined text-3xl text-amber-600">location_on</span>
+                  </div>
+                  <h3 className="font-bold text-slate-900 text-xl mb-4">Location Factors</h3>
+                  <ul className="space-y-2 text-slate-600 text-sm text-left">
+                    <li>• Local labor costs</li>
+                    <li>• Permit requirements</li>
+                    <li>• Material availability</li>
+                    <li>• Weather conditions</li>
+                  </ul>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
+        </section>
 
         {/* FAQ Section */}
-        <div className="bg-white rounded-xl p-8 shadow-sm mb-8">
-          <h2 className="text-2xl font-bold mb-6">Foundation Repair Cost FAQs</h2>
-          <div className="space-y-6">
-            {faqs.map((faq, index) => (
-              <div key={index} className="border-b border-gray-200 pb-6 last:border-b-0">
-                <h3 className="text-lg font-semibold mb-3">{faq.question}</h3>
-                <p className="text-gray-700 leading-relaxed">{faq.answer}</p>
+        <section className="py-20 lg:py-24 bg-white">
+          <div className="mx-auto max-w-7xl px-6 lg:px-10">
+            <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-8 lg:p-12">
+              <h2 className="text-3xl font-bold text-slate-900 mb-8">Foundation Repair Cost FAQs</h2>
+              <div className="space-y-6">
+                {faqs.map((faq, index) => (
+                  <div key={index} className="bg-slate-50 border border-slate-200 rounded-xl p-6">
+                    <h3 className="text-xl font-bold text-slate-900 mb-4">{faq.question}</h3>
+                    <p className="text-slate-600 leading-relaxed">{faq.answer}</p>
+                  </div>
+                ))}
               </div>
-            ))}
+            </div>
           </div>
-        </div>
+        </section>
 
-        {/* CTA */}
-        <div className="bg-amber-50 rounded-xl p-8 text-center">
-          <h2 className="text-2xl font-bold mb-4">Get Free Foundation Repair Quotes in {stateName}</h2>
-          <p className="text-gray-600 mb-6">
-            Connect with certified foundation contractors in your area. 
-            Compare quotes and find the best value for your foundation repair project.
-          </p>
-          <Link 
-            href={`/${state}`}
-            className="inline-block bg-primary hover:bg-primary/90 text-white px-8 py-3 rounded-lg font-semibold"
-          >
-            Find Contractors in {stateName}
-          </Link>
-        </div>
-      </div>
+        {/* Pricing Transparency Section */}
+        <section className="py-20 lg:py-24 bg-slate-50 border-y border-slate-200">
+          <div className="mx-auto max-w-7xl px-6 lg:px-10">
+            <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-8 lg:p-12">
+              <h2 className="text-3xl font-bold text-slate-900 mb-8 text-center">Get Transparent Pricing</h2>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                <div className="text-center">
+                  <div className="size-16 rounded-full bg-amber-100 flex items-center justify-center mx-auto mb-4 border border-amber-200">
+                    <span className="material-symbols-outlined text-3xl text-amber-600">search</span>
+                  </div>
+                  <h3 className="text-xl font-bold text-slate-900 mb-3">1. Free Inspection</h3>
+                  <p className="text-slate-600">Professional assessment of your foundation issues at no cost.</p>
+                </div>
+                <div className="text-center">
+                  <div className="size-16 rounded-full bg-amber-100 flex items-center justify-center mx-auto mb-4 border border-amber-200">
+                    <span className="material-symbols-outlined text-3xl text-amber-600">calculate</span>
+                  </div>
+                  <h3 className="text-xl font-bold text-slate-900 mb-3">2. Detailed Quote</h3>
+                  <p className="text-slate-600">Itemized estimate with materials, labor, and timeline breakdown.</p>
+                </div>
+                <div className="text-center">
+                  <div className="size-16 rounded-full bg-amber-100 flex items-center justify-center mx-auto mb-4 border border-amber-200">
+                    <span className="material-symbols-outlined text-3xl text-amber-600">compare</span>
+                  </div>
+                  <h3 className="text-xl font-bold text-slate-900 mb-3">3. Compare Options</h3>
+                  <p className="text-slate-600">Review multiple quotes and repair approaches to find the best value.</p>
+                </div>
+              </div>
+              <div className="text-center">
+                <Link 
+                  href={`/${state}`}
+                  className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-8 rounded-lg transition-all shadow-lg mr-4"
+                >
+                  Find Contractors in {stateName}
+                </Link>
+                <button className="bg-amber-500 hover:bg-amber-600 text-white font-bold py-4 px-8 rounded-lg transition-all">
+                  Get Free Quote
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Cost Savings Tips */}
+        <section className="py-20 lg:py-24 bg-white">
+          <div className="mx-auto max-w-7xl px-6 lg:px-10">
+            <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-8 lg:p-12">
+              <h2 className="text-3xl font-bold text-slate-900 mb-8">How to Save on Foundation Repair Costs</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="bg-slate-50 border border-slate-200 rounded-xl p-6">
+                  <div className="flex items-center gap-3 mb-4">
+                    <span className="material-symbols-outlined text-2xl text-green-600">schedule</span>
+                    <h3 className="text-xl font-bold text-slate-900">Act Early</h3>
+                  </div>
+                  <p className="text-slate-600">Address foundation issues promptly to prevent minor problems from becoming major repairs. Early intervention saves thousands.</p>
+                </div>
+                <div className="bg-slate-50 border border-slate-200 rounded-xl p-6">
+                  <div className="flex items-center gap-3 mb-4">
+                    <span className="material-symbols-outlined text-2xl text-green-600">compare_arrows</span>
+                    <h3 className="text-xl font-bold text-slate-900">Get Multiple Quotes</h3>
+                  </div>
+                  <p className="text-slate-600">Compare 3-5 estimates from different contractors. Prices can vary significantly, but ensure you're comparing similar repair approaches.</p>
+                </div>
+                <div className="bg-slate-50 border border-slate-200 rounded-xl p-6">
+                  <div className="flex items-center gap-3 mb-4">
+                    <span className="material-symbols-outlined text-2xl text-green-600">verified</span>
+                    <h3 className="text-xl font-bold text-slate-900">Choose Quality</h3>
+                  </div>
+                  <p className="text-slate-600">Select contractors based on quality, not just price. Poor workmanship leads to costly repairs later. Look for warranties and guarantees.</p>
+                </div>
+                <div className="bg-slate-50 border border-slate-200 rounded-xl p-6">
+                  <div className="flex items-center gap-3 mb-4">
+                    <span className="material-symbols-outlined text-2xl text-green-600">calendar_month</span>
+                    <h3 className="text-xl font-bold text-slate-900">Seasonal Timing</h3>
+                  </div>
+                  <p className="text-slate-600">Some contractors offer discounts during slower seasons. However, don't delay urgent repairs to wait for better pricing.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <StitchFooter />
 
       {/* JSON-LD Schema */}
       <script
@@ -215,6 +343,6 @@ export default async function FoundationRepairCostPage({ params }: Props) {
           ]),
         }}
       />
-    </main>
+    </div>
   )
 }
