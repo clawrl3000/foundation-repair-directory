@@ -1,40 +1,18 @@
 @import "tailwindcss";
 
-/* Tailwind Custom Config - Direct port from Stitch export */
+/* CSS Variables */
 :root {
   --primary: #1152d4;
   --amber-accent: #f59e0b;
-  --accent-amber: #f59e0b;
-  --background-light: #f6f6f8;
-  --background-dark: #101622;
-  --glass-stroke: rgba(255, 255, 255, 0.1);
-  --surface-dark: #1c2433;
-  --border-dark: #232f48;
 }
-
-/* Stitch Export Styles - Direct Port */
-
-.hero-gradient {
-    background: radial-gradient(circle at top right, rgba(17, 82, 212, 0.15), transparent), 
-                radial-gradient(circle at bottom left, rgba(17, 82, 212, 0.05), transparent);
-}
-
-/* Theme toggle styles removed */
-
-/* Light theme overrides removed - using light mode only */
 
 /* Material Symbols */
 .material-symbols-outlined {
   font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
 }
 
-/* Filled stars - Direct port from Stitch */
+/* Filled stars */
 .material-symbols-outlined.fill-1,
 .fill-1 {
   font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24 !important;
-}
-
-/* Ensure font family */
-body {
-  font-family: 'Manrope', sans-serif;
 }

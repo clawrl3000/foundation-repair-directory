@@ -122,7 +122,7 @@ export default function HomePageClient() {
           {/* Hero Section - With background image */}
           <section className="relative overflow-hidden border-b border-slate-200 py-20 lg:py-32">
             <div className="absolute inset-0">
-              <img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=1920&q=80" alt="Foundation construction work" className="h-full w-full object-cover" />
+              <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1920&q=80" alt="Foundation construction work" className="h-full w-full object-cover" />
               <div className="absolute inset-0 bg-white/85"></div>
             </div>
             <div className="relative mx-auto max-w-5xl px-6 text-center">
@@ -212,11 +212,15 @@ export default function HomePageClient() {
                   </div>
                   <div className="flex flex-1 flex-col p-6">
                     <div className="flex items-start justify-between mb-4">
-                      <div>
+                      <div className="flex-1">
                         <Link href="/texas/houston/precision-foundation-pros" className="text-lg font-bold text-slate-900 hover:text-primary transition-colors">
                           Precision Foundation Pros
                         </Link>
-                        <div className="flex items-center gap-1 mt-1">
+                        <div className="flex items-center gap-2 mt-1 mb-2">
+                          <span className="material-symbols-outlined text-primary text-sm">location_on</span>
+                          <span className="text-sm text-slate-600 font-medium">Houston, TX</span>
+                        </div>
+                        <div className="flex items-center gap-1 mb-2">
                           <div className="flex text-[#f59e0b]">
                             <span className="material-symbols-outlined text-sm fill-1">star</span>
                             <span className="material-symbols-outlined text-sm fill-1">star</span>
@@ -224,11 +228,17 @@ export default function HomePageClient() {
                             <span className="material-symbols-outlined text-sm fill-1">star</span>
                             <span className="material-symbols-outlined text-sm fill-1">star</span>
                           </div>
-                          <span className="text-xs font-semibold text-slate-600">(124 reviews)</span>
+                          <span className="text-xs font-semibold text-slate-500">(124 reviews)</span>
                         </div>
+                        <p className="text-sm text-slate-600">Specializing in residential slab repairs since 2008</p>
                       </div>
-                      <div className="rounded-lg bg-primary/10 p-2 text-primary">
-                        <span className="material-symbols-outlined">verified</span>
+                      <div className="flex flex-col items-end gap-2">
+                        <div className="rounded-lg bg-primary/10 p-2 text-primary">
+                          <span className="material-symbols-outlined">verified</span>
+                        </div>
+                        <div className="bg-green-100 text-green-800 text-xs font-bold px-2 py-1 rounded">
+                          Licensed & Insured
+                        </div>
                       </div>
                     </div>
                     <div className="flex flex-wrap gap-2 mb-6">
@@ -263,11 +273,15 @@ export default function HomePageClient() {
                   </div>
                   <div className="flex flex-1 flex-col p-6">
                     <div className="flex items-start justify-between mb-4">
-                      <div>
+                      <div className="flex-1">
                         <Link href="/texas/houston/solid-ground-engineering" className="text-lg font-bold text-slate-900 hover:text-primary transition-colors">
                           Solid Ground Engineering
                         </Link>
-                        <div className="flex items-center gap-1 mt-1">
+                        <div className="flex items-center gap-2 mt-1 mb-2">
+                          <span className="material-symbols-outlined text-primary text-sm">location_on</span>
+                          <span className="text-sm text-slate-600 font-medium">Houston, TX</span>
+                        </div>
+                        <div className="flex items-center gap-1 mb-2">
                           <div className="flex text-[#f59e0b]">
                             <span className="material-symbols-outlined text-sm fill-1">star</span>
                             <span className="material-symbols-outlined text-sm fill-1">star</span>
@@ -275,11 +289,17 @@ export default function HomePageClient() {
                             <span className="material-symbols-outlined text-sm fill-1">star</span>
                             <span className="material-symbols-outlined text-sm">star_half</span>
                           </div>
-                          <span className="text-xs font-semibold text-slate-600">(98 reviews)</span>
+                          <span className="text-xs font-semibold text-slate-500">(98 reviews)</span>
                         </div>
+                        <p className="text-sm text-slate-600">Expert foundation leveling and crack repair solutions</p>
                       </div>
-                      <div className="rounded-lg bg-primary/10 p-2 text-primary">
-                        <span className="material-symbols-outlined">verified</span>
+                      <div className="flex flex-col items-end gap-2">
+                        <div className="rounded-lg bg-primary/10 p-2 text-primary">
+                          <span className="material-symbols-outlined">verified</span>
+                        </div>
+                        <div className="bg-green-100 text-green-800 text-xs font-bold px-2 py-1 rounded">
+                          Licensed & Insured
+                        </div>
                       </div>
                     </div>
                     <div className="flex flex-wrap gap-2 mb-6">
@@ -311,11 +331,15 @@ export default function HomePageClient() {
                   </div>
                   <div className="flex flex-1 flex-col p-6">
                     <div className="flex items-start justify-between mb-4">
-                      <div>
+                      <div className="flex-1">
                         <Link href="/texas/houston/atlas-pier-specialists" className="text-lg font-bold text-slate-900 hover:text-primary transition-colors">
                           Atlas Pier Specialists
                         </Link>
-                        <div className="flex items-center gap-1 mt-1">
+                        <div className="flex items-center gap-2 mt-1 mb-2">
+                          <span className="material-symbols-outlined text-primary text-sm">location_on</span>
+                          <span className="text-sm text-slate-600 font-medium">Houston, TX</span>
+                        </div>
+                        <div className="flex items-center gap-1 mb-2">
                           <div className="flex text-[#f59e0b]">
                             <span className="material-symbols-outlined text-sm fill-1">star</span>
                             <span className="material-symbols-outlined text-sm fill-1">star</span>
@@ -323,11 +347,17 @@ export default function HomePageClient() {
                             <span className="material-symbols-outlined text-sm fill-1">star</span>
                             <span className="material-symbols-outlined text-sm fill-1">star</span>
                           </div>
-                          <span className="text-xs font-semibold text-slate-600">(56 reviews)</span>
+                          <span className="text-xs font-semibold text-slate-500">(56 reviews)</span>
                         </div>
+                        <p className="text-sm text-slate-600">Professional basement waterproofing and pier systems</p>
                       </div>
-                      <div className="rounded-lg bg-primary/10 p-2 text-primary">
-                        <span className="material-symbols-outlined">verified</span>
+                      <div className="flex flex-col items-end gap-2">
+                        <div className="rounded-lg bg-primary/10 p-2 text-primary">
+                          <span className="material-symbols-outlined">verified</span>
+                        </div>
+                        <div className="bg-green-100 text-green-800 text-xs font-bold px-2 py-1 rounded">
+                          Licensed & Insured
+                        </div>
                       </div>
                     </div>
                     <div className="flex flex-wrap gap-2 mb-6">
@@ -400,7 +430,7 @@ export default function HomePageClient() {
           </section>
           
           {/* How It Works section - Dark Blue */}
-          <section className="py-20 px-6 md:px-20 lg:px-40 bg-[#0f172a]">
+          <section className="py-24 lg:py-28 px-6 md:px-20 lg:px-40 bg-[#0f172a]">
             <div className="max-w-7xl mx-auto">
               <div className="text-center mb-16">
                 <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight mb-4 text-white">How It Works</h2>
@@ -447,7 +477,7 @@ export default function HomePageClient() {
           </section>
           
           {/* Repair Types Section */}
-          <section className="py-20 px-6 md:px-20 lg:px-40 bg-white">
+          <section className="py-20 lg:py-24 px-6 md:px-20 lg:px-40 bg-white">
             <div className="max-w-7xl mx-auto">
               <div className="text-center mb-12">
                 <h2 className="text-slate-900 text-3xl md:text-4xl font-extrabold leading-tight tracking-tight mb-4">Common Foundation Repair Types</h2>
@@ -480,8 +510,87 @@ export default function HomePageClient() {
             </div>
           </section>
           
+          {/* Testimonials Section */}
+          <section className="py-20 lg:py-24 px-6 md:px-20 lg:px-40 bg-slate-50">
+            <div className="max-w-7xl mx-auto">
+              <div className="text-center mb-16">
+                <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight mb-4 text-slate-900">What Homeowners Say</h2>
+                <p className="text-slate-600 max-w-2xl mx-auto">
+                  Real experiences from homeowners who found their foundation repair experts through FoundationDir.
+                </p>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {/* Testimonial 1 */}
+                <div className="bg-white border border-slate-200 rounded-xl p-8 shadow-sm hover:shadow-md transition-all">
+                  <div className="mb-6">
+                    <span className="material-symbols-outlined text-4xl text-primary opacity-20">format_quote</span>
+                  </div>
+                  <p className="text-slate-700 leading-relaxed mb-6">
+                    "After noticing cracks in our living room walls, we found our contractor through FoundationDir. The whole process took less than a week from estimate to completion."
+                  </p>
+                  <div className="flex items-center gap-1 mb-4">
+                    <div className="flex text-amber-500">
+                      <span className="material-symbols-outlined text-lg fill-1">star</span>
+                      <span className="material-symbols-outlined text-lg fill-1">star</span>
+                      <span className="material-symbols-outlined text-lg fill-1">star</span>
+                      <span className="material-symbols-outlined text-lg fill-1">star</span>
+                      <span className="material-symbols-outlined text-lg fill-1">star</span>
+                    </div>
+                  </div>
+                  <div className="text-slate-500 text-sm">
+                    <span className="font-semibold">Sarah M.</span> • Dallas, TX
+                  </div>
+                </div>
+                
+                {/* Testimonial 2 */}
+                <div className="bg-white border border-slate-200 rounded-xl p-8 shadow-sm hover:shadow-md transition-all">
+                  <div className="mb-6">
+                    <span className="material-symbols-outlined text-4xl text-primary opacity-20">format_quote</span>
+                  </div>
+                  <p className="text-slate-700 leading-relaxed mb-6">
+                    "We got three quotes within 48 hours. The contractor we chose saved us over $3,000 compared to the first estimate we got on our own."
+                  </p>
+                  <div className="flex items-center gap-1 mb-4">
+                    <div className="flex text-amber-500">
+                      <span className="material-symbols-outlined text-lg fill-1">star</span>
+                      <span className="material-symbols-outlined text-lg fill-1">star</span>
+                      <span className="material-symbols-outlined text-lg fill-1">star</span>
+                      <span className="material-symbols-outlined text-lg fill-1">star</span>
+                      <span className="material-symbols-outlined text-lg fill-1">star</span>
+                    </div>
+                  </div>
+                  <div className="text-slate-500 text-sm">
+                    <span className="font-semibold">James R.</span> • Atlanta, GA
+                  </div>
+                </div>
+                
+                {/* Testimonial 3 */}
+                <div className="bg-white border border-slate-200 rounded-xl p-8 shadow-sm hover:shadow-md transition-all">
+                  <div className="mb-6">
+                    <span className="material-symbols-outlined text-4xl text-primary opacity-20">format_quote</span>
+                  </div>
+                  <p className="text-slate-700 leading-relaxed mb-6">
+                    "I was terrified about the cost, but the free inspection put my mind at ease. Professional, honest, and the repair came with a 25-year warranty."
+                  </p>
+                  <div className="flex items-center gap-1 mb-4">
+                    <div className="flex text-amber-500">
+                      <span className="material-symbols-outlined text-lg fill-1">star</span>
+                      <span className="material-symbols-outlined text-lg fill-1">star</span>
+                      <span className="material-symbols-outlined text-lg fill-1">star</span>
+                      <span className="material-symbols-outlined text-lg fill-1">star</span>
+                      <span className="material-symbols-outlined text-lg fill-1">star</span>
+                    </div>
+                  </div>
+                  <div className="text-slate-500 text-sm">
+                    <span className="font-semibold">Maria L.</span> • Phoenix, AZ
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          
           {/* Urgency CTA Section - Dark Blue */}
-          <section className="relative overflow-hidden py-24 px-6 md:px-20 lg:px-40 bg-[#0f172a]">
+          <section className="relative overflow-hidden py-24 lg:py-28 px-6 md:px-20 lg:px-40 bg-[#0f172a]">
             <div className="absolute inset-0 opacity-5 pointer-events-none" 
                  style={{backgroundImage: 'radial-gradient(circle at 2px 2px, #ffffff 1px, transparent 0)', backgroundSize: '40px 40px'}}></div>
             <div className="max-w-5xl mx-auto relative z-10 flex flex-col items-center text-center">
@@ -514,26 +623,22 @@ export default function HomePageClient() {
           {/* Trust Badges Row */}
           <section className="py-16 px-6 md:px-20 lg:px-40 bg-slate-50 border-t border-slate-200">
             <div className="max-w-7xl mx-auto">
-              <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 items-center justify-items-center">
-                <div className="h-16 w-36 bg-white border border-slate-200 rounded-lg shadow-sm flex flex-col items-center justify-center hover:shadow-md transition-all duration-300">
-                  <span className="material-symbols-outlined text-blue-600 text-lg mb-1">verified_user</span>
-                  <span className="text-[9px] font-bold tracking-tighter text-slate-700 uppercase">BBB ACCREDITED</span>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-6 items-center justify-items-center">
+                <div className="h-20 w-44 bg-blue-50 border border-blue-200 rounded-lg shadow-sm flex items-center justify-center gap-3 px-4 hover:shadow-md transition-all duration-300">
+                  <span className="material-symbols-outlined text-blue-600 text-2xl">verified_user</span>
+                  <span className="text-xs font-bold text-blue-800 uppercase">BBB Accredited</span>
                 </div>
-                <div className="h-16 w-36 bg-white border border-slate-200 rounded-lg shadow-sm flex flex-col items-center justify-center hover:shadow-md transition-all duration-300">
-                  <span className="material-symbols-outlined text-green-600 text-lg mb-1">engineering</span>
-                  <span className="text-[9px] font-bold tracking-tighter text-slate-700 uppercase">SEA MEMBER</span>
+                <div className="h-20 w-44 bg-green-50 border border-green-200 rounded-lg shadow-sm flex items-center justify-center gap-3 px-4 hover:shadow-md transition-all duration-300">
+                  <span className="material-symbols-outlined text-green-600 text-2xl">engineering</span>
+                  <span className="text-xs font-bold text-green-800 uppercase">SEA Member</span>
                 </div>
-                <div className="h-16 w-36 bg-white border border-slate-200 rounded-lg shadow-sm flex flex-col items-center justify-center hover:shadow-md transition-all duration-300">
-                  <span className="material-symbols-outlined text-orange-600 text-lg mb-1">star</span>
-                  <span className="text-[9px] font-bold tracking-tighter text-slate-700 uppercase">HOMEADVISOR TOP</span>
+                <div className="h-20 w-44 bg-orange-50 border border-orange-200 rounded-lg shadow-sm flex items-center justify-center gap-3 px-4 hover:shadow-md transition-all duration-300">
+                  <span className="material-symbols-outlined text-orange-600 text-2xl">star</span>
+                  <span className="text-xs font-bold text-orange-800 uppercase">HomeAdvisor Top</span>
                 </div>
-                <div className="h-16 w-36 bg-white border border-slate-200 rounded-lg shadow-sm flex flex-col items-center justify-center hover:shadow-md transition-all duration-300">
-                  <span className="material-symbols-outlined text-purple-600 text-lg mb-1">grade</span>
-                  <span className="text-[9px] font-bold tracking-tighter text-slate-700 uppercase">ANGI SUPER SVC</span>
-                </div>
-                <div className="h-16 w-36 bg-white border border-slate-200 rounded-lg shadow-sm flex-col items-center justify-center hover:shadow-md transition-all duration-300 hidden lg:flex">
-                  <span className="material-symbols-outlined text-blue-700 text-lg mb-1">certificate</span>
-                  <span className="text-[9px] font-bold tracking-tighter text-slate-700 uppercase">NARI CERTIFIED</span>
+                <div className="h-20 w-44 bg-purple-50 border border-purple-200 rounded-lg shadow-sm flex items-center justify-center gap-3 px-4 hover:shadow-md transition-all duration-300">
+                  <span className="material-symbols-outlined text-purple-600 text-2xl">construction</span>
+                  <span className="text-xs font-bold text-purple-800 uppercase">NARI Certified</span>
                 </div>
               </div>
             </div>
@@ -547,37 +652,29 @@ export default function HomePageClient() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
               {/* Brand Column */}
               <div className="flex flex-col gap-6">
-                <div className="flex items-center gap-3 text-primary">
-                  <div className="size-8">
-                    <span className="material-symbols-outlined text-2xl">foundation</span>
+                <div>
+                  <div className="flex items-center gap-3 text-primary mb-2">
+                    <div className="size-8">
+                      <span className="material-symbols-outlined text-2xl">foundation</span>
+                    </div>
+                    <span className="text-2xl font-black text-slate-900">FoundationDir</span>
                   </div>
-                  <span className="text-2xl font-black text-slate-900">FoundationDir</span>
+                  <p className="text-slate-500 text-sm font-medium">Trusted by homeowners nationwide</p>
                 </div>
                 <p className="text-slate-600 text-sm leading-relaxed">
                   The nation&apos;s most trusted network of foundation repair specialists. We connect homeowners with certified pros to protect what matters most.
                 </p>
-                <div className="flex gap-4">
-                  <Link className="size-10 rounded-full bg-slate-100 flex items-center justify-center hover:bg-blue-600 hover:text-white transition-colors" href="#" aria-label="Facebook">
-                    <span className="text-xs font-bold">FB</span>
-                  </Link>
-                  <Link className="size-10 rounded-full bg-slate-100 flex items-center justify-center hover:bg-blue-400 hover:text-white transition-colors" href="#" aria-label="Twitter">
-                    <span className="text-xs font-bold">TW</span>
-                  </Link>
-                  <Link className="size-10 rounded-full bg-slate-100 flex items-center justify-center hover:bg-blue-700 hover:text-white transition-colors" href="#" aria-label="LinkedIn">
-                    <span className="text-xs font-bold">LI</span>
-                  </Link>
-                </div>
               </div>
               
               {/* Services Column */}
               <div>
                 <h4 className="text-sm font-bold uppercase tracking-widest text-slate-900 mb-6">Services</h4>
                 <ul className="flex flex-col gap-4 text-sm text-slate-600">
-                  <li><Link className="hover:text-primary transition-colors" href="/services/slab-repair">Slab Foundation Repair</Link></li>
-                  <li><Link className="hover:text-primary transition-colors" href="/services/piering">Pier and Beam Repair</Link></li>
-                  <li><Link className="hover:text-primary transition-colors" href="/services/waterproofing">Basement Waterproofing</Link></li>
-                  <li><Link className="hover:text-primary transition-colors" href="/services/crawl-space">Crawl Space Encapsulation</Link></li>
-                  <li><Link className="hover:text-primary transition-colors" href="/services">Structural Inspections</Link></li>
+                  <li><Link className="hover:text-amber-600 transition-colors" href="/services/slab-repair">Slab Foundation Repair</Link></li>
+                  <li><Link className="hover:text-amber-600 transition-colors" href="/services/piering">Pier and Beam Repair</Link></li>
+                  <li><Link className="hover:text-amber-600 transition-colors" href="/services/waterproofing">Basement Waterproofing</Link></li>
+                  <li><Link className="hover:text-amber-600 transition-colors" href="/services/crawl-space">Crawl Space Encapsulation</Link></li>
+                  <li><Link className="hover:text-amber-600 transition-colors" href="/services">Structural Inspections</Link></li>
                 </ul>
               </div>
               
@@ -585,11 +682,11 @@ export default function HomePageClient() {
               <div>
                 <h4 className="text-sm font-bold uppercase tracking-widest text-slate-900 mb-6">Quick Links</h4>
                 <ul className="flex flex-col gap-4 text-sm text-slate-600">
-                  <li><Link className="hover:text-primary transition-colors" href="/">About FoundationDir</Link></li>
-                  <li><Link className="hover:text-primary transition-colors" href="/auth/signup">Contractor Portal</Link></li>
-                  <li><Link className="hover:text-primary transition-colors" href="/services">Industry Resources</Link></li>
-                  <li><Link className="hover:text-primary transition-colors" href="/auth/signup">Partner Program</Link></li>
-                  <li><button onClick={() => openLeadForm()} className="hover:text-primary transition-colors text-left">Contact Support</button></li>
+                  <li><Link className="hover:text-amber-600 transition-colors" href="/">About FoundationDir</Link></li>
+                  <li><Link className="hover:text-amber-600 transition-colors" href="/auth/signup">Contractor Portal</Link></li>
+                  <li><Link className="hover:text-amber-600 transition-colors" href="/services">Industry Resources</Link></li>
+                  <li><Link className="hover:text-amber-600 transition-colors" href="/auth/signup">Partner Program</Link></li>
+                  <li><button onClick={() => openLeadForm()} className="hover:text-amber-600 transition-colors text-left">Contact Support</button></li>
                 </ul>
               </div>
               
@@ -617,10 +714,10 @@ export default function HomePageClient() {
             <div className="pt-8 border-t border-slate-200 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-500">
               <p>© 2025 Foundation Directory. All rights reserved.</p>
               <div className="flex gap-6">
-                <Link className="hover:text-primary" href="#">Privacy Policy</Link>
-                <Link className="hover:text-primary" href="#">Terms of Service</Link>
-                <Link className="hover:text-primary" href="#">Cookie Settings</Link>
-                <Link className="hover:text-primary" href="#">Accessibility</Link>
+                <Link className="hover:text-amber-600" href="#">Privacy Policy</Link>
+                <Link className="hover:text-amber-600" href="#">Terms of Service</Link>
+                <Link className="hover:text-amber-600" href="#">Cookie Settings</Link>
+                <Link className="hover:text-amber-600" href="#">Accessibility</Link>
               </div>
             </div>
           </div>
