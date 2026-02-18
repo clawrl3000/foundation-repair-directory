@@ -7,15 +7,15 @@ export const metadata: Metadata = {
   title: 'Foundation Repair by State | Find Local Contractors',
   description: 'Find foundation repair contractors in all 50 states. Browse by state to compare local professionals, read reviews, and get free estimates.',
   alternates: {
-    canonical: 'https://foundationrepairfinder.com/states',
+    canonical: 'https://foundationscout.com/states',
   },
   openGraph: {
     title: 'Foundation Repair by State | Find Local Contractors',
     description: 'Find foundation repair contractors in all 50 states. Browse by state to compare local professionals, read reviews, and get free estimates.',
-    url: 'https://foundationrepairfinder.com/states',
+    url: 'https://foundationscout.com/states',
     images: [
       {
-        url: 'https://foundationrepairfinder.com/og-image.jpg',
+        url: 'https://foundationscout.com/og-image.jpg',
         width: 1200,
         height: 630,
         alt: 'Foundation Repair by State',
@@ -237,13 +237,13 @@ export default function StatesPage() {
                 "@type": "ListItem",
                 "position": 1,
                 "name": "Home",
-                "item": "https://foundationrepairfinder.com"
+                "item": "https://foundationscout.com"
               },
               {
                 "@type": "ListItem",
                 "position": 2,
                 "name": "States",
-                "item": "https://foundationrepairfinder.com/states"
+                "item": "https://foundationscout.com/states"
               }
             ]
           }),

@@ -147,7 +147,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   const { name, description, city: cityInfo } = businessData
-  const url = `https://foundationrepairfinder.com/${state}/${city}/${business}`
+  const url = `https://foundationscout.com/${state}/${city}/${business}`
 
   return {
     title: `${name} - Foundation Repair in ${cityInfo.name}, ${cityInfo.state.abbreviation} | Foundation Repair Directory`,
@@ -161,7 +161,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       url: url,
       images: [
         {
-          url: 'https://foundationrepairfinder.com/og-image.jpg',
+          url: 'https://foundationscout.com/og-image.jpg',
           width: 1200,
           height: 630,
           alt: `${name} Foundation Repair Services`,
@@ -183,10 +183,10 @@ export default async function BusinessPage({ params }: Props) {
   
   // Generate structured data
   const breadcrumbs = [
-    { name: 'Home', url: 'https://foundationrepairfinder.com' },
-    { name: `Foundation Repair in ${cityInfo.state.name}`, url: `https://foundationrepairfinder.com/${state}` },
-    { name: `Foundation Repair in ${cityInfo.name}`, url: `https://foundationrepairfinder.com/${state}/${city}` },
-    { name: name, url: `https://foundationrepairfinder.com/${state}/${city}/${business}` }
+    { name: 'Home', url: 'https://foundationscout.com' },
+    { name: `Foundation Repair in ${cityInfo.state.name}`, url: `https://foundationscout.com/${state}` },
+    { name: `Foundation Repair in ${cityInfo.name}`, url: `https://foundationscout.com/${state}/${city}` },
+    { name: name, url: `https://foundationscout.com/${state}/${city}/${business}` }
   ]
   const breadcrumbSchema = generateBreadcrumbSchema(breadcrumbs)
 
@@ -403,7 +403,7 @@ export default async function BusinessPage({ params }: Props) {
           "@context": "https://schema.org",
           "@type": "LocalBusiness",
           "name": name,
-          "url": `https://foundationrepairfinder.com/${state}/${city}/${business}`,
+          "url": `https://foundationscout.com/${state}/${city}/${business}`,
           "telephone": phone,
           "email": businessData.email,
           "description": description,

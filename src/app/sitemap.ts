@@ -21,7 +21,7 @@ const SERVICES = [
 ]
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = 'https://foundationrepairfinder.com'
+  const baseUrl = 'https://foundationscout.com'
   const today = new Date().toISOString().split('T')[0]
 
   const routes: MetadataRoute.Sitemap = [

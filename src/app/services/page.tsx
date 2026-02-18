@@ -7,15 +7,15 @@ export const metadata: Metadata = {
   title: 'Foundation Repair Services | Foundation Repair Directory',
   description: 'Explore professional foundation repair services including piering, slab repair, waterproofing, and crawl space repair. Find certified contractors nationwide.',
   alternates: {
-    canonical: 'https://foundationrepairfinder.com/services',
+    canonical: 'https://foundationscout.com/services',
   },
   openGraph: {
     title: 'Foundation Repair Services | Foundation Repair Directory',
     description: 'Explore professional foundation repair services including piering, slab repair, waterproofing, and crawl space repair. Find certified contractors nationwide.',
-    url: 'https://foundationrepairfinder.com/services',
+    url: 'https://foundationscout.com/services',
     images: [
       {
-        url: 'https://foundationrepairfinder.com/og-image.jpg',
+        url: 'https://foundationscout.com/og-image.jpg',
         width: 1200,
         height: 630,
         alt: 'Foundation Repair Services',
@@ -227,13 +227,13 @@ export default function ServicesPage() {
                 "@type": "ListItem",
                 "position": 1,
                 "name": "Home",
-                "item": "https://foundationrepairfinder.com"
+                "item": "https://foundationscout.com"
               },
               {
                 "@type": "ListItem",
                 "position": 2,
                 "name": "Services",
-                "item": "https://foundationrepairfinder.com/services"
+                "item": "https://foundationscout.com/services"
               }
             ]
           }),

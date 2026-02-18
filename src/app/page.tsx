@@ -5,15 +5,15 @@ export const metadata: Metadata = {
   title: 'Foundation Repair Directory — Find Trusted Contractors Near You',
   description: 'Compare foundation repair contractors nationwide. Get free estimates, read reviews, and find licensed professionals for pier & beam, slab, and basement repairs.',
   alternates: {
-    canonical: 'https://foundationrepairfinder.com',
+    canonical: 'https://foundationscout.com',
   },
   openGraph: {
     title: 'Foundation Repair Directory — Find Trusted Contractors Near You',
     description: 'Compare foundation repair contractors nationwide. Get free estimates, read reviews, and find licensed professionals for pier & beam, slab, and basement repairs.',
-    url: 'https://foundationrepairfinder.com',
+    url: 'https://foundationscout.com',
     images: [
       {
-        url: 'https://foundationrepairfinder.com/og-image.jpg',
+        url: 'https://foundationscout.com/og-image.jpg',
         width: 1200,
         height: 630,
         alt: 'Foundation Repair Directory',

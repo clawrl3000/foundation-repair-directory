@@ -6,7 +6,7 @@ import ConversionTracker from '@/components/ConversionTracker';
 const manrope = Manrope({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://foundationrepairfinder.com'),
+  metadataBase: new URL('https://foundationscout.com'),
   title: {
     default: 'Foundation Repair Directory — Find Trusted Contractors Near You',
     template: '%s | Foundation Repair Directory',
@@ -26,12 +26,12 @@ export const metadata: Metadata = {
   creator: 'Foundation Repair Directory',
   publisher: 'Foundation Repair Directory',
   alternates: {
-    canonical: 'https://foundationrepairfinder.com',
+    canonical: 'https://foundationscout.com',
   },
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://foundationrepairfinder.com',
+    url: 'https://foundationscout.com',
     siteName: 'Foundation Repair Directory',
     title: 'Foundation Repair Directory — Find Trusted Contractors Near You',
     description: 'Compare foundation repair contractors nationwide. Get free estimates, read reviews, and find licensed professionals for pier & beam, slab, and basement repairs.',
@@ -85,6 +85,13 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
           rel="stylesheet"
         />
+        {/* Plausible Analytics */}
+        <script
+          defer
+          data-domain={process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN || 'foundationscout.com'}
+          src={process.env.NEXT_PUBLIC_PLAUSIBLE_SRC || 'https://plausible.io/js/script.js'}
+        />
+        
         {/* Light mode - no theme switching needed */}
         <script
           type="application/ld+json"
@@ -94,13 +101,13 @@ export default function RootLayout({
                 "@context": "https://schema.org",
                 "@type": "WebSite",
                 "name": "Foundation Repair Directory",
-                "url": "https://foundationrepairfinder.com",
+                "url": "https://foundationscout.com",
                 "description": "Compare foundation repair contractors nationwide",
                 "potentialAction": {
                   "@type": "SearchAction",
                   "target": {
                     "@type": "EntryPoint",
-                    "urlTemplate": "https://foundationrepairfinder.com/search?q={search_term_string}"
+                    "urlTemplate": "https://foundationscout.com/search?q={search_term_string}"
                   },
                   "query-input": "required name=search_term_string"
                 }
@@ -109,8 +116,8 @@ export default function RootLayout({
                 "@context": "https://schema.org",
                 "@type": "Organization",
                 "name": "Foundation Repair Directory",
-                "url": "https://foundationrepairfinder.com",
-                "logo": "https://foundationrepairfinder.com/logo.png",
+                "url": "https://foundationscout.com",
+                "logo": "https://foundationscout.com/logo.png",
                 "sameAs": [],
                 "description": "The most trusted directory for finding verified foundation repair contractors nationwide. Compare reviews, warranties, and pricing from licensed professionals."
               }

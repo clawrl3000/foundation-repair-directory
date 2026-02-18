@@ -173,7 +173,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   const { state: stateInfo } = stateData
-  const url = `https://foundationrepairfinder.com/${state}`
+  const url = `https://foundationscout.com/${state}`
 
   return {
     title: `${stateInfo.name} Foundation Repair Contractors | Foundation Repair Directory`,
@@ -187,7 +187,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       url: url,
       images: [
         {
-          url: 'https://foundationrepairfinder.com/og-image.jpg',
+          url: 'https://foundationscout.com/og-image.jpg',
           width: 1200,
           height: 630,
           alt: `Foundation Repair in ${stateInfo.name}`,
@@ -210,8 +210,8 @@ export default async function StatePage({ params }: Props) {
   
   // Generate structured data
   const breadcrumbs = [
-    { name: 'Home', url: 'https://foundationrepairfinder.com' },
-    { name: `Foundation Repair in ${stateInfo.name}`, url: `https://foundationrepairfinder.com/${state}` }
+    { name: 'Home', url: 'https://foundationscout.com' },
+    { name: `Foundation Repair in ${stateInfo.name}`, url: `https://foundationscout.com/${state}` }
   ]
   const breadcrumbSchema = generateBreadcrumbSchema(breadcrumbs)
 

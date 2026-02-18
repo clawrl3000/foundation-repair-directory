@@ -10,7 +10,7 @@ interface Props {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { state } = await params
   const stateName = state.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')
-  const url = `https://foundationrepairfinder.com/cost/${state}/foundation-repair-cost`
+  const url = `https://foundationscout.com/cost/${state}/foundation-repair-cost`
 
   return {
     title: `Foundation Repair Cost in ${stateName} 2024 | Pricing Guide`,
@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       url: url,
       images: [
         {
-          url: 'https://foundationrepairfinder.com/og-image.jpg',
+          url: 'https://foundationscout.com/og-image.jpg',
           width: 1200,
           height: 630,
           alt: `Foundation Repair Costs in ${stateName}`,
@@ -306,25 +306,25 @@ export default async function FoundationRepairCostPage({ params }: Props) {
                   "@type": "ListItem",
                   "position": 1,
                   "name": "Home",
-                  "item": "https://foundationrepairfinder.com"
+                  "item": "https://foundationscout.com"
                 },
                 {
                   "@type": "ListItem",
                   "position": 2,
                   "name": "Pricing",
-                  "item": "https://foundationrepairfinder.com/cost"
+                  "item": "https://foundationscout.com/cost"
                 },
                 {
                   "@type": "ListItem",
                   "position": 3,
                   "name": stateName,
-                  "item": `https://foundationrepairfinder.com/cost/${state}`
+                  "item": `https://foundationscout.com/cost/${state}`
                 },
                 {
                   "@type": "ListItem",
                   "position": 4,
                   "name": "Foundation Repair Cost",
-                  "item": `https://foundationrepairfinder.com/cost/${state}/foundation-repair-cost`
+                  "item": `https://foundationscout.com/cost/${state}/foundation-repair-cost`
                 }
               ]
             },

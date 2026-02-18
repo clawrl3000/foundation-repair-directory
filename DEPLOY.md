@@ -11,7 +11,7 @@
 - [ ] Row Level Security (RLS) policies configured (if needed)
 
 ### Domain Configuration
-- [x] Domain references updated to `foundationrepairfinder.com`
+- [x] Domain references updated to `foundationscout.com`
 - [x] Meta tags use correct domain
 - [x] Canonical URLs point to correct domain
 - [x] Sitemap references correct domain

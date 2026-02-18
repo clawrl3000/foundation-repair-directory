@@ -231,7 +231,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   const { city: cityInfo, state: stateInfo } = pageData
-  const url = `https://foundationrepairfinder.com/${state}/${city}`
+  const url = `https://foundationscout.com/${state}/${city}`
 
   return {
     title: `${cityInfo.name} Foundation Repair Contractors | Foundation Repair Directory`,
@@ -245,7 +245,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       url: url,
       images: [
         {
-          url: 'https://foundationrepairfinder.com/og-image.jpg',
+          url: 'https://foundationscout.com/og-image.jpg',
           width: 1200,
           height: 630,
           alt: `Foundation Repair in ${cityInfo.name}, ${stateInfo.name}`,
@@ -267,9 +267,9 @@ export default async function CityPage({ params }: Props) {
   
   // Generate structured data
   const breadcrumbs = [
-    { name: 'Home', url: 'https://foundationrepairfinder.com' },
-    { name: `Foundation Repair in ${stateInfo.name}`, url: `https://foundationrepairfinder.com/${state}` },
-    { name: `Foundation Repair in ${cityInfo.name}`, url: `https://foundationrepairfinder.com/${state}/${city}` }
+    { name: 'Home', url: 'https://foundationscout.com' },
+    { name: `Foundation Repair in ${stateInfo.name}`, url: `https://foundationscout.com/${state}` },
+    { name: `Foundation Repair in ${cityInfo.name}`, url: `https://foundationscout.com/${state}/${city}` }
   ]
   const breadcrumbSchema = generateBreadcrumbSchema(breadcrumbs)
 
@@ -509,7 +509,7 @@ export default async function CityPage({ params }: Props) {
               "item": {
                 "@type": "LocalBusiness",
                 "name": business.name,
-                "url": `https://foundationrepairfinder.com/${state}/${city}/${business.slug}`,
+                "url": `https://foundationscout.com/${state}/${city}/${business.slug}`,
                 "telephone": business.phone,
                 "address": {
                   "@type": "PostalAddress",

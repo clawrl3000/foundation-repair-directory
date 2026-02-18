@@ -46,10 +46,10 @@ export function generateLocalBusinessSchema(business: Business, city: City) {
   const schema: any = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
-    "@id": `https://foundationrepairfinder.com/${city.state.name.toLowerCase().replace(/\s+/g, '-')}/${city.slug}/${business.slug}#LocalBusiness`,
+    "@id": `https://foundationscout.com/${city.state.name.toLowerCase().replace(/\s+/g, '-')}/${city.slug}/${business.slug}#LocalBusiness`,
     "name": business.name,
     "description": business.description || `Professional foundation repair services in ${city.name}, ${city.state.abbreviation}`,
-    "url": `https://foundationrepairfinder.com/${city.state.name.toLowerCase().replace(/\s+/g, '-')}/${city.slug}/${business.slug}`,
+    "url": `https://foundationscout.com/${city.state.name.toLowerCase().replace(/\s+/g, '-')}/${city.slug}/${business.slug}`,
     "telephone": business.phone,
     "email": business.email,
     "address": {
@@ -184,16 +184,16 @@ export function generateServiceSchema(service: Service) {
   return {
     "@context": "https://schema.org",
     "@type": "Service",
-    "@id": `https://foundationrepairfinder.com/services/${service.slug}#Service`,
+    "@id": `https://foundationscout.com/services/${service.slug}#Service`,
     "name": service.name,
     "description": service.description || `Professional ${service.name.toLowerCase()} services`,
-    "url": `https://foundationrepairfinder.com/services/${service.slug}`,
+    "url": `https://foundationscout.com/services/${service.slug}`,
     "serviceType": "Construction",
     "category": "Foundation Repair",
     "provider": {
       "@type": "Organization",
       "name": "Foundation Repair Finder",
-      "url": "https://foundationrepairfinder.com"
+      "url": "https://foundationscout.com"
     },
     "areaServed": {
       "@type": "Country",
@@ -214,10 +214,10 @@ export function generateOrganizationSchema() {
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
-    "@id": "https://foundationrepairfinder.com#Organization",
+    "@id": "https://foundationscout.com#Organization",
     "name": "Foundation Repair Finder",
-    "url": "https://foundationrepairfinder.com",
-    "logo": "https://foundationrepairfinder.com/logo.png",
+    "url": "https://foundationscout.com",
+    "logo": "https://foundationscout.com/logo.png",
     "description": "Find trusted foundation repair contractors in your area. Compare quotes, read reviews, and connect with licensed professionals.",
     "foundingDate": "2026",
     "contactPoint": {
@@ -251,9 +251,9 @@ export function generateWebSiteSchema() {
   return {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "@id": "https://foundationrepairfinder.com#WebSite",
+    "@id": "https://foundationscout.com#WebSite",
     "name": "Foundation Repair Finder",
-    "url": "https://foundationrepairfinder.com",
+    "url": "https://foundationscout.com",
     "description": "Find and compare foundation repair contractors near you",
     "publisher": {
       "@type": "Organization",
@@ -263,7 +263,7 @@ export function generateWebSiteSchema() {
       "@type": "SearchAction",
       "target": {
         "@type": "EntryPoint",
-        "urlTemplate": "https://foundationrepairfinder.com/search?q={search_term_string}"
+        "urlTemplate": "https://foundationscout.com/search?q={search_term_string}"
       },
       "query-input": "required name=search_term_string"
     }
