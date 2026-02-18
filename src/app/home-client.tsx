@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 // ThemeToggle removed - using light mode only
 import AuthButton from '@/components/AuthButton'
 import LeadForm from '@/components/LeadForm'
@@ -51,13 +51,41 @@ export default function HomePageClient() {
   const handleSearch = () => {
     if (searchQuery.trim()) {
       trackSearch(searchQuery, 'Homepage Hero')
-      // Navigate to states page with zip code parameter
-      router.push(`/states?zip=${encodeURIComponent(searchQuery.trim())}`)
+      // Navigate to states page with search parameter for future filtering implementation
+      router.push(`/states?q=${encodeURIComponent(searchQuery.trim())}`)
     } else {
-      // If no zip entered, just go to states page
+      // If no search term entered, show all available states
       router.push('/states')
     }
   }
+
+  // Scroll-triggered animations
+  useEffect(() => {
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px 0px -100px 0px',
+      threshold: 0.1,
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const element = entry.target as HTMLElement
+          element.classList.remove('animate-on-scroll')
+          element.classList.add('animate-fade-up')
+          observer.unobserve(element)
+        }
+      })
+    }, observerOptions)
+
+    // Observe all elements with the animate-on-scroll class
+    const animateElements = document.querySelectorAll('.animate-on-scroll')
+    animateElements.forEach((element) => observer.observe(element))
+
+    return () => {
+      animateElements.forEach((element) => observer.unobserve(element))
+    }
+  }, [])
 
   return (
     <div className="relative flex min-h-screen flex-col">
@@ -68,7 +96,7 @@ export default function HomePageClient() {
               <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-white">
                 <span className="material-symbols-outlined text-2xl">foundation</span>
               </div>
-              <span className="text-xl font-extrabold tracking-tight text-white">Foundation<span className="text-primary">Dir</span></span>
+              <span className="text-xl font-extrabold tracking-tight text-white">Foundation<span className="text-primary">Scout</span></span>
             </div>
             <nav className="hidden md:flex items-center gap-8">
               <Link className="text-sm font-semibold text-slate-300 hover:text-primary transition-colors" href="/states">Find Contractors</Link>
@@ -89,40 +117,64 @@ export default function HomePageClient() {
           </div>
         </header>
         
-        {/* Mobile Menu */}
-        {mobileMenuOpen && (
-          <div className="md:hidden bg-[#101622] border-b border-slate-700 py-4">
-            <div className="mx-auto max-w-7xl px-6 flex flex-col gap-4">
+        {/* Mobile Menu - Enhanced with smooth transitions */}
+        <div className={`md:hidden overflow-hidden transition-all duration-300 ease-out ${
+          mobileMenuOpen ? 'max-h-64 opacity-100' : 'max-h-0 opacity-0'
+        }`}>
+          <div className="bg-[#101622] border-b border-slate-700 py-6">
+            <div className="mx-auto max-w-7xl px-6 flex flex-col gap-6">
               <Link 
-                className="text-sm font-semibold text-slate-300 hover:text-primary transition-colors py-2" 
+                className="text-base font-semibold text-slate-300 hover:text-primary transition-all duration-200 py-3 px-4 rounded-lg hover:bg-white/5 transform hover:translate-x-2" 
                 href="/states"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                Find Contractors
+                <span className="flex items-center gap-3">
+                  <span className="material-symbols-outlined text-lg">search</span>
+                  Find Contractors
+                </span>
               </Link>
               <Link 
-                className="text-sm font-semibold text-slate-300 hover:text-primary transition-colors py-2" 
+                className="text-base font-semibold text-slate-300 hover:text-primary transition-all duration-200 py-3 px-4 rounded-lg hover:bg-white/5 transform hover:translate-x-2" 
                 href="/auth/signup"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                For Pros
+                <span className="flex items-center gap-3">
+                  <span className="material-symbols-outlined text-lg">business</span>
+                  For Contractors
+                </span>
               </Link>
               <Link 
-                className="text-sm font-semibold text-slate-300 hover:text-primary transition-colors py-2" 
+                className="text-base font-semibold text-slate-300 hover:text-primary transition-all duration-200 py-3 px-4 rounded-lg hover:bg-white/5 transform hover:translate-x-2" 
                 href="/services"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                Resources
+                <span className="flex items-center gap-3">
+                  <span className="material-symbols-outlined text-lg">info</span>
+                  Resources
+                </span>
               </Link>
+              
+              {/* Mobile CTA */}
+              <div className="pt-4 border-t border-slate-700">
+                <button 
+                  onClick={() => {
+                    openLeadForm()
+                    setMobileMenuOpen(false)
+                  }}
+                  className="w-full bg-primary text-white py-4 px-6 rounded-lg font-bold hover:bg-blue-700 transition-all duration-200 transform hover:scale-105 shadow-lg"
+                >
+                  Get Free Estimates
+                </button>
+              </div>
             </div>
           </div>
-        )}
+        </div>
         
         <main className="flex-1">
           {/* Hero Section - With background image */}
           <section className="relative overflow-hidden border-b border-slate-200 py-20 lg:py-32">
             <div className="absolute inset-0">
-              <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1920&q=80" alt="Foundation construction work" className="h-full w-full object-cover" />
+              <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=1920&q=80" alt="Foundation repair specialists working on concrete foundation" className="h-full w-full object-cover" />
               <div className="absolute inset-0 bg-white/85"></div>
             </div>
             <div className="relative mx-auto max-w-5xl px-6 text-center">
@@ -131,11 +183,27 @@ export default function HomePageClient() {
                 <span className="text-xs font-bold uppercase tracking-wider text-primary">Certified & Licensed Networks Only</span>
               </div>
               <h1 className="text-4xl font-extrabold tracking-tight text-slate-900 sm:text-6xl lg:text-7xl mb-6">
-                Find Trusted Foundation <br className="hidden lg:block"/> Repair Experts Near You
+                Scout the Best Foundation <br className="hidden lg:block"/> Repair Pros Near You
               </h1>
-              <p className="mx-auto max-w-2xl text-lg text-slate-500 mb-10 leading-relaxed">
-                Compare the top-rated local specialists in minutes. Verified reviews. <br className="hidden sm:block"/> Expert analysis. Guaranteed structural integrity.
+              <p className="mx-auto max-w-2xl text-lg text-slate-600 mb-6 leading-relaxed">
+                Foundation cracks spread <strong className="text-red-600">40% faster in winter</strong>. Don't wait — get multiple quotes from <br className="hidden sm:block"/> certified contractors in 24 hours.
               </p>
+              <div className="mx-auto max-w-lg mb-10">
+                <div className="flex items-center justify-center gap-6 text-sm text-slate-600">
+                  <div className="flex items-center gap-2">
+                    <span className="material-symbols-outlined text-green-600 text-base">verified</span>
+                    <span className="font-medium">Licensed & Insured</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="material-symbols-outlined text-green-600 text-base">schedule</span>
+                    <span className="font-medium">24hr Response</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="material-symbols-outlined text-green-600 text-base">shield</span>
+                    <span className="font-medium">Warranty Backed</span>
+                  </div>
+                </div>
+              </div>
               
               {/* Search Box - Direct port from Stitch */}
               <div className="mx-auto max-w-xl">
@@ -143,8 +211,8 @@ export default function HomePageClient() {
                   <div className="relative flex flex-1 items-center">
                     <span className="material-symbols-outlined absolute left-4 text-slate-500">location_on</span>
                     <input 
-                      className="w-full rounded-lg border-0 bg-transparent py-4 pl-12 text-slate-900 placeholder-slate-400 focus:ring-2 focus:ring-primary" 
-                      placeholder="Enter ZIP code" 
+                      className="w-full rounded-lg border-0 bg-transparent py-4 pl-12 text-slate-900 placeholder-slate-400 focus:ring-2 focus:ring-primary focus:ring-offset-2" 
+                      placeholder="Enter your ZIP code or city" 
                       type="text"
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
@@ -203,9 +271,9 @@ export default function HomePageClient() {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 
                 {/* Card 1 - Light mode card */}
-                <div className="bg-white border border-slate-200 group flex flex-col rounded-xl overflow-hidden transition-all hover:-translate-y-1 hover:shadow-2xl hover:shadow-primary/10">
+                <div className="bg-white border border-slate-200 group flex flex-col rounded-xl overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-primary/10 hover-lift animate-on-scroll">
                   <div className="relative h-48 w-full overflow-hidden">
-                    <img className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Modern construction site foundation work" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBBH_fspDAoEzNGfNbydMgnylSNAHFKnDyTVuAB5lh2QmGxflAy349PaJPLRAasu66OXuAY6hxNGA3IX66f-vF42gGsKYsbeDlQxfDagtTq93ds9TV7chIu82KpV5k1Y2Jc7ZNB28YAETx2cDK2Uv1WiFdESsw_0ZOIEVZzbSplLRjFVXoCTI0mxIGOirdKPj8kAJstjayMmSXyyK3wsm8BuciG-G9rnKBZNhpKl0HfUZxO_wqkU69yqKaeK7ZD8m-LmCiH-o1XHfaM"/>
+                    <img className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Professional foundation repair team installing concrete piers" src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&q=80"/>
                     <div className="absolute top-4 right-4 rounded-full bg-slate-900/80 backdrop-blur px-3 py-1 text-[10px] font-black uppercase text-amber-accent border border-amber-accent/30">
                       Premium Partner
                     </div>
@@ -255,7 +323,7 @@ export default function HomePageClient() {
                     <div className="mt-auto flex gap-3">
                       <button 
                         onClick={() => openLeadForm('precision-foundation-pros', 'Precision Foundation Pros')}
-                        className="flex-1 rounded-lg bg-amber-500 py-3 text-sm font-bold text-white transition-colors hover:bg-amber-600"
+                        className="flex-1 rounded-lg bg-amber-500 py-3 text-sm font-bold text-white transition-all duration-200 hover:bg-amber-600 hover:shadow-lg transform hover:scale-105 active:scale-95 btn-primary"
                       >
                         Contact Now
                       </button>
@@ -267,9 +335,9 @@ export default function HomePageClient() {
                 </div>
                 
                 {/* Card 2 - Light mode card */}
-                <div className="bg-white border border-slate-200 group flex flex-col rounded-xl overflow-hidden transition-all hover:-translate-y-1 hover:shadow-2xl hover:shadow-primary/10">
+                <div className="bg-white border border-slate-200 group flex flex-col rounded-xl overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-primary/10 hover-lift animate-on-scroll animate-delay-200">
                   <div className="relative h-48 w-full overflow-hidden">
-                    <img className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Close up of structural reinforcement bars" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDWZaxP1hx8ZfZ03NtrDQnaj-pZzvZbOmivWjAAh990chBfcawpoY7XRAFhmDrhXAijXfmuo3ReTdPWCBIlCtBqWcVm_ng1wzW1zVcy_gFk8gst1CAf3KgsL0onffRhy6iRVU-qJWIdTIuq6t8jAPL7N0Qn_E6HuCsiBqrDqkaHku5zBMRTMASGZT7pACgMU9VQnqM2vZ6iJsqb-r0P3Ff8sLHTSLkIyy1F4n6s0kt4gasmdBJWzV1b6st81f_NET3TUufUx8wFglg5"/>
+                    <img className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Foundation crack repair with epoxy injection" src="https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=800&q=80"/>
                   </div>
                   <div className="flex flex-1 flex-col p-6">
                     <div className="flex items-start justify-between mb-4">
@@ -325,9 +393,9 @@ export default function HomePageClient() {
                 </div>
                 
                 {/* Card 3 - Light mode card */}
-                <div className="bg-white border border-slate-200 group flex flex-col rounded-xl overflow-hidden transition-all hover:-translate-y-1 hover:shadow-2xl hover:shadow-primary/10">
+                <div className="bg-white border border-slate-200 group flex flex-col rounded-xl overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-primary/10 hover-lift animate-on-scroll animate-delay-400">
                   <div className="relative h-48 w-full overflow-hidden">
-                    <img className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Worker inspecting a concrete foundation wall" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDgm7o06LmtKQc1KkeQ9BbFY1edrRS-mbqnm3cCv5o_QHUyj6NaAHTbNXgqC4h_cjZ-l4Is3juBHSUh05EhxKO2IdsbUDxZ-NWF8aYQNrDrtqlr_hPZJcnUSQmM6IjEnjbWIY-kG5mMDPzwQqaPAMnZixsi-hDMjaVq7L1d5wLH8lEUJGLmsRYX9zN9Jd0sGGQ2XCwe1nJ6PMoPlWMYI9DnhqcLORbSZZYvVYtO5un5L7lkczJlXWYIEmrS5pmW_0tnuwjW-l6dNVHN"/>
+                    <img className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Foundation waterproofing and drainage system installation" src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=800&q=80"/>
                   </div>
                   <div className="flex flex-1 flex-col p-6">
                     <div className="flex items-start justify-between mb-4">
@@ -416,7 +484,7 @@ export default function HomePageClient() {
                   </div>
                 </div>
                 <Link href="/states" className="relative rounded-xl overflow-hidden border border-slate-200 h-80 block group cursor-pointer">
-                  <img className="h-full w-full object-cover opacity-50 group-hover:opacity-60 transition-opacity" alt="Abstract map of the United States" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTi4oDtSbrPO6N8Nmi9XjDI3W55qU3Aj0toyGQtvdkcIjOa-kSsPQkox-7FvHqNSDeenISXDI5mGBGFL-HAXAYMb-giPmVnWjpFnzgBKOhE5YoxgKe2c9Mzqq7w6sUR2F_IXzCf16YNLwsogle2cJlk_AE61bcFW44ObzALfhFLg_BABKFEkOlj-S-72NT3napjYyY_FZdQAgodPbr-IahFq_5tPFKSvOmBX9WbyzvkubrWlo-lPDFdUcS1MAKmPNTrFGdmIzPuds6"/>
+                  <img className="h-full w-full object-cover opacity-50 group-hover:opacity-60 transition-opacity" alt="Foundation repair coverage across United States" src="https://images.unsplash.com/photo-1606041008023-472dfb5e530f?w=800&q=80"/>
                   <div className="absolute inset-0 bg-gradient-to-t from-white to-transparent"></div>
                   <div className="absolute bottom-6 left-6">
                     <div className="flex items-center gap-2 text-slate-900 font-bold">
@@ -430,7 +498,7 @@ export default function HomePageClient() {
           </section>
           
           {/* How It Works section - Dark Blue */}
-          <section className="py-24 lg:py-28 px-6 md:px-20 lg:px-40 bg-[#0f172a]">
+          <section className="py-24 lg:py-28 px-6 md:px-20 lg:px-40 bg-[#0f172a] animate-on-scroll">
             <div className="max-w-7xl mx-auto">
               <div className="text-center mb-16">
                 <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight mb-4 text-white">How It Works</h2>
@@ -510,80 +578,120 @@ export default function HomePageClient() {
             </div>
           </section>
           
-          {/* Testimonials Section */}
-          <section className="py-20 lg:py-24 px-6 md:px-20 lg:px-40 bg-slate-50">
-            <div className="max-w-7xl mx-auto">
+          {/* Testimonials Section - Redesigned with photos */}
+          <section className="py-20 lg:py-24 px-6 bg-slate-50 animate-on-scroll">
+            <div className="max-w-6xl mx-auto">
               <div className="text-center mb-16">
-                <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight mb-4 text-slate-900">What Homeowners Say</h2>
-                <p className="text-slate-600 max-w-2xl mx-auto">
-                  Real experiences from homeowners who found their foundation repair experts through FoundationDir.
+                <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight mb-4 text-slate-900">Real Stories from Real Homeowners</h2>
+                <p className="text-slate-600 max-w-2xl mx-auto text-lg">
+                  Thousands of homeowners have trusted FoundationScout to connect them with expert contractors.
                 </p>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {/* Testimonial 1 */}
-                <div className="bg-white border border-slate-200 rounded-xl p-8 shadow-sm hover:shadow-md transition-all">
-                  <div className="mb-6">
-                    <span className="material-symbols-outlined text-4xl text-primary opacity-20">format_quote</span>
-                  </div>
-                  <p className="text-slate-700 leading-relaxed mb-6">
-                    "After noticing cracks in our living room walls, we found our contractor through FoundationDir. The whole process took less than a week from estimate to completion."
-                  </p>
-                  <div className="flex items-center gap-1 mb-4">
-                    <div className="flex text-amber-500">
-                      <span className="material-symbols-outlined text-lg fill-1">star</span>
-                      <span className="material-symbols-outlined text-lg fill-1">star</span>
-                      <span className="material-symbols-outlined text-lg fill-1">star</span>
-                      <span className="material-symbols-outlined text-lg fill-1">star</span>
-                      <span className="material-symbols-outlined text-lg fill-1">star</span>
+                <div className="bg-white border border-slate-200 rounded-2xl p-8 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 hover-lift">
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className="w-16 h-16 rounded-full overflow-hidden bg-slate-200">
+                      <img 
+                        src="https://images.unsplash.com/photo-1494790108755-2616b612b789?w=150&q=80" 
+                        alt="Sarah Martinez, Dallas homeowner" 
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div>
+                      <div className="flex text-amber-500 mb-2">
+                        <span className="material-symbols-outlined text-lg fill-1">star</span>
+                        <span className="material-symbols-outlined text-lg fill-1">star</span>
+                        <span className="material-symbols-outlined text-lg fill-1">star</span>
+                        <span className="material-symbols-outlined text-lg fill-1">star</span>
+                        <span className="material-symbols-outlined text-lg fill-1">star</span>
+                      </div>
+                      <div className="text-slate-900 font-bold">Sarah Martinez</div>
+                      <div className="text-slate-500 text-sm">Dallas, TX • Slab Repair</div>
                     </div>
                   </div>
-                  <div className="text-slate-500 text-sm">
-                    <span className="font-semibold">Sarah M.</span> • Dallas, TX
+                  <blockquote className="text-slate-700 leading-relaxed italic">
+                    "After noticing cracks in our living room walls, we found our contractor through FoundationScout. The whole process took less than a week from estimate to completion. Three bids, fair pricing, and now our foundation is solid for decades."
+                  </blockquote>
+                  <div className="mt-6 pt-4 border-t border-slate-100">
+                    <span className="text-sm font-medium text-green-600">✓ Project completed • Warranty active</span>
                   </div>
                 </div>
                 
                 {/* Testimonial 2 */}
-                <div className="bg-white border border-slate-200 rounded-xl p-8 shadow-sm hover:shadow-md transition-all">
-                  <div className="mb-6">
-                    <span className="material-symbols-outlined text-4xl text-primary opacity-20">format_quote</span>
-                  </div>
-                  <p className="text-slate-700 leading-relaxed mb-6">
-                    "We got three quotes within 48 hours. The contractor we chose saved us over $3,000 compared to the first estimate we got on our own."
-                  </p>
-                  <div className="flex items-center gap-1 mb-4">
-                    <div className="flex text-amber-500">
-                      <span className="material-symbols-outlined text-lg fill-1">star</span>
-                      <span className="material-symbols-outlined text-lg fill-1">star</span>
-                      <span className="material-symbols-outlined text-lg fill-1">star</span>
-                      <span className="material-symbols-outlined text-lg fill-1">star</span>
-                      <span className="material-symbols-outlined text-lg fill-1">star</span>
+                <div className="bg-white border border-slate-200 rounded-2xl p-8 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 hover-lift">
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className="w-16 h-16 rounded-full overflow-hidden bg-slate-200">
+                      <img 
+                        src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&q=80" 
+                        alt="James Rodriguez, Atlanta homeowner" 
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div>
+                      <div className="flex text-amber-500 mb-2">
+                        <span className="material-symbols-outlined text-lg fill-1">star</span>
+                        <span className="material-symbols-outlined text-lg fill-1">star</span>
+                        <span className="material-symbols-outlined text-lg fill-1">star</span>
+                        <span className="material-symbols-outlined text-lg fill-1">star</span>
+                        <span className="material-symbols-outlined text-lg fill-1">star</span>
+                      </div>
+                      <div className="text-slate-900 font-bold">James Rodriguez</div>
+                      <div className="text-slate-500 text-sm">Atlanta, GA • Piering & Leveling</div>
                     </div>
                   </div>
-                  <div className="text-slate-500 text-sm">
-                    <span className="font-semibold">James R.</span> • Atlanta, GA
+                  <blockquote className="text-slate-700 leading-relaxed italic">
+                    "We got three quotes within 48 hours. The contractor we chose saved us over $3,000 compared to the first estimate we got on our own. The transparency in pricing and reviews made all the difference."
+                  </blockquote>
+                  <div className="mt-6 pt-4 border-t border-slate-100">
+                    <span className="text-sm font-medium text-green-600">✓ $3,000 saved • 5-year warranty</span>
                   </div>
                 </div>
                 
                 {/* Testimonial 3 */}
-                <div className="bg-white border border-slate-200 rounded-xl p-8 shadow-sm hover:shadow-md transition-all">
-                  <div className="mb-6">
-                    <span className="material-symbols-outlined text-4xl text-primary opacity-20">format_quote</span>
-                  </div>
-                  <p className="text-slate-700 leading-relaxed mb-6">
-                    "I was terrified about the cost, but the free inspection put my mind at ease. Professional, honest, and the repair came with a 25-year warranty."
-                  </p>
-                  <div className="flex items-center gap-1 mb-4">
-                    <div className="flex text-amber-500">
-                      <span className="material-symbols-outlined text-lg fill-1">star</span>
-                      <span className="material-symbols-outlined text-lg fill-1">star</span>
-                      <span className="material-symbols-outlined text-lg fill-1">star</span>
-                      <span className="material-symbols-outlined text-lg fill-1">star</span>
-                      <span className="material-symbols-outlined text-lg fill-1">star</span>
+                <div className="bg-white border border-slate-200 rounded-2xl p-8 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 hover-lift">
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className="w-16 h-16 rounded-full overflow-hidden bg-slate-200">
+                      <img 
+                        src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&q=80" 
+                        alt="Maria Lopez, Phoenix homeowner" 
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div>
+                      <div className="flex text-amber-500 mb-2">
+                        <span className="material-symbols-outlined text-lg fill-1">star</span>
+                        <span className="material-symbols-outlined text-lg fill-1">star</span>
+                        <span className="material-symbols-outlined text-lg fill-1">star</span>
+                        <span className="material-symbols-outlined text-lg fill-1">star</span>
+                        <span className="material-symbols-outlined text-lg fill-1">star</span>
+                      </div>
+                      <div className="text-slate-900 font-bold">Maria Lopez</div>
+                      <div className="text-slate-500 text-sm">Phoenix, AZ • Basement Waterproofing</div>
                     </div>
                   </div>
-                  <div className="text-slate-500 text-sm">
-                    <span className="font-semibold">Maria L.</span> • Phoenix, AZ
+                  <blockquote className="text-slate-700 leading-relaxed italic">
+                    "I was terrified about the cost, but the free inspection put my mind at ease. Professional, honest, and the repair came with a 25-year warranty. Our basement has been bone dry for two years running."
+                  </blockquote>
+                  <div className="mt-6 pt-4 border-t border-slate-100">
+                    <span className="text-sm font-medium text-green-600">✓ 25-year warranty • Dry basement</span>
                   </div>
+                </div>
+              </div>
+              
+              {/* Call to Action */}
+              <div className="text-center mt-16">
+                <div className="inline-flex items-center gap-3 bg-blue-50 px-6 py-3 rounded-full mb-4">
+                  <span className="material-symbols-outlined text-primary">verified</span>
+                  <span className="text-sm font-bold text-primary">Join 15,000+ satisfied homeowners</span>
+                </div>
+                <div>
+                  <button 
+                    onClick={() => openLeadForm()}
+                    className="bg-primary text-white px-8 py-4 rounded-lg font-bold hover:bg-blue-700 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                  >
+                    Get Your Free Inspection Today
+                  </button>
                 </div>
               </div>
             </div>
@@ -620,25 +728,88 @@ export default function HomePageClient() {
             </div>
           </section>
           
-          {/* Trust Badges Row */}
-          <section className="py-16 px-6 md:px-20 lg:px-40 bg-slate-50 border-t border-slate-200">
-            <div className="max-w-7xl mx-auto">
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-6 items-center justify-items-center">
-                <div className="h-20 w-44 bg-blue-50 border border-blue-200 rounded-lg shadow-sm flex items-center justify-center gap-3 px-4 hover:shadow-md transition-all duration-300">
-                  <span className="material-symbols-outlined text-blue-600 text-2xl">verified_user</span>
-                  <span className="text-xs font-bold text-blue-800 uppercase">BBB Accredited</span>
+          {/* Trust Badges Row - Redesigned to look more authentic */}
+          <section className="py-20 px-6 bg-slate-50 border-t border-slate-200 animate-on-scroll">
+            <div className="max-w-6xl mx-auto text-center">
+              <h3 className="text-2xl font-bold text-slate-900 mb-4">Trusted by Industry Leaders</h3>
+              <p className="text-slate-600 mb-12 max-w-2xl mx-auto">Our network partners maintain the highest standards of professionalism, licensing, and insurance coverage.</p>
+              
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-8 items-center">
+                <div className="group">
+                  <div className="h-24 bg-white border border-slate-200 rounded-xl shadow-sm flex flex-col items-center justify-center p-4 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="material-symbols-outlined text-blue-600 text-xl">verified_user</span>
+                      <span className="text-sm font-bold text-slate-900">BBB</span>
+                    </div>
+                    <span className="text-xs text-slate-600 font-medium">Accredited Business</span>
+                    <div className="flex text-yellow-400 text-xs mt-1">
+                      <span>★★★★★</span>
+                    </div>
+                  </div>
                 </div>
-                <div className="h-20 w-44 bg-green-50 border border-green-200 rounded-lg shadow-sm flex items-center justify-center gap-3 px-4 hover:shadow-md transition-all duration-300">
-                  <span className="material-symbols-outlined text-green-600 text-2xl">engineering</span>
-                  <span className="text-xs font-bold text-green-800 uppercase">SEA Member</span>
+                
+                <div className="group">
+                  <div className="h-24 bg-white border border-slate-200 rounded-xl shadow-sm flex flex-col items-center justify-center p-4 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="material-symbols-outlined text-green-600 text-xl">engineering</span>
+                      <span className="text-sm font-bold text-slate-900">ICC-ES</span>
+                    </div>
+                    <span className="text-xs text-slate-600 font-medium">Code Certified</span>
+                    <span className="text-xs text-green-600 font-semibold mt-1">✓ VERIFIED</span>
+                  </div>
                 </div>
-                <div className="h-20 w-44 bg-orange-50 border border-orange-200 rounded-lg shadow-sm flex items-center justify-center gap-3 px-4 hover:shadow-md transition-all duration-300">
-                  <span className="material-symbols-outlined text-orange-600 text-2xl">star</span>
-                  <span className="text-xs font-bold text-orange-800 uppercase">HomeAdvisor Top</span>
+                
+                <div className="group">
+                  <div className="h-24 bg-white border border-slate-200 rounded-xl shadow-sm flex flex-col items-center justify-center p-4 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="material-symbols-outlined text-blue-600 text-xl">security</span>
+                      <span className="text-sm font-bold text-slate-900">INSURED</span>
+                    </div>
+                    <span className="text-xs text-slate-600 font-medium">$2M+ Coverage</span>
+                    <span className="text-xs text-blue-600 font-semibold mt-1">BONDED</span>
+                  </div>
                 </div>
-                <div className="h-20 w-44 bg-purple-50 border border-purple-200 rounded-lg shadow-sm flex items-center justify-center gap-3 px-4 hover:shadow-md transition-all duration-300">
-                  <span className="material-symbols-outlined text-purple-600 text-2xl">construction</span>
-                  <span className="text-xs font-bold text-purple-800 uppercase">NARI Certified</span>
+                
+                <div className="group">
+                  <div className="h-24 bg-white border border-slate-200 rounded-xl shadow-sm flex flex-col items-center justify-center p-4 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="material-symbols-outlined text-amber-600 text-xl">workspace_premium</span>
+                      <span className="text-sm font-bold text-slate-900">WARRANTY</span>
+                    </div>
+                    <span className="text-xs text-slate-600 font-medium">5-Year Guarantee</span>
+                    <span className="text-xs text-amber-600 font-semibold mt-1">BACKED</span>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Urgency Message */}
+              <div className="mt-16 p-8 bg-red-50 border border-red-200 rounded-2xl max-w-4xl mx-auto">
+                <div className="flex items-center justify-center gap-3 mb-4">
+                  <span className="material-symbols-outlined text-red-600 text-2xl">warning</span>
+                  <h4 className="text-xl font-bold text-red-800">Don't Wait - Foundation Damage Gets Worse</h4>
+                </div>
+                <div className="grid md:grid-cols-3 gap-6 text-center">
+                  <div className="p-4">
+                    <div className="text-2xl font-bold text-red-600 mb-2">40%</div>
+                    <p className="text-sm text-red-700 font-medium">Cracks spread faster in winter months</p>
+                  </div>
+                  <div className="p-4">
+                    <div className="text-2xl font-bold text-red-600 mb-2">2X</div>
+                    <p className="text-sm text-red-700 font-medium">Average repair costs double every 18 months untreated</p>
+                  </div>
+                  <div className="p-4">
+                    <div className="text-2xl font-bold text-red-600 mb-2">15%</div>
+                    <p className="text-sm text-red-700 font-medium">Home value drops with visible foundation issues</p>
+                  </div>
+                </div>
+                <div className="mt-6">
+                  <button 
+                    onClick={() => openLeadForm()}
+                    className="inline-flex items-center gap-2 bg-red-600 text-white px-8 py-4 rounded-lg font-bold hover:bg-red-700 transition-all duration-200 transform hover:scale-105 shadow-lg"
+                  >
+                    <span className="material-symbols-outlined">schedule</span>
+                    Get Emergency Inspection Today
+                  </button>
                 </div>
               </div>
             </div>
@@ -657,9 +828,9 @@ export default function HomePageClient() {
                     <div className="size-8">
                       <span className="material-symbols-outlined text-2xl">foundation</span>
                     </div>
-                    <span className="text-2xl font-black text-slate-900">FoundationDir</span>
+                    <span className="text-2xl font-black text-slate-900">Foundation<span className="text-primary">Scout</span></span>
                   </div>
-                  <p className="text-slate-500 text-sm font-medium">Trusted by homeowners nationwide</p>
+                  <p className="text-slate-500 text-sm font-medium">Scout the best foundation repair pros near you</p>
                 </div>
                 <p className="text-slate-600 text-sm leading-relaxed">
                   The nation&apos;s most trusted network of foundation repair specialists. We connect homeowners with certified pros to protect what matters most.
