@@ -12,12 +12,11 @@ export default function StitchFooter() {
             <span className="font-bold tracking-tight text-slate-900">Foundation Directory</span>
           </div>
           <div className="flex gap-8 text-sm text-slate-600">
-            <Link className="hover:text-primary transition-colors" href="#">Privacy Policy</Link>
-            <Link className="hover:text-primary transition-colors" href="#">Terms of Service</Link>
-            <Link className="hover:text-primary transition-colors" href="#">Contact Us</Link>
+            <Link className="hover:text-primary transition-colors" href="/privacy">Privacy Policy</Link>
+            <Link className="hover:text-primary transition-colors" href="/terms">Terms of Service</Link>
           </div>
           <div className="text-sm text-slate-600">
-            © 2025 Foundation Directory. All rights reserved.
+            © 2026 FoundationScout. All rights reserved.
           </div>
         </div>
       </div>
