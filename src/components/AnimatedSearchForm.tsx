@@ -11,7 +11,7 @@ interface AnimatedSearchFormProps {
 
 export default function AnimatedSearchForm({ 
   onSearch, 
-  placeholder = "Enter your ZIP code",
+  placeholder = "Enter your ZIP code or city",
   className = "" 
 }: AnimatedSearchFormProps) {
   const [searchQuery, setSearchQuery] = useState('')
@@ -22,27 +22,6 @@ export default function AnimatedSearchForm({
   const inputRef = useRef<HTMLInputElement>(null)
   const router = useRouter()
 
-  // Helper function to map ZIP codes to states
-  const getStateFromZip = (zip: string) => {
-    const zipCode = zip.substring(0, 5)
-    const firstDigit = zipCode.charAt(0)
-    
-    const zipToStateMap: { [key: string]: { stateSlug: string, stateName: string } } = {
-      '0': { stateSlug: 'massachusetts', stateName: 'Massachusetts' },
-      '1': { stateSlug: 'new-york', stateName: 'New York' },
-      '2': { stateSlug: 'virginia', stateName: 'Virginia' },
-      '3': { stateSlug: 'florida', stateName: 'Florida' },
-      '4': { stateSlug: 'georgia', stateName: 'Georgia' },
-      '5': { stateSlug: 'ohio', stateName: 'Ohio' },
-      '6': { stateSlug: 'texas', stateName: 'Texas' },
-      '7': { stateSlug: 'texas', stateName: 'Texas' },
-      '8': { stateSlug: 'california', stateName: 'California' },
-      '9': { stateSlug: 'california', stateName: 'California' },
-    }
-    
-    return zipToStateMap[firstDigit] || null
-  }
-
   const handleSearch = async () => {
     if (!searchQuery.trim()) return
 
@@ -50,38 +29,50 @@ export default function AnimatedSearchForm({
     setFeedback('')
     setFeedbackType('')
 
-    // Simulate API call delay for better UX
-    await new Promise(resolve => setTimeout(resolve, 500))
-
     const query = searchQuery.trim()
-    
-    // Check if it's a ZIP code (5 digits)
     const zipRegex = /^\d{5}(-\d{4})?$/
     
     if (zipRegex.test(query)) {
-      const zipToStateMapping = getStateFromZip(query)
-      if (zipToStateMapping) {
-        setFeedback(`Found contractors in ${zipToStateMapping.stateName}!`)
-        setFeedbackType('success')
+      // ZIP code lookup via API
+      try {
+        const res = await fetch(`/api/zip-lookup?zip=${query.substring(0, 5)}`)
+        const data = await res.json()
         
-        setTimeout(() => {
-          router.push(`/${zipToStateMapping.stateSlug}?zip=${encodeURIComponent(query)}`)
-        }, 800)
-      } else {
-        setFeedback('ZIP code not recognized. Showing all states.')
+        if (res.ok && data.stateSlug) {
+          if (data.citySlug) {
+            setFeedback(`Found contractors in ${data.city}, ${data.stateAbbr || data.stateName}!`)
+            setFeedbackType('success')
+            setTimeout(() => {
+              router.push(`/${data.stateSlug}/${data.citySlug}`)
+            }, 600)
+          } else {
+            setFeedback(`Showing contractors in ${data.stateName}`)
+            setFeedbackType('success')
+            setTimeout(() => {
+              router.push(`/${data.stateSlug}`)
+            }, 600)
+          }
+        } else {
+          setFeedback('ZIP code not recognized. Browse by state instead.')
+          setFeedbackType('error')
+          setTimeout(() => {
+            router.push('/states')
+          }, 1500)
+        }
+      } catch {
+        setFeedback('Search error. Browse by state instead.')
         setFeedbackType('error')
         setTimeout(() => {
-          router.push(`/states?q=${encodeURIComponent(query)}`)
+          router.push('/states')
         }, 1500)
       }
     } else {
-      // City/State search  
-      setFeedback('Searching by city/state...')
+      // City/State text search
+      setFeedback('Searching...')
       setFeedbackType('success')
-      
       setTimeout(() => {
         router.push(`/states?q=${encodeURIComponent(query)}`)
-      }, 800)
+      }, 600)
     }
 
     if (onSearch) {
@@ -135,11 +126,6 @@ export default function AnimatedSearchForm({
             onKeyDown={handleKeyDown}
             disabled={isLoading}
           />
-          
-          {/* Focus ring animation */}
-          <div className={`absolute inset-0 rounded-xl transition-all duration-300 pointer-events-none ${
-            isFocused ? 'ring-2 ring-amber-500/20 ring-offset-2 ring-offset-slate-900' : ''
-          }`} />
         </div>
         
         <button
@@ -162,27 +148,16 @@ export default function AnimatedSearchForm({
               <span>Find Contractors</span>
             </>
           )}
-          
-          {/* Shimmer effect on hover */}
-          <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
         </button>
       </div>
       
       {/* Feedback message */}
       {feedback && (
-        <div className={`flex items-center gap-2 text-sm font-medium transition-all duration-300 transform ${
-          feedbackType === 'success' 
-            ? 'text-green-400' 
-            : feedbackType === 'error' 
-            ? 'text-red-400' 
-            : 'text-slate-300'
+        <div className={`flex items-center gap-2 text-sm font-medium transition-all duration-300 ${
+          feedbackType === 'success' ? 'text-green-400' : feedbackType === 'error' ? 'text-red-400' : 'text-slate-300'
         }`}>
           <span className={`material-symbols-outlined text-base ${
-            feedbackType === 'success' 
-              ? 'text-green-400' 
-              : feedbackType === 'error' 
-              ? 'text-red-400' 
-              : 'text-amber-400'
+            feedbackType === 'success' ? 'text-green-400' : feedbackType === 'error' ? 'text-red-400' : 'text-amber-400'
           }`}>
             {feedbackType === 'success' ? 'check_circle' : feedbackType === 'error' ? 'error' : 'info'}
           </span>
@@ -204,11 +179,6 @@ export default function AnimatedSearchForm({
           Takes 2 minutes
         </span>
       </div>
-      
-      <p className="text-xs text-amber-400/70 flex items-center gap-1">
-        <span className="material-symbols-outlined text-sm">schedule</span>
-        Don't wait — cracks spread fastest in cold weather
-      </p>
     </div>
   )
 }
