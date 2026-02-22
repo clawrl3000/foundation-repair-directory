@@ -126,9 +126,11 @@ const FALLBACK_BUSINESS_DATA: Record<string, Record<string, Record<string, Busin
 async function getBusinessData(stateSlug: string, citySlug: string, businessSlug: string): Promise<BusinessData | null> {
   try {
     const supabase = supabaseAdmin
+    const sbUrl = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL || 'MISSING'
     console.log('[BusinessPage] Query params:', { stateSlug, citySlug, businessSlug })
-    console.log('[BusinessPage] SUPABASE_URL:', process.env.NEXT_PUBLIC_SUPABASE_URL?.substring(0, 30))
+    console.log('[BusinessPage] SUPABASE_URL:', sbUrl.substring(0, 50))
     console.log('[BusinessPage] SERVICE_KEY exists:', !!process.env.SUPABASE_SERVICE_ROLE_KEY)
+    console.log('[BusinessPage] SERVICE_KEY ref:', process.env.SUPABASE_SERVICE_ROLE_KEY?.substring(80, 120))
     
     const { data: business, error } = await supabase
       .from('businesses')
@@ -177,8 +179,9 @@ async function getBusinessData(stateSlug: string, citySlug: string, businessSlug
       .eq('cities.states.slug', stateSlug)
       .single()
 
+    console.log('[BusinessPage] Query result:', { hasData: !!business, error: error?.message || error?.code || null })
     if (error || !business) {
-      console.error('[BusinessPage] Supabase query failed:', { error, stateSlug, citySlug, businessSlug })
+      console.error('[BusinessPage] Supabase query failed:', JSON.stringify({ error, stateSlug, citySlug, businessSlug }))
       // Fallback to hardcoded data
       return FALLBACK_BUSINESS_DATA[stateSlug]?.[citySlug]?.[businessSlug] || null
     }
