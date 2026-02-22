@@ -19,10 +19,10 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL('https://foundationscout.com'),
   title: {
-    default: 'Find Trusted Foundation Repair Contractors Near You | Free Quotes in 24hrs',
+    default: 'Find Trusted Foundation Repair Contractors Near You | Compare Local Quotes',
     template: '%s | FoundationScout',
   },
-  description: 'Compare 12,847+ verified foundation repair contractors nationwide. Get free estimates, read reviews, and connect with licensed professionals. Average rating: 4.9/5 stars.',
+  description: 'Compare Thousands of foundation repair contractors nationwide. Get estimates, read reviews, and connect with licensed professionals. Average rating: 4.9/5 stars.',
   keywords: [
     'foundation repair',
     'foundation contractors',
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
     url: 'https://foundationscout.com',
     siteName: 'Foundation Repair Directory',
     title: 'Foundation Repair Directory — Find Trusted Contractors Near You',
-    description: 'Compare foundation repair contractors nationwide. Get free estimates, read reviews, and find licensed professionals for pier & beam, slab, and basement repairs.',
+    description: 'Compare foundation repair contractors nationwide. Get estimates, read reviews, and find licensed professionals for pier & beam, slab, and basement repairs.',
     images: [
       {
         url: '/og-image.jpg',
@@ -58,7 +58,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Foundation Repair Directory — Find Trusted Contractors Near You',
-    description: 'Compare foundation repair contractors nationwide. Get free estimates, read reviews, and find licensed professionals.',
+    description: 'Compare foundation repair contractors nationwide. Get estimates, read reviews, and find licensed professionals.',
     images: ['/og-image.jpg'],
   },
   robots: {
@@ -130,7 +130,7 @@ export default function RootLayout({
                 "url": "https://foundationscout.com",
                 "logo": "https://foundationscout.com/logo.png",
                 "sameAs": [],
-                "description": "The most trusted directory for finding verified foundation repair contractors nationwide. Compare reviews, warranties, and pricing from licensed professionals."
+                "description": "The most trusted directory for finding foundation repair contractors nationwide. Compare reviews, warranties, and pricing from licensed professionals."
               }
             ]),
           }}

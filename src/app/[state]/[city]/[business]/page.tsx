@@ -93,7 +93,7 @@ const FALLBACK_BUSINESS_DATA: Record<string, Record<string, Record<string, Busin
         ],
         features: [
           { name: 'Licensed & Insured', slug: 'licensed-insured' },
-          { name: 'Free Estimates', slug: 'free-estimates' },
+          { name: 'Estimates Available', slug: 'estimates-available' },
           { name: 'Lifetime Warranty', slug: 'lifetime-warranty' },
           { name: '24/7 Emergency Service', slug: 'emergency-service' }
         ],
@@ -218,7 +218,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return {
     title: `${name} — Foundation Repair in ${cityInfo.name}, ${cityInfo.state.abbreviation} | Reviews & Quotes`,
-    description: description || `${name} provides professional foundation repair in ${cityInfo.name}, ${cityInfo.state.abbreviation}. Licensed, insured. Get free estimates and read verified reviews.`,
+    description: description || `${name} provides professional foundation repair in ${cityInfo.name}, ${cityInfo.state.abbreviation}. Licensed, insured. Get estimates and read verified reviews.`,
     alternates: {
       canonical: url,
     },
@@ -346,7 +346,7 @@ export default async function BusinessPage({ params }: Props) {
                   {/* Contact Actions */}
                   <div className="flex flex-col sm:flex-row gap-3">
                     <button className="flex-1 rounded-lg bg-amber-500 py-4 px-6 text-base font-bold text-white transition-colors hover:bg-amber-600">
-                      Get Free Estimate
+                      Get Estimate
                     </button>
                     {phone && (
                       <a 
@@ -545,10 +545,10 @@ export default async function BusinessPage({ params }: Props) {
               
               <div className="text-center mt-8">
                 <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-8 rounded-lg transition-all shadow-lg">
-                  Request Free Foundation Inspection
+                  Request a Foundation Inspection
                 </button>
                 <p className="mt-4 text-slate-500 text-sm">
-                  Professional assessment • No obligation • Licensed & insured
+                  Professional assessment • Browse freely • Licensed & insured
                 </p>
               </div>
             </div>

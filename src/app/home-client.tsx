@@ -71,7 +71,7 @@ export default function HomePageClient({ featuredBusinesses = [] }: { featuredBu
       trackButtonClick('Contact Now', `Business: ${businessName}`)
     } else {
       setSelectedBusiness(null)
-      trackButtonClick('Get Free Estimates', 'Homepage')
+      trackButtonClick('Get Estimates', 'Homepage')
     }
     setLeadFormOpen(true)
   }
@@ -271,7 +271,7 @@ export default function HomePageClient({ featuredBusinesses = [] }: { featuredBu
                 >
                   <span className="relative z-10 flex items-center justify-center gap-2">
                     <span className="material-symbols-outlined text-xl" aria-hidden="true">verified</span>
-                    Get Free Estimates
+                    Get Estimates
                   </span>
                 </button>
               </div>
@@ -299,7 +299,7 @@ export default function HomePageClient({ featuredBusinesses = [] }: { featuredBu
                   </h1>
 
                   <p className="text-lg lg:text-xl text-slate-300 leading-relaxed max-w-xl">
-                    Foundation damage spreads <strong className="text-amber-400">40% faster in winter</strong>. Get free quotes from certified contractors in your area in 24 hours — before small cracks become major repairs.
+                    Foundation damage spreads <strong className="text-amber-400">40% faster in winter</strong>. Get quotes from local contractors in your area — before small cracks become major repairs.
                   </p>
 
                   {/* Enhanced Search Form */}
@@ -314,7 +314,7 @@ export default function HomePageClient({ featuredBusinesses = [] }: { featuredBu
                   <div className="stats-container grid grid-cols-3 gap-4 sm:gap-8 pt-4 border-t border-slate-700/50">
                     <div className="stat-item text-center sm:text-left">
                       <div className="text-xl sm:text-2xl font-bold text-white counter-highlight">
-                        <CounterAnimation end={12847} suffix="+" />
+                        <CounterAnimation end={500} suffix="+" />
                       </div>
                       <div className="text-[10px] sm:text-xs text-slate-400 uppercase tracking-wider">Contractors</div>
                     </div>
@@ -326,7 +326,7 @@ export default function HomePageClient({ featuredBusinesses = [] }: { featuredBu
                     </div>
                     <div className="stat-item text-center sm:text-left">
                       <div className="text-xl sm:text-2xl font-bold text-white counter-highlight">
-                        <CounterAnimation end={4.9} />&#9733;
+                        <CounterAnimation end={4.7} />&#9733;
                       </div>
                       <div className="text-[10px] sm:text-xs text-slate-400 uppercase tracking-wider">Avg Rating</div>
                     </div>
@@ -490,7 +490,7 @@ export default function HomePageClient({ featuredBusinesses = [] }: { featuredBu
                     </div>
                   </div>
                   <div className="absolute top-4 right-4 bg-primary text-white px-3 py-1 rounded-full text-xs font-bold">
-                    12,847+ Contractors
+                    Contractors Listed
                   </div>
                   <div className="absolute bottom-6 left-6">
                     <div className="flex items-center gap-2 text-slate-900 font-bold">
@@ -538,7 +538,7 @@ export default function HomePageClient({ featuredBusinesses = [] }: { featuredBu
                     <div className="absolute -top-2 -right-2 bg-amber-500 text-slate-900 rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">3</div>
                   </div>
                   <h3 className="text-xl font-bold mb-3 text-white group-hover:text-amber-400 transition-colors">Contact</h3>
-                  <p className="text-slate-300 text-sm leading-relaxed">Get free inspections and competitive quotes from verified professionals.</p>
+                  <p className="text-slate-300 text-sm leading-relaxed">Get inspections and competitive quotes from verified professionals.</p>
                 </div>
                 
                 {/* Step 4 */}
@@ -602,7 +602,7 @@ export default function HomePageClient({ featuredBusinesses = [] }: { featuredBu
                   <span className="material-symbols-outlined text-xl text-green-600" aria-hidden="true">groups</span>
                   <span className="text-xs font-bold uppercase tracking-wider text-green-700">Growing Community</span>
                 </div>
-                <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight mb-4 text-slate-900">Join Thousands of Homeowners</h2>
+                <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight mb-4 text-slate-900">Connect With Local Pros</h2>
                 <p className="text-slate-600 max-w-2xl mx-auto text-lg leading-relaxed">
                   Every month, thousands of homeowners use FoundationScout to connect with trusted foundation repair professionals nationwide.
                 </p>
@@ -614,8 +614,8 @@ export default function HomePageClient({ featuredBusinesses = [] }: { featuredBu
                   <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
                     <span className="material-symbols-outlined text-4xl text-blue-600" role="img" aria-label="Home repair services">home_repair_service</span>
                   </div>
-                  <div className="text-3xl font-bold text-slate-900 mb-2">15,000+</div>
-                  <div className="text-slate-600 font-medium">Successful Projects</div>
+                  <div className="text-3xl font-bold text-slate-900 mb-2">Nationwide</div>
+                  <div className="text-slate-600 font-medium">Contractor Network</div>
                   <div className="text-sm text-slate-500 mt-2">Completed by network contractors</div>
                 </div>
                 
@@ -623,7 +623,7 @@ export default function HomePageClient({ featuredBusinesses = [] }: { featuredBu
                   <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                     <span className="material-symbols-outlined text-4xl text-green-600" role="img" aria-label="Verified contractors">verified</span>
                   </div>
-                  <div className="text-3xl font-bold text-slate-900 mb-2">4.9★</div>
+                  <div className="text-3xl font-bold text-slate-900 mb-2">4.7+★</div>
                   <div className="text-slate-600 font-medium">Average Rating</div>
                   <div className="text-sm text-slate-500 mt-2">From verified customer reviews</div>
                 </div>
@@ -632,9 +632,9 @@ export default function HomePageClient({ featuredBusinesses = [] }: { featuredBu
                   <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4">
                     <span className="material-symbols-outlined text-4xl text-amber-600" role="img" aria-label="Fast response time">schedule</span>
                   </div>
-                  <div className="text-3xl font-bold text-slate-900 mb-2">24hrs</div>
-                  <div className="text-slate-600 font-medium">Average Response</div>
-                  <div className="text-sm text-slate-500 mt-2">Get free quotes fast</div>
+                  <div className="text-3xl font-bold text-slate-900 mb-2">Fast</div>
+                  <div className="text-slate-600 font-medium">Response Times</div>
+                  <div className="text-sm text-slate-500 mt-2">Get quotes fast</div>
                 </div>
               </div>
               
@@ -657,8 +657,8 @@ export default function HomePageClient({ featuredBusinesses = [] }: { featuredBu
                       <span className="material-symbols-outlined text-xl text-green-600" aria-hidden="true">check_circle</span>
                     </div>
                     <div>
-                      <h4 className="font-bold text-slate-900 mb-1">No Obligation Quotes</h4>
-                      <p className="text-slate-600 text-sm">Get free estimates from multiple contractors with no pressure to commit.</p>
+                      <h4 className="font-bold text-slate-900 mb-1">Compare Quotes</h4>
+                      <p className="text-slate-600 text-sm">Get estimates from multiple contractors with no pressure to commit.</p>
                     </div>
                   </div>
                   
@@ -695,10 +695,10 @@ export default function HomePageClient({ featuredBusinesses = [] }: { featuredBu
                     onClick={() => openLeadForm()}
                     className="bg-amber-500 text-white px-8 py-4 rounded-lg font-bold hover:bg-amber-600 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-amber-500/25 btn-primary relative overflow-hidden"
                   >
-                    <span className="relative z-10">Get Your Free Inspection Today</span>
+                    <span className="relative z-10">Request an Inspection Today</span>
                   </button>
                 </div>
-                <p className="text-slate-500 text-sm mt-4">Free • No Obligation • Takes 2 Minutes</p>
+                <p className="text-slate-500 text-sm mt-4">Compare contractors • Takes 2 minutes</p>
               </div>
             </div>
           </section>
@@ -808,7 +808,7 @@ export default function HomePageClient({ featuredBusinesses = [] }: { featuredBu
               </div>
               <p className="mt-8 text-slate-300 text-sm flex items-center gap-2">
                 <span className="material-symbols-outlined text-xl text-amber-accent" aria-hidden="true">verified_user</span>
-                Free inspections available from certified local pros
+                Inspections available from local professionals
               </p>
             </div>
           </section>

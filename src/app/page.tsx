@@ -6,14 +6,14 @@ import { supabaseAdmin } from '@/lib/supabase-admin'
 export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
-  title: 'Find Trusted Foundation Repair Contractors Near You | Free Quotes in 24hrs',
-  description: 'Compare 12,847+ verified foundation repair contractors nationwide. Get free estimates, read reviews, and connect with licensed professionals. Average rating: 4.9/5 stars.',
+  title: 'Find Trusted Foundation Repair Contractors Near You | Compare Local Quotes',
+  description: 'Compare Thousands of foundation repair contractors nationwide. Get estimates, read reviews, and connect with licensed professionals. Average rating: 4.9/5 stars.',
   alternates: {
     canonical: 'https://foundationscout.com',
   },
   openGraph: {
     title: 'Foundation Repair Directory — Find Trusted Contractors Near You',
-    description: 'Compare foundation repair contractors nationwide. Get free estimates, read reviews, and find licensed professionals for pier & beam, slab, and basement repairs.',
+    description: 'Compare foundation repair contractors nationwide. Get estimates, read reviews, and find licensed professionals for pier & beam, slab, and basement repairs.',
     url: 'https://foundationscout.com',
     images: [
       {

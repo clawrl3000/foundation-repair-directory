@@ -150,7 +150,7 @@ export default function SignupPage() {
             <div className="text-xs text-slate-600 font-medium">Projects Completed</div>
           </div>
           <div className="text-center">
-            <div className="text-2xl font-bold text-primary">4.9★</div>
+            <div className="text-2xl font-bold text-primary">4.7+★</div>
             <div className="text-xs text-slate-600 font-medium">Average Rating</div>
           </div>
         </div>

@@ -121,9 +121,9 @@ export default function LeadForm({ isOpen, onClose, businessId, businessName }: 
             {/* Header */}
             <div className="flex items-center justify-between p-6 border-b border-slate-200">
               <div>
-                <h3 className="text-lg font-semibold text-slate-900">Get Free Estimates</h3>
+                <h3 className="text-lg font-semibold text-slate-900">Get Estimates</h3>
                 {businessName && (
-                  <p className="text-sm text-slate-600">Get free quotes from {businessName}</p>
+                  <p className="text-sm text-slate-600">Get quotes from {businessName}</p>
                 )}
               </div>
               <button
@@ -263,7 +263,7 @@ export default function LeadForm({ isOpen, onClose, businessId, businessName }: 
                 disabled={loading}
                 className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
-                {loading ? 'Submitting...' : 'Get Free Estimates'}
+                {loading ? 'Submitting...' : 'Get Estimates'}
               </button>
 
               <p className="text-xs text-slate-500 text-center">

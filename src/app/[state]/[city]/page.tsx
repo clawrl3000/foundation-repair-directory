@@ -72,7 +72,7 @@ const FALLBACK_CITY_DATA: Record<string, Record<string, CityPageData>> = {
           ],
           features: [
             { name: 'Licensed & Insured', slug: 'licensed-insured', value: 'Yes' },
-            { name: 'Free Estimates', slug: 'free-estimates', value: 'Yes' }
+            { name: 'Estimates Available', slug: 'estimates-available', value: 'Yes' }
           ]
         },
         {
@@ -260,13 +260,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return {
     title: `${cityInfo.name}, ${stateInfo.abbreviation} Foundation Repair — Compare Top-Rated Contractors`,
-    description: `Find verified foundation repair contractors in ${cityInfo.name}, ${stateInfo.abbreviation}. Compare ratings, read reviews, get free quotes. Licensed professionals for pier & beam, slab, basement repairs.`,
+    description: `Find foundation repair contractors in ${cityInfo.name}, ${stateInfo.abbreviation}. Compare ratings, read reviews, get quotes. Licensed professionals for pier & beam, slab, basement repairs.`,
     alternates: {
       canonical: url,
     },
     openGraph: {
       title: `${cityInfo.name} Foundation Repair Contractors | Foundation Repair Directory`,
-      description: `Find top-rated foundation repair contractors in ${cityInfo.name}, ${stateInfo.abbreviation}. Compare local experts, verified reviews, and get free estimates.`,
+      description: `Find top-rated foundation repair contractors in ${cityInfo.name}, ${stateInfo.abbreviation}. Compare local experts, verified reviews, and get estimates.`,
       url: url,
       images: [
         {
@@ -323,13 +323,13 @@ export default async function CityPage({ params }: Props) {
             <p className="text-slate-600 text-lg mb-12 max-w-3xl leading-relaxed">
               {businesses.length > 1 ? (
                 <>Compare {businesses.length} licensed foundation repair contractors in {cityInfo.name}. 
-                Get free estimates and find the right professional for your project.</>
+                Get estimates and find the right professional for your project.</>
               ) : businesses.length === 1 ? (
                 <>Featured foundation repair contractor in {cityInfo.name}. 
-                Get free estimates and more contractors coming soon.</>
+                Get estimates and more contractors coming soon.</>
               ) : (
                 <>Foundation repair contractors in {cityInfo.name}, {stateInfo.abbreviation}. 
-                Get free estimates from qualified professionals in your area.</>
+                Get estimates from qualified professionals in your area.</>
               )}
             </p>
           </div>
@@ -440,7 +440,7 @@ export default async function CityPage({ params }: Props) {
                       {/* Action Buttons */}
                       <div className="mt-auto flex flex-col sm:flex-row gap-3">
                         <button className="flex-1 rounded-lg bg-amber-500 py-3 px-6 text-base font-bold text-white transition-colors hover:bg-amber-600">
-                          Get Free Estimate
+                          Get Estimate
                         </button>
                         {business.phone && (
                           <a 

@@ -5,13 +5,13 @@ import StitchFooter from '@/components/StitchFooter'
 
 export const metadata: Metadata = {
   title: 'Foundation Repair by State | Find Local Contractors',
-  description: 'Find foundation repair contractors in all 50 states. Browse by state to compare local professionals, read reviews, and get free estimates.',
+  description: 'Find foundation repair contractors in all 50 states. Browse by state to compare local professionals, read reviews, and get estimates.',
   alternates: {
     canonical: 'https://foundationscout.com/states',
   },
   openGraph: {
     title: 'Foundation Repair by State | Find Local Contractors',
-    description: 'Find foundation repair contractors in all 50 states. Browse by state to compare local professionals, read reviews, and get free estimates.',
+    description: 'Find foundation repair contractors in all 50 states. Browse by state to compare local professionals, read reviews, and get estimates.',
     url: 'https://foundationscout.com/states',
     images: [
       {
@@ -109,7 +109,7 @@ export default function StatesPage() {
             </h1>
             <p className="text-slate-600 text-lg mb-12 max-w-3xl leading-relaxed">
               Find foundation repair contractors in all 50 states. Browse by state to compare 
-              local professionals, read reviews, and get free estimates.
+              local professionals, read reviews, and get estimates.
             </p>
           </div>
         </section>

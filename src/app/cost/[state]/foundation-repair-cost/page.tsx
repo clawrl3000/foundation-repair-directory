@@ -13,8 +13,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const url = `https://foundationscout.com/cost/${state}/foundation-repair-cost`
 
   return {
-    title: `Foundation Repair Cost in ${stateName} (2026) — Average Prices & Free Quotes`,
-    description: `Complete foundation repair cost guide for ${stateName}: pier installation $8K-$25K, slab repair $500-$15K, waterproofing $1.5K-$10K. Get free estimates from licensed contractors.`,
+    title: `Foundation Repair Cost in ${stateName} (2026) — Average Prices & Compare Quotes`,
+    description: `Complete foundation repair cost guide for ${stateName}: pier installation $8K-$25K, slab repair $500-$15K, waterproofing $1.5K-$10K. Get estimates from licensed contractors.`,
     alternates: {
       canonical: url,
     },
@@ -63,7 +63,7 @@ export default async function FoundationRepairCostPage({ params }: Props) {
     },
     {
       question: `How can I get accurate foundation repair quotes in ${stateName}?`,
-      answer: `Get 3-5 quotes from licensed foundation repair contractors in ${stateName}. Most offer free inspections and estimates. Compare their proposed solutions, warranties, and timeline for completion.`
+      answer: `Get 3-5 quotes from licensed foundation repair contractors in ${stateName}. Most offer inspections and estimates. Compare their proposed solutions, warranties, and timeline for completion.`
     },
     {
       question: `What's the best time of year for foundation repair in ${stateName}?`,
@@ -101,7 +101,7 @@ export default async function FoundationRepairCostPage({ params }: Props) {
             </div>
             <p className="text-slate-600 text-lg mb-12 max-w-3xl leading-relaxed">
               Complete pricing guide for foundation repair services in {stateName}. 
-              Compare costs, get free estimates, and understand what affects pricing in your area.
+              Compare costs, get estimates, and understand what affects pricing in your area.
             </p>
           </div>
         </section>
@@ -218,7 +218,7 @@ export default async function FoundationRepairCostPage({ params }: Props) {
                   <div className="size-16 rounded-full bg-amber-100 flex items-center justify-center mx-auto mb-4 border border-amber-200">
                     <span className="material-symbols-outlined text-3xl text-amber-600" role="img" aria-label="Inspection process">search</span>
                   </div>
-                  <h3 className="text-xl font-bold text-slate-900 mb-3">1. Free Inspection</h3>
+                  <h3 className="text-xl font-bold text-slate-900 mb-3">1. Request Inspection</h3>
                   <p className="text-slate-600">Professional assessment of your foundation issues at no cost.</p>
                 </div>
                 <div className="text-center">
@@ -244,7 +244,7 @@ export default async function FoundationRepairCostPage({ params }: Props) {
                   Find Contractors in {stateName}
                 </Link>
                 <button className="bg-amber-500 hover:bg-amber-600 text-white font-bold py-4 px-8 rounded-lg transition-all">
-                  Get Free Quote
+                  Get Quote
                 </button>
               </div>
             </div>

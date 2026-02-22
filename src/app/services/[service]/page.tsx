@@ -17,7 +17,7 @@ const SERVICES_DATA = {
     icon: 'architecture',
     heroImage: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1200&q=80',
     heroAlt: 'Professional foundation piering contractor installing steel piers for foundation stabilization',
-    longDescription: 'Foundation piering is a permanent solution for foundation settlement and instability. Our certified contractors use advanced steel push piers and helical piers to transfer the weight of your home to stable soil or bedrock below.',
+    longDescription: 'Foundation piering is a permanent solution for foundation settlement and instability. Our local contractors use advanced steel push piers and helical piers to transfer the weight of your home to stable soil or bedrock below.',
     benefits: [
       'Permanent foundation stabilization',
       'Can lift and level settled foundations',
@@ -282,7 +282,7 @@ export default async function ServicePage({ params }: Props) {
                   Find Local Experts
                 </button>
                 <button className="bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/30 text-white px-8 py-4 rounded-lg font-bold transition-all">
-                  Get Free Estimate
+                  Get Estimate
                 </button>
               </div>
               <div className="flex items-center gap-6 mt-8 text-sm">
@@ -292,7 +292,7 @@ export default async function ServicePage({ params }: Props) {
                 </div>
                 <div className="flex items-center gap-2 text-slate-300">
                   <span className="material-symbols-outlined text-amber-400">schedule</span>
-                  Free Inspections
+                  Request Inspections
                 </div>
                 <div className="flex items-center gap-2 text-slate-300">
                   <span className="material-symbols-outlined text-amber-400">workspace_premium</span>
@@ -379,20 +379,20 @@ export default async function ServicePage({ params }: Props) {
             <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-8 lg:p-12 text-center">
               <h2 className="text-3xl font-bold text-slate-900 mb-6">Ready to Get Started?</h2>
               <p className="text-slate-600 text-lg mb-8 max-w-2xl mx-auto">
-                Get free quotes from certified {serviceData.name.toLowerCase()} contractors in your area.
-                Get free estimates and compare services from top-rated professionals.
+                Get quotes from local {serviceData.name.toLowerCase()} contractors in your area.
+                Get estimates and compare services from top-rated professionals.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-8 rounded-lg transition-all shadow-lg">
                   Find Local Experts
                 </button>
                 <button className="bg-amber-500 hover:bg-amber-600 text-white font-bold py-4 px-8 rounded-lg transition-all">
-                  Get Free Quotes
+                  Get Quotes
                 </button>
               </div>
               <p className="mt-6 text-slate-500 text-sm flex items-center justify-center gap-2">
                 <span className="material-symbols-outlined text-amber-600 text-base">verified_user</span>
-                Free inspections available from certified local pros
+                Inspections available from local professionals
               </p>
             </div>
           </div>

@@ -193,11 +193,11 @@ export default function AnimatedSearchForm({
       <div className="flex flex-wrap gap-4 text-sm text-slate-400">
         <span className="flex items-center gap-1">
           <span className="material-symbols-outlined text-amber-500 text-base">check_circle</span> 
-          Free quotes
+          Compare pros
         </span>
         <span className="flex items-center gap-1">
           <span className="material-symbols-outlined text-amber-500 text-base">check_circle</span> 
-          No obligation
+          Browse freely
         </span>
         <span className="flex items-center gap-1">
           <span className="material-symbols-outlined text-amber-500 text-base">check_circle</span> 

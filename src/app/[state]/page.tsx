@@ -598,14 +598,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const url = `https://foundationscout.com/${state}`
 
   return {
-    title: `Top Foundation Repair Contractors in ${stateInfo.name} (2026) | Free Estimates`,
-    description: `Find verified foundation repair contractors in ${stateInfo.name}. Compare ratings, read reviews, get free quotes in 24hrs. Licensed professionals serving 50+ cities statewide.`,
+    title: `Top Foundation Repair Contractors in ${stateInfo.name} (2026) | Compare Contractors`,
+    description: `Find foundation repair contractors in ${stateInfo.name}. Compare ratings, read reviews, get compare local quotes. Licensed professionals serving 50+ cities statewide.`,
     alternates: {
       canonical: url,
     },
     openGraph: {
       title: `${stateInfo.name} Foundation Repair Contractors | Foundation Repair Directory`,
-      description: `Find trusted foundation repair contractors in ${stateInfo.name}. Compare local experts, read verified reviews, and get free estimates for pier & beam, slab, and basement repairs.`,
+      description: `Find trusted foundation repair contractors in ${stateInfo.name}. Compare local experts, read verified reviews, and get estimates for pier & beam, slab, and basement repairs.`,
       url: url,
       images: [
         {

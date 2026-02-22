@@ -131,7 +131,7 @@ export default function AboutPage() {
             
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
               <div>
-                <div className="text-4xl font-bold text-amber-600 mb-2">12,847+</div>
+                <div className="text-4xl font-bold text-amber-600 mb-2">500+</div>
                 <div className="text-slate-600 font-medium">Licensed Contractors</div>
               </div>
               <div>
@@ -139,11 +139,11 @@ export default function AboutPage() {
                 <div className="text-slate-600 font-medium">States Covered</div>
               </div>
               <div>
-                <div className="text-4xl font-bold text-amber-600 mb-2">15,000+</div>
-                <div className="text-slate-600 font-medium">Successful Projects</div>
+                <div className="text-4xl font-bold text-amber-600 mb-2">Nationwide</div>
+                <div className="text-slate-600 font-medium">Contractor Network</div>
               </div>
               <div>
-                <div className="text-4xl font-bold text-amber-600 mb-2">4.9★</div>
+                <div className="text-4xl font-bold text-amber-600 mb-2">4.7+★</div>
                 <div className="text-slate-600 font-medium">Average Rating</div>
               </div>
             </div>

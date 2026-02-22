@@ -6,13 +6,13 @@ import ExpertBio from '@/components/ExpertBio'
 
 export const metadata: Metadata = {
   title: 'Foundation Repair Services — How It Works, Costs & Top Contractors',
-  description: 'Complete guide to foundation repair services: piering ($8K-$45K), slab repair ($500-$15K), waterproofing ($1.5K-$10K). 12,847+ verified contractors nationwide.',
+  description: 'Complete guide to foundation repair services: piering ($8K-$45K), slab repair ($500-$15K), waterproofing ($1.5K-$10K). Thousands of verified contractors nationwide.',
   alternates: {
     canonical: 'https://foundationscout.com/services',
   },
   openGraph: {
     title: 'Foundation Repair Services | Foundation Repair Directory',
-    description: 'Explore professional foundation repair services including piering, slab repair, waterproofing, and crawl space repair. Find certified contractors nationwide.',
+    description: 'Explore professional foundation repair services including piering, slab repair, waterproofing, and crawl space repair. Find local contractors nationwide.',
     url: 'https://foundationscout.com/services',
     images: [
       {
@@ -178,7 +178,7 @@ export default function ServicesPage() {
                     <span className="material-symbols-outlined text-3xl text-amber-600" role="img" aria-label="Get matched with contractors">engineering</span>
                   </div>
                   <h3 className="text-xl font-bold text-slate-900 mb-3">2. Get Matched</h3>
-                  <p className="text-slate-600">We connect you with certified contractors who specialize in your specific repair needs.</p>
+                  <p className="text-slate-600">We connect you with local contractors who specialize in your specific repair needs.</p>
                 </div>
                 <div className="text-center">
                   <div className="size-16 rounded-full bg-amber-100 flex items-center justify-center mx-auto mb-4 border border-amber-200">
@@ -198,8 +198,8 @@ export default function ServicesPage() {
             <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-8 lg:p-12 text-center">
               <h2 className="text-3xl font-bold text-slate-900 mb-6">Ready to Fix Your Foundation?</h2>
               <p className="text-slate-600 text-lg mb-8 max-w-2xl mx-auto">
-Get free quotes from certified foundation repair contractors in your area. 
-                Get free estimates and compare services from top-rated professionals.
+Get quotes from foundation repair contractors in your area. 
+                Get estimates and compare services from top-rated professionals.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link 
@@ -209,12 +209,12 @@ Get free quotes from certified foundation repair contractors in your area.
                   Find Local Experts
                 </Link>
                 <button className="bg-amber-500 hover:bg-amber-600 text-white font-bold py-4 px-8 rounded-lg transition-all">
-                  Get Free Estimate
+                  Get Estimate
                 </button>
               </div>
               <p className="mt-6 text-slate-500 text-sm flex items-center justify-center gap-2">
                 <span className="material-symbols-outlined text-xl text-amber-600" aria-hidden="true">verified_user</span>
-                Free inspections available from certified local pros
+                Inspections available from local professionals
               </p>
             </div>
           </div>
