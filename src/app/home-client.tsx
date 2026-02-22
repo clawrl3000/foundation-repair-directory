@@ -45,10 +45,10 @@ export default function HomePageClient() {
   const [heroImageIndex, setHeroImageIndex] = useState(0)
   
   const heroImages = [
-    { src: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&q=80', alt: 'Foundation repair contractor inspecting a home' },
-    { src: 'https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=800&q=80', alt: 'Professional foundation repair team at work' },
-    { src: 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=800&q=80', alt: 'Foundation crack repair with professional equipment' },
-    { src: 'https://images.unsplash.com/photo-1517581177682-a085bb7ffb15?w=800&q=80', alt: 'Basement waterproofing and drainage installation' },
+    { src: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&q=80', alt: 'Construction crew working on concrete foundation with rebar reinforcement' },
+    { src: 'https://images.pexels.com/photos/2219024/pexels-photo-2219024.jpeg?w=800', alt: 'Workers pouring and leveling concrete for a foundation slab' },
+    { src: 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=800&q=80', alt: 'Foundation slab construction with post-tension cables and rebar grid' },
+    { src: 'https://images.unsplash.com/photo-1517581177682-a085bb7ffb15?w=800&q=80', alt: 'Structural shoring and foundation stabilization work in progress' },
   ]
 
   const openLeadForm = (businessId?: string, businessName?: string) => {
@@ -365,12 +365,11 @@ export default function HomePageClient() {
                 
                 {/* Card 1 - Enhanced card with better hover */}
                 <div className="bg-white border border-slate-200 group flex flex-col rounded-xl overflow-hidden card-hover animate-on-scroll">
-                  <div className="relative h-48 w-full overflow-hidden image-zoom">
-                    <img className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Professional piering contractor installing steel hydraulic piers for foundation stabilization" src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=800&q=80"/>
+                  <div className="relative h-48 w-full overflow-hidden bg-gradient-to-br from-slate-800 via-slate-700 to-slate-900 flex items-center justify-center">
+                    <span className="material-symbols-outlined text-6xl text-amber-400/80 group-hover:scale-110 transition-transform duration-500">foundation</span>
                     <div className="absolute top-4 right-4 rounded-full bg-slate-900/80 backdrop-blur px-3 py-1 text-[10px] font-black uppercase text-amber-accent border border-amber-accent/30">
                       Premium Partner
                     </div>
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   </div>
                   <div className="flex flex-1 flex-col p-6">
                     {/* Enhanced availability indicators */}
@@ -447,9 +446,8 @@ export default function HomePageClient() {
                 
                 {/* Card 2 - Enhanced card with better hover */}
                 <div className="bg-white border border-slate-200 group flex flex-col rounded-xl overflow-hidden card-hover animate-on-scroll animate-delay-200">
-                  <div className="relative h-48 w-full overflow-hidden image-zoom">
-                    <img className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Concrete slab leveling and crack repair specialist using professional injection equipment" src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=800&q=80"/>
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <div className="relative h-48 w-full overflow-hidden bg-gradient-to-br from-blue-900 via-blue-800 to-slate-900 flex items-center justify-center">
+                    <span className="material-symbols-outlined text-6xl text-blue-300/80 group-hover:scale-110 transition-transform duration-500">concrete</span>
                   </div>
                   <div className="flex flex-1 flex-col p-6">
                     {/* Enhanced availability indicators */}
@@ -523,9 +521,8 @@ export default function HomePageClient() {
                 
                 {/* Card 3 - Enhanced card with better hover */}
                 <div className="bg-white border border-slate-200 group flex flex-col rounded-xl overflow-hidden card-hover animate-on-scroll animate-delay-400">
-                  <div className="relative h-48 w-full overflow-hidden image-zoom">
-                    <img className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Basement waterproofing specialist installing drainage system and moisture barrier for foundation protection" src="https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=800&q=80"/>
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <div className="relative h-48 w-full overflow-hidden bg-gradient-to-br from-emerald-900 via-emerald-800 to-slate-900 flex items-center justify-center">
+                    <span className="material-symbols-outlined text-6xl text-emerald-300/80 group-hover:scale-110 transition-transform duration-500">water_damage</span>
                   </div>
                   <div className="flex flex-1 flex-col p-6">
                     {/* Enhanced availability indicators */}
