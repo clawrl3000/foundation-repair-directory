@@ -55,7 +55,7 @@ export default function HomePageClient({ featuredBusinesses = [] }: { featuredBu
   const [selectedBusiness, setSelectedBusiness] = useState<{id: string, name: string} | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [showTrustPopup, setShowTrustPopup] = useState(false)
+  // Trust popup removed — was claiming "all contractors verified, background checked" which is false
   const [heroImageIndex, setHeroImageIndex] = useState(0)
   
   const heroImages = [
@@ -182,14 +182,7 @@ export default function HomePageClient({ featuredBusinesses = [] }: { featuredBu
     }
   }, [])
 
-  // Dynamic trust popup after 5 seconds of browsing
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowTrustPopup(true)
-    }, 5000)
-
-    return () => clearTimeout(timer)
-  }, [])
+  // Trust popup timer removed
 
   return (
     <div className="relative flex min-h-screen flex-col">
@@ -290,7 +283,7 @@ export default function HomePageClient({ featuredBusinesses = [] }: { featuredBu
                 <div className="space-y-6 lg:space-y-8">
                   <div className="inline-flex items-center gap-2 rounded-full bg-amber-500/10 border border-amber-500/20 px-4 py-1.5 text-sm text-amber-400 font-medium">
                     <span className="w-2 h-2 bg-amber-400 rounded-full"></span>
-                    Licensed &bull; Insured &bull; Verified
+                    
                   </div>
 
                   <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight text-white leading-[1.08]">
@@ -369,7 +362,7 @@ export default function HomePageClient({ featuredBusinesses = [] }: { featuredBu
               <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
                 <div>
                   <h2 className="text-3xl font-bold text-slate-900 mb-3">Top-Rated Local Specialists</h2>
-                  <p className="text-slate-600">Highest-rated foundation repair contractors based on verified customer reviews.</p>
+                  <p className="text-slate-600">Highest-rated foundation repair contractors based on customer reviews.</p>
                 </div>
                 <Link href="/states" className="flex items-center gap-2 text-primary font-bold hover:underline">
                   View All Contractors
@@ -538,7 +531,7 @@ export default function HomePageClient({ featuredBusinesses = [] }: { featuredBu
                     <div className="absolute -top-2 -right-2 bg-amber-500 text-slate-900 rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">3</div>
                   </div>
                   <h3 className="text-xl font-bold mb-3 text-white group-hover:text-amber-400 transition-colors">Contact</h3>
-                  <p className="text-slate-300 text-sm leading-relaxed">Get inspections and competitive quotes from verified professionals.</p>
+                  <p className="text-slate-300 text-sm leading-relaxed">Get inspections and competitive quotes from local professionals.</p>
                 </div>
                 
                 {/* Step 4 */}
@@ -625,7 +618,7 @@ export default function HomePageClient({ featuredBusinesses = [] }: { featuredBu
                   </div>
                   <div className="text-3xl font-bold text-slate-900 mb-2">4.7+★</div>
                   <div className="text-slate-600 font-medium">Average Rating</div>
-                  <div className="text-sm text-slate-500 mt-2">From verified customer reviews</div>
+                  <div className="text-sm text-slate-500 mt-2">From customer reviews</div>
                 </div>
                 
                 <div className="bg-white border border-slate-200 rounded-2xl p-8 shadow-sm text-center hover:shadow-xl hover:-translate-y-2 transition-all duration-300 animate-on-scroll animate-delay-300">
@@ -818,7 +811,7 @@ export default function HomePageClient({ featuredBusinesses = [] }: { featuredBu
             <div className="max-w-6xl mx-auto text-center">
               <div className="inline-flex items-center gap-2 rounded-full border border-green-500/30 bg-green-50 px-4 py-2 mb-6">
                 <span className="material-symbols-outlined text-xl text-green-600" aria-hidden="true">verified_user</span>
-                <span className="text-xs font-bold uppercase tracking-wider text-green-700">Industry-Verified Standards</span>
+                <span className="text-xs font-bold uppercase tracking-wider text-green-700">Quality Standards</span>
               </div>
               <h3 className="text-3xl font-bold text-slate-900 mb-4">Backed by the Best in the Industry</h3>
               <p className="text-slate-600 mb-16 max-w-2xl mx-auto text-lg leading-relaxed">Every contractor in our network meets rigorous professional standards and carries comprehensive insurance coverage.</p>
@@ -850,7 +843,7 @@ export default function HomePageClient({ featuredBusinesses = [] }: { featuredBu
                     <span className="text-xs text-slate-600 font-semibold">Code Certified</span>
                     <div className="flex items-center gap-1 mt-2">
                       <span className="material-symbols-outlined text-xl text-green-600" aria-hidden="true">check_circle</span>
-                      <span className="text-xs text-green-600 font-bold">VERIFIED</span>
+                      
                     </div>
                   </div>
                 </div>
@@ -1007,28 +1000,7 @@ export default function HomePageClient({ featuredBusinesses = [] }: { featuredBu
         />
         
         {/* Dynamic Trust Popup */}
-        {showTrustPopup && (
-          <div className={`trust-popup ${showTrustPopup ? 'show' : ''}`}>
-            <div className="bg-green-600 text-white p-6 rounded-xl shadow-2xl border border-green-500/30">
-              <div className="flex items-start gap-3">
-                <div className="flex-shrink-0">
-                  <span className="material-symbols-outlined text-4xl" role="img" aria-label="Verified contractors">verified</span>
-                </div>
-                <div className="flex-1">
-                  <div className="font-bold mb-1">All contractors verified</div>
-                  <div className="text-sm opacity-90 mb-3">Licensed, insured & background checked</div>
-                  <button
-                    onClick={() => setShowTrustPopup(false)}
-                    className="text-xs text-green-200 hover:text-white transition-colors flex items-center gap-1"
-                  >
-                    <span className="material-symbols-outlined text-xl" role="img" aria-label="Close popup">close</span>
-                    Dismiss
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
+        {/* Trust popup removed — false claims */}
       </div>
   )
 }

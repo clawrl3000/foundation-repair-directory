@@ -134,7 +134,7 @@ export default function SignupPage() {
           
           <h1 className="text-3xl font-bold text-slate-900 mb-2">Join the Network</h1>
           <p className="text-lg text-slate-600 max-w-md mx-auto leading-relaxed">
-            Connect with 10,000+ verified contractors nationwide. 
+            Browse foundation repair contractors nationwide. 
             <span className="font-semibold text-slate-800">Get premium leads delivered daily.</span>
           </p>
         </div>
