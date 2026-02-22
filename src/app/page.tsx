@@ -1,6 +1,9 @@
 import { Metadata } from 'next'
 import HomePageClient from './home-client'
 import { generateFAQSchema, jsonLdScript } from '@/lib/structured-data'
+import { supabaseAdmin } from '@/lib/supabase-admin'
+
+export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
   title: 'Find Trusted Foundation Repair Contractors Near You | Free Quotes in 24hrs',
@@ -23,7 +26,43 @@ export const metadata: Metadata = {
   },
 }
 
-export default function HomePage() {
+async function getFeaturedBusinesses() {
+  try {
+    const { data, error } = await supabaseAdmin
+      .from('businesses')
+      .select(`
+        id, name, slug, rating, review_count, description, address,
+        cities!inner (name, slug, states!inner (name, abbreviation, slug)),
+        business_services (services (name, slug))
+      `)
+      .eq('is_active', true)
+      .gte('rating', 4.5)
+      .gte('review_count', 10)
+      .order('review_count', { ascending: false })
+      .limit(3)
+
+    if (error || !data) return []
+    
+    return data.map((b: any) => ({
+      id: b.id,
+      name: b.name,
+      slug: b.slug,
+      rating: b.rating,
+      reviewCount: b.review_count,
+      description: b.description,
+      city: b.cities?.name,
+      citySlug: b.cities?.slug,
+      stateAbbr: b.cities?.states?.abbreviation,
+      stateSlug: b.cities?.states?.slug,
+      services: b.business_services?.map((bs: any) => bs.services).filter(Boolean).slice(0, 3) || [],
+    }))
+  } catch {
+    return []
+  }
+}
+
+export default async function HomePage() {
+  const featuredBusinesses = await getFeaturedBusinesses()
   // FAQ data for schema markup
   const faqs = [
     {
@@ -52,7 +91,7 @@ export default function HomePage() {
 
   return (
     <div className="bg-white font-display text-slate-900 antialiased overflow-x-hidden">
-      <HomePageClient />
+      <HomePageClient featuredBusinesses={featuredBusinesses} />
       
       {/* FAQ Schema */}
       <script

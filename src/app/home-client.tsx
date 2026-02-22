@@ -35,7 +35,21 @@ const SERVICES = [
   { name: 'Crawl Space', slug: 'crawl-space', icon: 'grid_guides', desc: 'Encapsulation and support systems designed to eliminate sagging floors, mold, and humidity in crawl spaces.' },
 ]
 
-export default function HomePageClient() {
+interface FeaturedBusiness {
+  id: string
+  name: string
+  slug: string
+  rating: number
+  reviewCount: number
+  description: string | null
+  city: string
+  citySlug: string
+  stateAbbr: string
+  stateSlug: string
+  services: { name: string; slug: string }[]
+}
+
+export default function HomePageClient({ featuredBusinesses = [] }: { featuredBusinesses?: FeaturedBusiness[] }) {
   const router = useRouter()
   const [leadFormOpen, setLeadFormOpen] = useState(false)
   const [selectedBusiness, setSelectedBusiness] = useState<{id: string, name: string} | null>(null)
@@ -348,13 +362,14 @@ export default function HomePageClient() {
             </div>
           </section>
 
-          {/* Featured Contractors - Light mode */}
+          {/* Featured Contractors - Real data from database */}
+          {featuredBusinesses.length > 0 && (
           <section className="py-20 lg:py-24 bg-white">
             <div className="mx-auto max-w-7xl px-6 lg:px-10">
               <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
                 <div>
                   <h2 className="text-3xl font-bold text-slate-900 mb-3">Top-Rated Local Specialists</h2>
-                  <p className="text-slate-600">Showing the highest-rated foundation experts currently available in your area.</p>
+                  <p className="text-slate-600">Highest-rated foundation repair contractors based on verified customer reviews.</p>
                 </div>
                 <Link href="/states" className="flex items-center gap-2 text-primary font-bold hover:underline">
                   View All Contractors
@@ -362,243 +377,76 @@ export default function HomePageClient() {
                 </Link>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                
-                {/* Card 1 - Enhanced card with better hover */}
-                <div className="bg-white border border-slate-200 group flex flex-col rounded-xl overflow-hidden card-hover animate-on-scroll">
-                  <div className="relative h-48 w-full overflow-hidden bg-gradient-to-br from-slate-800 via-slate-700 to-slate-900 flex items-center justify-center">
-                    <span className="material-symbols-outlined text-6xl text-amber-400/80 group-hover:scale-110 transition-transform duration-500">foundation</span>
-                    <div className="absolute top-4 right-4 rounded-full bg-slate-900/80 backdrop-blur px-3 py-1 text-[10px] font-black uppercase text-amber-accent border border-amber-accent/30">
-                      Premium Partner
-                    </div>
-                  </div>
-                  <div className="flex flex-1 flex-col p-6">
-                    {/* Enhanced availability indicators */}
-                    <div className="flex items-center gap-4 text-xs text-slate-500 mb-4">
-                      <div className="flex items-center gap-1">
-                        <div className="availability-dot"></div>
-                        <span className="font-medium text-green-700">Available today</span>
+                {featuredBusinesses.map((biz, i) => {
+                  const gradients = [
+                    'from-slate-800 via-slate-700 to-slate-900',
+                    'from-blue-900 via-blue-800 to-slate-900',
+                    'from-emerald-900 via-emerald-800 to-slate-900',
+                  ]
+                  const icons = ['foundation', 'concrete', 'water_damage']
+                  const iconColors = ['text-amber-400/80', 'text-blue-300/80', 'text-emerald-300/80']
+                  const delays = ['', 'animate-delay-200', 'animate-delay-400']
+                  const fullStars = Math.floor(biz.rating)
+                  const hasHalf = biz.rating - fullStars >= 0.25
+                  
+                  return (
+                    <div key={biz.id} className={`bg-white border border-slate-200 group flex flex-col rounded-xl overflow-hidden card-hover animate-on-scroll ${delays[i]}`}>
+                      <div className={`relative h-48 w-full overflow-hidden bg-gradient-to-br ${gradients[i]} flex items-center justify-center`}>
+                        <span className={`material-symbols-outlined text-6xl ${iconColors[i]} group-hover:scale-110 transition-transform duration-500`}>{icons[i]}</span>
                       </div>
-                      <div className="response-time-indicator">
-                        <span className="material-symbols-outlined text-xs">schedule</span>
-                        <span>Responds in 2hrs</span>
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <span className="material-symbols-outlined text-xl" aria-hidden="true">handyman</span>
-                        <span className="font-medium">8 jobs this week</span>
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-start justify-between mb-4">
-                      <div className="flex-1">
-                        <Link href="/texas/houston/precision-foundation-pros" className="text-lg font-bold text-slate-900 hover:text-primary transition-colors">
-                          Precision Foundation Pros
-                        </Link>
-                        <div className="flex items-center gap-2 mt-1 mb-2">
-                          <span className="material-symbols-outlined text-xl text-primary" aria-hidden="true">location_on</span>
-                          <span className="text-sm text-slate-600 font-medium">Houston, TX</span>
-                        </div>
-                        <div className="flex items-center gap-1 mb-2">
-                          <div className="flex text-[#f59e0b]">
-                            <span className="material-symbols-outlined text-xl fill-1" aria-hidden="true">star</span>
-                            <span className="material-symbols-outlined text-xl fill-1" aria-hidden="true">star</span>
-                            <span className="material-symbols-outlined text-xl fill-1" aria-hidden="true">star</span>
-                            <span className="material-symbols-outlined text-xl fill-1" aria-hidden="true">star</span>
-                            <span className="material-symbols-outlined text-xl fill-1" aria-hidden="true">star</span>
+                      <div className="flex flex-1 flex-col p-6">
+                        <div className="flex items-start justify-between mb-4">
+                          <div className="flex-1">
+                            <Link href={`/${biz.stateSlug}/${biz.citySlug}/${biz.slug}`} className="text-lg font-bold text-slate-900 hover:text-primary transition-colors">
+                              {biz.name}
+                            </Link>
+                            <div className="flex items-center gap-2 mt-1 mb-2">
+                              <span className="material-symbols-outlined text-xl text-primary" aria-hidden="true">location_on</span>
+                              <span className="text-sm text-slate-600 font-medium">{biz.city}, {biz.stateAbbr}</span>
+                            </div>
+                            <div className="flex items-center gap-1 mb-2">
+                              <div className="flex text-[#f59e0b]">
+                                {[...Array(fullStars)].map((_, j) => (
+                                  <span key={j} className="material-symbols-outlined text-xl fill-1" aria-hidden="true">star</span>
+                                ))}
+                                {hasHalf && <span className="material-symbols-outlined text-xl" aria-hidden="true">star_half</span>}
+                              </div>
+                              <span className="text-xs font-semibold text-slate-500">({biz.reviewCount} reviews)</span>
+                            </div>
+                            {biz.description && (
+                              <p className="text-sm text-slate-600 line-clamp-2">{biz.description}</p>
+                            )}
                           </div>
-                          <span className="text-xs font-semibold text-slate-500">(124 reviews)</span>
                         </div>
-                        <p className="text-sm text-slate-600">Specializing in residential slab repairs since 2008</p>
-                      </div>
-                      <div className="flex flex-col items-end gap-2">
-                        <div className="rounded-lg bg-primary/10 p-2 text-primary">
-                          <span className="material-symbols-outlined text-xl" aria-hidden="true">verified</span>
-                        </div>
-                        <div className="bg-green-100 text-green-800 text-xs font-bold px-2 py-1 rounded">
-                          Licensed & Insured
-                        </div>
-                      </div>
-                    </div>
-                    <div className="flex flex-wrap gap-2 mb-6">
-                      <Link href="/services/slab-repair" className="rounded-full bg-amber-100 px-2 py-1 text-[10px] font-bold text-amber-800 hover:bg-primary hover:text-white transition-colors">
-                        Slab Jacking
-                      </Link>
-                      <Link href="/services/piering" className="rounded-full bg-amber-100 px-2 py-1 text-[10px] font-bold text-amber-800 hover:bg-primary hover:text-white transition-colors">
-                        Pier & Beam
-                      </Link>
-                      <Link href="/services/waterproofing" className="rounded-full bg-amber-100 px-2 py-1 text-[10px] font-bold text-amber-800 hover:bg-primary hover:text-white transition-colors">
-                        Waterproofing
-                      </Link>
-                    </div>
-                    <div className="mt-auto flex gap-3">
-                      <button 
-                        onClick={() => openLeadForm('precision-foundation-pros', 'Precision Foundation Pros')}
-                        className="flex-1 btn-primary"
-                      >
-                        <span className="material-symbols-outlined">contact_support</span>
-                        Contact Now
-                      </button>
-                      <Link href="/texas/houston/precision-foundation-pros" className="btn-outline">
-                        <span className="material-symbols-outlined">info</span>
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-                
-                {/* Card 2 - Enhanced card with better hover */}
-                <div className="bg-white border border-slate-200 group flex flex-col rounded-xl overflow-hidden card-hover animate-on-scroll animate-delay-200">
-                  <div className="relative h-48 w-full overflow-hidden bg-gradient-to-br from-blue-900 via-blue-800 to-slate-900 flex items-center justify-center">
-                    <span className="material-symbols-outlined text-6xl text-blue-300/80 group-hover:scale-110 transition-transform duration-500">concrete</span>
-                  </div>
-                  <div className="flex flex-1 flex-col p-6">
-                    {/* Enhanced availability indicators */}
-                    <div className="flex items-center gap-4 text-xs text-slate-500 mb-4">
-                      <div className="flex items-center gap-1">
-                        <div className="w-2 h-2 bg-amber-500 rounded-full"></div>
-                        <span className="font-medium text-amber-700">Next available: Tomorrow</span>
-                      </div>
-                      <div className="response-time-indicator">
-                        <span className="material-symbols-outlined text-xs">schedule</span>
-                        <span>Responds in 4hrs</span>
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <span className="material-symbols-outlined text-xl" aria-hidden="true">handyman</span>
-                        <span className="font-medium">5 jobs this week</span>
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-start justify-between mb-4">
-                      <div className="flex-1">
-                        <Link href="/texas/houston/solid-ground-engineering" className="text-lg font-bold text-slate-900 hover:text-primary transition-colors">
-                          Solid Ground Engineering
-                        </Link>
-                        <div className="flex items-center gap-2 mt-1 mb-2">
-                          <span className="material-symbols-outlined text-xl text-primary" aria-hidden="true">location_on</span>
-                          <span className="text-sm text-slate-600 font-medium">Houston, TX</span>
-                        </div>
-                        <div className="flex items-center gap-1 mb-2">
-                          <div className="flex text-[#f59e0b]">
-                            <span className="material-symbols-outlined text-xl fill-1" aria-hidden="true">star</span>
-                            <span className="material-symbols-outlined text-xl fill-1" aria-hidden="true">star</span>
-                            <span className="material-symbols-outlined text-xl fill-1" aria-hidden="true">star</span>
-                            <span className="material-symbols-outlined text-xl fill-1" aria-hidden="true">star</span>
-                            <span className="material-symbols-outlined text-xl" aria-hidden="true">star_half</span>
+                        {biz.services.length > 0 && (
+                          <div className="flex flex-wrap gap-2 mb-6">
+                            {biz.services.map((svc) => (
+                              <span key={svc.slug} className="rounded-full bg-amber-100 px-2 py-1 text-[10px] font-bold text-amber-800">
+                                {svc.name}
+                              </span>
+                            ))}
                           </div>
-                          <span className="text-xs font-semibold text-slate-500">(98 reviews)</span>
-                        </div>
-                        <p className="text-sm text-slate-600">Expert foundation leveling and crack repair solutions</p>
-                      </div>
-                      <div className="flex flex-col items-end gap-2">
-                        <div className="rounded-lg bg-primary/10 p-2 text-primary">
-                          <span className="material-symbols-outlined text-xl" aria-hidden="true">verified</span>
-                        </div>
-                        <div className="bg-green-100 text-green-800 text-xs font-bold px-2 py-1 rounded">
-                          Licensed & Insured
-                        </div>
-                      </div>
-                    </div>
-                    <div className="flex flex-wrap gap-2 mb-6">
-                      <Link href="/services/slab-repair" className="rounded-full bg-amber-100 px-2 py-1 text-[10px] font-bold text-amber-800 hover:bg-primary hover:text-white transition-colors">
-                        Leveling
-                      </Link>
-                      <Link href="/services/slab-repair" className="rounded-full bg-amber-100 px-2 py-1 text-[10px] font-bold text-amber-800 hover:bg-primary hover:text-white transition-colors">
-                        Crack Repair
-                      </Link>
-                    </div>
-                    <div className="mt-auto flex gap-3">
-                      <button 
-                        onClick={() => openLeadForm('solid-ground-engineering', 'Solid Ground Engineering')}
-                        className="flex-1 btn-primary"
-                      >
-                        <span className="material-symbols-outlined">contact_support</span>
-                        Contact Now
-                      </button>
-                      <Link href="/texas/houston/solid-ground-engineering" className="btn-outline">
-                        <span className="material-symbols-outlined">info</span>
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-                
-                {/* Card 3 - Enhanced card with better hover */}
-                <div className="bg-white border border-slate-200 group flex flex-col rounded-xl overflow-hidden card-hover animate-on-scroll animate-delay-400">
-                  <div className="relative h-48 w-full overflow-hidden bg-gradient-to-br from-emerald-900 via-emerald-800 to-slate-900 flex items-center justify-center">
-                    <span className="material-symbols-outlined text-6xl text-emerald-300/80 group-hover:scale-110 transition-transform duration-500">water_damage</span>
-                  </div>
-                  <div className="flex flex-1 flex-col p-6">
-                    {/* Enhanced availability indicators */}
-                    <div className="flex items-center gap-4 text-xs text-slate-500 mb-4">
-                      <div className="flex items-center gap-1">
-                        <div className="availability-dot"></div>
-                        <span className="font-medium text-green-700">Available today</span>
-                      </div>
-                      <div className="response-time-indicator">
-                        <span className="material-symbols-outlined text-xs">schedule</span>
-                        <span>Responds in 1hr</span>
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <span className="material-symbols-outlined text-xl" aria-hidden="true">handyman</span>
-                        <span className="font-medium">12 jobs this week</span>
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-start justify-between mb-4">
-                      <div className="flex-1">
-                        <Link href="/texas/houston/atlas-pier-specialists" className="text-lg font-bold text-slate-900 hover:text-primary transition-colors">
-                          Atlas Pier Specialists
-                        </Link>
-                        <div className="flex items-center gap-2 mt-1 mb-2">
-                          <span className="material-symbols-outlined text-xl text-primary" aria-hidden="true">location_on</span>
-                          <span className="text-sm text-slate-600 font-medium">Houston, TX</span>
-                        </div>
-                        <div className="flex items-center gap-1 mb-2">
-                          <div className="flex text-[#f59e0b]">
-                            <span className="material-symbols-outlined text-xl fill-1" aria-hidden="true">star</span>
-                            <span className="material-symbols-outlined text-xl fill-1" aria-hidden="true">star</span>
-                            <span className="material-symbols-outlined text-xl fill-1" aria-hidden="true">star</span>
-                            <span className="material-symbols-outlined text-xl fill-1" aria-hidden="true">star</span>
-                            <span className="material-symbols-outlined text-xl fill-1" aria-hidden="true">star</span>
-                          </div>
-                          <span className="text-xs font-semibold text-slate-500">(56 reviews)</span>
-                        </div>
-                        <p className="text-sm text-slate-600">Professional basement waterproofing and pier systems</p>
-                      </div>
-                      <div className="flex flex-col items-end gap-2">
-                        <div className="rounded-lg bg-primary/10 p-2 text-primary">
-                          <span className="material-symbols-outlined text-xl" aria-hidden="true">verified</span>
-                        </div>
-                        <div className="bg-green-100 text-green-800 text-xs font-bold px-2 py-1 rounded">
-                          Licensed & Insured
+                        )}
+                        <div className="mt-auto flex gap-3">
+                          <button 
+                            onClick={() => openLeadForm(biz.slug, biz.name)}
+                            className="flex-1 btn-primary"
+                          >
+                            <span className="material-symbols-outlined">contact_support</span>
+                            Contact Now
+                          </button>
+                          <Link href={`/${biz.stateSlug}/${biz.citySlug}/${biz.slug}`} className="btn-outline">
+                            <span className="material-symbols-outlined">info</span>
+                          </Link>
                         </div>
                       </div>
                     </div>
-                    <div className="flex flex-wrap gap-2 mb-6">
-                      <Link href="/services/waterproofing" className="rounded-full bg-amber-100 px-2 py-1 text-[10px] font-bold text-amber-800 hover:bg-primary hover:text-white transition-colors">
-                        Basement Repair
-                      </Link>
-                      <Link href="/services/waterproofing" className="rounded-full bg-amber-100 px-2 py-1 text-[10px] font-bold text-amber-800 hover:bg-primary hover:text-white transition-colors">
-                        Sealing
-                      </Link>
-                      <Link href="/services/piering" className="rounded-full bg-amber-100 px-2 py-1 text-[10px] font-bold text-amber-800 hover:bg-primary hover:text-white transition-colors">
-                        Helical Piers
-                      </Link>
-                    </div>
-                    <div className="mt-auto flex gap-3">
-                      <button 
-                        onClick={() => openLeadForm('atlas-pier-specialists', 'Atlas Pier Specialists')}
-                        className="flex-1 btn-primary"
-                      >
-                        <span className="material-symbols-outlined">contact_support</span>
-                        Contact Now
-                      </button>
-                      <Link href="/texas/houston/atlas-pier-specialists" className="btn-outline">
-                        <span className="material-symbols-outlined">info</span>
-                      </Link>
-                    </div>
-                  </div>
-                </div>
+                  )
+                })}
               </div>
             </div>
           </section>
+          )}
           
           {/* Location Section Teaser - Enhanced with animations */}
           <section className="bg-slate-50 py-20 lg:py-28 border-y border-slate-200 animate-on-scroll">
