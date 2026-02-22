@@ -667,3 +667,563 @@ Processing 31/31: Two Brothers Foundation Repair
 2026-02-18 10:18:15,150 - INFO - Failed: 9
 2026-02-18 10:18:15,150 - INFO - Total: 31
 2026-02-22 11:15:34,739 - ERROR - Script failed: Missing Supabase credentials in environment variables
+2026-02-22 11:15:41,846 - WARNING - No ANTHROPIC_API_KEY found - will use rule-based extraction
+2026-02-22 11:15:41,846 - INFO - Starting Foundation Scout Business Data Scraper
+2026-02-22 11:15:42,099 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/states?select=id&abbreviation=eq.TX "HTTP/2 200 OK"
+2026-02-22 11:15:42,200 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/businesses?select=id%2Cname%2Cslug%2Cwebsite_url&state_id=eq.43&website_url=not.is.null "HTTP/2 200 OK"
+2026-02-22 11:15:42,201 - INFO - Found 31 Texas businesses with websites
+2026-02-22 11:15:42,201 - INFO - 
+Processing 1/31: Advanced Foundation Repair Austin
+2026-02-22 11:15:42,201 - INFO - 
+============================================================
+2026-02-22 11:15:42,201 - INFO - Processing: Advanced Foundation Repair Austin
+2026-02-22 11:15:42,201 - INFO - Website: https://foundationrepairs.com/texas/austin-foundation-repair/
+2026-02-22 11:15:42,201 - INFO - Scraping: https://foundationrepairs.com/texas/austin-foundation-repair/
+2026-02-22 11:15:42,520 - INFO - Extracted 4225 characters from https://foundationrepairs.com/texas/austin-foundation-repair/
+2026-02-22 11:15:42,522 - INFO - Rule-based extracted: 2 services, 0 features, 0 reviews
+2026-02-22 11:15:42,623 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.Foundation+Repair "HTTP/2 200 OK"
+2026-02-22 11:15:42,713 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:15:42,802 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.Drainage "HTTP/2 200 OK"
+2026-02-22 11:15:42,887 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:15:42,888 - INFO - Saved data for business a38545aa-ce32-42a2-86ba-1daafc742523
+2026-02-22 11:15:44,964 - INFO - 
+Processing 2/31: Quality Foundation Repair
+2026-02-22 11:15:44,965 - INFO - 
+============================================================
+2026-02-22 11:15:44,965 - INFO - Processing: Quality Foundation Repair
+2026-02-22 11:15:44,965 - INFO - Website: https://qualityfoundationrepairaustin.com/
+2026-02-22 11:15:44,965 - INFO - Scraping: https://qualityfoundationrepairaustin.com/
+2026-02-22 11:15:45,308 - INFO - Extracted 5484 characters from https://qualityfoundationrepairaustin.com/
+2026-02-22 11:15:45,308 - INFO - Rule-based extracted: 5 services, 1 features, 0 reviews
+2026-02-22 11:15:45,392 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.Pier+And+Beam+Repair "HTTP/2 200 OK"
+2026-02-22 11:15:45,552 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services "HTTP/2 409 Conflict"
+2026-02-22 11:15:45,553 - ERROR - Error saving service Pier And Beam Repair: {'message': 'duplicate key value violates unique constraint "services_pkey"', 'code': '23505', 'hint': None, 'details': 'Key (id)=(1) already exists.'}
+2026-02-22 11:15:45,636 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.Foundation+Repair "HTTP/2 200 OK"
+2026-02-22 11:15:45,726 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:15:45,802 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.House+Leveling "HTTP/2 200 OK"
+2026-02-22 11:15:45,882 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:15:45,971 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.Underpinning "HTTP/2 200 OK"
+2026-02-22 11:15:46,050 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:15:46,130 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.Crawl+Space "HTTP/2 200 OK"
+2026-02-22 11:15:46,208 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:15:46,286 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/features?select=id&name=eq.Free+Estimate "HTTP/2 200 OK"
+2026-02-22 11:15:46,387 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_features "HTTP/2 200 OK"
+2026-02-22 11:15:46,387 - INFO - Saved data for business 557420cf-7cb6-4162-9a66-3fe31c911bb5
+2026-02-22 11:15:48,390 - INFO - 
+Processing 3/31: Total Foundation Repair Austin
+2026-02-22 11:15:48,390 - INFO - 
+============================================================
+2026-02-22 11:15:48,390 - INFO - Processing: Total Foundation Repair Austin
+2026-02-22 11:15:48,390 - INFO - Website: https://totalfoundationrepairaustin.com/
+2026-02-22 11:15:48,390 - INFO - Scraping: https://totalfoundationrepairaustin.com/
+2026-02-22 11:15:49,154 - INFO - Extracted 8003 characters from https://totalfoundationrepairaustin.com/
+2026-02-22 11:15:49,155 - INFO - Rule-based extracted: 8 services, 1 features, 0 reviews
+2026-02-22 11:15:49,243 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.Pier+And+Beam+Repair "HTTP/2 200 OK"
+2026-02-22 11:15:49,341 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services "HTTP/2 409 Conflict"
+2026-02-22 11:15:49,342 - ERROR - Error saving service Pier And Beam Repair: {'message': 'duplicate key value violates unique constraint "services_pkey"', 'code': '23505', 'hint': None, 'details': 'Key (id)=(2) already exists.'}
+2026-02-22 11:15:49,435 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.Slab+Repair "HTTP/2 200 OK"
+2026-02-22 11:15:49,518 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:15:49,608 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.Foundation+Repair "HTTP/2 200 OK"
+2026-02-22 11:15:49,686 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:15:49,761 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.House+Leveling "HTTP/2 200 OK"
+2026-02-22 11:15:49,864 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:15:49,946 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.Foundation+Leveling "HTTP/2 200 OK"
+2026-02-22 11:15:50,029 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:15:50,142 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.Crack+Repair "HTTP/2 200 OK"
+2026-02-22 11:15:50,224 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:15:50,314 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.Basement+Waterproofing "HTTP/2 200 OK"
+2026-02-22 11:15:50,394 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:15:50,486 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.Crawl+Space "HTTP/2 200 OK"
+2026-02-22 11:15:50,560 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:15:50,636 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/features?select=id&name=eq.Free+Estimate "HTTP/2 200 OK"
+2026-02-22 11:15:50,717 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_features "HTTP/2 200 OK"
+2026-02-22 11:15:50,718 - INFO - Saved data for business 3cb5f0d1-f53d-4b91-8148-02f668f09818
+2026-02-22 11:15:52,720 - INFO - 
+Processing 4/31: Foundation Repair Austin Texas
+2026-02-22 11:15:52,721 - INFO - 
+============================================================
+2026-02-22 11:15:52,721 - INFO - Processing: Foundation Repair Austin Texas
+2026-02-22 11:15:52,721 - INFO - Website: https://foundation-repair-austin-tx.com/
+2026-02-22 11:15:52,721 - INFO - Scraping: https://foundation-repair-austin-tx.com/
+2026-02-22 11:15:59,181 - INFO - Extracted 8003 characters from https://foundation-repair-austin-tx.com/
+2026-02-22 11:15:59,181 - INFO - Rule-based extracted: 2 services, 0 features, 0 reviews
+2026-02-22 11:15:59,324 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.Foundation+Repair "HTTP/2 200 OK"
+2026-02-22 11:15:59,413 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 201 Created"
+2026-02-22 11:15:59,516 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.House+Leveling "HTTP/2 200 OK"
+2026-02-22 11:15:59,617 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 201 Created"
+2026-02-22 11:15:59,617 - INFO - Saved data for business ef559ecf-c3d2-4ad3-8746-cb35d8eda7e8
+2026-02-22 11:16:01,686 - INFO - 
+Processing 5/31: Quality Foundation Repair Contact
+2026-02-22 11:16:01,687 - INFO - 
+============================================================
+2026-02-22 11:16:01,687 - INFO - Processing: Quality Foundation Repair Contact
+2026-02-22 11:16:01,687 - INFO - Website: https://qualityfoundationrepairaustin.com/contact/
+2026-02-22 11:16:01,687 - INFO - Scraping: https://qualityfoundationrepairaustin.com/contact/
+2026-02-22 11:16:01,868 - INFO - Extracted 961 characters from https://qualityfoundationrepairaustin.com/contact/
+2026-02-22 11:16:01,868 - INFO - Rule-based extracted: 1 services, 0 features, 0 reviews
+2026-02-22 11:16:01,962 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.Foundation+Repair "HTTP/2 200 OK"
+2026-02-22 11:16:02,044 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:16:02,044 - INFO - Saved data for business 7a41be24-c0b6-4e09-ac7a-8ffac0d0c324
+2026-02-22 11:16:04,046 - INFO - 
+Processing 6/31: Baird Foundation Repair
+2026-02-22 11:16:04,046 - INFO - 
+============================================================
+2026-02-22 11:16:04,046 - INFO - Processing: Baird Foundation Repair
+2026-02-22 11:16:04,046 - INFO - Website: https://www.bairdfoundationrepair.com/
+2026-02-22 11:16:04,046 - INFO - Scraping: https://www.bairdfoundationrepair.com/
+2026-02-22 11:16:04,194 - WARNING - Request failed for https://www.bairdfoundationrepair.com/: 403 Client Error: Forbidden for url: https://www.bairdfoundationrepair.com/
+2026-02-22 11:16:04,194 - WARNING - Failed to scrape website for Baird Foundation Repair
+2026-02-22 11:16:06,199 - INFO - 
+Processing 7/31: Total Foundation Repair San Antonio
+2026-02-22 11:16:06,199 - INFO - 
+============================================================
+2026-02-22 11:16:06,199 - INFO - Processing: Total Foundation Repair San Antonio
+2026-02-22 11:16:06,199 - INFO - Website: https://texfoundationrepair.com/
+2026-02-22 11:16:06,199 - INFO - Scraping: https://texfoundationrepair.com/
+2026-02-22 11:16:06,688 - INFO - Extracted 8003 characters from https://texfoundationrepair.com/
+2026-02-22 11:16:06,688 - INFO - Rule-based extracted: 5 services, 1 features, 0 reviews
+2026-02-22 11:16:06,796 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.Foundation+Repair "HTTP/2 200 OK"
+2026-02-22 11:16:06,899 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:16:06,995 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.House+Leveling "HTTP/2 200 OK"
+2026-02-22 11:16:07,109 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:16:07,202 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.Crawl+Space "HTTP/2 200 OK"
+2026-02-22 11:16:07,280 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:16:07,372 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.French+Drain "HTTP/2 200 OK"
+2026-02-22 11:16:07,471 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:16:07,566 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.Drainage "HTTP/2 200 OK"
+2026-02-22 11:16:07,670 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:16:07,757 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/features?select=id&name=eq.Lifetime+Warranty "HTTP/2 200 OK"
+2026-02-22 11:16:07,843 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_features "HTTP/2 200 OK"
+2026-02-22 11:16:07,844 - INFO - Saved data for business 884a2c95-ae3e-4500-be29-dcf35ec4569e
+2026-02-22 11:16:09,863 - INFO - 
+Processing 8/31: San Antonio Foundation Repair
+2026-02-22 11:16:09,863 - INFO - 
+============================================================
+2026-02-22 11:16:09,863 - INFO - Processing: San Antonio Foundation Repair
+2026-02-22 11:16:09,863 - INFO - Website: https://satxfoundationrepair.com/
+2026-02-22 11:16:09,863 - INFO - Scraping: https://satxfoundationrepair.com/
+2026-02-22 11:16:10,979 - INFO - Extracted 7296 characters from https://satxfoundationrepair.com/
+2026-02-22 11:16:10,979 - INFO - Rule-based extracted: 7 services, 2 features, 0 reviews
+2026-02-22 11:16:11,081 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.Foundation+Repair "HTTP/2 200 OK"
+2026-02-22 11:16:11,170 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:16:11,262 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.House+Leveling "HTTP/2 200 OK"
+2026-02-22 11:16:11,382 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:16:11,476 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.Helical+Piers "HTTP/2 200 OK"
+2026-02-22 11:16:11,578 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:16:11,672 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.Foundation+Cracks "HTTP/2 200 OK"
+2026-02-22 11:16:11,772 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:16:11,886 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.Drainage "HTTP/2 200 OK"
+2026-02-22 11:16:12,050 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:16:12,165 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.Slabjacking "HTTP/2 200 OK"
+2026-02-22 11:16:12,288 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:16:12,386 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.Mudjacking "HTTP/2 200 OK"
+2026-02-22 11:16:12,480 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:16:12,567 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/features?select=id&name=eq.Transferable+Warranty "HTTP/2 200 OK"
+2026-02-22 11:16:12,705 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_features "HTTP/2 200 OK"
+2026-02-22 11:16:12,812 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/features?select=id&name=eq.Free+Estimate "HTTP/2 200 OK"
+2026-02-22 11:16:12,921 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_features "HTTP/2 200 OK"
+2026-02-22 11:16:12,921 - INFO - Saved data for business f31e9d41-045b-4908-994c-d130748c096d
+2026-02-22 11:16:14,922 - INFO - 
+Processing 9/31: AAA Foundation Repair
+2026-02-22 11:16:14,922 - INFO - 
+============================================================
+2026-02-22 11:16:14,922 - INFO - Processing: AAA Foundation Repair
+2026-02-22 11:16:14,922 - INFO - Website: https://aaafoundationrepair.com/
+2026-02-22 11:16:14,922 - INFO - Scraping: https://aaafoundationrepair.com/
+2026-02-22 11:16:15,243 - INFO - Extracted 5383 characters from https://aaafoundationrepair.com/
+2026-02-22 11:16:15,243 - INFO - Rule-based extracted: 2 services, 0 features, 0 reviews
+2026-02-22 11:16:15,333 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.Foundation+Repair "HTTP/2 200 OK"
+2026-02-22 11:16:15,434 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:16:15,521 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.Crawl+Space "HTTP/2 200 OK"
+2026-02-22 11:16:15,612 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:16:15,613 - INFO - Saved data for business dc9544ea-651e-405f-af01-1c0d719f78eb
+2026-02-22 11:16:17,616 - INFO - 
+Processing 10/31: Advanced Foundation Repair San Antonio
+2026-02-22 11:16:17,616 - INFO - 
+============================================================
+2026-02-22 11:16:17,616 - INFO - Processing: Advanced Foundation Repair San Antonio
+2026-02-22 11:16:17,616 - INFO - Website: https://foundationrepairs.com/texas/san-antonio-foundation-repair/
+2026-02-22 11:16:17,616 - INFO - Scraping: https://foundationrepairs.com/texas/san-antonio-foundation-repair/
+2026-02-22 11:16:17,961 - INFO - Extracted 5085 characters from https://foundationrepairs.com/texas/san-antonio-foundation-repair/
+2026-02-22 11:16:17,961 - INFO - Rule-based extracted: 3 services, 0 features, 0 reviews
+2026-02-22 11:16:18,143 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.Foundation+Repair "HTTP/2 200 OK"
+2026-02-22 11:16:18,235 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:16:18,328 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.Foundation+Leveling "HTTP/2 200 OK"
+2026-02-22 11:16:18,412 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:16:18,497 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.Drainage "HTTP/2 200 OK"
+2026-02-22 11:16:18,701 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:16:18,701 - INFO - Saved data for business ab1a9a27-9362-477d-9056-f8f30f79afcf
+2026-02-22 11:16:20,719 - INFO - 
+Processing 11/31: Allied Foundation
+2026-02-22 11:16:20,719 - INFO - 
+============================================================
+2026-02-22 11:16:20,719 - INFO - Processing: Allied Foundation
+2026-02-22 11:16:20,719 - INFO - Website: https://www.crackedslab.com/
+2026-02-22 11:16:20,719 - INFO - Scraping: https://www.crackedslab.com/
+2026-02-22 11:16:21,017 - INFO - Extracted 5501 characters from https://www.crackedslab.com/
+2026-02-22 11:16:21,017 - INFO - Rule-based extracted: 3 services, 3 features, 0 reviews
+2026-02-22 11:16:21,096 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.Foundation+Repair "HTTP/2 200 OK"
+2026-02-22 11:16:21,179 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:16:21,261 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.House+Leveling "HTTP/2 200 OK"
+2026-02-22 11:16:21,351 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:16:21,445 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.Drainage "HTTP/2 200 OK"
+2026-02-22 11:16:21,536 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:16:21,628 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/features?select=id&name=eq.Transferable+Warranty "HTTP/2 200 OK"
+2026-02-22 11:16:21,772 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_features "HTTP/2 200 OK"
+2026-02-22 11:16:21,868 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/features?select=id&name=eq.Free+Estimate "HTTP/2 200 OK"
+2026-02-22 11:16:21,966 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_features "HTTP/2 200 OK"
+2026-02-22 11:16:22,047 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/features?select=id&name=eq.Financing+Available "HTTP/2 200 OK"
+2026-02-22 11:16:22,145 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_features "HTTP/2 200 OK"
+2026-02-22 11:16:22,146 - INFO - Saved data for business 28e6e616-533e-41f3-83b4-5827d9f1325b
+2026-02-22 11:16:24,152 - INFO - 
+Processing 12/31: HTX Foundation Repair
+2026-02-22 11:16:24,152 - INFO - 
+============================================================
+2026-02-22 11:16:24,152 - INFO - Processing: HTX Foundation Repair
+2026-02-22 11:16:24,152 - INFO - Website: https://www.htxfr.com/
+2026-02-22 11:16:24,152 - INFO - Scraping: https://www.htxfr.com/
+2026-02-22 11:16:24,391 - WARNING - Request failed for https://www.htxfr.com/: 403 Client Error: Forbidden for url: https://www.htxfr.com/
+2026-02-22 11:16:24,391 - WARNING - Failed to scrape website for HTX Foundation Repair
+2026-02-22 11:16:26,486 - INFO - 
+Processing 13/31: MitchCo Foundation Repair
+2026-02-22 11:16:26,487 - INFO - 
+============================================================
+2026-02-22 11:16:26,487 - INFO - Processing: MitchCo Foundation Repair
+2026-02-22 11:16:26,487 - INFO - Website: https://www.safoundationrepaircompanies.com/contact-us/
+2026-02-22 11:16:26,487 - INFO - Scraping: https://www.safoundationrepaircompanies.com/contact-us/
+2026-02-22 11:16:27,320 - INFO - Extracted 3811 characters from https://www.safoundationrepaircompanies.com/contact-us/
+2026-02-22 11:16:27,321 - INFO - Rule-based extracted: 2 services, 1 features, 0 reviews
+2026-02-22 11:16:27,603 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.Foundation+Repair "HTTP/2 200 OK"
+2026-02-22 11:16:27,716 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:16:27,797 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.Drainage "HTTP/2 200 OK"
+2026-02-22 11:16:27,910 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:16:27,999 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/features?select=id&name=eq.Bbb+Accredited "HTTP/2 200 OK"
+2026-02-22 11:16:28,088 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/features "HTTP/2 409 Conflict"
+2026-02-22 11:16:28,089 - ERROR - Error saving feature Bbb Accredited: {'message': 'duplicate key value violates unique constraint "features_pkey"', 'code': '23505', 'hint': None, 'details': 'Key (id)=(1) already exists.'}
+2026-02-22 11:16:28,089 - INFO - Saved data for business 6d2d3877-7ccc-4cf3-a768-c73a7b1bee1e
+2026-02-22 11:16:30,089 - INFO - 
+Processing 14/31: Olshan Foundation Repair
+2026-02-22 11:16:30,089 - INFO - 
+============================================================
+2026-02-22 11:16:30,089 - INFO - Processing: Olshan Foundation Repair
+2026-02-22 11:16:30,089 - INFO - Website: https://www.olshanfoundation.com/regions/texas/sanantonio/
+2026-02-22 11:16:30,090 - INFO - Scraping: https://www.olshanfoundation.com/regions/texas/sanantonio/
+2026-02-22 11:16:30,252 - WARNING - Request failed for https://www.olshanfoundation.com/regions/texas/sanantonio/: 403 Client Error: Forbidden for url: https://www.olshanfoundation.com/regions/texas/sanantonio/
+2026-02-22 11:16:30,253 - WARNING - Failed to scrape website for Olshan Foundation Repair
+2026-02-22 11:16:32,295 - INFO - 
+Processing 15/31: Risen Foundation Solutions
+2026-02-22 11:16:32,295 - INFO - 
+============================================================
+2026-02-22 11:16:32,295 - INFO - Processing: Risen Foundation Solutions
+2026-02-22 11:16:32,295 - INFO - Website: https://www.risenfoundations.com/
+2026-02-22 11:16:32,295 - INFO - Scraping: https://www.risenfoundations.com/
+2026-02-22 11:16:32,517 - WARNING - Request failed for https://www.risenfoundations.com/: 403 Client Error: Forbidden for url: https://www.risenfoundations.com/
+2026-02-22 11:16:32,517 - WARNING - Failed to scrape website for Risen Foundation Solutions
+2026-02-22 11:16:34,551 - INFO - 
+Processing 16/31: FCS Foundation Repair Dallas
+2026-02-22 11:16:34,551 - INFO - 
+============================================================
+2026-02-22 11:16:34,551 - INFO - Processing: FCS Foundation Repair Dallas
+2026-02-22 11:16:34,551 - INFO - Website: https://fcsfoundationandconcrete.com/foundation-repair-dallas/
+2026-02-22 11:16:34,551 - INFO - Scraping: https://fcsfoundationandconcrete.com/foundation-repair-dallas/
+2026-02-22 11:16:35,756 - INFO - Extracted 8003 characters from https://fcsfoundationandconcrete.com/foundation-repair-dallas/
+2026-02-22 11:16:35,756 - INFO - Rule-based extracted: 4 services, 1 features, 0 reviews
+2026-02-22 11:16:36,005 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.Foundation+Repair "HTTP/2 200 OK"
+2026-02-22 11:16:36,209 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:16:36,434 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.Crack+Repair "HTTP/2 200 OK"
+2026-02-22 11:16:36,695 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:16:36,916 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.French+Drain "HTTP/2 200 OK"
+2026-02-22 11:16:37,118 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:16:37,602 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.Drainage "HTTP/2 200 OK"
+2026-02-22 11:16:37,878 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:16:38,172 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/features?select=id&name=eq.Free+Inspection "HTTP/2 200 OK"
+2026-02-22 11:16:38,360 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_features "HTTP/2 200 OK"
+2026-02-22 11:16:38,360 - INFO - Saved data for business 72c7a21b-0202-4e2d-a68c-dc678b8f57ec
+2026-02-22 11:16:40,362 - INFO - 
+Processing 17/31: G.L. Hunt Foundation Repair
+2026-02-22 11:16:40,362 - INFO - 
+============================================================
+2026-02-22 11:16:40,362 - INFO - Processing: G.L. Hunt Foundation Repair
+2026-02-22 11:16:40,362 - INFO - Website: https://glhunt.com/location/fort-worth-tx/?utm_source=google&utm_medium=organic&utm_campaign=gbp
+2026-02-22 11:16:40,362 - INFO - Scraping: https://glhunt.com/location/fort-worth-tx/?utm_source=google&utm_medium=organic&utm_campaign=gbp
+2026-02-22 11:16:40,482 - WARNING - Request failed for https://glhunt.com/location/fort-worth-tx/?utm_source=google&utm_medium=organic&utm_campaign=gbp: 403 Client Error: Forbidden for url: https://glhunt.com/location/fort-worth-tx/?utm_source=google&utm_medium=organic&utm_campaign=gbp
+2026-02-22 11:16:40,483 - WARNING - Failed to scrape website for G.L. Hunt Foundation Repair
+2026-02-22 11:16:42,484 - INFO - 
+Processing 18/31: All In One Foundation Repair
+2026-02-22 11:16:42,485 - INFO - 
+============================================================
+2026-02-22 11:16:42,485 - INFO - Processing: All In One Foundation Repair
+2026-02-22 11:16:42,485 - INFO - Website: https://www.yelp.com/biz/all-in-one-foundation-repair-austin
+2026-02-22 11:16:42,485 - INFO - Scraping: https://www.yelp.com/biz/all-in-one-foundation-repair-austin
+2026-02-22 11:16:42,645 - WARNING - Request failed for https://www.yelp.com/biz/all-in-one-foundation-repair-austin: 403 Client Error: Forbidden for url: https://www.yelp.com/biz/all-in-one-foundation-repair-austin
+2026-02-22 11:16:42,645 - WARNING - Failed to scrape website for All In One Foundation Repair
+2026-02-22 11:16:44,646 - INFO - 
+Processing 19/31: Advanced Foundation Repair
+2026-02-22 11:16:44,646 - INFO - 
+============================================================
+2026-02-22 11:16:44,646 - INFO - Processing: Advanced Foundation Repair
+2026-02-22 11:16:44,646 - INFO - Website: https://foundationrepairs.com/
+2026-02-22 11:16:44,646 - INFO - Scraping: https://foundationrepairs.com/
+2026-02-22 11:16:44,973 - INFO - Extracted 5882 characters from https://foundationrepairs.com/
+2026-02-22 11:16:44,974 - INFO - Rule-based extracted: 3 services, 2 features, 3 reviews
+2026-02-22 11:16:45,123 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.Foundation+Repair "HTTP/2 200 OK"
+2026-02-22 11:16:45,252 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:16:45,356 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.Foundation+Leveling "HTTP/2 200 OK"
+2026-02-22 11:16:45,456 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:16:45,547 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.Drainage "HTTP/2 200 OK"
+2026-02-22 11:16:45,645 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:16:45,748 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/features?select=id&name=eq.Lifetime+Warranty "HTTP/2 200 OK"
+2026-02-22 11:16:45,843 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_features "HTTP/2 200 OK"
+2026-02-22 11:16:45,940 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/features?select=id&name=eq.Free+Estimate "HTTP/2 200 OK"
+2026-02-22 11:16:46,036 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_features "HTTP/2 200 OK"
+2026-02-22 11:16:46,131 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/reviews "HTTP/2 404 Not Found"
+2026-02-22 11:16:46,132 - ERROR - Error saving review: {'message': "Could not find the table 'public.reviews' in the schema cache", 'code': 'PGRST205', 'hint': "Perhaps you meant the table 'public.services'", 'details': None} (Note: reviews table may not exist yet)
+2026-02-22 11:16:46,226 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/reviews "HTTP/2 404 Not Found"
+2026-02-22 11:16:46,227 - ERROR - Error saving review: {'message': "Could not find the table 'public.reviews' in the schema cache", 'code': 'PGRST205', 'hint': "Perhaps you meant the table 'public.services'", 'details': None} (Note: reviews table may not exist yet)
+2026-02-22 11:16:46,331 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/reviews "HTTP/2 404 Not Found"
+2026-02-22 11:16:46,332 - ERROR - Error saving review: {'message': "Could not find the table 'public.reviews' in the schema cache", 'code': 'PGRST205', 'hint': "Perhaps you meant the table 'public.services'", 'details': None} (Note: reviews table may not exist yet)
+2026-02-22 11:16:46,332 - INFO - Saved data for business 05c672c9-9383-49b5-8177-e319da820613
+2026-02-22 11:16:48,332 - INFO - 
+Processing 20/31: Arch Foundation Repair
+2026-02-22 11:16:48,332 - INFO - 
+============================================================
+2026-02-22 11:16:48,332 - INFO - Processing: Arch Foundation Repair
+2026-02-22 11:16:48,332 - INFO - Website: https://archfoundationrepair.com/
+2026-02-22 11:16:48,332 - INFO - Scraping: https://archfoundationrepair.com/
+2026-02-22 11:16:48,904 - INFO - Extracted 8003 characters from https://archfoundationrepair.com/
+2026-02-22 11:16:48,904 - INFO - Rule-based extracted: 1 services, 1 features, 0 reviews
+2026-02-22 11:16:49,008 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.Foundation+Repair "HTTP/2 200 OK"
+2026-02-22 11:16:49,105 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:16:49,194 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/features?select=id&name=eq.Transferable+Warranty "HTTP/2 200 OK"
+2026-02-22 11:16:49,305 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_features "HTTP/2 200 OK"
+2026-02-22 11:16:49,306 - INFO - Saved data for business d60b1c8f-8e6d-495f-a3cd-0425c2996ec6
+2026-02-22 11:16:51,307 - INFO - 
+Processing 21/31: Cortez Foundation Repair
+2026-02-22 11:16:51,307 - INFO - 
+============================================================
+2026-02-22 11:16:51,308 - INFO - Processing: Cortez Foundation Repair
+2026-02-22 11:16:51,308 - INFO - Website: https://www.cortezfoundationrepair.com/
+2026-02-22 11:16:51,308 - INFO - Scraping: https://www.cortezfoundationrepair.com/
+2026-02-22 11:16:52,079 - INFO - Extracted 6051 characters from https://www.cortezfoundationrepair.com/
+2026-02-22 11:16:52,080 - INFO - Rule-based extracted: 2 services, 2 features, 5 reviews
+2026-02-22 11:16:52,168 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.Foundation+Repair "HTTP/2 200 OK"
+2026-02-22 11:16:52,263 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:16:52,369 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.French+Drain "HTTP/2 200 OK"
+2026-02-22 11:16:52,469 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:16:52,559 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/features?select=id&name=eq.Lifetime+Warranty "HTTP/2 200 OK"
+2026-02-22 11:16:52,650 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_features "HTTP/2 200 OK"
+2026-02-22 11:16:52,740 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/features?select=id&name=eq.Free+Estimate "HTTP/2 200 OK"
+2026-02-22 11:16:52,837 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_features "HTTP/2 200 OK"
+2026-02-22 11:16:52,930 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/reviews "HTTP/2 404 Not Found"
+2026-02-22 11:16:52,931 - ERROR - Error saving review: {'message': "Could not find the table 'public.reviews' in the schema cache", 'code': 'PGRST205', 'hint': "Perhaps you meant the table 'public.services'", 'details': None} (Note: reviews table may not exist yet)
+2026-02-22 11:16:53,024 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/reviews "HTTP/2 404 Not Found"
+2026-02-22 11:16:53,024 - ERROR - Error saving review: {'message': "Could not find the table 'public.reviews' in the schema cache", 'code': 'PGRST205', 'hint': "Perhaps you meant the table 'public.services'", 'details': None} (Note: reviews table may not exist yet)
+2026-02-22 11:16:53,113 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/reviews "HTTP/2 404 Not Found"
+2026-02-22 11:16:53,113 - ERROR - Error saving review: {'message': "Could not find the table 'public.reviews' in the schema cache", 'code': 'PGRST205', 'hint': "Perhaps you meant the table 'public.services'", 'details': None} (Note: reviews table may not exist yet)
+2026-02-22 11:16:53,217 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/reviews "HTTP/2 404 Not Found"
+2026-02-22 11:16:53,218 - ERROR - Error saving review: {'message': "Could not find the table 'public.reviews' in the schema cache", 'code': 'PGRST205', 'hint': "Perhaps you meant the table 'public.services'", 'details': None} (Note: reviews table may not exist yet)
+2026-02-22 11:16:53,307 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/reviews "HTTP/2 404 Not Found"
+2026-02-22 11:16:53,307 - ERROR - Error saving review: {'message': "Could not find the table 'public.reviews' in the schema cache", 'code': 'PGRST205', 'hint': "Perhaps you meant the table 'public.services'", 'details': None} (Note: reviews table may not exist yet)
+2026-02-22 11:16:53,307 - INFO - Saved data for business 2ec1ae03-93e5-41cd-a434-d9651514c3f4
+2026-02-22 11:16:55,321 - INFO - 
+Processing 22/31: Du-West Services
+2026-02-22 11:16:55,322 - INFO - 
+============================================================
+2026-02-22 11:16:55,322 - INFO - Processing: Du-West Services
+2026-02-22 11:16:55,322 - INFO - Website: https://www.du-west.com/dallas/
+2026-02-22 11:16:55,322 - INFO - Scraping: https://www.du-west.com/dallas/
+2026-02-22 11:16:55,479 - INFO - Extracted 303 characters from https://www.du-west.com/dallas/
+2026-02-22 11:16:55,479 - INFO - Rule-based extracted: 0 services, 0 features, 0 reviews
+2026-02-22 11:16:55,479 - INFO - Saved data for business 15918eaa-6e7f-4b9d-9b0d-0c4e6efdb551
+2026-02-22 11:16:57,494 - INFO - 
+Processing 23/31: Ecoscape Foundation
+2026-02-22 11:16:57,494 - INFO - 
+============================================================
+2026-02-22 11:16:57,494 - INFO - Processing: Ecoscape Foundation
+2026-02-22 11:16:57,494 - INFO - Website: https://ecoscapefoundation.com/
+2026-02-22 11:16:57,494 - INFO - Scraping: https://ecoscapefoundation.com/
+2026-02-22 11:16:59,529 - INFO - Extracted 4377 characters from https://ecoscapefoundation.com/
+2026-02-22 11:16:59,529 - INFO - Rule-based extracted: 6 services, 2 features, 0 reviews
+2026-02-22 11:16:59,682 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.Pier+%26+Beam+Repair "HTTP/2 200 OK"
+2026-02-22 11:16:59,776 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:16:59,866 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.Slab+Repair "HTTP/2 200 OK"
+2026-02-22 11:16:59,951 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:17:00,054 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.Foundation+Repair "HTTP/2 200 OK"
+2026-02-22 11:17:00,144 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:17:00,252 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.French+Drain "HTTP/2 200 OK"
+2026-02-22 11:17:00,349 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:17:00,468 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.Drainage "HTTP/2 200 OK"
+2026-02-22 11:17:00,552 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:17:00,642 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.Mudjacking "HTTP/2 200 OK"
+2026-02-22 11:17:00,729 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:17:00,826 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/features?select=id&name=eq.Lifetime+Warranty "HTTP/2 200 OK"
+2026-02-22 11:17:00,934 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_features "HTTP/2 200 OK"
+2026-02-22 11:17:01,016 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/features?select=id&name=eq.Transferable+Warranty "HTTP/2 200 OK"
+2026-02-22 11:17:01,110 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_features "HTTP/2 200 OK"
+2026-02-22 11:17:01,111 - INFO - Saved data for business 332d8e95-a862-4c56-80d3-537840b928a7
+2026-02-22 11:17:03,114 - INFO - 
+Processing 24/31: Hercules Foundation Repair
+2026-02-22 11:17:03,114 - INFO - 
+============================================================
+2026-02-22 11:17:03,114 - INFO - Processing: Hercules Foundation Repair
+2026-02-22 11:17:03,114 - INFO - Website: https://herculesfoundations.com/locations/foundation-repair-houston-tx/
+2026-02-22 11:17:03,114 - INFO - Scraping: https://herculesfoundations.com/locations/foundation-repair-houston-tx/
+2026-02-22 11:17:05,853 - INFO - Extracted 6744 characters from https://herculesfoundations.com/locations/foundation-repair-houston-tx/
+2026-02-22 11:17:05,854 - INFO - Rule-based extracted: 5 services, 2 features, 0 reviews
+2026-02-22 11:17:05,945 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.Slab+Repair "HTTP/2 200 OK"
+2026-02-22 11:17:06,041 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:17:06,132 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.Foundation+Repair "HTTP/2 200 OK"
+2026-02-22 11:17:06,231 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:17:06,329 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.Foundation+Leveling "HTTP/2 200 OK"
+2026-02-22 11:17:06,437 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:17:06,533 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.Crack+Repair "HTTP/2 200 OK"
+2026-02-22 11:17:06,625 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:17:06,710 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.Drainage "HTTP/2 200 OK"
+2026-02-22 11:17:06,804 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:17:06,890 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/features?select=id&name=eq.Free+Inspection "HTTP/2 200 OK"
+2026-02-22 11:17:06,978 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_features "HTTP/2 200 OK"
+2026-02-22 11:17:07,070 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/features?select=id&name=eq.Free+Estimate "HTTP/2 200 OK"
+2026-02-22 11:17:07,188 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_features "HTTP/2 200 OK"
+2026-02-22 11:17:07,189 - INFO - Saved data for business 1f7c9ff2-1f4d-43f0-8b61-2d0655da4e1d
+2026-02-22 11:17:09,214 - INFO - 
+Processing 25/31: Knight Engineering Services
+2026-02-22 11:17:09,214 - INFO - 
+============================================================
+2026-02-22 11:17:09,214 - INFO - Processing: Knight Engineering Services
+2026-02-22 11:17:09,214 - INFO - Website: https://www.foundationrepairhouston.net/
+2026-02-22 11:17:09,214 - INFO - Scraping: https://www.foundationrepairhouston.net/
+2026-02-22 11:17:09,483 - INFO - Extracted 2961 characters from https://www.foundationrepairhouston.net/
+2026-02-22 11:17:09,483 - INFO - Rule-based extracted: 3 services, 1 features, 0 reviews
+2026-02-22 11:17:09,586 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.Slab+Repair "HTTP/2 200 OK"
+2026-02-22 11:17:09,799 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:17:09,906 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.Foundation+Repair "HTTP/2 200 OK"
+2026-02-22 11:17:10,007 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:17:10,109 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.Drainage "HTTP/2 200 OK"
+2026-02-22 11:17:10,205 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:17:10,320 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/features?select=id&name=eq.Lifetime+Warranty "HTTP/2 200 OK"
+2026-02-22 11:17:10,427 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_features "HTTP/2 200 OK"
+2026-02-22 11:17:10,427 - INFO - Saved data for business 3bc92e7d-15b6-40ec-8e5f-9d31a4c5ed4d
+2026-02-22 11:17:12,442 - INFO - 
+Processing 26/31: Perma Pier Austin
+2026-02-22 11:17:12,442 - INFO - 
+============================================================
+2026-02-22 11:17:12,442 - INFO - Processing: Perma Pier Austin
+2026-02-22 11:17:12,442 - INFO - Website: https://permapier.com/locations/austin/
+2026-02-22 11:17:12,443 - INFO - Scraping: https://permapier.com/locations/austin/
+2026-02-22 11:17:12,605 - WARNING - Request failed for https://permapier.com/locations/austin/: 403 Client Error: Forbidden for url: https://permapier.com/locations/austin/
+2026-02-22 11:17:12,606 - WARNING - Failed to scrape website for Perma Pier Austin
+2026-02-22 11:17:14,708 - INFO - 
+Processing 27/31: Precision Foundation Services
+2026-02-22 11:17:14,708 - INFO - 
+============================================================
+2026-02-22 11:17:14,708 - INFO - Processing: Precision Foundation Services
+2026-02-22 11:17:14,708 - INFO - Website: https://texaspfs.com/
+2026-02-22 11:17:14,708 - INFO - Scraping: https://texaspfs.com/
+2026-02-22 11:17:15,884 - INFO - Extracted 5137 characters from https://texaspfs.com/
+2026-02-22 11:17:15,884 - INFO - Rule-based extracted: 3 services, 3 features, 0 reviews
+2026-02-22 11:17:16,009 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.Foundation+Repair "HTTP/2 200 OK"
+2026-02-22 11:17:16,092 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:17:16,178 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.Underpinning "HTTP/2 200 OK"
+2026-02-22 11:17:16,252 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:17:16,344 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.Push+Piers "HTTP/2 200 OK"
+2026-02-22 11:17:16,447 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:17:16,561 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/features?select=id&name=eq.Transferable+Warranty "HTTP/2 200 OK"
+2026-02-22 11:17:16,695 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_features "HTTP/2 200 OK"
+2026-02-22 11:17:16,776 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/features?select=id&name=eq.Licensed+And+Insured "HTTP/2 200 OK"
+2026-02-22 11:17:16,863 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_features "HTTP/2 200 OK"
+2026-02-22 11:17:16,940 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/features?select=id&name=eq.Financing+Available "HTTP/2 200 OK"
+2026-02-22 11:17:17,021 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_features "HTTP/2 200 OK"
+2026-02-22 11:17:17,022 - INFO - Saved data for business 4b7c8f44-c2fd-4627-9378-fb2e9841700a
+2026-02-22 11:17:19,054 - INFO - 
+Processing 28/31: Ram Jack Dallas & Fort Worth
+2026-02-22 11:17:19,054 - INFO - 
+============================================================
+2026-02-22 11:17:19,054 - INFO - Processing: Ram Jack Dallas & Fort Worth
+2026-02-22 11:17:19,054 - INFO - Website: https://www.ramjack.com/dallas-ft-worth/
+2026-02-22 11:17:19,054 - INFO - Scraping: https://www.ramjack.com/dallas-ft-worth/
+2026-02-22 11:17:19,460 - INFO - Extracted 8003 characters from https://www.ramjack.com/dallas-ft-worth/
+2026-02-22 11:17:19,461 - INFO - Rule-based extracted: 6 services, 2 features, 0 reviews
+2026-02-22 11:17:19,548 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.Slab+Repair "HTTP/2 200 OK"
+2026-02-22 11:17:19,630 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:17:19,726 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.Foundation+Repair "HTTP/2 200 OK"
+2026-02-22 11:17:19,818 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:17:19,903 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.Crack+Repair "HTTP/2 200 OK"
+2026-02-22 11:17:19,978 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:17:20,060 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.French+Drain "HTTP/2 200 OK"
+2026-02-22 11:17:20,147 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:17:20,235 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.Drainage "HTTP/2 200 OK"
+2026-02-22 11:17:20,314 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:17:20,396 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.Concrete+Lifting "HTTP/2 200 OK"
+2026-02-22 11:17:20,478 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:17:20,562 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/features?select=id&name=eq.Transferable+Warranty "HTTP/2 200 OK"
+2026-02-22 11:17:20,645 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_features "HTTP/2 200 OK"
+2026-02-22 11:17:20,729 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/features?select=id&name=eq.Free+Estimate "HTTP/2 200 OK"
+2026-02-22 11:17:20,819 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_features "HTTP/2 200 OK"
+2026-02-22 11:17:20,820 - INFO - Saved data for business a2e03f32-5f28-492d-ab9c-5603e105e3c4
+2026-02-22 11:17:22,840 - INFO - 
+Processing 29/31: Ram Jack Texas - Austin
+2026-02-22 11:17:22,840 - INFO - 
+============================================================
+2026-02-22 11:17:22,840 - INFO - Processing: Ram Jack Texas - Austin
+2026-02-22 11:17:22,840 - INFO - Website: https://www.ramjack.com/austin/
+2026-02-22 11:17:22,840 - INFO - Scraping: https://www.ramjack.com/austin/
+2026-02-22 11:17:23,062 - INFO - Extracted 8003 characters from https://www.ramjack.com/austin/
+2026-02-22 11:17:23,062 - INFO - Rule-based extracted: 6 services, 2 features, 0 reviews
+2026-02-22 11:17:23,140 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.Slab+Repair "HTTP/2 200 OK"
+2026-02-22 11:17:23,220 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:17:23,298 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.Foundation+Repair "HTTP/2 200 OK"
+2026-02-22 11:17:23,379 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:17:23,453 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.Crack+Repair "HTTP/2 200 OK"
+2026-02-22 11:17:23,532 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:17:23,606 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.French+Drain "HTTP/2 200 OK"
+2026-02-22 11:17:23,687 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:17:23,764 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.Drainage "HTTP/2 200 OK"
+2026-02-22 11:17:23,839 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:17:23,916 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.Concrete+Lifting "HTTP/2 200 OK"
+2026-02-22 11:17:23,994 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:17:24,069 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/features?select=id&name=eq.Transferable+Warranty "HTTP/2 200 OK"
+2026-02-22 11:17:24,188 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_features "HTTP/2 200 OK"
+2026-02-22 11:17:24,273 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/features?select=id&name=eq.Free+Estimate "HTTP/2 200 OK"
+2026-02-22 11:17:24,372 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_features "HTTP/2 200 OK"
+2026-02-22 11:17:24,373 - INFO - Saved data for business e26c42ae-6d31-4afe-8235-67f07280d37a
+2026-02-22 11:17:26,374 - INFO - 
+Processing 30/31: Ram Jack Texas - Houston
+2026-02-22 11:17:26,374 - INFO - 
+============================================================
+2026-02-22 11:17:26,374 - INFO - Processing: Ram Jack Texas - Houston
+2026-02-22 11:17:26,374 - INFO - Website: https://www.ramjack.com/houston/
+2026-02-22 11:17:26,374 - INFO - Scraping: https://www.ramjack.com/houston/
+2026-02-22 11:17:26,582 - INFO - Extracted 8003 characters from https://www.ramjack.com/houston/
+2026-02-22 11:17:26,583 - INFO - Rule-based extracted: 6 services, 2 features, 0 reviews
+2026-02-22 11:17:26,659 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.Slab+Repair "HTTP/2 200 OK"
+2026-02-22 11:17:26,761 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:17:26,838 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.Foundation+Repair "HTTP/2 200 OK"
+2026-02-22 11:17:26,938 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:17:27,019 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.Crack+Repair "HTTP/2 200 OK"
+2026-02-22 11:17:27,093 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:17:27,166 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.French+Drain "HTTP/2 200 OK"
+2026-02-22 11:17:27,278 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:17:27,349 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.Drainage "HTTP/2 200 OK"
+2026-02-22 11:17:27,432 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:17:27,514 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/services?select=id&name=eq.Concrete+Lifting "HTTP/2 200 OK"
+2026-02-22 11:17:27,590 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_services "HTTP/2 200 OK"
+2026-02-22 11:17:27,660 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/features?select=id&name=eq.Transferable+Warranty "HTTP/2 200 OK"
+2026-02-22 11:17:27,733 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_features "HTTP/2 200 OK"
+2026-02-22 11:17:27,810 - INFO - HTTP Request: GET https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/features?select=id&name=eq.Free+Estimate "HTTP/2 200 OK"
+2026-02-22 11:17:27,895 - INFO - HTTP Request: POST https://zvfobtpgucmitsaeltig.supabase.co/rest/v1/business_features "HTTP/2 200 OK"
+2026-02-22 11:17:27,895 - INFO - Saved data for business 56738633-e8c9-468e-b7cf-3f9e5b5ca183
+2026-02-22 11:17:29,929 - INFO - 
+Processing 31/31: Two Brothers Foundation Repair
+2026-02-22 11:17:29,930 - INFO - 
+============================================================
+2026-02-22 11:17:29,930 - INFO - Processing: Two Brothers Foundation Repair
+2026-02-22 11:17:29,930 - INFO - Website: https://www.twobrosfoundationrepair.com/
+2026-02-22 11:17:29,930 - INFO - Scraping: https://www.twobrosfoundationrepair.com/
+2026-02-22 11:17:30,123 - WARNING - Request failed for https://www.twobrosfoundationrepair.com/: 403 Client Error: Forbidden for url: https://www.twobrosfoundationrepair.com/
+2026-02-22 11:17:30,123 - WARNING - Failed to scrape website for Two Brothers Foundation Repair
+2026-02-22 11:17:32,176 - INFO - 
+============================================================
+2026-02-22 11:17:32,177 - INFO - SCRAPING COMPLETE
+2026-02-22 11:17:32,177 - INFO - Successful: 23
+2026-02-22 11:17:32,177 - INFO - Failed: 8
+2026-02-22 11:17:32,177 - INFO - Total: 31

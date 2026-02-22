@@ -297,24 +297,24 @@ export default function HomePageClient() {
                   />
 
                   {/* Animated Stats */}
-                  <div className="stats-container flex gap-8 pt-4 border-t border-slate-700/50">
-                    <div className="stat-item">
-                      <div className="text-2xl font-bold text-white counter-highlight">
+                  <div className="stats-container grid grid-cols-3 gap-4 sm:gap-8 pt-4 border-t border-slate-700/50">
+                    <div className="stat-item text-center sm:text-left">
+                      <div className="text-xl sm:text-2xl font-bold text-white counter-highlight">
                         <CounterAnimation end={12847} suffix="+" />
                       </div>
-                      <div className="text-xs text-slate-400 uppercase tracking-wider">Licensed Contractors</div>
+                      <div className="text-[10px] sm:text-xs text-slate-400 uppercase tracking-wider">Contractors</div>
                     </div>
-                    <div className="stat-item">
-                      <div className="text-2xl font-bold text-white counter-highlight">
+                    <div className="stat-item text-center sm:text-left">
+                      <div className="text-xl sm:text-2xl font-bold text-white counter-highlight">
                         <CounterAnimation end={50} />
                       </div>
-                      <div className="text-xs text-slate-400 uppercase tracking-wider">States</div>
+                      <div className="text-[10px] sm:text-xs text-slate-400 uppercase tracking-wider">States</div>
                     </div>
-                    <div className="stat-item">
-                      <div className="text-2xl font-bold text-white counter-highlight">
+                    <div className="stat-item text-center sm:text-left">
+                      <div className="text-xl sm:text-2xl font-bold text-white counter-highlight">
                         <CounterAnimation end={4.9} />&#9733;
                       </div>
-                      <div className="text-xs text-slate-400 uppercase tracking-wider">Avg Rating</div>
+                      <div className="text-[10px] sm:text-xs text-slate-400 uppercase tracking-wider">Avg Rating</div>
                     </div>
                   </div>
                 </div>

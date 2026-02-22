@@ -102,9 +102,9 @@ export default function AnimatedSearchForm({
     <div className={`max-w-xl space-y-3 ${className}`}>
       <div className="flex flex-col sm:flex-row gap-3">
         <div className="relative flex-1">
-          <span className={`material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 transition-colors duration-300 ${
+          <span className={`material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-xl transition-colors duration-300 ${
             isFocused ? 'text-amber-500' : 'text-slate-400'
-          }`}>
+          }`} aria-hidden="true">
             location_on
           </span>
           <input
