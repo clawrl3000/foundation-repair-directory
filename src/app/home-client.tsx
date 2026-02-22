@@ -283,7 +283,7 @@ export default function HomePageClient({ featuredBusinesses = [] }: { featuredBu
                 <div className="space-y-6 lg:space-y-8">
                   <div className="inline-flex items-center gap-2 rounded-full bg-amber-500/10 border border-amber-500/20 px-4 py-1.5 text-sm text-amber-400 font-medium">
                     <span className="w-2 h-2 bg-amber-400 rounded-full"></span>
-                    
+                    Trusted by homeowners in all 50 states
                   </div>
 
                   <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight text-white leading-[1.08]">
