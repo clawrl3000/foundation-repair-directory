@@ -103,7 +103,7 @@ export default function LeadForm({ isOpen, onClose, businessId, businessName }: 
         {success ? (
           // Success state
           <div className="p-6 text-center">
-            <span className="material-symbols-outlined text-green-400 text-6xl mb-4">check_circle</span>
+            <span className="material-symbols-outlined text-4xl text-green-400 mb-4" role="img" aria-label="Request submitted successfully">check_circle</span>
             <h3 className="text-xl font-bold text-slate-900 mb-2">Request Submitted!</h3>
             <p className="text-slate-600 mb-6">
               We'll connect you with {businessName ? businessName : 'qualified contractors'} in your area shortly.
@@ -123,14 +123,14 @@ export default function LeadForm({ isOpen, onClose, businessId, businessName }: 
               <div>
                 <h3 className="text-lg font-semibold text-slate-900">Get Free Estimates</h3>
                 {businessName && (
-                  <p className="text-sm text-slate-600">Connect with {businessName}</p>
+                  <p className="text-sm text-slate-600">Get free quotes from {businessName}</p>
                 )}
               </div>
               <button
                 onClick={handleClose}
                 className="text-slate-400 hover:text-slate-900 transition-colors"
               >
-                <span className="material-symbols-outlined">close</span>
+                <span className="material-symbols-outlined text-xl" role="img" aria-label="Close form">close</span>
               </button>
             </div>
 
@@ -139,7 +139,7 @@ export default function LeadForm({ isOpen, onClose, businessId, businessName }: 
               {error && (
                 <div className="p-3 rounded-md bg-red-50 border border-red-200">
                   <div className="flex">
-                    <span className="material-symbols-outlined text-red-400 text-sm mr-2">error</span>
+                    <span className="material-symbols-outlined text-xl text-red-400 mr-2" aria-hidden="true">error</span>
                     <div className="text-sm text-red-300">{error}</div>
                   </div>
                 </div>

@@ -321,9 +321,12 @@ export default async function CityPage({ params }: Props) {
               Foundation Repair in {cityInfo.name}, {stateInfo.abbreviation}
             </h1>
             <p className="text-slate-600 text-lg mb-12 max-w-3xl leading-relaxed">
-              {businesses.length > 0 ? (
+              {businesses.length > 1 ? (
                 <>Compare {businesses.length} licensed foundation repair contractors in {cityInfo.name}. 
                 Get free estimates and find the right professional for your project.</>
+              ) : businesses.length === 1 ? (
+                <>Featured foundation repair contractor in {cityInfo.name}. 
+                Get free estimates and more contractors coming soon.</>
               ) : (
                 <>Foundation repair contractors in {cityInfo.name}, {stateInfo.abbreviation}. 
                 Get free estimates from qualified professionals in your area.</>
@@ -465,6 +468,18 @@ export default async function CityPage({ params }: Props) {
                     </div>
                   </Link>
                 ))}
+                
+                {/* More contractors coming soon message for single contractor */}
+                {businesses.length === 1 && (
+                  <div className="bg-slate-50 border border-slate-200 rounded-xl p-6 text-center mt-8">
+                    <span className="material-symbols-outlined text-3xl text-slate-400 mb-3 block">schedule</span>
+                    <h3 className="text-lg font-semibold text-slate-900 mb-2">More Contractors Coming Soon</h3>
+                    <p className="text-slate-600 text-sm">
+                      We're actively adding more foundation repair professionals to {cityInfo.name}. 
+                      Check back soon for additional options or expand your search to nearby cities.
+                    </p>
+                  </div>
+                )}
               </div>
             ) : (
               <div className="bg-white border border-slate-200 rounded-xl shadow-sm text-center py-16">

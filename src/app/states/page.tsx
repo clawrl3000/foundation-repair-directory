@@ -134,7 +134,7 @@ export default function StatesPage() {
                 >
                   <div className="flex items-center gap-3 mb-4">
                     <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-amber-100 text-amber-600">
-                      <span className="material-symbols-outlined text-xl">location_on</span>
+                      <span className="material-symbols-outlined text-xl" aria-hidden="true">location_on</span>
                     </div>
                     <div>
                       <h3 className="text-lg font-bold text-slate-900 group-hover:text-amber-600 transition-colors">{state.name}</h3>
@@ -144,14 +144,14 @@ export default function StatesPage() {
                   
                   <div className="flex items-center justify-between mt-auto">
                     <div className="flex items-center gap-1">
-                      <span className="material-symbols-outlined text-amber-500 text-sm">engineering</span>
+                      <span className="material-symbols-outlined text-xl text-amber-500" aria-hidden="true">engineering</span>
                       <span className="text-slate-600 text-sm">
                         {state.contractors} contractor{state.contractors !== 1 ? 's' : ''}
                       </span>
                     </div>
                     <div className="flex items-center gap-1 text-amber-600">
                       <span className="text-xs font-bold">View</span>
-                      <span className="material-symbols-outlined text-xs">arrow_forward</span>
+                      <span className="material-symbols-outlined text-xl" aria-hidden="true">arrow_forward</span>
                     </div>
                   </div>
                 </Link>

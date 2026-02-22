@@ -96,7 +96,7 @@ export default async function FoundationRepairCostPage({ params }: Props) {
               Foundation Repair Cost in {stateName}
             </h1>
             <div className="inline-flex items-center gap-2 rounded-full border border-amber-500 bg-amber-100 px-4 py-1.5 mb-8">
-              <span className="material-symbols-outlined text-amber-600 text-sm">paid</span>
+              <span className="material-symbols-outlined text-xl text-amber-600" aria-hidden="true">paid</span>
               <span className="text-xs font-bold uppercase tracking-wider text-amber-700">2024 Pricing Guide</span>
             </div>
             <p className="text-slate-600 text-lg mb-12 max-w-3xl leading-relaxed">
@@ -111,14 +111,14 @@ export default async function FoundationRepairCostPage({ params }: Props) {
           <div className="mx-auto max-w-7xl px-6 lg:px-10">
             <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-8 lg:p-12">
               <div className="flex items-center gap-3 mb-8">
-                <span className="material-symbols-outlined text-4xl text-amber-600">payments</span>
+                <span className="material-symbols-outlined text-4xl text-amber-600" role="img" aria-label="Payment information">payments</span>
                 <h2 className="text-3xl font-bold text-slate-900">Average Foundation Repair Costs in {stateName}</h2>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {Object.entries(costData).map(([service, data]) => (
                   <div key={service} className="bg-slate-50 border border-slate-200 rounded-xl p-6 hover:border-amber-300 hover:shadow-sm transition-all">
                     <div className="flex items-center gap-3 mb-4">
-                      <span className="material-symbols-outlined text-2xl text-amber-600">{data.icon}</span>
+                      <span className="material-symbols-outlined text-4xl text-amber-600" role="img" aria-label={`${service} costs`}>{data.icon}</span>
                       <h3 className="font-bold text-slate-900 text-lg">{service}</h3>
                     </div>
                     <div className="text-2xl font-black text-amber-600 mb-2">
@@ -140,7 +140,7 @@ export default async function FoundationRepairCostPage({ params }: Props) {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                 <div className="text-center">
                   <div className="size-16 rounded-full bg-amber-100 flex items-center justify-center mx-auto mb-4 border border-amber-200">
-                    <span className="material-symbols-outlined text-3xl text-amber-600">foundation</span>
+                    <span className="material-symbols-outlined text-3xl text-amber-600" role="img" aria-label="Foundation issues">foundation</span>
                   </div>
                   <h3 className="font-bold text-slate-900 text-xl mb-4">Foundation Issues</h3>
                   <ul className="space-y-2 text-slate-600 text-sm text-left">
@@ -152,7 +152,7 @@ export default async function FoundationRepairCostPage({ params }: Props) {
                 </div>
                 <div className="text-center">
                   <div className="size-16 rounded-full bg-amber-100 flex items-center justify-center mx-auto mb-4 border border-amber-200">
-                    <span className="material-symbols-outlined text-3xl text-amber-600">terrain</span>
+                    <span className="material-symbols-outlined text-3xl text-amber-600" role="img" aria-label="Site conditions">terrain</span>
                   </div>
                   <h3 className="font-bold text-slate-900 text-xl mb-4">Site Conditions</h3>
                   <ul className="space-y-2 text-slate-600 text-sm text-left">
@@ -164,7 +164,7 @@ export default async function FoundationRepairCostPage({ params }: Props) {
                 </div>
                 <div className="text-center">
                   <div className="size-16 rounded-full bg-amber-100 flex items-center justify-center mx-auto mb-4 border border-amber-200">
-                    <span className="material-symbols-outlined text-3xl text-amber-600">engineering</span>
+                    <span className="material-symbols-outlined text-3xl text-amber-600" role="img" aria-label="Engineering factors">engineering</span>
                   </div>
                   <h3 className="font-bold text-slate-900 text-xl mb-4">Repair Method</h3>
                   <ul className="space-y-2 text-slate-600 text-sm text-left">
@@ -176,7 +176,7 @@ export default async function FoundationRepairCostPage({ params }: Props) {
                 </div>
                 <div className="text-center">
                   <div className="size-16 rounded-full bg-amber-100 flex items-center justify-center mx-auto mb-4 border border-amber-200">
-                    <span className="material-symbols-outlined text-3xl text-amber-600">location_on</span>
+                    <span className="material-symbols-outlined text-3xl text-amber-600" role="img" aria-label="Location factors">location_on</span>
                   </div>
                   <h3 className="font-bold text-slate-900 text-xl mb-4">Location Factors</h3>
                   <ul className="space-y-2 text-slate-600 text-sm text-left">
@@ -216,21 +216,21 @@ export default async function FoundationRepairCostPage({ params }: Props) {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
                 <div className="text-center">
                   <div className="size-16 rounded-full bg-amber-100 flex items-center justify-center mx-auto mb-4 border border-amber-200">
-                    <span className="material-symbols-outlined text-3xl text-amber-600">search</span>
+                    <span className="material-symbols-outlined text-3xl text-amber-600" role="img" aria-label="Inspection process">search</span>
                   </div>
                   <h3 className="text-xl font-bold text-slate-900 mb-3">1. Free Inspection</h3>
                   <p className="text-slate-600">Professional assessment of your foundation issues at no cost.</p>
                 </div>
                 <div className="text-center">
                   <div className="size-16 rounded-full bg-amber-100 flex items-center justify-center mx-auto mb-4 border border-amber-200">
-                    <span className="material-symbols-outlined text-3xl text-amber-600">calculate</span>
+                    <span className="material-symbols-outlined text-3xl text-amber-600" role="img" aria-label="Quote calculation">calculate</span>
                   </div>
                   <h3 className="text-xl font-bold text-slate-900 mb-3">2. Detailed Quote</h3>
                   <p className="text-slate-600">Itemized estimate with materials, labor, and timeline breakdown.</p>
                 </div>
                 <div className="text-center">
                   <div className="size-16 rounded-full bg-amber-100 flex items-center justify-center mx-auto mb-4 border border-amber-200">
-                    <span className="material-symbols-outlined text-3xl text-amber-600">compare</span>
+                    <span className="material-symbols-outlined text-3xl text-amber-600" role="img" aria-label="Compare options">compare</span>
                   </div>
                   <h3 className="text-xl font-bold text-slate-900 mb-3">3. Compare Options</h3>
                   <p className="text-slate-600">Review multiple quotes and repair approaches to find the best value.</p>
@@ -259,28 +259,28 @@ export default async function FoundationRepairCostPage({ params }: Props) {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div className="bg-slate-50 border border-slate-200 rounded-xl p-6">
                   <div className="flex items-center gap-3 mb-4">
-                    <span className="material-symbols-outlined text-2xl text-green-600">schedule</span>
+                    <span className="material-symbols-outlined text-4xl text-green-600" role="img" aria-label="Early action saves money">schedule</span>
                     <h3 className="text-xl font-bold text-slate-900">Act Early</h3>
                   </div>
                   <p className="text-slate-600">Address foundation issues promptly to prevent minor problems from becoming major repairs. Early intervention saves thousands.</p>
                 </div>
                 <div className="bg-slate-50 border border-slate-200 rounded-xl p-6">
                   <div className="flex items-center gap-3 mb-4">
-                    <span className="material-symbols-outlined text-2xl text-green-600">compare_arrows</span>
+                    <span className="material-symbols-outlined text-4xl text-green-600" role="img" aria-label="Get multiple quotes">compare_arrows</span>
                     <h3 className="text-xl font-bold text-slate-900">Get Multiple Quotes</h3>
                   </div>
                   <p className="text-slate-600">Compare 3-5 estimates from different contractors. Prices can vary significantly, but ensure you're comparing similar repair approaches.</p>
                 </div>
                 <div className="bg-slate-50 border border-slate-200 rounded-xl p-6">
                   <div className="flex items-center gap-3 mb-4">
-                    <span className="material-symbols-outlined text-2xl text-green-600">verified</span>
+                    <span className="material-symbols-outlined text-4xl text-green-600" role="img" aria-label="Choose quality contractors">verified</span>
                     <h3 className="text-xl font-bold text-slate-900">Choose Quality</h3>
                   </div>
                   <p className="text-slate-600">Select contractors based on quality, not just price. Poor workmanship leads to costly repairs later. Look for warranties and guarantees.</p>
                 </div>
                 <div className="bg-slate-50 border border-slate-200 rounded-xl p-6">
                   <div className="flex items-center gap-3 mb-4">
-                    <span className="material-symbols-outlined text-2xl text-green-600">calendar_month</span>
+                    <span className="material-symbols-outlined text-4xl text-green-600" role="img" aria-label="Seasonal pricing">calendar_month</span>
                     <h3 className="text-xl font-bold text-slate-900">Seasonal Timing</h3>
                   </div>
                   <p className="text-slate-600">Some contractors offer discounts during slower seasons. However, don't delay urgent repairs to wait for better pricing.</p>

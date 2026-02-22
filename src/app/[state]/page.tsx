@@ -6,6 +6,7 @@ import { notFound } from 'next/navigation'
 import StitchNav from '@/components/StitchNav'
 import StitchFooter from '@/components/StitchFooter'
 import ExpertBio from '@/components/ExpertBio'
+import AnimatedFAQ from '@/components/AnimatedFAQ'
 
 // Force dynamic rendering to avoid cookies issue during static generation
 export const dynamic = 'force-dynamic'
@@ -100,7 +101,7 @@ async function getStateData(stateSlug: string): Promise<{state: StateData, citie
 
     const citiesWithCount = cities?.map((city: any) => ({
       ...city,
-      business_count: city.businesses?.length || 0
+      business_count: city.businesses?.[0]?.count || city.businesses?.length || 0
     })).filter((city: CityData) => city.business_count > 0) || []
 
     return { state, cities: citiesWithCount }
@@ -706,7 +707,7 @@ export default async function StatePage({ params }: Props) {
                 <Link
                   key={city.slug}
                   href={`/${state}/${city.slug}`}
-                  className="bg-white border border-slate-200 rounded-xl shadow-sm group flex flex-col p-6 transition-all hover:-translate-y-1 hover:shadow-lg hover:border-amber-300"
+                  className="city-card bg-white border border-slate-200 rounded-xl shadow-sm group flex flex-col p-6"
                 >
                   <div className="flex items-center gap-3 mb-4">
                     <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-amber-100 text-amber-600">
@@ -727,7 +728,7 @@ export default async function StatePage({ params }: Props) {
                     </div>
                     <div className="flex items-center gap-1 text-amber-600">
                       <span className="text-xs font-bold">View</span>
-                      <span className="material-symbols-outlined text-xs">arrow_forward</span>
+                      <span className="material-symbols-outlined text-xs city-arrow">arrow_forward</span>
                     </div>
                   </div>
                 </Link>
@@ -741,7 +742,7 @@ export default async function StatePage({ params }: Props) {
           <div className="mx-auto max-w-7xl px-6 lg:px-10">
             <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-8 lg:p-12">
               <h2 className="text-3xl font-bold text-slate-900 mb-6">
-                About Foundation Repair in {stateInfo.name}
+                Don't Let {stateInfo.name} Soil Conditions Damage Your Foundation
               </h2>
               <p className="text-slate-600 leading-relaxed mb-8 text-lg">
                 {stateInfo.name} homeowners understand the importance of a solid foundation. Local soil conditions, 
@@ -810,45 +811,35 @@ export default async function StatePage({ params }: Props) {
           </div>
         </section>
 
-        {/* FAQ Section */}
+        {/* FAQ Section with Enhanced Animations */}
         <section className="py-20 lg:py-24 bg-slate-50">
           <div className="mx-auto max-w-7xl px-6 lg:px-10">
-            <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-8 lg:p-12">
-              <h2 className="text-3xl font-bold text-slate-900 mb-8">
-                Foundation Repair FAQs for {stateInfo.name}
-              </h2>
-              <div className="space-y-6">
-                <div className="bg-slate-50 border border-slate-200 rounded-xl p-6">
-                  <h3 className="text-lg font-bold text-slate-900 mb-3">
-                    How much does foundation repair cost in {stateInfo.name}?
-                  </h3>
-                  <p className="text-slate-600">
-                    {content.avgCosts} Costs vary based on the type of foundation, extent of damage, 
-                    and local labor rates. Get multiple quotes for accurate pricing.
-                  </p>
-                </div>
-                
-                <div className="bg-slate-50 border border-slate-200 rounded-xl p-6">
-                  <h3 className="text-lg font-bold text-slate-900 mb-3">
-                    What are the signs I need foundation repair?
-                  </h3>
-                  <p className="text-slate-600">
-                    Look for cracks in walls or foundation, doors/windows that stick, uneven floors, 
-                    or gaps between wall and ceiling. Schedule a professional inspection if you notice these signs.
-                  </p>
-                </div>
-                
-                <div className="bg-slate-50 border border-slate-200 rounded-xl p-6">
-                  <h3 className="text-lg font-bold text-slate-900 mb-3">
-                    How long does foundation repair take?
-                  </h3>
-                  <p className="text-slate-600">
-                    Most foundation repairs take 1-3 days, though extensive repairs or adverse weather 
-                    conditions in {stateInfo.name} may extend the timeline.
-                  </p>
-                </div>
-              </div>
-            </div>
+            <AnimatedFAQ
+              title={`Foundation Repair FAQs for ${stateInfo.name}`}
+              items={[
+                {
+                  question: `How much does foundation repair cost in ${stateInfo.name}?`,
+                  answer: `${content.avgCosts} Costs vary based on the type of foundation, extent of damage, and local labor rates. Get multiple quotes for accurate pricing.`
+                },
+                {
+                  question: "What are the signs I need foundation repair?",
+                  answer: "Look for cracks in walls or foundation, doors/windows that stick, uneven floors, or gaps between wall and ceiling. Schedule a professional inspection if you notice these signs."
+                },
+                {
+                  question: "How long does foundation repair take?",
+                  answer: `Most foundation repairs take 1-3 days, though extensive repairs or adverse weather conditions in ${stateInfo.name} may extend the timeline.`
+                },
+                {
+                  question: `What soil conditions affect foundations in ${stateInfo.name}?`,
+                  answer: content.soilTypes
+                },
+                {
+                  question: `When is the best time for foundation repairs in ${stateInfo.name}?`,
+                  answer: content.seasonalFactors
+                }
+              ]}
+              className="bg-white border border-slate-200 rounded-xl shadow-sm p-8 lg:p-12"
+            />
           </div>
         </section>
       </main>

@@ -666,3 +666,4 @@ Processing 31/31: Two Brothers Foundation Repair
 2026-02-18 10:18:15,150 - INFO - Successful: 22
 2026-02-18 10:18:15,150 - INFO - Failed: 9
 2026-02-18 10:18:15,150 - INFO - Total: 31
+2026-02-22 11:15:34,739 - ERROR - Script failed: Missing Supabase credentials in environment variables

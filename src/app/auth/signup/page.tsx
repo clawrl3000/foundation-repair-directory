@@ -21,7 +21,7 @@ export default function SignupPage() {
     setError('')
 
     if (password !== confirmPassword) {
-      setError('Passwords do not match')
+      setError('Passwords don\'t match')
       setLoading(false)
       return
     }
@@ -89,7 +89,7 @@ export default function SignupPage() {
           <div className="bg-white shadow-2xl rounded-xl border border-slate-200 py-8 px-4 sm:px-10">
             <div className="text-center">
               <div className="mx-auto w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
-                <span className="material-symbols-outlined text-green-600 text-3xl">mark_email_read</span>
+                <span className="material-symbols-outlined text-4xl text-green-600" role="img" aria-label="Email sent">mark_email_read</span>
               </div>
               <h2 className="text-2xl font-bold text-slate-900 mb-2">Check your email</h2>
               <p className="text-slate-600 mb-6 leading-relaxed">
@@ -125,7 +125,7 @@ export default function SignupPage() {
         <div className="text-center mb-8">
           <Link href="/" className="inline-flex items-center gap-3 mb-6">
             <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary text-white shadow-lg">
-              <span className="material-symbols-outlined text-2xl">foundation</span>
+              <span className="material-symbols-outlined text-xl" aria-hidden="true">foundation</span>
             </div>
             <span className="text-3xl font-extrabold tracking-tight text-slate-900">
               Foundation<span className="text-primary">Scout</span>
@@ -161,7 +161,7 @@ export default function SignupPage() {
           {error && (
             <div className="mb-6 p-4 rounded-lg bg-red-50 border border-red-200">
               <div className="flex">
-                <span className="material-symbols-outlined text-red-500 text-lg mr-3">error</span>
+                <span className="material-symbols-outlined text-xl text-red-500 mr-3" aria-hidden="true">error</span>
                 <div className="text-sm text-red-700 font-medium">{error}</div>
               </div>
             </div>
@@ -227,12 +227,12 @@ export default function SignupPage() {
               >
                 {loading ? (
                   <>
-                    <span className="material-symbols-outlined animate-spin mr-2">progress_activity</span>
+                    <span className="material-symbols-outlined text-xl animate-spin mr-2" role="img" aria-label="Creating account">progress_activity</span>
                     Creating Account...
                   </>
                 ) : (
                   <>
-                    <span className="material-symbols-outlined mr-2">rocket_launch</span>
+                    <span className="material-symbols-outlined text-xl mr-2" aria-hidden="true">rocket_launch</span>
                     Start Getting Leads
                   </>
                 )}
@@ -285,15 +285,15 @@ export default function SignupPage() {
         <div className="mt-8 text-center">
           <div className="flex justify-center items-center gap-8 text-xs text-slate-500">
             <div className="flex items-center gap-1">
-              <span className="material-symbols-outlined text-green-600">verified_user</span>
+              <span className="material-symbols-outlined text-xl text-green-600" aria-hidden="true">verified_user</span>
               Background Checked
             </div>
             <div className="flex items-center gap-1">
-              <span className="material-symbols-outlined text-green-600">gpp_good</span>
+              <span className="material-symbols-outlined text-xl text-green-600" aria-hidden="true">gpp_good</span>
               Insured & Licensed
             </div>
             <div className="flex items-center gap-1">
-              <span className="material-symbols-outlined text-green-600">shield</span>
+              <span className="material-symbols-outlined text-xl text-green-600" aria-hidden="true">shield</span>
               5-Star Guarantee
             </div>
           </div>

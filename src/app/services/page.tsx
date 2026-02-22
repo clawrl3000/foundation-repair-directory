@@ -121,7 +121,7 @@ export default function ServicesPage() {
                 >
                   <div className="flex items-center gap-4 mb-6">
                     <div className="size-14 rounded-lg bg-amber-100 flex items-center justify-center text-amber-600 group-hover:bg-amber-600 group-hover:text-white transition-all">
-                      <span className="material-symbols-outlined text-3xl">{service.icon}</span>
+                      <span className="material-symbols-outlined text-4xl" role="img" aria-label={`${service.name} service`}>{service.icon}</span>
                     </div>
                     <div>
                       <h3 className="text-xl font-bold text-slate-900 group-hover:text-amber-600 transition-colors">{service.name}</h3>
@@ -143,7 +143,7 @@ export default function ServicesPage() {
                       <div className="text-amber-600 font-bold text-lg">{service.priceRange}</div>
                       <div className="flex items-center gap-1 text-amber-600 font-bold">
                         <span className="text-sm">Learn More</span>
-                        <span className="material-symbols-outlined text-sm">arrow_forward</span>
+                        <span className="material-symbols-outlined text-xl" aria-hidden="true">arrow_forward</span>
                       </div>
                     </div>
                   </div>
@@ -168,21 +168,21 @@ export default function ServicesPage() {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div className="text-center">
                   <div className="size-16 rounded-full bg-amber-100 flex items-center justify-center mx-auto mb-4 border border-amber-200">
-                    <span className="material-symbols-outlined text-3xl text-amber-600">search</span>
+                    <span className="material-symbols-outlined text-3xl text-amber-600" role="img" aria-label="Describe your foundation issue">search</span>
                   </div>
                   <h3 className="text-xl font-bold text-slate-900 mb-3">1. Describe Your Issue</h3>
                   <p className="text-slate-600">Tell us about your foundation problems, from minor cracks to major structural issues.</p>
                 </div>
                 <div className="text-center">
                   <div className="size-16 rounded-full bg-amber-100 flex items-center justify-center mx-auto mb-4 border border-amber-200">
-                    <span className="material-symbols-outlined text-3xl text-amber-600">engineering</span>
+                    <span className="material-symbols-outlined text-3xl text-amber-600" role="img" aria-label="Get matched with contractors">engineering</span>
                   </div>
                   <h3 className="text-xl font-bold text-slate-900 mb-3">2. Get Matched</h3>
                   <p className="text-slate-600">We connect you with certified contractors who specialize in your specific repair needs.</p>
                 </div>
                 <div className="text-center">
                   <div className="size-16 rounded-full bg-amber-100 flex items-center justify-center mx-auto mb-4 border border-amber-200">
-                    <span className="material-symbols-outlined text-3xl text-amber-600">handshake</span>
+                    <span className="material-symbols-outlined text-3xl text-amber-600" role="img" aria-label="Compare and choose contractor">handshake</span>
                   </div>
                   <h3 className="text-xl font-bold text-slate-900 mb-3">3. Compare & Choose</h3>
                   <p className="text-slate-600">Review quotes, warranties, and timelines to select the best contractor for your project.</p>
@@ -198,7 +198,7 @@ export default function ServicesPage() {
             <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-8 lg:p-12 text-center">
               <h2 className="text-3xl font-bold text-slate-900 mb-6">Ready to Fix Your Foundation?</h2>
               <p className="text-slate-600 text-lg mb-8 max-w-2xl mx-auto">
-                Connect with certified foundation repair contractors in your area. 
+Get free quotes from certified foundation repair contractors in your area. 
                 Get free estimates and compare services from top-rated professionals.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -206,14 +206,14 @@ export default function ServicesPage() {
                   href="/"
                   className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-8 rounded-lg transition-all shadow-lg"
                 >
-                  Find Contractors Near You
+                  Find Local Experts
                 </Link>
                 <button className="bg-amber-500 hover:bg-amber-600 text-white font-bold py-4 px-8 rounded-lg transition-all">
                   Get Free Estimate
                 </button>
               </div>
               <p className="mt-6 text-slate-500 text-sm flex items-center justify-center gap-2">
-                <span className="material-symbols-outlined text-amber-600 text-base">verified_user</span>
+                <span className="material-symbols-outlined text-xl text-amber-600" aria-hidden="true">verified_user</span>
                 Free inspections available from certified local pros
               </p>
             </div>

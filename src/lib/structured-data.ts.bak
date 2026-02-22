@@ -266,9 +266,6 @@ export function generateOrganizationSchema() {
 /**
  * Generate WebSite JSON-LD schema with search action
  */
-/**
- * Generate WebSite JSON-LD schema without search action
- */
 export function generateWebSiteSchema() {
   return {
     "@context": "https://schema.org",
@@ -280,9 +277,18 @@ export function generateWebSiteSchema() {
     "publisher": {
       "@type": "Organization",
       "name": "Foundation Repair Finder"
+    },
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": {
+        "@type": "EntryPoint",
+        "urlTemplate": "https://foundationscout.com/search?q={search_term_string}"
+      },
+      "query-input": "required name=search_term_string"
     }
   }
 }
+
 /**
  * Utility to safely stringify JSON-LD for HTML insertion
  */

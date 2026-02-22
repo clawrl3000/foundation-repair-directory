@@ -7,7 +7,7 @@ export default function StitchFooter() {
         <div className="flex flex-col md:flex-row justify-between items-center gap-8">
           <div className="flex items-center gap-3">
             <div className="flex h-8 w-8 items-center justify-center rounded bg-primary text-white">
-              <span className="material-symbols-outlined text-lg">foundation</span>
+              <span className="material-symbols-outlined text-xl" aria-hidden="true">foundation</span>
             </div>
             <span className="font-bold tracking-tight text-slate-900">Foundation Directory</span>
           </div>

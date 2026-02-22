@@ -76,7 +76,7 @@ export default function BusinessImage({
   // Fallback to placeholder
   return (
     <div className={`${className} bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center`}>
-      <span className="material-symbols-outlined text-6xl text-slate-400">foundation</span>
+      <span className="material-symbols-outlined text-4xl text-slate-400" role="img" aria-label="Foundation repair company">foundation</span>
     </div>
   )
 }

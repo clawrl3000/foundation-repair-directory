@@ -10,7 +10,7 @@ export default function StitchNav() {
         <div className="flex items-center gap-3">
           <Link href="/" className="flex items-center gap-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-amber-500 text-slate-900">
-              <span className="material-symbols-outlined text-2xl">foundation</span>
+              <span className="material-symbols-outlined text-xl" aria-hidden="true">foundation</span>
             </div>
             <span className="text-xl font-extrabold tracking-tight text-white">Foundation<span className="text-amber-400">Scout</span></span>
           </Link>

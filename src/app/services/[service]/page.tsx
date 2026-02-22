@@ -15,6 +15,8 @@ const SERVICES_DATA = {
     name: 'Foundation Piering',
     description: 'Professional foundation piering services using steel push piers and helical piers to stabilize and lift settling foundations.',
     icon: 'architecture',
+    heroImage: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1200&q=80',
+    heroAlt: 'Professional foundation piering contractor installing steel piers for foundation stabilization',
     longDescription: 'Foundation piering is a permanent solution for foundation settlement and instability. Our certified contractors use advanced steel push piers and helical piers to transfer the weight of your home to stable soil or bedrock below.',
     benefits: [
       'Permanent foundation stabilization',
@@ -42,6 +44,8 @@ const SERVICES_DATA = {
     name: 'Slab Foundation Repair',
     description: 'Expert slab foundation repair including slab jacking, polyurethane injection, and concrete crack repair.',
     icon: 'layers',
+    heroImage: 'https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=1200&q=80',
+    heroAlt: 'Slab foundation repair specialist using concrete lifting equipment for slab leveling',
     longDescription: 'Slab foundation problems can cause uneven floors, cracks in walls, and doors that won\'t close properly. Our contractors specialize in slab lifting, crack repair, and permanent slab stabilization.',
     benefits: [
       'Repairs uneven concrete floors',
@@ -69,6 +73,8 @@ const SERVICES_DATA = {
     name: 'Foundation Waterproofing',
     description: 'Complete waterproofing solutions including drainage systems, sump pumps, and moisture barriers.',
     icon: 'water_drop',
+    heroImage: 'https://images.unsplash.com/photo-1517581177682-a085bb7ffb15?w=1200&q=80',
+    heroAlt: 'Basement waterproofing professional installing drainage system and moisture barrier',
     longDescription: 'Protect your foundation from water damage with professional waterproofing. We install drainage systems, waterproof membranes, and moisture control systems to keep your basement or crawl space dry.',
     benefits: [
       'Prevents basement flooding',
@@ -96,6 +102,8 @@ const SERVICES_DATA = {
     name: 'Crawl Space Repair',
     description: 'Crawl space encapsulation, support beam repair, and moisture control systems.',
     icon: 'grid_guides',
+    heroImage: 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=1200&q=80',
+    heroAlt: 'Crawl space encapsulation specialist installing vapor barrier and support beams',
     longDescription: 'Crawl space problems can affect your entire home. We provide crawl space encapsulation, support beam reinforcement, and moisture control to create a healthy, stable foundation.',
     benefits: [
       'Eliminates musty odors',
@@ -123,6 +131,8 @@ const SERVICES_DATA = {
     name: 'Foundation Crack Repair',
     description: 'Professional crack injection and sealing to prevent water intrusion.',
     icon: 'build',
+    heroImage: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=1200&q=80',
+    heroAlt: 'Foundation crack repair professional using epoxy injection to seal cracks',
     longDescription: 'Foundation cracks can allow water intrusion and indicate structural problems. Our contractors use professional crack injection techniques to permanently seal foundation cracks.',
     benefits: [
       'Prevents water damage',
@@ -150,6 +160,8 @@ const SERVICES_DATA = {
     name: 'House Leveling',
     description: 'Complete home releveling using hydraulic jacks and permanent support systems.',
     icon: 'balance',
+    heroImage: 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=1200&q=80',
+    heroAlt: 'House leveling contractor using hydraulic jacks for complete home releveling',
     longDescription: 'House leveling restores your home to its proper position and prevents further structural damage. Our contractors use hydraulic jacks and permanent support systems for long-lasting results.',
     benefits: [
       'Restores structural integrity',
@@ -241,29 +253,51 @@ export default async function ServicePage({ params }: Props) {
       </nav>
 
       <main className="flex-1">
-        {/* Hero Section */}
-        <section className="py-20 lg:py-24 bg-slate-50">
-          <div className="mx-auto max-w-7xl px-6 lg:px-10">
-            <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-8 lg:p-12">
+        {/* Hero Section with Image */}
+        <section className="relative py-20 lg:py-24 bg-slate-900">
+          <div className="absolute inset-0 overflow-hidden">
+            <img
+              src={serviceData.heroImage}
+              alt={serviceData.heroAlt}
+              className="h-full w-full object-cover opacity-30"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-slate-900/80 via-slate-900/60 to-slate-900/80"></div>
+          </div>
+          <div className="relative mx-auto max-w-7xl px-6 lg:px-10">
+            <div className="max-w-4xl">
               <div className="flex items-center gap-6 mb-6">
-                <div className="size-16 rounded-lg bg-amber-100 flex items-center justify-center border border-amber-200">
-                  <span className="material-symbols-outlined text-4xl text-amber-600">{serviceData.icon}</span>
+                <div className="size-16 rounded-lg bg-amber-500/20 backdrop-blur-sm flex items-center justify-center border border-amber-500/30">
+                  <span className="material-symbols-outlined text-4xl text-amber-400">{serviceData.icon}</span>
                 </div>
                 <div>
-                  <h1 className="text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl">{serviceData.name}</h1>
-                  <p className="text-amber-600 mt-2">Professional repair services nationwide</p>
+                  <h1 className="text-4xl font-extrabold tracking-tight text-white sm:text-5xl">{serviceData.name}</h1>
+                  <p className="text-amber-400 mt-2 text-lg font-semibold">Professional repair services nationwide</p>
                 </div>
               </div>
-              <p className="text-slate-600 text-lg leading-relaxed mb-8">
+              <p className="text-slate-200 text-lg leading-relaxed mb-8 max-w-3xl">
                 {serviceData.longDescription}
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-bold shadow-lg transition-all">
-                  Find {serviceData.name} Contractors
+                <button className="bg-amber-500 hover:bg-amber-600 text-white px-8 py-4 rounded-lg font-bold shadow-lg transition-all">
+                  Find Local Experts
                 </button>
-                <button className="bg-amber-500 hover:bg-amber-600 text-white px-8 py-4 rounded-lg font-bold transition-all">
+                <button className="bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/30 text-white px-8 py-4 rounded-lg font-bold transition-all">
                   Get Free Estimate
                 </button>
+              </div>
+              <div className="flex items-center gap-6 mt-8 text-sm">
+                <div className="flex items-center gap-2 text-slate-300">
+                  <span className="material-symbols-outlined text-amber-400">verified</span>
+                  Licensed & Insured
+                </div>
+                <div className="flex items-center gap-2 text-slate-300">
+                  <span className="material-symbols-outlined text-amber-400">schedule</span>
+                  Free Inspections
+                </div>
+                <div className="flex items-center gap-2 text-slate-300">
+                  <span className="material-symbols-outlined text-amber-400">workspace_premium</span>
+                  Warranty Backed
+                </div>
               </div>
             </div>
           </div>
@@ -345,15 +379,15 @@ export default async function ServicePage({ params }: Props) {
             <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-8 lg:p-12 text-center">
               <h2 className="text-3xl font-bold text-slate-900 mb-6">Ready to Get Started?</h2>
               <p className="text-slate-600 text-lg mb-8 max-w-2xl mx-auto">
-                Connect with certified {serviceData.name.toLowerCase()} contractors in your area.
+                Get free quotes from certified {serviceData.name.toLowerCase()} contractors in your area.
                 Get free estimates and compare services from top-rated professionals.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-8 rounded-lg transition-all shadow-lg">
-                  Find Local Contractors
+                  Find Local Experts
                 </button>
                 <button className="bg-amber-500 hover:bg-amber-600 text-white font-bold py-4 px-8 rounded-lg transition-all">
-                  Get Free Quote
+                  Get Free Quotes
                 </button>
               </div>
               <p className="mt-6 text-slate-500 text-sm flex items-center justify-center gap-2">

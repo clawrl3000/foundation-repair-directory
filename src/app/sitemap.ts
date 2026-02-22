@@ -42,77 +42,81 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'weekly',
       priority: 0.8,
     },
+    // About page
+    {
+      url: `${baseUrl}/about`,
+      lastModified: new Date(today),
+      changeFrequency: 'monthly',
+      priority: 0.6,
+    },
   ]
 
   try {
-    // Get states with business data
-    const { data: statesData } = await supabase
+    // Get all states
+    const { data: statesData, error: statesError } = await supabase
       .from('states')
-      .select(`
-        slug,
-        updated_at,
-        cities!inner(
-          slug,
-          updated_at,
-          businesses(count)
-        )
-      `)
+      .select('id, slug')
       .limit(50)
+
+    if (statesError) {
+      console.error('States query error:', statesError)
+    }
 
     if (statesData && statesData.length > 0) {
       // State pages
       statesData.forEach((state) => {
         routes.push({
           url: `${baseUrl}/${state.slug}`,
-          lastModified: new Date(state.updated_at || today),
+          lastModified: new Date(today),
           changeFrequency: 'weekly',
           priority: 0.8,
         })
       })
 
-      // City pages
-      const { data: citiesData } = await supabase
+      // City pages — get cities that have businesses via business foreign key
+      const { data: citiesData, error: citiesError } = await supabase
         .from('cities')
-        .select(`
-          slug,
-          updated_at,
-          states!inner(slug),
-          businesses(count)
-        `)
-        .not('businesses', 'is', null)
+        .select('slug, states(slug)')
         .limit(500)
+
+      if (citiesError) {
+        console.error('Cities query error:', citiesError)
+      }
 
       if (citiesData) {
         citiesData.forEach((city: any) => {
-          routes.push({
-            url: `${baseUrl}/${city.states.slug}/${city.slug}`,
-            lastModified: new Date(city.updated_at || today),
-            changeFrequency: 'weekly',
-            priority: 0.7,
-          })
+          if (city.states?.slug) {
+            routes.push({
+              url: `${baseUrl}/${city.states.slug}/${city.slug}`,
+              lastModified: new Date(today),
+              changeFrequency: 'weekly',
+              priority: 0.7,
+            })
+          }
         })
       }
 
       // Business pages
-      const { data: businessesData } = await supabase
+      const { data: businessesData, error: bizError } = await supabase
         .from('businesses')
-        .select(`
-          slug,
-          updated_at,
-          states!inner(slug),
-          cities!inner(slug)
-        `)
+        .select('slug, updated_at, states(slug), cities(slug)')
         .eq('is_active', true)
         .limit(2000)
 
+      if (bizError) {
+        console.error('Businesses query error:', bizError)
+      }
+
       if (businessesData) {
         businessesData.forEach((business: any) => {
-          routes.push({
-            url: `${baseUrl}/${business.states.slug}/${business.cities.slug}/${business.slug}`,
-            lastModified: new Date(business.updated_at || today),
-            changeFrequency: 'monthly',
-            priority: 0.6,
-          })
+          if (business.states?.slug && business.cities?.slug) {
+            routes.push({
+              url: `${baseUrl}/${business.states.slug}/${business.cities.slug}/${business.slug}`,
+              lastModified: new Date(business.updated_at || today),
+              changeFrequency: 'monthly',
+              priority: 0.6,
+            })
+          }
         })
       }
 

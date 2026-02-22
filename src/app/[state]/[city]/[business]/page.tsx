@@ -575,7 +575,7 @@ export default async function BusinessPage({ params }: Props) {
           "@context": "https://schema.org",
           "@type": "LocalBusiness",
           "name": name,
-          "url": `https://foundationscout.com/${state}/${city}/${business}`,
+          "url": website_url || `https://foundationscout.com/${state}/${city}/${business}`,
           "telephone": phone,
           "email": businessData.email,
           "description": description,

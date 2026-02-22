@@ -7,10 +7,6 @@ import { useState, useEffect, useRef } from 'react'
 import AuthButton from '@/components/AuthButton'
 import LeadForm from '@/components/LeadForm'
 import ExpertBio from '@/components/ExpertBio'
-import CounterAnimation from '@/components/CounterAnimation'
-import AnimatedSearchForm from '@/components/AnimatedSearchForm'
-import ScrollProgressIndicator from '@/components/ScrollProgressIndicator'
-import EnhancedScrollAnimations from '@/components/EnhancedScrollAnimations'
 import { trackButtonClick, trackSearch } from '@/components/ConversionTracker'
 
 const TOP_STATES = [
@@ -179,8 +175,6 @@ export default function HomePageClient() {
 
   return (
     <div className="relative flex min-h-screen flex-col">
-      <ScrollProgressIndicator />
-      <EnhancedScrollAnimations />
         {/* Navigation - Dark nav with fixed links */}
         <header className="absolute top-0 left-0 right-0 z-50 w-full">
           <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-10">
@@ -256,7 +250,7 @@ export default function HomePageClient() {
                   className="w-full btn-primary py-5 px-8 mobile-touch-target"
                 >
                   <span className="relative z-10 flex items-center justify-center gap-2">
-                    <span className="material-symbols-outlined text-xl" aria-hidden="true">verified</span>
+                    <span className="material-symbols-outlined">verified</span>
                     Get Free Estimates
                   </span>
                 </button>
@@ -288,32 +282,51 @@ export default function HomePageClient() {
                     Foundation damage spreads <strong className="text-amber-400">40% faster in winter</strong>. Get free quotes from certified contractors in your area in 24 hours — before small cracks become major repairs.
                   </p>
 
-                  {/* Enhanced Search Form */}
-                  <AnimatedSearchForm
-                    onSearch={(query) => {
-                      trackSearch(query, 'Homepage Hero')
-                    }}
-                    placeholder="Enter your ZIP code"
-                  />
-
-                  {/* Animated Stats */}
-                  <div className="stats-container flex gap-8 pt-4 border-t border-slate-700/50">
-                    <div className="stat-item">
-                      <div className="text-2xl font-bold text-white counter-highlight">
-                        <CounterAnimation end={12847} suffix="+" />
+                  {/* Search */}
+                  <div className="max-w-xl space-y-3">
+                    <div className="flex flex-col sm:flex-row gap-3">
+                      <div className="relative flex-1">
+                        <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">location_on</span>
+                        <input
+                          className="w-full rounded-xl border border-slate-600 bg-slate-800/80 py-4 pl-12 pr-4 text-white placeholder-slate-400 text-base focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                          placeholder="Enter your ZIP code"
+                          type="text"
+                          value={searchQuery}
+                          onChange={(e) => setSearchQuery(e.target.value)}
+                          onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+                        />
                       </div>
+                      <button
+                        onClick={handleSearch}
+                        className="bg-amber-500 hover:bg-amber-600 active:bg-amber-700 text-slate-900 font-bold px-8 py-4 rounded-xl text-base transition-colors duration-200 flex items-center justify-center gap-2 whitespace-nowrap"
+                      >
+                        <span className="material-symbols-outlined text-xl">search</span>
+                        Get my contractor matches
+                      </button>
+                    </div>
+                    <div className="flex flex-wrap gap-4 text-sm text-slate-400">
+                      <span className="flex items-center gap-1"><span className="material-symbols-outlined text-amber-500 text-base">check_circle</span> Free quotes</span>
+                      <span className="flex items-center gap-1"><span className="material-symbols-outlined text-amber-500 text-base">check_circle</span> No obligation</span>
+                      <span className="flex items-center gap-1"><span className="material-symbols-outlined text-amber-500 text-base">check_circle</span> Takes 2 minutes</span>
+                    </div>
+                    <p className="text-xs text-amber-400/70 flex items-center gap-1">
+                      <span className="material-symbols-outlined text-sm">schedule</span>
+                      Don&apos;t wait — cracks spread fastest in cold weather
+                    </p>
+                  </div>
+
+                  {/* Stats */}
+                  <div className="flex gap-8 pt-4 border-t border-slate-700/50">
+                    <div>
+                      <div className="text-2xl font-bold text-white">12,847+</div>
                       <div className="text-xs text-slate-400 uppercase tracking-wider">Licensed Contractors</div>
                     </div>
-                    <div className="stat-item">
-                      <div className="text-2xl font-bold text-white counter-highlight">
-                        <CounterAnimation end={50} />
-                      </div>
+                    <div>
+                      <div className="text-2xl font-bold text-white">50</div>
                       <div className="text-xs text-slate-400 uppercase tracking-wider">States</div>
                     </div>
-                    <div className="stat-item">
-                      <div className="text-2xl font-bold text-white counter-highlight">
-                        <CounterAnimation end={4.9} />&#9733;
-                      </div>
+                    <div>
+                      <div className="text-2xl font-bold text-white">4.9&#9733;</div>
                       <div className="text-xs text-slate-400 uppercase tracking-wider">Avg Rating</div>
                     </div>
                   </div>
@@ -335,7 +348,7 @@ export default function HomePageClient() {
                   <div className="absolute -bottom-4 -left-6 bg-white rounded-xl shadow-xl px-5 py-4 border border-slate-100">
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
-                        <span className="material-symbols-outlined text-xl text-green-600" aria-hidden="true">verified</span>
+                        <span className="material-symbols-outlined text-green-600">verified</span>
                       </div>
                       <div>
                         <div className="text-sm font-bold text-slate-900">Pre-screened pros</div>
@@ -358,13 +371,13 @@ export default function HomePageClient() {
                 </div>
                 <Link href="/states" className="flex items-center gap-2 text-primary font-bold hover:underline">
                   View All Contractors
-                  <span className="material-symbols-outlined text-xl" aria-hidden="true">arrow_forward</span>
+                  <span className="material-symbols-outlined">arrow_forward</span>
                 </Link>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 
-                {/* Card 1 - Enhanced card with better hover */}
-                <div className="bg-white border border-slate-200 group flex flex-col rounded-xl overflow-hidden card-hover animate-on-scroll">
+                {/* Card 1 - Light mode card */}
+                <div className="bg-white border border-slate-200 group flex flex-col rounded-xl overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-primary/10 hover:scale-[1.02] hover-lift animate-on-scroll">
                   <div className="relative h-48 w-full overflow-hidden image-zoom">
                     <img className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Professional piering contractor installing steel hydraulic piers for foundation stabilization" src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=800&q=80"/>
                     <div className="absolute top-4 right-4 rounded-full bg-slate-900/80 backdrop-blur px-3 py-1 text-[10px] font-black uppercase text-amber-accent border border-amber-accent/30">
@@ -384,7 +397,7 @@ export default function HomePageClient() {
                         <span>Responds in 2hrs</span>
                       </div>
                       <div className="flex items-center gap-1">
-                        <span className="material-symbols-outlined text-xl" aria-hidden="true">handyman</span>
+                        <span className="material-symbols-outlined text-xs">handyman</span>
                         <span className="font-medium">8 jobs this week</span>
                       </div>
                     </div>
@@ -395,16 +408,16 @@ export default function HomePageClient() {
                           Precision Foundation Pros
                         </Link>
                         <div className="flex items-center gap-2 mt-1 mb-2">
-                          <span className="material-symbols-outlined text-xl text-primary" aria-hidden="true">location_on</span>
+                          <span className="material-symbols-outlined text-primary text-sm">location_on</span>
                           <span className="text-sm text-slate-600 font-medium">Houston, TX</span>
                         </div>
                         <div className="flex items-center gap-1 mb-2">
                           <div className="flex text-[#f59e0b]">
-                            <span className="material-symbols-outlined text-xl fill-1" aria-hidden="true">star</span>
-                            <span className="material-symbols-outlined text-xl fill-1" aria-hidden="true">star</span>
-                            <span className="material-symbols-outlined text-xl fill-1" aria-hidden="true">star</span>
-                            <span className="material-symbols-outlined text-xl fill-1" aria-hidden="true">star</span>
-                            <span className="material-symbols-outlined text-xl fill-1" aria-hidden="true">star</span>
+                            <span className="material-symbols-outlined text-sm fill-1">star</span>
+                            <span className="material-symbols-outlined text-sm fill-1">star</span>
+                            <span className="material-symbols-outlined text-sm fill-1">star</span>
+                            <span className="material-symbols-outlined text-sm fill-1">star</span>
+                            <span className="material-symbols-outlined text-sm fill-1">star</span>
                           </div>
                           <span className="text-xs font-semibold text-slate-500">(124 reviews)</span>
                         </div>
@@ -412,7 +425,7 @@ export default function HomePageClient() {
                       </div>
                       <div className="flex flex-col items-end gap-2">
                         <div className="rounded-lg bg-primary/10 p-2 text-primary">
-                          <span className="material-symbols-outlined text-xl" aria-hidden="true">verified</span>
+                          <span className="material-symbols-outlined">verified</span>
                         </div>
                         <div className="bg-green-100 text-green-800 text-xs font-bold px-2 py-1 rounded">
                           Licensed & Insured
@@ -445,8 +458,8 @@ export default function HomePageClient() {
                   </div>
                 </div>
                 
-                {/* Card 2 - Enhanced card with better hover */}
-                <div className="bg-white border border-slate-200 group flex flex-col rounded-xl overflow-hidden card-hover animate-on-scroll animate-delay-200">
+                {/* Card 2 - Light mode card */}
+                <div className="bg-white border border-slate-200 group flex flex-col rounded-xl overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-primary/10 hover:scale-[1.02] hover-lift animate-on-scroll animate-delay-200">
                   <div className="relative h-48 w-full overflow-hidden image-zoom">
                     <img className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Concrete slab leveling and crack repair specialist using professional injection equipment" src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=800&q=80"/>
                     <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -463,7 +476,7 @@ export default function HomePageClient() {
                         <span>Responds in 4hrs</span>
                       </div>
                       <div className="flex items-center gap-1">
-                        <span className="material-symbols-outlined text-xl" aria-hidden="true">handyman</span>
+                        <span className="material-symbols-outlined text-xs">handyman</span>
                         <span className="font-medium">5 jobs this week</span>
                       </div>
                     </div>
@@ -474,16 +487,16 @@ export default function HomePageClient() {
                           Solid Ground Engineering
                         </Link>
                         <div className="flex items-center gap-2 mt-1 mb-2">
-                          <span className="material-symbols-outlined text-xl text-primary" aria-hidden="true">location_on</span>
+                          <span className="material-symbols-outlined text-primary text-sm">location_on</span>
                           <span className="text-sm text-slate-600 font-medium">Houston, TX</span>
                         </div>
                         <div className="flex items-center gap-1 mb-2">
                           <div className="flex text-[#f59e0b]">
-                            <span className="material-symbols-outlined text-xl fill-1" aria-hidden="true">star</span>
-                            <span className="material-symbols-outlined text-xl fill-1" aria-hidden="true">star</span>
-                            <span className="material-symbols-outlined text-xl fill-1" aria-hidden="true">star</span>
-                            <span className="material-symbols-outlined text-xl fill-1" aria-hidden="true">star</span>
-                            <span className="material-symbols-outlined text-xl" aria-hidden="true">star_half</span>
+                            <span className="material-symbols-outlined text-sm fill-1">star</span>
+                            <span className="material-symbols-outlined text-sm fill-1">star</span>
+                            <span className="material-symbols-outlined text-sm fill-1">star</span>
+                            <span className="material-symbols-outlined text-sm fill-1">star</span>
+                            <span className="material-symbols-outlined text-sm">star_half</span>
                           </div>
                           <span className="text-xs font-semibold text-slate-500">(98 reviews)</span>
                         </div>
@@ -491,7 +504,7 @@ export default function HomePageClient() {
                       </div>
                       <div className="flex flex-col items-end gap-2">
                         <div className="rounded-lg bg-primary/10 p-2 text-primary">
-                          <span className="material-symbols-outlined text-xl" aria-hidden="true">verified</span>
+                          <span className="material-symbols-outlined">verified</span>
                         </div>
                         <div className="bg-green-100 text-green-800 text-xs font-bold px-2 py-1 rounded">
                           Licensed & Insured
@@ -521,8 +534,8 @@ export default function HomePageClient() {
                   </div>
                 </div>
                 
-                {/* Card 3 - Enhanced card with better hover */}
-                <div className="bg-white border border-slate-200 group flex flex-col rounded-xl overflow-hidden card-hover animate-on-scroll animate-delay-400">
+                {/* Card 3 - Light mode card */}
+                <div className="bg-white border border-slate-200 group flex flex-col rounded-xl overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-primary/10 hover:scale-[1.02] hover-lift animate-on-scroll animate-delay-400">
                   <div className="relative h-48 w-full overflow-hidden image-zoom">
                     <img className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Basement waterproofing specialist installing drainage system and moisture barrier for foundation protection" src="https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=800&q=80"/>
                     <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -539,7 +552,7 @@ export default function HomePageClient() {
                         <span>Responds in 1hr</span>
                       </div>
                       <div className="flex items-center gap-1">
-                        <span className="material-symbols-outlined text-xl" aria-hidden="true">handyman</span>
+                        <span className="material-symbols-outlined text-xs">handyman</span>
                         <span className="font-medium">12 jobs this week</span>
                       </div>
                     </div>
@@ -550,16 +563,16 @@ export default function HomePageClient() {
                           Atlas Pier Specialists
                         </Link>
                         <div className="flex items-center gap-2 mt-1 mb-2">
-                          <span className="material-symbols-outlined text-xl text-primary" aria-hidden="true">location_on</span>
+                          <span className="material-symbols-outlined text-primary text-sm">location_on</span>
                           <span className="text-sm text-slate-600 font-medium">Houston, TX</span>
                         </div>
                         <div className="flex items-center gap-1 mb-2">
                           <div className="flex text-[#f59e0b]">
-                            <span className="material-symbols-outlined text-xl fill-1" aria-hidden="true">star</span>
-                            <span className="material-symbols-outlined text-xl fill-1" aria-hidden="true">star</span>
-                            <span className="material-symbols-outlined text-xl fill-1" aria-hidden="true">star</span>
-                            <span className="material-symbols-outlined text-xl fill-1" aria-hidden="true">star</span>
-                            <span className="material-symbols-outlined text-xl fill-1" aria-hidden="true">star</span>
+                            <span className="material-symbols-outlined text-sm fill-1">star</span>
+                            <span className="material-symbols-outlined text-sm fill-1">star</span>
+                            <span className="material-symbols-outlined text-sm fill-1">star</span>
+                            <span className="material-symbols-outlined text-sm fill-1">star</span>
+                            <span className="material-symbols-outlined text-sm fill-1">star</span>
                           </div>
                           <span className="text-xs font-semibold text-slate-500">(56 reviews)</span>
                         </div>
@@ -567,7 +580,7 @@ export default function HomePageClient() {
                       </div>
                       <div className="flex flex-col items-end gap-2">
                         <div className="rounded-lg bg-primary/10 p-2 text-primary">
-                          <span className="material-symbols-outlined text-xl" aria-hidden="true">verified</span>
+                          <span className="material-symbols-outlined">verified</span>
                         </div>
                         <div className="bg-green-100 text-green-800 text-xs font-bold px-2 py-1 rounded">
                           Licensed & Insured
@@ -640,7 +653,7 @@ export default function HomePageClient() {
                       <p className="text-slate-600">Licensed contractors in all 50 states</p>
                       <div className="flex items-center justify-center gap-2 mt-4 text-primary font-semibold">
                         <span>View All States</span>
-                        <span className="material-symbols-outlined text-xl" aria-hidden="true">arrow_forward</span>
+                        <span className="material-symbols-outlined">arrow_forward</span>
                       </div>
                     </div>
                   </div>
@@ -649,7 +662,7 @@ export default function HomePageClient() {
                   </div>
                   <div className="absolute bottom-6 left-6">
                     <div className="flex items-center gap-2 text-slate-900 font-bold">
-                      <span className="material-symbols-outlined text-xl text-primary" aria-hidden="true">pin_drop</span>
+                      <span className="material-symbols-outlined text-primary">pin_drop</span>
                       50 States Served
                     </div>
                   </div>
@@ -669,7 +682,7 @@ export default function HomePageClient() {
                 {/* Step 1 */}
                 <div className="flex flex-col items-center text-center group animate-on-scroll animate-delay-100">
                   <div className="size-20 rounded-full bg-white/10 flex items-center justify-center mb-6 border-2 border-white/30 group-hover:bg-amber-500 group-hover:border-amber-400 group-hover:scale-110 transition-all duration-300 relative">
-                    <span className="material-symbols-outlined text-3xl text-white group-hover:text-white" role="img" aria-label="Search for contractors">search</span>
+                    <span className="material-symbols-outlined text-3xl text-white group-hover:text-white">search</span>
                     <div className="absolute -top-2 -right-2 bg-amber-500 text-slate-900 rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">1</div>
                   </div>
                   <h3 className="text-xl font-bold mb-3 text-white group-hover:text-amber-400 transition-colors">Search</h3>
@@ -679,7 +692,7 @@ export default function HomePageClient() {
                 {/* Step 2 */}
                 <div className="flex flex-col items-center text-center group animate-on-scroll animate-delay-200">
                   <div className="size-20 rounded-full bg-white/10 flex items-center justify-center mb-6 border-2 border-white/30 group-hover:bg-amber-500 group-hover:border-amber-400 group-hover:scale-110 transition-all duration-300 relative">
-                    <span className="material-symbols-outlined text-3xl text-white group-hover:text-white" role="img" aria-label="Compare contractors">rule</span>
+                    <span className="material-symbols-outlined text-3xl text-white group-hover:text-white">rule</span>
                     <div className="absolute -top-2 -right-2 bg-amber-500 text-slate-900 rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">2</div>
                   </div>
                   <h3 className="text-xl font-bold mb-3 text-white group-hover:text-amber-400 transition-colors">Compare</h3>
@@ -689,7 +702,7 @@ export default function HomePageClient() {
                 {/* Step 3 */}
                 <div className="flex flex-col items-center text-center group animate-on-scroll animate-delay-300">
                   <div className="size-20 rounded-full bg-white/10 flex items-center justify-center mb-6 border-2 border-white/30 group-hover:bg-amber-500 group-hover:border-amber-400 group-hover:scale-110 transition-all duration-300 relative">
-                    <span className="material-symbols-outlined text-3xl text-white group-hover:text-white" role="img" aria-label="Contact contractors">forum</span>
+                    <span className="material-symbols-outlined text-3xl text-white group-hover:text-white">forum</span>
                     <div className="absolute -top-2 -right-2 bg-amber-500 text-slate-900 rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">3</div>
                   </div>
                   <h3 className="text-xl font-bold mb-3 text-white group-hover:text-amber-400 transition-colors">Contact</h3>
@@ -699,7 +712,7 @@ export default function HomePageClient() {
                 {/* Step 4 */}
                 <div className="flex flex-col items-center text-center group animate-on-scroll animate-delay-400">
                   <div className="size-20 rounded-full bg-white/10 flex items-center justify-center mb-6 border-2 border-white/30 group-hover:bg-amber-500 group-hover:border-amber-400 group-hover:scale-110 transition-all duration-300 relative">
-                    <span className="material-symbols-outlined text-3xl text-white group-hover:text-white" role="img" aria-label="Get protection">house_with_shield</span>
+                    <span className="material-symbols-outlined text-3xl text-white group-hover:text-white">house_with_shield</span>
                     <div className="absolute -top-2 -right-2 bg-amber-500 text-slate-900 rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">4</div>
                   </div>
                   <h3 className="text-xl font-bold mb-3 text-white group-hover:text-amber-400 transition-colors">Get Protected</h3>
@@ -714,7 +727,7 @@ export default function HomePageClient() {
             <div className="max-w-7xl mx-auto">
               <div className="text-center mb-16 animate-on-scroll">
                 <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-2 mb-6">
-                  <span className="material-symbols-outlined text-xl text-primary" aria-hidden="true">construction</span>
+                  <span className="material-symbols-outlined text-primary text-sm">construction</span>
                   <span className="text-xs font-bold uppercase tracking-wider text-primary">Expert Solutions</span>
                 </div>
                 <h2 className="text-slate-900 text-3xl md:text-4xl font-extrabold leading-tight tracking-tight mb-4">Common Foundation Repair Types</h2>
@@ -724,15 +737,15 @@ export default function HomePageClient() {
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                 {SERVICES.map((service, index) => (
-                  <div key={service.slug} className={`service-card group flex flex-col bg-slate-50 border-2 border-slate-200 rounded-xl p-6 animate-on-scroll animate-delay-${(index + 1) * 100}`}>
+                  <div key={service.slug} className={`group flex flex-col bg-slate-50 border-2 border-slate-200 rounded-xl p-6 transition-all duration-300 hover:border-primary/50 hover:shadow-xl hover:shadow-primary/10 hover:-translate-y-2 hover:scale-105 animate-on-scroll animate-delay-${(index + 1) * 100}`}>
                     <div className="size-16 rounded-xl bg-primary/10 flex items-center justify-center mb-6 text-primary group-hover:bg-amber-500 group-hover:text-white transition-all duration-300 group-hover:scale-110">
-                      <span className="material-symbols-outlined text-4xl" role="img" aria-label={`${service.name} service`}>{service.icon}</span>
+                      <span className="material-symbols-outlined text-3xl">{service.icon}</span>
                     </div>
                     <h3 className="text-slate-900 text-xl font-bold mb-3 group-hover:text-primary transition-colors">{service.name}</h3>
                     <p className="text-slate-600 text-sm leading-relaxed mb-6 flex-1">{service.desc}</p>
                     <Link className="mt-auto text-primary text-sm font-bold flex items-center gap-2 hover:gap-3 hover:text-amber-600 transition-all duration-200 group/link" href={`/services/${service.slug}`}>
                       Learn More 
-                      <span className="material-symbols-outlined text-xl group-hover/link:translate-x-1 transition-transform" aria-hidden="true">arrow_forward</span>
+                      <span className="material-symbols-outlined text-sm group-hover/link:translate-x-1 transition-transform">arrow_forward</span>
                     </Link>
                   </div>
                 ))}
@@ -754,7 +767,7 @@ export default function HomePageClient() {
             <div className="max-w-6xl mx-auto">
               <div className="text-center mb-16 animate-on-scroll">
                 <div className="inline-flex items-center gap-2 rounded-full border border-green-500/30 bg-green-50 px-4 py-2 mb-6">
-                  <span className="material-symbols-outlined text-xl text-green-600" aria-hidden="true">groups</span>
+                  <span className="material-symbols-outlined text-green-600 text-sm">groups</span>
                   <span className="text-xs font-bold uppercase tracking-wider text-green-700">Growing Community</span>
                 </div>
                 <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight mb-4 text-slate-900">Join Thousands of Homeowners</h2>
@@ -767,7 +780,7 @@ export default function HomePageClient() {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
                 <div className="bg-white border border-slate-200 rounded-2xl p-8 shadow-sm text-center hover:shadow-xl hover:-translate-y-2 transition-all duration-300 animate-on-scroll animate-delay-100">
                   <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <span className="material-symbols-outlined text-4xl text-blue-600" role="img" aria-label="Home repair services">home_repair_service</span>
+                    <span className="material-symbols-outlined text-blue-600 text-2xl">home_repair_service</span>
                   </div>
                   <div className="text-3xl font-bold text-slate-900 mb-2">15,000+</div>
                   <div className="text-slate-600 font-medium">Successful Projects</div>
@@ -776,7 +789,7 @@ export default function HomePageClient() {
                 
                 <div className="bg-white border border-slate-200 rounded-2xl p-8 shadow-sm text-center hover:shadow-xl hover:-translate-y-2 transition-all duration-300 animate-on-scroll animate-delay-200">
                   <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <span className="material-symbols-outlined text-4xl text-green-600" role="img" aria-label="Verified contractors">verified</span>
+                    <span className="material-symbols-outlined text-green-600 text-2xl">verified</span>
                   </div>
                   <div className="text-3xl font-bold text-slate-900 mb-2">4.9★</div>
                   <div className="text-slate-600 font-medium">Average Rating</div>
@@ -785,7 +798,7 @@ export default function HomePageClient() {
                 
                 <div className="bg-white border border-slate-200 rounded-2xl p-8 shadow-sm text-center hover:shadow-xl hover:-translate-y-2 transition-all duration-300 animate-on-scroll animate-delay-300">
                   <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <span className="material-symbols-outlined text-4xl text-amber-600" role="img" aria-label="Fast response time">schedule</span>
+                    <span className="material-symbols-outlined text-amber-600 text-2xl">schedule</span>
                   </div>
                   <div className="text-3xl font-bold text-slate-900 mb-2">24hrs</div>
                   <div className="text-slate-600 font-medium">Average Response</div>
@@ -799,7 +812,7 @@ export default function HomePageClient() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="flex items-start gap-4">
                     <div className="flex-shrink-0 w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
-                      <span className="material-symbols-outlined text-xl text-green-600" aria-hidden="true">check_circle</span>
+                      <span className="material-symbols-outlined text-green-600 text-sm">check_circle</span>
                     </div>
                     <div>
                       <h4 className="font-bold text-slate-900 mb-1">Licensed & Insured Only</h4>
@@ -809,7 +822,7 @@ export default function HomePageClient() {
                   
                   <div className="flex items-start gap-4">
                     <div className="flex-shrink-0 w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
-                      <span className="material-symbols-outlined text-xl text-green-600" aria-hidden="true">check_circle</span>
+                      <span className="material-symbols-outlined text-green-600 text-sm">check_circle</span>
                     </div>
                     <div>
                       <h4 className="font-bold text-slate-900 mb-1">No Obligation Quotes</h4>
@@ -819,7 +832,7 @@ export default function HomePageClient() {
                   
                   <div className="flex items-start gap-4">
                     <div className="flex-shrink-0 w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
-                      <span className="material-symbols-outlined text-xl text-green-600" aria-hidden="true">check_circle</span>
+                      <span className="material-symbols-outlined text-green-600 text-sm">check_circle</span>
                     </div>
                     <div>
                       <h4 className="font-bold text-slate-900 mb-1">Local Expertise</h4>
@@ -829,7 +842,7 @@ export default function HomePageClient() {
                   
                   <div className="flex items-start gap-4">
                     <div className="flex-shrink-0 w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
-                      <span className="material-symbols-outlined text-xl text-green-600" aria-hidden="true">check_circle</span>
+                      <span className="material-symbols-outlined text-green-600 text-sm">check_circle</span>
                     </div>
                     <div>
                       <h4 className="font-bold text-slate-900 mb-1">Warranty Protection</h4>
@@ -842,7 +855,7 @@ export default function HomePageClient() {
               {/* Call to Action */}
               <div className="text-center">
                 <div className="inline-flex items-center gap-3 bg-blue-50 px-6 py-3 rounded-full mb-6">
-                  <span className="material-symbols-outlined text-xl text-primary" aria-hidden="true">verified</span>
+                  <span className="material-symbols-outlined text-primary">verified</span>
                   <span className="text-sm font-bold text-primary">Join thousands of satisfied homeowners</span>
                 </div>
                 <div>
@@ -926,7 +939,7 @@ export default function HomePageClient() {
                       className="bg-white border border-slate-200 rounded-xl p-6 text-center hover:bg-amber-50 hover:border-amber-300 hover:shadow-lg transition-all duration-200"
                     >
                       <div className="inline-flex items-center justify-center w-12 h-12 bg-amber-100 rounded-lg mb-4 text-amber-600">
-                        <span className="material-symbols-outlined text-4xl" role="img" aria-label={`${service.name} service`}>{service.icon}</span>
+                        <span className="material-symbols-outlined text-xl">{service.icon}</span>
                       </div>
                       <h3 className="text-lg font-bold text-slate-900 mb-2">{service.name}</h3>
                       <p className="text-sm text-slate-600">{service.desc}</p>
@@ -943,7 +956,7 @@ export default function HomePageClient() {
                  style={{backgroundImage: 'radial-gradient(circle at 2px 2px, #ffffff 1px, transparent 0)', backgroundSize: '40px 40px'}}></div>
             <div className="max-w-5xl mx-auto relative z-10 flex flex-col items-center text-center">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-accent/20 border border-amber-accent/40 text-amber-400 mb-8">
-                <span className="material-symbols-outlined text-xl" aria-hidden="true">warning</span>
+                <span className="material-symbols-outlined text-sm">warning</span>
                 <span className="text-xs font-bold uppercase tracking-wider">Urgent Structural Alert</span>
               </div>
               <h2 className="text-4xl md:text-6xl font-black text-white leading-tight mb-6 max-w-4xl">
@@ -955,14 +968,14 @@ export default function HomePageClient() {
               <div className="flex flex-col sm:flex-row gap-4 w-full justify-center">
                 <Link href="/states" className="bg-primary hover:bg-blue-700 text-white font-bold py-5 px-10 rounded-xl transition-all shadow-lg shadow-blue-500/25 text-lg flex items-center justify-center gap-3">
                   Find a Pro Now
-                  <span className="material-symbols-outlined text-xl" aria-hidden="true">arrow_forward</span>
+                  <span className="material-symbols-outlined">arrow_forward</span>
                 </Link>
                 <Link href="/cost/texas/foundation-repair-cost" className="bg-transparent border border-white/30 hover:bg-white/10 text-white font-bold py-5 px-10 rounded-xl transition-all text-lg">
                   View Pricing Guide
                 </Link>
               </div>
               <p className="mt-8 text-slate-300 text-sm flex items-center gap-2">
-                <span className="material-symbols-outlined text-xl text-amber-accent" aria-hidden="true">verified_user</span>
+                <span className="material-symbols-outlined text-amber-accent text-base">verified_user</span>
                 Free inspections available from certified local pros
               </p>
             </div>
@@ -972,7 +985,7 @@ export default function HomePageClient() {
           <section className="py-20 lg:py-28 px-6 bg-gradient-to-br from-slate-50 to-white border-t border-slate-200 animate-on-scroll">
             <div className="max-w-6xl mx-auto text-center">
               <div className="inline-flex items-center gap-2 rounded-full border border-green-500/30 bg-green-50 px-4 py-2 mb-6">
-                <span className="material-symbols-outlined text-xl text-green-600" aria-hidden="true">verified_user</span>
+                <span className="material-symbols-outlined text-green-600 text-sm">verified_user</span>
                 <span className="text-xs font-bold uppercase tracking-wider text-green-700">Industry-Verified Standards</span>
               </div>
               <h3 className="text-3xl font-bold text-slate-900 mb-4">Backed by the Best in the Industry</h3>
@@ -982,16 +995,16 @@ export default function HomePageClient() {
                 <div className="group animate-on-scroll">
                   <div className="h-32 bg-white border-2 border-slate-200 rounded-xl shadow-lg flex flex-col items-center justify-center p-6 hover:shadow-xl hover:-translate-y-2 hover:border-blue-300 hover:shadow-blue-100/50 transition-all duration-300 hover:scale-105">
                     <div className="flex items-center gap-2 mb-2">
-                      <span className="material-symbols-outlined text-4xl text-blue-600 animate-pulse-gentle" role="img" aria-label="BBB Accredited">verified_user</span>
+                      <span className="material-symbols-outlined text-blue-600 text-2xl animate-pulse-gentle">verified_user</span>
                       <span className="text-lg font-black text-slate-900">BBB</span>
                     </div>
                     <span className="text-xs text-slate-600 font-semibold">Accredited Business</span>
                     <div className="flex text-yellow-400 text-sm mt-2">
-                      <span className="material-symbols-outlined text-xl fill-1" aria-hidden="true">star</span>
-                      <span className="material-symbols-outlined text-xl fill-1" aria-hidden="true">star</span>
-                      <span className="material-symbols-outlined text-xl fill-1" aria-hidden="true">star</span>
-                      <span className="material-symbols-outlined text-xl fill-1" aria-hidden="true">star</span>
-                      <span className="material-symbols-outlined text-xl fill-1" aria-hidden="true">star</span>
+                      <span className="material-symbols-outlined text-sm fill-1">star</span>
+                      <span className="material-symbols-outlined text-sm fill-1">star</span>
+                      <span className="material-symbols-outlined text-sm fill-1">star</span>
+                      <span className="material-symbols-outlined text-sm fill-1">star</span>
+                      <span className="material-symbols-outlined text-sm fill-1">star</span>
                     </div>
                   </div>
                 </div>
@@ -999,12 +1012,12 @@ export default function HomePageClient() {
                 <div className="group animate-on-scroll animate-delay-200">
                   <div className="h-32 bg-white border-2 border-slate-200 rounded-xl shadow-lg flex flex-col items-center justify-center p-6 hover:shadow-xl hover:-translate-y-2 hover:border-green-300 hover:shadow-green-100/50 transition-all duration-300 hover:scale-105">
                     <div className="flex items-center gap-2 mb-2">
-                      <span className="material-symbols-outlined text-4xl text-green-600" role="img" aria-label="ICC-ES Code Certified">engineering</span>
+                      <span className="material-symbols-outlined text-green-600 text-2xl">engineering</span>
                       <span className="text-lg font-black text-slate-900">ICC-ES</span>
                     </div>
                     <span className="text-xs text-slate-600 font-semibold">Code Certified</span>
                     <div className="flex items-center gap-1 mt-2">
-                      <span className="material-symbols-outlined text-xl text-green-600" aria-hidden="true">check_circle</span>
+                      <span className="material-symbols-outlined text-green-600 text-sm">check_circle</span>
                       <span className="text-xs text-green-600 font-bold">VERIFIED</span>
                     </div>
                   </div>
@@ -1013,12 +1026,12 @@ export default function HomePageClient() {
                 <div className="group animate-on-scroll animate-delay-300">
                   <div className="h-32 bg-white border-2 border-slate-200 rounded-xl shadow-lg flex flex-col items-center justify-center p-6 hover:shadow-xl hover:-translate-y-2 hover:border-blue-300 hover:shadow-blue-100/50 transition-all duration-300 hover:scale-105">
                     <div className="flex items-center gap-2 mb-2">
-                      <span className="material-symbols-outlined text-4xl text-blue-600" role="img" aria-label="Insured contractors">security</span>
+                      <span className="material-symbols-outlined text-blue-600 text-2xl">security</span>
                       <span className="text-lg font-black text-slate-900">INSURED</span>
                     </div>
                     <span className="text-xs text-slate-600 font-semibold">$2M+ Coverage</span>
                     <div className="flex items-center gap-1 mt-2">
-                      <span className="material-symbols-outlined text-xl text-blue-600" aria-hidden="true">shield</span>
+                      <span className="material-symbols-outlined text-blue-600 text-sm">shield</span>
                       <span className="text-xs text-blue-600 font-bold">BONDED</span>
                     </div>
                   </div>
@@ -1027,12 +1040,12 @@ export default function HomePageClient() {
                 <div className="group animate-on-scroll animate-delay-400">
                   <div className="h-32 bg-white border-2 border-slate-200 rounded-xl shadow-lg flex flex-col items-center justify-center p-6 hover:shadow-xl hover:-translate-y-2 hover:border-amber-300 hover:shadow-amber-100/50 transition-all duration-300 hover:scale-105">
                     <div className="flex items-center gap-2 mb-2">
-                      <span className="material-symbols-outlined text-4xl text-amber-600" role="img" aria-label="5-Year Warranty">workspace_premium</span>
+                      <span className="material-symbols-outlined text-amber-600 text-2xl">workspace_premium</span>
                       <span className="text-lg font-black text-slate-900">WARRANTY</span>
                     </div>
                     <span className="text-xs text-slate-600 font-semibold">5-Year Guarantee</span>
                     <div className="flex items-center gap-1 mt-2">
-                      <span className="material-symbols-outlined text-xl text-amber-600" aria-hidden="true">verified</span>
+                      <span className="material-symbols-outlined text-amber-600 text-sm">verified</span>
                       <span className="text-xs text-amber-600 font-bold">BACKED</span>
                     </div>
                   </div>
@@ -1042,7 +1055,7 @@ export default function HomePageClient() {
               {/* Urgency Message */}
               <div className="mt-16 p-8 bg-red-50 border border-red-200 rounded-2xl max-w-4xl mx-auto">
                 <div className="flex items-center justify-center gap-3 mb-4">
-                  <span className="material-symbols-outlined text-4xl text-red-600" role="img" aria-label="Warning about foundation damage">warning</span>
+                  <span className="material-symbols-outlined text-red-600 text-2xl">warning</span>
                   <h4 className="text-xl font-bold text-red-800">Don't Wait - Foundation Damage Gets Worse</h4>
                 </div>
                 <div className="grid md:grid-cols-3 gap-6 text-center">
@@ -1065,7 +1078,7 @@ export default function HomePageClient() {
                     className="inline-flex items-center gap-2 bg-red-600 text-white px-8 py-4 rounded-lg font-bold hover:bg-red-700 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-red-600/25 btn-primary relative overflow-hidden"
                   >
                     <span className="relative z-10 flex items-center gap-2">
-                      <span className="material-symbols-outlined text-xl" role="img" aria-label="Schedule">schedule</span>
+                      <span className="material-symbols-outlined">schedule</span>
                       Get Emergency Inspection Today
                     </span>
                   </button>
@@ -1085,7 +1098,7 @@ export default function HomePageClient() {
                 <div>
                   <div className="flex items-center gap-3 text-primary mb-2">
                     <div className="size-8">
-                      <span className="material-symbols-outlined text-xl" aria-hidden="true">foundation</span>
+                      <span className="material-symbols-outlined text-2xl">foundation</span>
                     </div>
                     <span className="text-2xl font-black text-slate-900">Foundation<span className="text-primary">Scout</span></span>
                   </div>
@@ -1125,15 +1138,15 @@ export default function HomePageClient() {
                 <h4 className="text-sm font-bold uppercase tracking-widest text-slate-900 mb-6">Contact Us</h4>
                 <ul className="flex flex-col gap-4 text-sm text-slate-600">
                   <li className="flex gap-3">
-                    <span className="material-symbols-outlined text-xl text-primary" aria-hidden="true">call</span>
+                    <span className="material-symbols-outlined text-primary">call</span>
                     1-800-FOUND-DIR
                   </li>
                   <li className="flex gap-3">
-                    <span className="material-symbols-outlined text-xl text-primary" aria-hidden="true">mail</span>
+                    <span className="material-symbols-outlined text-primary">mail</span>
                     support@foundationdir.com
                   </li>
                   <li className="flex gap-3">
-                    <span className="material-symbols-outlined text-xl text-primary" aria-hidden="true">location_on</span>
+                    <span className="material-symbols-outlined text-primary">location_on</span>
                     1200 Structural Way, Suite 400<br/>Denver, CO 80202
                   </li>
                 </ul>
@@ -1167,7 +1180,7 @@ export default function HomePageClient() {
             <div className="bg-green-600 text-white p-6 rounded-xl shadow-2xl border border-green-500/30">
               <div className="flex items-start gap-3">
                 <div className="flex-shrink-0">
-                  <span className="material-symbols-outlined text-4xl" role="img" aria-label="Verified contractors">verified</span>
+                  <span className="material-symbols-outlined text-2xl">verified</span>
                 </div>
                 <div className="flex-1">
                   <div className="font-bold mb-1">All contractors verified</div>
@@ -1176,7 +1189,7 @@ export default function HomePageClient() {
                     onClick={() => setShowTrustPopup(false)}
                     className="text-xs text-green-200 hover:text-white transition-colors flex items-center gap-1"
                   >
-                    <span className="material-symbols-outlined text-xl" role="img" aria-label="Close popup">close</span>
+                    <span className="material-symbols-outlined text-sm">close</span>
                     Dismiss
                   </button>
                 </div>

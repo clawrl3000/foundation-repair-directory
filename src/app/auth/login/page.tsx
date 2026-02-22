@@ -75,7 +75,7 @@ export default function LoginPage() {
         <div className="text-center mb-8">
           <Link href="/" className="inline-flex items-center gap-3 mb-6">
             <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary text-white shadow-lg">
-              <span className="material-symbols-outlined text-2xl">foundation</span>
+              <span className="material-symbols-outlined text-xl" aria-hidden="true">foundation</span>
             </div>
             <span className="text-3xl font-extrabold tracking-tight text-slate-900">
               Foundation<span className="text-primary">Scout</span>
@@ -94,7 +94,7 @@ export default function LoginPage() {
           {error && (
             <div className="mb-6 p-4 rounded-lg bg-red-50 border border-red-200">
               <div className="flex">
-                <span className="material-symbols-outlined text-red-500 text-lg mr-3">error</span>
+                <span className="material-symbols-outlined text-xl text-red-500 mr-3" aria-hidden="true">error</span>
                 <div className="text-sm text-red-700 font-medium">{error}</div>
               </div>
             </div>
@@ -143,12 +143,12 @@ export default function LoginPage() {
               >
                 {loading ? (
                   <>
-                    <span className="material-symbols-outlined animate-spin mr-2">progress_activity</span>
+                    <span className="material-symbols-outlined text-xl animate-spin mr-2" role="img" aria-label="Loading">progress_activity</span>
                     Signing In...
                   </>
                 ) : (
                   <>
-                    <span className="material-symbols-outlined mr-2">login</span>
+                    <span className="material-symbols-outlined text-xl mr-2" aria-hidden="true">login</span>
                     Sign In to Dashboard
                   </>
                 )}
@@ -203,7 +203,7 @@ export default function LoginPage() {
             href="/"
             className="inline-flex items-center text-sm text-slate-600 hover:text-primary transition-colors"
           >
-            <span className="material-symbols-outlined mr-1 text-lg">arrow_back</span>
+            <span className="material-symbols-outlined text-xl mr-1" aria-hidden="true">arrow_back</span>
             Back to homepage
           </Link>
         </div>
