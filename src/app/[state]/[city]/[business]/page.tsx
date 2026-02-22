@@ -3,6 +3,8 @@ import Link from 'next/link'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 import { generateBreadcrumbSchema, jsonLdScript } from '@/lib/structured-data'
 import { notFound } from 'next/navigation'
+
+export const dynamic = 'force-dynamic'
 import StitchNav from '@/components/StitchNav'
 import StitchFooter from '@/components/StitchFooter'
 import BusinessImage from '@/components/BusinessImage'
@@ -173,6 +175,7 @@ async function getBusinessData(stateSlug: string, citySlug: string, businessSlug
       .single()
 
     if (error || !business) {
+      console.error('[BusinessPage] Supabase query failed:', { error, stateSlug, citySlug, businessSlug })
       // Fallback to hardcoded data
       return FALLBACK_BUSINESS_DATA[stateSlug]?.[citySlug]?.[businessSlug] || null
     }

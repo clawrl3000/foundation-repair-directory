@@ -93,7 +93,7 @@ export default function RootLayout({
         
         {/* Google Fonts - Optimized subset of Material Symbols */}
         <link
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=architecture,arrow_back,arrow_forward,balance,build,business,calculate,calendar_month,call,check,check_circle,close,compare,compare_arrows,construction,contact_support,engineering,error,forum,foundation,gavel,gpp_good,grid_guides,groups,handshake,handyman,healing,home_repair_service,home_work,house_with_shield,info,layers,location_city,location_on,login,mail,mark_email_read,menu,open_in_new,paid,payments,phone,pin_drop,progress_activity,reviews,rocket_launch,rule,schedule,school,search,search_off,security,shield,star,star_half,terrain,update,verified,verified_user,warning,water_drop,workspace_premium&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=architecture,arrow_back,arrow_forward,balance,build,business,calculate,calendar_month,call,check,check_circle,close,compare,compare_arrows,concrete,construction,contact_support,engineering,error,expand_more,forum,foundation,gavel,gpp_good,grid_guides,groups,handshake,handyman,healing,home_repair_service,home_work,house_with_shield,info,layers,location_city,location_on,login,mail,map,mark_email_read,menu,open_in_new,paid,payments,phone,pin_drop,progress_activity,reviews,rocket_launch,rule,schedule,school,search,search_off,security,shield,star,star_half,terrain,update,verified,verified_user,warning,water_damage,water_drop,workspace_premium&display=swap"
           rel="stylesheet"
         />
         {/* Plausible Analytics */}
