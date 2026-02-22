@@ -126,6 +126,9 @@ const FALLBACK_BUSINESS_DATA: Record<string, Record<string, Record<string, Busin
 async function getBusinessData(stateSlug: string, citySlug: string, businessSlug: string): Promise<BusinessData | null> {
   try {
     const supabase = supabaseAdmin
+    console.log('[BusinessPage] Query params:', { stateSlug, citySlug, businessSlug })
+    console.log('[BusinessPage] SUPABASE_URL:', process.env.NEXT_PUBLIC_SUPABASE_URL?.substring(0, 30))
+    console.log('[BusinessPage] SERVICE_KEY exists:', !!process.env.SUPABASE_SERVICE_ROLE_KEY)
     
     const { data: business, error } = await supabase
       .from('businesses')
