@@ -47,13 +47,21 @@ interface CityPageData {
   }
   businesses: BusinessListing[]
   cityContent?: {
-    soil_type: string
-    climate_zone: string
-    common_issues: string[]
-    avg_repair_cost_min: number
-    avg_repair_cost_max: number
-    content_body: string
-    tips: string[]
+    intro_text: string
+    meta_title: string
+    meta_description: string
+    faq_json: string
+    avg_price_min: number
+    avg_price_max: number
+    listing_count: number
+    // Legacy fields (if columns exist)
+    soil_type?: string
+    climate_zone?: string
+    common_issues?: string[]
+    avg_repair_cost_min?: number
+    avg_repair_cost_max?: number
+    content_body?: string
+    tips?: string[]
   }
 }
 
@@ -275,9 +283,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { city: cityInfo, state: stateInfo } = pageData
   const url = `https://foundationscout.com/${state}/${city}`
 
+  const metaTitle = pageData.cityContent?.meta_title || `${cityInfo.name}, ${stateInfo.abbreviation} Foundation Repair — Compare Top-Rated Contractors`
+  const metaDesc = pageData.cityContent?.meta_description || `Find foundation repair contractors in ${cityInfo.name}, ${stateInfo.abbreviation}. Compare ratings, read reviews, get quotes. Licensed professionals for pier & beam, slab, basement repairs.`
+
   return {
-    title: `${cityInfo.name}, ${stateInfo.abbreviation} Foundation Repair — Compare Top-Rated Contractors`,
-    description: `Find foundation repair contractors in ${cityInfo.name}, ${stateInfo.abbreviation}. Compare ratings, read reviews, get quotes. Licensed professionals for pier & beam, slab, basement repairs.`,
+    title: metaTitle,
+    description: metaDesc,
     alternates: {
       canonical: url,
     },
@@ -531,63 +542,102 @@ export default async function CityPage({ params }: Props) {
                 About Foundation Repair in {cityInfo.name}
               </h2>
               
-              {cityContent ? (
-                <>
-                  {/* City-specific geological and climate info */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                    <div className="p-4 bg-amber-50 border border-amber-200 rounded-lg">
-                      <h4 className="font-bold text-slate-900 mb-2">Soil Type</h4>
-                      <p className="text-slate-700 text-sm">{cityContent.soil_type}</p>
-                    </div>
-                    <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
-                      <h4 className="font-bold text-slate-900 mb-2">Climate Zone</h4>
-                      <p className="text-slate-700 text-sm">{cityContent.climate_zone}</p>
-                    </div>
-                  </div>
+              {cityContent?.intro_text ? (
+                (() => {
+                  // Parse structured intro_text into sections
+                  const text = cityContent.intro_text
+                  const soilMatch = text.match(/\*\*Soil Conditions:\*\*\s*(.+)/)
+                  const climateMatch = text.match(/\*\*Climate Zone:\*\*\s*(.+)/)
+                  const issuesSection = text.match(/\*\*Common Foundation Issues:\*\*\n([\s\S]*?)(?=\n\n\*\*|$)/)
+                  const tipsSection = text.match(/\*\*Local Maintenance Tips:\*\*\n([\s\S]*?)$/)
+                  const bodyText = text.split('\n\n')[0] // First paragraph is the main content
                   
-                  {/* City-specific content body */}
-                  <div className="prose prose-slate max-w-none mb-8">
-                    {cityContent.content_body.split('\n\n').map((paragraph, index) => (
-                      <p key={index} className="text-slate-600 leading-relaxed mb-4">
-                        {paragraph}
-                      </p>
-                    ))}
-                  </div>
+                  const issues = issuesSection?.[1]?.split('\n').filter(l => l.startsWith('•')).map(l => l.replace('• ', '')) || []
+                  const tips = tipsSection?.[1]?.split('\n').filter(l => l.startsWith('•')).map(l => l.replace('• ', '')) || []
                   
-                  {/* Common Issues */}
-                  {cityContent.common_issues && cityContent.common_issues.length > 0 && (
-                    <div className="mb-8">
-                      <h3 className="text-xl font-bold text-slate-900 mb-4">
-                        Common Foundation Issues in {cityInfo.name}
-                      </h3>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                        {cityContent.common_issues.map((issue, index) => (
-                          <div key={index} className="flex items-center gap-3 p-3 bg-red-50 border border-red-200 rounded-lg">
-                            <span className="material-symbols-outlined text-red-600 text-sm">warning</span>
-                            <span className="text-slate-700 text-sm">{issue}</span>
-                          </div>
-                        ))}
+                  return (
+                    <>
+                      {/* City-specific geological and climate info */}
+                      {(soilMatch || climateMatch) && (
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                          {soilMatch && (
+                            <div className="p-4 bg-amber-50 border border-amber-200 rounded-lg">
+                              <h4 className="font-bold text-slate-900 mb-2">Soil Type</h4>
+                              <p className="text-slate-700 text-sm">{soilMatch[1]}</p>
+                            </div>
+                          )}
+                          {climateMatch && (
+                            <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                              <h4 className="font-bold text-slate-900 mb-2">Climate Zone</h4>
+                              <p className="text-slate-700 text-sm">{climateMatch[1]}</p>
+                            </div>
+                          )}
+                        </div>
+                      )}
+                      
+                      {/* City-specific content body */}
+                      <div className="prose prose-slate max-w-none mb-8">
+                        <p className="text-slate-600 leading-relaxed mb-4">{bodyText}</p>
                       </div>
-                    </div>
-                  )}
-                  
-                  {/* Tips */}
-                  {cityContent.tips && cityContent.tips.length > 0 && (
-                    <div className="mb-8">
-                      <h3 className="text-xl font-bold text-slate-900 mb-4">
-                        Foundation Maintenance Tips for {cityInfo.name}
-                      </h3>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                        {cityContent.tips.map((tip, index) => (
-                          <div key={index} className="flex items-start gap-3 p-3 bg-green-50 border border-green-200 rounded-lg">
-                            <span className="material-symbols-outlined text-green-600 text-sm mt-0.5">lightbulb</span>
-                            <span className="text-slate-700 text-sm">{tip}</span>
+                      
+                      {/* Common Issues */}
+                      {issues.length > 0 && (
+                        <div className="mb-8">
+                          <h3 className="text-xl font-bold text-slate-900 mb-4">
+                            Common Foundation Issues in {cityInfo.name}
+                          </h3>
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            {issues.map((issue, index) => (
+                              <div key={index} className="flex items-center gap-3 p-3 bg-red-50 border border-red-200 rounded-lg">
+                                <span className="material-symbols-outlined text-red-600 text-sm">warning</span>
+                                <span className="text-slate-700 text-sm">{issue}</span>
+                              </div>
+                            ))}
                           </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </>
+                        </div>
+                      )}
+                      
+                      {/* Tips */}
+                      {tips.length > 0 && (
+                        <div className="mb-8">
+                          <h3 className="text-xl font-bold text-slate-900 mb-4">
+                            Foundation Maintenance Tips for {cityInfo.name}
+                          </h3>
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            {tips.map((tip, index) => (
+                              <div key={index} className="flex items-start gap-3 p-3 bg-green-50 border border-green-200 rounded-lg">
+                                <span className="material-symbols-outlined text-green-600 text-sm mt-0.5">lightbulb</span>
+                                <span className="text-slate-700 text-sm">{tip}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* FAQ Section */}
+                      {cityContent.faq_json && (() => {
+                        try {
+                          const faqs = JSON.parse(cityContent.faq_json)
+                          return faqs.length > 0 ? (
+                            <div className="mb-8">
+                              <h3 className="text-xl font-bold text-slate-900 mb-4">
+                                Frequently Asked Questions
+                              </h3>
+                              <div className="space-y-4">
+                                {faqs.map((faq: {q: string, a: string}, index: number) => (
+                                  <div key={index} className="p-4 bg-slate-50 border border-slate-200 rounded-lg">
+                                    <h4 className="font-semibold text-slate-900 mb-2">{faq.q}</h4>
+                                    <p className="text-slate-600 text-sm">{faq.a}</p>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          ) : null
+                        } catch { return null }
+                      })()}
+                    </>
+                  )
+                })()
               ) : (
                 <p className="text-slate-600 leading-relaxed mb-8">
                   {cityInfo.name}, {stateInfo.name} homeowners face unique foundation challenges due to local soil conditions 
@@ -598,10 +648,10 @@ export default async function CityPage({ params }: Props) {
               )}
               
               <h3 className="text-xl font-bold text-slate-900 mb-6">
-                {cityContent ? `Foundation Repair Costs in ${cityInfo.name}` : `Average Foundation Repair Costs in ${cityInfo.name}`}
+                {cityContent?.avg_price_min ? `Foundation Repair Costs in ${cityInfo.name}` : `Average Foundation Repair Costs in ${cityInfo.name}`}
               </h3>
               
-              {cityContent ? (
+              {cityContent?.avg_price_min ? (
                 /* Use city-specific cost ranges */
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                   <div className="text-center p-4 bg-slate-50 border border-slate-200 rounded-lg">
@@ -611,13 +661,13 @@ export default async function CityPage({ params }: Props) {
                   <div className="text-center p-4 bg-slate-50 border border-slate-200 rounded-lg">
                     <p className="text-xs text-slate-500 mb-2">Average Repair</p>
                     <p className="text-xl font-bold text-amber-600">
-                      ${(cityContent.avg_repair_cost_min / 1000).toFixed(0)}k–${(cityContent.avg_repair_cost_max / 1000).toFixed(0)}k
+                      ${(cityContent.avg_price_min / 1000).toFixed(0)}k–${(cityContent.avg_price_max / 1000).toFixed(0)}k
                     </p>
                   </div>
                   <div className="text-center p-4 bg-slate-50 border border-slate-200 rounded-lg">
                     <p className="text-xs text-slate-500 mb-2">Major Repair</p>
                     <p className="text-xl font-bold text-amber-600">
-                      ${Math.round(cityContent.avg_repair_cost_max * 1.2 / 1000)}k–${Math.round(cityContent.avg_repair_cost_max * 1.8 / 1000)}k
+                      ${Math.round(cityContent.avg_price_max * 1.2 / 1000)}k–${Math.round(cityContent.avg_price_max * 1.8 / 1000)}k
                     </p>
                   </div>
                   <div className="text-center p-4 bg-slate-50 border border-slate-200 rounded-lg">
