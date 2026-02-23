@@ -259,9 +259,17 @@
   }
 }
 
-/* Material Symbols */
+/* Material Symbols — hide text until font loads to prevent FOUT */
 .material-symbols-outlined {
   font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  /* Constrain to icon size so fallback text doesn't spill out as "starstarstar..." */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  width: 1em;
+  height: 1em;
+  line-height: 1;
 }
 
 /* Filled stars */
