@@ -134,7 +134,7 @@ export default function AnimatedSearchForm({
           className={`relative overflow-hidden bg-amber-500 hover:bg-amber-600 active:bg-amber-700 text-slate-900 font-bold px-8 py-4 rounded-xl text-base transition-all duration-300 flex items-center justify-center gap-2 whitespace-nowrap min-w-[200px] ${
             isLoading || !searchQuery.trim() 
               ? 'opacity-50 cursor-not-allowed' 
-              : 'transform hover:scale-105 hover:shadow-lg hover:shadow-amber-500/25'
+              : 'transform hover:scale-105 hover:shadow-lg hover:shadow-amber-500/25 cta-pulse-glow'
           }`}
         >
           {isLoading ? (
