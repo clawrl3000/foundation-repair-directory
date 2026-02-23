@@ -34,10 +34,10 @@ export default function HomeHeroSection({ onOpenLeadForm }: HomeHeroSectionProps
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center pt-24 sm:pt-28 lg:pt-32 pb-12 sm:pb-16 lg:pb-20">
           <div className="text-white animate-on-scroll">
             <h1 className="text-4xl sm:text-5xl lg:text-7xl font-black tracking-tight mb-6 leading-tight">
-              Find <span className="text-gradient bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 bg-clip-text text-transparent">Foundation Repair</span> Contractors Near You
+              Don&apos;t Let Foundation Cracks <span className="text-gradient bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 bg-clip-text text-transparent">Destroy Your Home&apos;s Value</span>
             </h1>
             <p className="text-xl lg:text-2xl text-slate-300 mb-8 leading-relaxed max-w-2xl">
-              Compare quotes from trusted professionals. Average rating: 4.9 stars. Get estimates in minutes, not hours.
+              Compare quotes from licensed contractors. Free estimates in minutes, not days.
             </p>
             <AnimatedSearchForm />
             <div className="stats-container grid grid-cols-3 gap-4 sm:gap-8 pt-4 border-t border-slate-700/50">
