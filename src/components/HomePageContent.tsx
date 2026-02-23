@@ -48,7 +48,7 @@ export default function HomePageContent({ featuredBusinesses, onOpenLeadForm }: 
     <>
       {/* Featured Contractors - Real data from database */}
       {featuredBusinesses.length > 0 && (
-      <section className="py-20 lg:py-24 bg-white">
+      <section className="py-20 lg:py-24 bg-slate-50">
         <div className="mx-auto max-w-7xl px-6 lg:px-10">
           <div className="text-center mb-16">
             <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-slate-900 mb-6 animate-on-scroll">
@@ -69,7 +69,7 @@ export default function HomePageContent({ featuredBusinesses, onOpenLeadForm }: 
               const hasHalf = biz.rating - fullStars >= 0.25
               
               return (
-                <div key={biz.id} className={`bg-white border border-slate-200 group flex flex-col rounded-xl overflow-hidden card-hover animate-on-scroll ${delays[i]}`}>
+                <div key={biz.id} className={`bg-white border border-slate-200 shadow-md group flex flex-col rounded-xl overflow-hidden card-hover animate-on-scroll ${delays[i]}`}>
                   <div className={`relative h-48 w-full overflow-hidden bg-gradient-to-br ${gradients[i]} flex items-center justify-center`}>
                     <span className={`material-symbols-outlined text-6xl ${iconColors[i]} group-hover:scale-110 transition-transform duration-500`}>{icons[i]}</span>
                   </div>
@@ -114,7 +114,7 @@ export default function HomePageContent({ featuredBusinesses, onOpenLeadForm }: 
                     <div className="mt-auto pt-4">
                       <button
                         onClick={() => onOpenLeadForm(biz.id, biz.name)}
-                        className="w-full bg-primary hover:bg-primary-dark text-white font-semibold py-3 px-4 rounded-lg transition-all duration-300 group-hover:shadow-lg"
+                        className="w-full bg-primary hover:bg-blue-800 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-300 group-hover:shadow-lg"
                       >
                         Contact Now
                       </button>
@@ -152,7 +152,7 @@ export default function HomePageContent({ featuredBusinesses, onOpenLeadForm }: 
                 ))}
               </div>
               <div className="mt-8">
-                <Link href="/states" className="inline-flex items-center gap-2 text-lg font-semibold text-primary hover:text-primary-dark transition-colors group">
+                <Link href="/states" className="inline-flex items-center gap-2 text-lg font-semibold text-primary hover:text-blue-800 transition-colors group">
                   View All 50 States
                   <span className="material-symbols-outlined text-xl group-hover:translate-x-1 transition-transform">arrow_forward</span>
                 </Link>
@@ -202,7 +202,7 @@ export default function HomePageContent({ featuredBusinesses, onOpenLeadForm }: 
             ].map((step, i) => (
               <div key={i} className={`text-center group animate-on-scroll animate-delay-${i * 150}`}>
                 <div className="relative mb-8">
-                  <div className="w-24 h-24 mx-auto bg-gradient-to-br from-primary to-primary-dark rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
+                  <div className="w-24 h-24 mx-auto bg-gradient-to-br from-primary to-blue-800 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
                     <span className="material-symbols-outlined text-3xl text-white">{step.icon}</span>
                   </div>
                   <div className="absolute -top-3 -right-3 w-8 h-8 bg-white text-slate-900 rounded-full flex items-center justify-center text-sm font-bold">
@@ -222,7 +222,7 @@ export default function HomePageContent({ featuredBusinesses, onOpenLeadForm }: 
         <div className="mx-auto max-w-7xl text-center">
           <div className="mb-16 animate-on-scroll">
             <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-slate-900 mb-6">
-              Foundation Repair <span className="text-gradient bg-gradient-to-r from-primary to-primary-dark bg-clip-text text-transparent">Services</span>
+              Foundation Repair <span className="text-gradient bg-gradient-to-r from-primary to-blue-800 bg-clip-text text-transparent">Services</span>
             </h2>
             <p className="text-xl lg:text-2xl text-slate-600 max-w-4xl mx-auto">From minor cracks to major structural issues, find specialists for every foundation problem.</p>
           </div>
@@ -323,7 +323,7 @@ export default function HomePageContent({ featuredBusinesses, onOpenLeadForm }: 
           <div className="text-center animate-on-scroll">
             <button
               onClick={() => onOpenLeadForm()}
-              className="bg-primary hover:bg-primary-dark text-white font-bold py-5 px-10 rounded-xl text-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-2xl"
+              className="bg-primary hover:bg-blue-800 text-white font-bold py-5 px-10 rounded-xl text-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-2xl"
             >
               Get Your Free Estimates Today
             </button>
@@ -434,7 +434,7 @@ export default function HomePageContent({ featuredBusinesses, onOpenLeadForm }: 
         <div className="mx-auto max-w-7xl">
           <div className="text-center mb-16 animate-on-scroll">
             <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-slate-900 mb-6">
-              About <span className="text-gradient bg-gradient-to-r from-primary to-primary-dark bg-clip-text text-transparent">FoundationScout</span>
+              About <span className="text-gradient bg-gradient-to-r from-primary to-blue-800 bg-clip-text text-transparent">FoundationScout</span>
             </h2>
             <p className="text-xl lg:text-2xl text-slate-600 max-w-4xl mx-auto">The most comprehensive directory of foundation repair contractors in America. We help homeowners make informed decisions.</p>
           </div>
@@ -512,7 +512,7 @@ export default function HomePageContent({ featuredBusinesses, onOpenLeadForm }: 
           <div className="mt-12 text-center animate-on-scroll">
             <button
               onClick={() => onOpenLeadForm()}
-              className="bg-primary hover:bg-primary-dark text-white font-bold py-5 px-10 rounded-xl text-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-2xl"
+              className="bg-primary hover:bg-blue-800 text-white font-bold py-5 px-10 rounded-xl text-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-2xl"
             >
               Start Your Free Foundation Assessment
             </button>
