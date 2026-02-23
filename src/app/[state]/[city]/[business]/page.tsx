@@ -366,9 +366,9 @@ export default async function BusinessPage({ params }: Props) {
                   
                   {/* Contact Actions */}
                   <div className="flex flex-col sm:flex-row gap-3">
-                    <button className="flex-1 rounded-lg bg-amber-500 py-4 px-6 text-base font-bold text-white transition-colors hover:bg-amber-600">
+                    <a href="#get-estimate" className="flex-1 text-center rounded-lg bg-amber-500 py-4 px-6 text-base font-bold text-white transition-colors hover:bg-amber-600">
                       Get Estimate
-                    </button>
+                    </a>
                     {phone && (
                       <a 
                         href={`tel:${phone}`}

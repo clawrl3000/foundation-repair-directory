@@ -7,6 +7,7 @@ import StitchNav from '@/components/StitchNav'
 import StitchFooter from '@/components/StitchFooter'
 import BusinessImage from '@/components/BusinessImage'
 import CityBusinessMap from '@/components/CityBusinessMap'
+import BusinessCardActions from '@/components/BusinessCardActions'
 
 // Force dynamic rendering to avoid cookies issue during static generation
 export const dynamic = 'force-dynamic'
@@ -488,33 +489,12 @@ export default async function CityPage({ params }: Props) {
                       </div>
 
                       {/* Action Buttons */}
-                      <div className="mt-auto flex flex-col sm:flex-row gap-3">
-                        <button className="flex-1 rounded-lg bg-amber-500 py-3 px-6 text-base font-bold text-white transition-colors hover:bg-amber-600">
-                          Get Estimate
-                        </button>
-                        {business.phone && (
-                          <a 
-                            href={`tel:${business.phone}`}
-                            className="flex-1 text-center border border-blue-500 text-blue-600 px-6 py-3 rounded-lg text-base font-bold hover:bg-blue-50 transition-colors"
-                          >
-                            {business.phone}
-                          </a>
-                        )}
-                        {business.website_url && (
-                          <a 
-                            href={business.website_url}
-                            target="_blank"
-                            rel="nofollow noopener noreferrer"
-                            className="flex items-center justify-center rounded-lg border border-slate-300 bg-slate-50 px-4 py-3 text-slate-700 hover:bg-slate-100 transition-colors"
-                            title="Visit website"
-                          >
-                            <span className="material-symbols-outlined">open_in_new</span>
-                          </a>
-                        )}
-                        <button className="flex items-center justify-center rounded-lg border border-slate-300 bg-slate-50 px-4 py-3 text-slate-700 hover:bg-slate-100 transition-colors">
-                          <span className="material-symbols-outlined">info</span>
-                        </button>
-                      </div>
+                      <BusinessCardActions
+                        businessUrl={`/${state}/${city}/${business.slug}`}
+                        phone={business.phone}
+                        websiteUrl={business.website_url}
+                        estimateUrl={`/${state}/${city}/${business.slug}#get-estimate`}
+                      />
                     </div>
                   </Link>
                 ))}
