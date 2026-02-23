@@ -33,6 +33,10 @@ export default function HomeHeroSection({ onOpenLeadForm }: HomeHeroSectionProps
       <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-10">
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center pt-24 sm:pt-28 lg:pt-32 pb-12 sm:pb-16 lg:pb-20">
           <div className="text-white animate-on-scroll">
+            <div className="inline-flex items-center gap-2 bg-amber-500/10 border border-amber-500/20 text-amber-400 px-4 py-1.5 rounded-full text-sm font-semibold mb-4">
+              <span className="material-symbols-outlined text-base fill-1">check_circle</span>
+              Compare pros • Browse freely • Takes 2 minutes
+            </div>
             <h1 className="text-4xl sm:text-5xl lg:text-7xl font-black tracking-tight mb-6 leading-tight">
               Don&apos;t Let Foundation Cracks <span className="text-gradient bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 bg-clip-text text-transparent">Destroy Your Home&apos;s Value</span>
             </h1>
@@ -79,9 +83,14 @@ export default function HomeHeroSection({ onOpenLeadForm }: HomeHeroSectionProps
                 ))}
               </div>
               <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-slate-900/20"></div>
-              <div className="absolute bottom-6 left-6 text-white">
-                <div className="text-lg font-bold mb-1">Professional Foundation Work</div>
-                <div className="text-sm text-slate-300">Trusted contractors in your area</div>
+              <div className="absolute bottom-6 left-6">
+                <div className="inline-flex items-center gap-2 bg-slate-900/80 backdrop-blur-sm text-white px-4 py-2.5 rounded-xl border border-slate-700/50">
+                  <span className="material-symbols-outlined text-amber-400 text-lg fill-1">verified</span>
+                  <div>
+                    <div className="text-sm font-bold leading-tight">Professional Foundation Work</div>
+                    <div className="text-xs text-slate-400">Licensed &amp; insured contractors</div>
+                  </div>
+                </div>
               </div>
             </div>
             <div className="absolute -bottom-6 -left-6 w-24 h-24 bg-amber-500 rounded-2xl blur-3xl opacity-60 animate-pulse"></div>
