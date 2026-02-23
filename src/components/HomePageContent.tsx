@@ -196,7 +196,7 @@ export default function HomePageContent({ featuredBusinesses, onOpenLeadForm }: 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 relative">
             {[
               { number: '01', title: 'Tell Us About Your Problem', desc: 'Describe your foundation issues, timeline, and location in 2 minutes.', icon: 'edit_note' },
-              { number: '02', title: 'Get Matched Instantly', desc: 'Our system finds qualified contractors in your area based on your specific needs.', icon: 'match' },
+              { number: '02', title: 'Get Matched Instantly', desc: 'Our system finds qualified contractors in your area based on your specific needs.', icon: 'handshake' },
               { number: '03', title: 'Compare & Choose', desc: 'Review profiles, ratings, and get free estimates from multiple contractors.', icon: 'compare' },
               { number: '04', title: 'Get It Fixed Right', desc: 'Work with your chosen contractor to restore your foundation permanently.', icon: 'construction' }
             ].map((step, i) => (
