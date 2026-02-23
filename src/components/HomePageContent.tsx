@@ -323,7 +323,7 @@ export default function HomePageContent({ featuredBusinesses, onOpenLeadForm }: 
           <div className="text-center animate-on-scroll">
             <button
               onClick={() => onOpenLeadForm()}
-              className="bg-primary hover:bg-blue-800 text-white font-bold py-5 px-10 rounded-xl text-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-2xl"
+              className="bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold py-5 px-10 rounded-xl text-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-2xl"
             >
               Get Your Free Estimates Today
             </button>
@@ -512,7 +512,7 @@ export default function HomePageContent({ featuredBusinesses, onOpenLeadForm }: 
           <div className="mt-12 text-center animate-on-scroll">
             <button
               onClick={() => onOpenLeadForm()}
-              className="bg-primary hover:bg-blue-800 text-white font-bold py-5 px-10 rounded-xl text-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-2xl"
+              className="bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold py-5 px-10 rounded-xl text-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-2xl"
             >
               Start Your Free Foundation Assessment
             </button>
