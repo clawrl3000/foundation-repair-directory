@@ -17,67 +17,72 @@ export default function CounterAnimation({
 }: CounterAnimationProps) {
   const [count, setCount] = useState(0)
   const [hasStarted, setHasStarted] = useState(false)
-  const counterRef = useRef<HTMLDivElement>(null)
+  const counterRef = useRef<HTMLSpanElement>(null)
 
   useEffect(() => {
+    // Fallback: if IntersectionObserver doesn't fire within 1s, start anyway
+    const fallbackTimer = setTimeout(() => {
+      if (!hasStarted) {
+        startAnimation()
+      }
+    }, 1000)
+
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting && !hasStarted) {
-          setHasStarted(true)
-          
-          const startTime = Date.now()
-          const endTime = startTime + duration
-          
-          const updateCount = () => {
-            const now = Date.now()
-            const progress = Math.min((now - startTime) / duration, 1)
-            
-            // Easing function for smooth animation
-            const easeOutQuart = 1 - Math.pow(1 - progress, 4)
-            const currentCount = Math.floor(easeOutQuart * end)
-            
-            setCount(currentCount)
-            
-            if (progress < 1) {
-              requestAnimationFrame(updateCount)
-            } else {
-              setCount(end)
-            }
-          }
-          
-          requestAnimationFrame(updateCount)
+          startAnimation()
         }
       },
-      { threshold: 0.5 }
+      { threshold: 0.1 } // Lower threshold for reliability
     )
 
     if (counterRef.current) {
       observer.observe(counterRef.current)
     }
 
-    return () => observer.disconnect()
-  }, [end, duration, hasStarted])
+    return () => {
+      observer.disconnect()
+      clearTimeout(fallbackTimer)
+    }
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+
+  function startAnimation() {
+    if (hasStarted) return
+    setHasStarted(true)
+    
+    const startTime = Date.now()
+    
+    const updateCount = () => {
+      const now = Date.now()
+      const progress = Math.min((now - startTime) / duration, 1)
+      
+      // Easing function for smooth animation
+      const easeOutQuart = 1 - Math.pow(1 - progress, 4)
+      const currentCount = Math.floor(easeOutQuart * end)
+      
+      setCount(currentCount)
+      
+      if (progress < 1) {
+        requestAnimationFrame(updateCount)
+      } else {
+        setCount(end)
+      }
+    }
+    
+    requestAnimationFrame(updateCount)
+  }
 
   const formatNumber = (num: number) => {
     if (num >= 1000) {
-      return (num / 1000).toFixed(1).replace('.0', '') + 'k'
+      const k = num / 1000
+      return k % 1 === 0 ? k.toFixed(0) + ',' + String(num % 1000).padStart(3, '0') : num.toLocaleString()
     }
-    return num.toString()
+    return num.toLocaleString()
   }
 
   return (
     <span ref={counterRef} className={className}>
-      {end >= 1000 ? (
-        <>
-          {formatNumber(count)}
-          {suffix && count === end && suffix}
-        </>
-      ) : (
-        <>
-          {count.toLocaleString()}
-          {suffix && count === end && suffix}
-        </>
-      )}
+      {formatNumber(count)}{suffix}
     </span>
   )
 }

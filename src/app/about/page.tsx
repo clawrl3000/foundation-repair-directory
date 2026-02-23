@@ -105,7 +105,7 @@ export default function AboutPage() {
               
               <div className="bg-white border border-slate-200 rounded-xl p-6 text-center">
                 <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="material-symbols-outlined text-4xl text-amber-600" role="img" aria-label="Quality reviews">star</span>
+                  <span className="material-symbols-outlined text-4xl text-amber-600 fill-1" role="img" aria-label="Quality reviews">star</span>
                 </div>
                 <h3 className="text-lg font-bold text-slate-900 mb-3">Quality Reviews</h3>
                 <p className="text-slate-600 text-sm">Consistently high customer satisfaction ratings and positive project outcomes.</p>

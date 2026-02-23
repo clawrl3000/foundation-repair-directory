@@ -682,7 +682,7 @@ export default async function StatePage({ params }: Props) {
                     <span className="text-white text-sm font-medium">Licensed Contractors</span>
                   </div>
                   <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2">
-                    <span className="material-symbols-outlined text-amber-400 text-sm">star</span>
+                    <span className="material-symbols-outlined text-amber-400 text-sm fill-1">star</span>
                     <span className="text-white text-sm font-medium">Verified Reviews</span>
                   </div>
                 </div>
