@@ -27,6 +27,16 @@ interface Review {
   created_at: string
 }
 
+interface BBBData {
+  rating?: string // A+, A, B+, etc.
+  is_accredited?: boolean
+  years_accredited?: number
+  complaint_count?: number
+  profile_url?: string
+  scraped_at?: string
+  found?: boolean
+}
+
 interface BusinessData {
   id: string
   name: string
@@ -42,6 +52,7 @@ interface BusinessData {
   is_verified: boolean
   year_established?: number
   email?: string
+  bbb_data?: BBBData
   city: {
     name: string
     slug: string
@@ -334,6 +345,16 @@ export default async function BusinessPage({ params }: Props) {
                             Est. {year_established}
                           </span>
                         )}
+                        {businessData.bbb_data?.rating && (
+                          <span className="px-3 py-1 bg-blue-100 text-blue-700 text-sm rounded-full border border-blue-200">
+                            BBB {businessData.bbb_data.rating}
+                          </span>
+                        )}
+                        {businessData.bbb_data?.is_accredited && (
+                          <span className="px-3 py-1 bg-indigo-100 text-indigo-700 text-sm rounded-full border border-indigo-200">
+                            BBB Accredited {businessData.bbb_data.years_accredited && `${businessData.bbb_data.years_accredited} Years`}
+                          </span>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -377,7 +398,7 @@ export default async function BusinessPage({ params }: Props) {
         {/* Services & Features */}
         <section className="py-20 lg:py-24 bg-white border-y border-slate-200">
           <div className="mx-auto max-w-7xl px-6 lg:px-10">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               {/* Services */}
               <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-8">
                 <h2 className="text-2xl font-bold text-slate-900 mb-6">Our Services</h2>
@@ -405,6 +426,64 @@ export default async function BusinessPage({ params }: Props) {
                   ))}
                 </div>
               </div>
+
+              {/* BBB Information */}
+              {businessData.bbb_data && (businessData.bbb_data.rating || businessData.bbb_data.is_accredited) && (
+                <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-8">
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="size-12 rounded-full bg-blue-100 border border-blue-200 flex items-center justify-center">
+                      <span className="text-blue-600 font-bold text-lg">BBB</span>
+                    </div>
+                    <h2 className="text-2xl font-bold text-slate-900">BBB Profile</h2>
+                  </div>
+                  <div className="space-y-4">
+                    {businessData.bbb_data.rating && (
+                      <div className="flex items-center gap-3 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                        <div className="size-8 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-sm">
+                          {businessData.bbb_data.rating}
+                        </div>
+                        <span className="text-slate-900 font-medium">BBB Rating: {businessData.bbb_data.rating}</span>
+                      </div>
+                    )}
+                    {businessData.bbb_data.is_accredited && (
+                      <div className="flex items-center gap-3 p-4 bg-indigo-50 border border-indigo-200 rounded-lg">
+                        <div className="size-8 rounded-full bg-indigo-100 border border-indigo-200 flex items-center justify-center">
+                          <span className="material-symbols-outlined text-indigo-600 text-lg">verified</span>
+                        </div>
+                        <div>
+                          <span className="text-slate-900 font-medium block">BBB Accredited Business</span>
+                          {businessData.bbb_data.years_accredited && (
+                            <span className="text-slate-600 text-sm">Accredited for {businessData.bbb_data.years_accredited} years</span>
+                          )}
+                        </div>
+                      </div>
+                    )}
+                    {typeof businessData.bbb_data.complaint_count === 'number' && (
+                      <div className="flex items-center gap-3 p-4 bg-slate-50 border border-slate-200 rounded-lg">
+                        <div className="size-8 rounded-full bg-green-100 border border-green-200 flex items-center justify-center">
+                          <span className="material-symbols-outlined text-green-600 text-lg">info</span>
+                        </div>
+                        <span className="text-slate-900 font-medium">
+                          {businessData.bbb_data.complaint_count} complaints in last 3 years
+                        </span>
+                      </div>
+                    )}
+                    {businessData.bbb_data.profile_url && (
+                      <div className="pt-4 border-t border-slate-200">
+                        <a 
+                          href={businessData.bbb_data.profile_url}
+                          target="_blank"
+                          rel="nofollow noopener noreferrer"
+                          className="flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium"
+                        >
+                          <span className="material-symbols-outlined text-lg">open_in_new</span>
+                          View Full BBB Profile
+                        </a>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </section>

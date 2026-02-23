@@ -14,6 +14,16 @@ interface Props {
   params: Promise<{ state: string; city: string }>
 }
 
+interface BBBData {
+  rating?: string // A+, A, B+, etc.
+  is_accredited?: boolean
+  years_accredited?: number
+  complaint_count?: number
+  profile_url?: string
+  scraped_at?: string
+  found?: boolean
+}
+
 interface BusinessListing {
   id: string
   name: string
@@ -28,6 +38,7 @@ interface BusinessListing {
   review_count: number
   is_verified: boolean
   year_established?: number
+  bbb_data?: BBBData
   services: { name: string; slug: string }[]
   features: { name: string; slug: string; value: string }[]
   images?: { url: string; alt_text?: string; source?: string }[]
@@ -458,7 +469,17 @@ export default async function CityPage({ params }: Props) {
                             {service.name}
                           </span>
                         ))}
-                        {business.features.slice(0, 3).map((feature) => (
+                        {business.bbb_data?.rating && (
+                          <span className="px-3 py-1 bg-blue-100 text-blue-700 text-xs rounded-full border border-blue-200 font-semibold">
+                            BBB {business.bbb_data.rating}
+                          </span>
+                        )}
+                        {business.bbb_data?.is_accredited && (
+                          <span className="px-3 py-1 bg-indigo-100 text-indigo-700 text-xs rounded-full border border-indigo-200">
+                            BBB Accredited
+                          </span>
+                        )}
+                        {business.features.slice(0, business.bbb_data?.rating || business.bbb_data?.is_accredited ? 2 : 3).map((feature) => (
                           <span key={feature.slug} className="px-3 py-1 bg-slate-100 text-slate-700 text-xs rounded-full border border-slate-200">
                             {feature.name}
                           </span>
