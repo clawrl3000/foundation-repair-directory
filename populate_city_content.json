@@ -1,0 +1,222 @@
+[
+  {
+    "city_id": 198,
+    "city_name": "New York",
+    "soil_type": "Glacial till and bedrock",
+    "climate_zone": "Humid continental",
+    "common_issues": ["Foundation settlement from freeze-thaw cycles", "Water infiltration", "Basement wall cracks", "Hydrostatic pressure"],
+    "avg_repair_cost_min": 6000,
+    "avg_repair_cost_max": 18000,
+    "content_body": "New York City's foundation challenges stem from its diverse geological foundation of Manhattan schist, glacial deposits, and varying bedrock depths. The humid continental climate with freeze-thaw cycles can cause foundation movement and cracking. Many older buildings face issues with basement water infiltration due to high groundwater tables and aging waterproofing systems.\n\nFoundation repair in NYC often involves underpinning for settlement issues, waterproofing for moisture control, and crack injection for structural repairs. The dense urban environment and building codes require specialized techniques and certified professionals. Costs vary significantly based on building type, accessibility, and the extent of structural work required.",
+    "tips": ["Schedule inspections before and after winter freeze cycles", "Monitor basement humidity levels", "Address water infiltration immediately", "Check for settlement near subway construction zones"]
+  },
+  {
+    "city_id": 9,
+    "city_name": "Los Angeles",
+    "soil_type": "Sandy alluvial and clay deposits",
+    "climate_zone": "Mediterranean semi-arid",
+    "common_issues": ["Seismic foundation damage", "Hillside settlement", "Clay soil expansion", "Lateral foundation movement"],
+    "avg_repair_cost_min": 6000,
+    "avg_repair_cost_max": 18000,
+    "content_body": "Los Angeles foundations face unique challenges from seismic activity, expansive clay soils, and steep terrain construction. The Mediterranean climate with wet winters and dry summers causes clay soil expansion and contraction cycles. Earthquake damage is a primary concern, with many foundations requiring retrofitting for seismic safety.\n\nFoundation repairs in LA commonly involve seismic retrofitting, hillside stabilization, and underpinning for settlement issues. The city's building codes require specific seismic standards, and many older homes need foundation bolting and cripple wall bracing. Professional assessment is crucial given the earthquake risk and varied soil conditions throughout the metro area.",
+    "tips": ["Prioritize seismic retrofitting for older homes", "Monitor for settlement on hillside properties", "Address drainage issues to prevent clay soil problems", "Consider earthquake insurance after foundation work"]
+  },
+  {
+    "city_id": 47,
+    "city_name": "Chicago", 
+    "soil_type": "Glacial clay and lake deposits",
+    "climate_zone": "Humid continental",
+    "common_issues": ["Freeze-thaw foundation damage", "Clay soil expansion", "Basement water infiltration", "Foundation heaving"],
+    "avg_repair_cost_min": 4500,
+    "avg_repair_cost_max": 14000,
+    "content_body": "Chicago's foundation challenges are primarily driven by expansive clay soils and extreme temperature variations. The city sits on glacial lake deposits and dense clay that expands and contracts with moisture changes. Harsh winters with freeze-thaw cycles can cause significant foundation movement and cracking.\n\nFoundation repair in Chicago frequently involves addressing clay soil issues through pier systems, waterproofing for lake-effect moisture problems, and crack repair from freeze damage. Many homes require basement waterproofing due to high water tables and clay soil's poor drainage properties. The extreme climate makes professional assessment and proper repair techniques essential for long-term stability.",
+    "tips": ["Install proper basement drainage systems", "Monitor foundation after severe winter weather", "Address clay soil moisture with proper grading", "Consider sump pump installation for basement protection"]
+  },
+  {
+    "city_id": 1,
+    "city_name": "Houston",
+    "soil_type": "Expansive Gulf Coast clay",
+    "climate_zone": "Hot humid subtropical",
+    "common_issues": ["Slab foundation heaving", "Pier and beam settlement", "Clay soil movement", "Foundation upheaval"],
+    "avg_repair_cost_min": 5000,
+    "avg_repair_cost_max": 15000,
+    "content_body": "Houston's foundation problems are legendary, primarily due to the area's expansive Gulf Coast clay soils. These soils can expand up to 10% when wet and shrink dramatically during dry periods. The subtropical climate with periods of heavy rain followed by drought creates extreme soil movement that constantly stresses foundations.\n\nFoundation repair in Houston typically involves installing pressed or drilled concrete piers to reach stable soil layers 8-20 feet below the surface. Slab foundations often require extensive shimming and pier support, while pier and beam homes need foundation releveling. The local industry has developed specialized techniques for dealing with the area's challenging soil conditions, making professional expertise crucial.",
+    "tips": ["Maintain consistent soil moisture around foundation", "Install proper drainage to direct water away", "Consider soaker hoses during dry periods", "Schedule regular foundation inspections"]
+  },
+  {
+    "city_id": 256,
+    "city_name": "Phoenix",
+    "soil_type": "Caliche and desert alluvium",
+    "climate_zone": "Arid desert",
+    "common_issues": ["Caliche layer foundation problems", "Desert soil expansion when irrigated", "Foundation settlement", "Differential movement"],
+    "avg_repair_cost_min": 4000,
+    "avg_repair_cost_max": 12000,
+    "content_body": "Phoenix foundations encounter unique desert challenges, particularly from caliche - a concrete-hard layer of calcium carbonate that forms naturally in arid climates. This layer can be extremely difficult to excavate but provides excellent foundation support when properly addressed. However, the introduction of irrigation and landscaping can cause previously stable desert soils to expand and shift.\n\nFoundation repair in Phoenix often involves dealing with caliche removal during construction, addressing settlement from soil changes due to irrigation, and managing differential movement between irrigated and natural desert areas around homes. The extreme heat and minimal rainfall create specific challenges for foundation materials and soil stability management.",
+    "tips": ["Limit irrigation near foundation areas", "Use desert-appropriate landscaping", "Monitor for settlement from new irrigation", "Address caliche issues during initial construction"]
+  },
+  {
+    "city_id": 42,
+    "city_name": "Philadelphia",
+    "soil_type": "Clay and glacial deposits",
+    "climate_zone": "Humid subtropical",
+    "common_issues": ["Foundation settlement", "Water infiltration", "Freeze-thaw damage", "Clay soil expansion"],
+    "avg_repair_cost_min": 5000,
+    "avg_repair_cost_max": 15000,
+    "content_body": "Philadelphia's foundation challenges stem from its position on glacial deposits and marine clay layers. The humid subtropical climate with significant seasonal temperature variations causes freeze-thaw cycles that can damage foundations. Many older row homes and historical buildings face unique structural challenges requiring specialized repair approaches.\n\nFoundation repair in Philadelphia commonly addresses settlement issues in older construction, water infiltration in basements, and structural challenges in row house party walls. The city's building codes and historical preservation requirements often influence repair methods. Professional assessment is important given the age and construction variety of the city's housing stock.",
+    "tips": ["Address water infiltration quickly in older homes", "Consider historical building requirements for repairs", "Monitor party wall connections in row homes", "Schedule inspections after severe winter weather"]
+  },
+  {
+    "city_id": 3,
+    "city_name": "San Antonio",
+    "soil_type": "Blackland Prairie clay and limestone",
+    "climate_zone": "Hot humid subtropical",
+    "common_issues": ["Expansive clay movement", "Limestone bedrock issues", "Foundation heaving", "Differential settlement"],
+    "avg_repair_cost_min": 4500,
+    "avg_repair_cost_max": 14000,
+    "content_body": "San Antonio sits on a transition zone between expansive Blackland Prairie clay and limestone bedrock, creating complex foundation challenges. The expansive clay soils can cause significant heaving and settlement, while areas with shallow limestone bedrock have different stability characteristics. The hot, humid climate with periodic droughts exacerbates soil movement.\n\nFoundation repair in San Antonio requires understanding local soil variations and appropriate pier depth selection. Clay areas typically need deep pier systems to reach stable bearing layers, while limestone areas may require different approaches. The combination of climate and soil conditions makes professional soil analysis and customized repair solutions essential.",
+    "tips": ["Test soil conditions before major repairs", "Maintain consistent moisture around clay soil areas", "Address drainage to prevent clay saturation", "Consider limestone bedrock depth in repair planning"]
+  },
+  {
+    "city_id": 10,
+    "city_name": "San Diego",
+    "soil_type": "Marine terraces and sedimentary deposits",
+    "climate_zone": "Mediterranean coastal",
+    "common_issues": ["Coastal erosion effects", "Marine clay settlement", "Seismic foundation damage", "Slope stability"],
+    "avg_repair_cost_min": 5500,
+    "avg_repair_cost_max": 16000,
+    "content_body": "San Diego's foundation challenges combine coastal marine deposits, seismic activity, and steep terrain construction. The area's marine terraces and sedimentary soils can be unstable, particularly on sloped lots common throughout the region. The mild Mediterranean climate is generally foundation-friendly, but seismic activity and coastal erosion present ongoing challenges.\n\nFoundation repair in San Diego often involves seismic retrofitting for earthquake safety, slope stabilization for hillside properties, and addressing settlement issues in marine clay deposits. The city's building codes emphasize seismic standards, and many coastal properties require specialized approaches for erosion protection and soil stability.",
+    "tips": ["Prioritize seismic retrofitting for older homes", "Monitor slope stability on hillside properties", "Address drainage to prevent erosion", "Consider coastal exposure effects on foundation materials"]
+  },
+  {
+    "city_id": 2,
+    "city_name": "Dallas",
+    "soil_type": "Blackland Prairie clay",
+    "climate_zone": "Hot semi-arid",
+    "common_issues": ["Expansive clay soil movement", "Foundation heaving and settlement", "Pier system failure", "Differential movement"],
+    "avg_repair_cost_min": 4500,
+    "avg_repair_cost_max": 14000,
+    "content_body": "Dallas sits squarely on the notorious Blackland Prairie, characterized by highly expansive clay soils that can move dramatically with moisture changes. These dark, heavy clay soils can expand up to 8% when saturated and shrink significantly during drought conditions. The semi-arid climate with hot summers and variable rainfall creates extreme soil movement cycles.\n\nFoundation repair in Dallas almost universally requires deep pier systems to reach stable soil layers below the active clay zone. Both pressed concrete and steel piers are commonly used, with depths often reaching 12-16 feet or more. The local foundation repair industry is highly developed due to the challenging soil conditions, with established techniques for dealing with the area's specific geological challenges.",
+    "tips": ["Install and maintain proper drainage", "Use soaker hoses during drought conditions", "Monitor foundation levels seasonally", "Address pier system issues promptly"]
+  },
+  {
+    "city_id": 11,
+    "city_name": "San Jose",
+    "soil_type": "Bay mud and alluvial deposits",
+    "climate_zone": "Mediterranean",
+    "common_issues": ["Bay mud settlement", "Seismic foundation damage", "Liquefaction risk", "Differential settlement"],
+    "avg_repair_cost_min": 6000,
+    "avg_repair_cost_max": 17000,
+    "content_body": "San Jose's location in the South Bay presents unique foundation challenges from bay mud deposits and high seismic activity. The soft, compressible bay mud can cause significant settlement, while earthquake activity requires specialized foundation design. Much of the area is built on filled land that can be subject to liquefaction during seismic events.\n\nFoundation repair in San Jose focuses heavily on seismic retrofitting and addressing settlement issues in bay mud soils. Deep foundation systems, earthquake retrofitting, and liquefaction mitigation are common requirements. The high cost of living and property values in Silicon Valley often justify comprehensive foundation improvements and seismic upgrades.",
+    "tips": ["Prioritize seismic safety upgrades", "Monitor for settlement in bay mud areas", "Consider liquefaction risk in earthquake planning", "Address soil stability before major renovations"]
+  },
+  {
+    "city_id": 4,
+    "city_name": "Austin",
+    "soil_type": "Austin chalk and clay",
+    "climate_zone": "Hot semi-arid",
+    "common_issues": ["Expansive clay movement", "Chalk bedrock settlement", "Foundation cracking", "Differential movement"],
+    "avg_repair_cost_min": 4500,
+    "avg_repair_cost_max": 14000,
+    "content_body": "Austin's foundation challenges stem from its position on expansive clay soils over Austin chalk bedrock. The clay soils can be highly reactive to moisture changes, while the chalk bedrock, though stable, can weather and create voids that lead to settlement. The semi-arid climate with periods of drought and heavy rain exacerbates clay soil movement.\n\nFoundation repair in Austin typically involves pier systems designed to reach either stable clay layers or the underlying chalk bedrock. The depth and type of repair depend on local soil conditions and bedrock depth. The city's rapid growth has led to construction on increasingly challenging lots, making professional soil evaluation crucial for proper foundation repair.",
+    "tips": ["Understand local bedrock depth", "Maintain consistent soil moisture", "Address drainage issues promptly", "Monitor for settlement in clay soil areas"]
+  },
+  {
+    "city_id": 19,
+    "city_name": "Jacksonville",
+    "soil_type": "Sandy soils and marine deposits",
+    "climate_zone": "Humid subtropical",
+    "common_issues": ["Sandy soil settlement", "Water infiltration", "Coastal groundwater effects", "Foundation washout"],
+    "avg_repair_cost_min": 4000,
+    "avg_repair_cost_max": 12000,
+    "content_body": "Jacksonville's coastal location creates foundation challenges from sandy soils, high groundwater levels, and hurricane-related flooding. The predominantly sandy soils drain well but can shift and settle, particularly around foundation areas where water concentrates. The humid subtropical climate and coastal exposure create ongoing moisture management challenges.\n\nFoundation repair in Jacksonville often involves addressing settlement in sandy soils, waterproofing for high groundwater, and storm damage restoration. Proper drainage and moisture control are crucial given the area's rainfall and coastal storms. The relatively stable soils generally make repairs less costly than in clay soil regions, but hurricane preparedness is an important consideration.",
+    "tips": ["Maintain excellent drainage around foundations", "Prepare for hurricane season water issues", "Monitor groundwater effects on foundations", "Address sandy soil erosion promptly"]
+  },
+  {
+    "city_id": 5,
+    "city_name": "Fort Worth",
+    "soil_type": "Expansive clay and shale",
+    "climate_zone": "Hot semi-arid", 
+    "common_issues": ["Expansive clay movement", "Foundation heaving", "Differential settlement", "Pier system stress"],
+    "avg_repair_cost_min": 4500,
+    "avg_repair_cost_max": 14000,
+    "content_body": "Fort Worth shares Dallas's challenging Blackland Prairie clay soils but also has areas with underlying shale bedrock. The expansive clay creates the same dramatic movement issues seen throughout North Texas, with foundations constantly adjusting to soil volume changes. The semi-arid climate with variable rainfall patterns makes soil moisture management crucial.\n\nFoundation repair in Fort Worth follows similar patterns to Dallas, with deep pier systems being the standard solution for clay soil movement. However, areas with shale bedrock may require different approaches and pier depths. The mature foundation repair industry in the DFW metroplex provides experienced professionals familiar with local soil challenges.",
+    "tips": ["Follow DFW-standard moisture management practices", "Install adequate drainage systems", "Monitor pier system performance", "Address foundation issues before they spread"]
+  },
+  {
+    "city_id": 32,
+    "city_name": "Columbus",
+    "soil_type": "Glacial clay and till",
+    "climate_zone": "Humid continental",
+    "common_issues": ["Clay soil expansion", "Freeze-thaw damage", "Foundation settlement", "Basement water issues"],
+    "avg_repair_cost_min": 4000,
+    "avg_repair_cost_max": 13000,
+    "content_body": "Columbus sits on glacial deposits that include expansive clay soils and glacial till. The humid continental climate with cold winters and warm, humid summers creates freeze-thaw cycles that can damage foundations. Clay soils in the area can expand and contract with seasonal moisture changes, causing foundation movement.\n\nFoundation repair in Columbus commonly addresses clay soil issues, freeze-thaw damage, and basement water infiltration. The combination of clay soils and significant precipitation requires good drainage systems and waterproofing. Many homes need foundation adjustments after harsh winters or following periods of heavy rainfall that saturate clay soils.",
+    "tips": ["Prepare foundations for winter freeze cycles", "Manage clay soil moisture levels", "Install proper basement drainage", "Address water issues before they cause foundation damage"]
+  },
+  {
+    "city_id": 90,
+    "city_name": "Indianapolis",
+    "soil_type": "Clay and glacial deposits", 
+    "climate_zone": "Humid continental",
+    "common_issues": ["Clay soil movement", "Freeze-thaw foundation damage", "Settlement issues", "Basement water infiltration"],
+    "avg_repair_cost_min": 4000,
+    "avg_repair_cost_max": 12000,
+    "content_body": "Indianapolis foundations contend with clay soils and glacial deposits that can expand and settle with moisture changes. The humid continental climate brings freeze-thaw cycles that can crack foundations and cause heaving. Clay soil areas are particularly susceptible to movement during wet seasons and drought periods.\n\nFoundation repair in Indianapolis involves addressing clay soil movement through pier systems, repairing freeze-thaw damage, and managing basement moisture issues. The relatively stable geological conditions make repairs generally less expensive than in more challenging soil regions, but proper techniques are still essential for lasting results.",
+    "tips": ["Monitor foundation after severe weather", "Maintain proper drainage around clay soil areas", "Address basement water issues promptly", "Consider freeze protection measures"]
+  },
+  {
+    "city_id": 27,
+    "city_name": "Charlotte",
+    "soil_type": "Piedmont clay and decomposed granite",
+    "climate_zone": "Humid subtropical",
+    "common_issues": ["Clay soil expansion", "Settlement from decomposed granite", "Water infiltration", "Foundation cracking"],
+    "avg_repair_cost_min": 4000,
+    "avg_repair_cost_max": 13000,
+    "content_body": "Charlotte's location in the Piedmont region creates foundation challenges from both clay soils and areas of decomposed granite (saprolite). The clay soils can be expansive, while decomposed granite areas may have stability issues. The humid subtropical climate with significant rainfall can saturate clay soils and cause erosion in granite areas.\n\nFoundation repair in Charlotte requires understanding local soil variations, as clay and granite areas need different approaches. Clay soil areas typically need pier systems and moisture management, while decomposed granite areas may require different stabilization techniques. The region's growth has led to construction on increasingly varied terrain.",
+    "tips": ["Identify soil type before planning repairs", "Manage water runoff to prevent erosion", "Address clay soil moisture consistently", "Monitor for settlement in granite soil areas"]
+  },
+  {
+    "city_id": 12,
+    "city_name": "San Francisco",
+    "soil_type": "Fill, bay mud, and bedrock",
+    "climate_zone": "Mediterranean coastal",
+    "common_issues": ["Bay mud settlement", "Fill soil instability", "Seismic foundation damage", "Liquefaction risk"],
+    "avg_repair_cost_min": 7000,
+    "avg_repair_cost_max": 20000,
+    "content_body": "San Francisco's foundation challenges are among the most complex in the nation, combining bay mud, artificial fill, bedrock variations, and high seismic activity. Much of the city is built on filled land that can be unstable, while bay mud areas are subject to settlement. Earthquake safety requirements add another layer of complexity to foundation work.\n\nFoundation repair in San Francisco requires specialized expertise due to soil variability, seismic requirements, and liquefaction risks. Deep foundation systems, extensive seismic retrofitting, and soil stabilization are common needs. The high cost of living and property values often justify comprehensive foundation improvements, but the complexity makes professional assessment crucial.",
+    "tips": ["Prioritize seismic safety in all foundation work", "Understand your property's fill and soil history", "Address liquefaction risk in planning", "Consider comprehensive upgrades given property values"]
+  },
+  {
+    "city_id": 236,
+    "city_name": "Seattle",
+    "soil_type": "Glacial till and marine clay",
+    "climate_zone": "Oceanic",
+    "common_issues": ["Rain saturation settlement", "Slope instability", "Marine clay movement", "Foundation washout"],
+    "avg_repair_cost_min": 5500,
+    "avg_repair_cost_max": 16000,
+    "content_body": "Seattle's foundation challenges stem from its hilly terrain, glacial till soils, marine clay deposits, and the region's heavy rainfall. The combination of steep slopes and rain saturation can cause slope instability and foundation settlement. Marine clay areas can be particularly problematic when saturated with water.\n\nFoundation repair in Seattle often involves slope stabilization, drainage management for rain-saturated soils, and addressing settlement in marine clay areas. The city's building codes account for seismic activity, and many properties require specialized approaches for hillside construction. Professional assessment is crucial given the varied topography and soil conditions.",
+    "tips": ["Install comprehensive drainage systems", "Monitor slope stability during wet seasons", "Address water infiltration immediately", "Consider seismic requirements in all foundation work"]
+  },
+  {
+    "city_id": 246,
+    "city_name": "Denver",
+    "soil_type": "Bentonite clay and bedrock",
+    "climate_zone": "Semi-arid continental",
+    "common_issues": ["Bentonite clay expansion", "Freeze-thaw cycles", "Foundation heaving", "Differential movement"],
+    "avg_repair_cost_min": 5000,
+    "avg_repair_cost_max": 15000,
+    "content_body": "Denver's foundation challenges come primarily from bentonite clay soils that are highly expansive when wet. These clay soils can expand dramatically with moisture and shrink during dry periods. The semi-arid climate with temperature extremes creates additional stress from freeze-thaw cycles, particularly challenging for foundations.\n\nFoundation repair in Denver typically involves deep pier systems to get below the active clay zone and reach stable bearing layers. The extreme clay expansion potential makes proper moisture management crucial. Many homes require extensive foundation work due to the combination of expansive soils and climate extremes.",
+    "tips": ["Manage moisture around bentonite clay soils", "Install proper drainage and moisture barriers", "Monitor foundation movement seasonally", "Address clay soil issues before they become severe"]
+  },
+  {
+    "city_id": 218,
+    "city_name": "Boston",
+    "soil_type": "Fill, marine clay, and glacial deposits",
+    "climate_zone": "Humid continental",
+    "common_issues": ["Fill settlement", "Marine clay movement", "Freeze-thaw damage", "Historic foundation challenges"],
+    "avg_repair_cost_min": 6000,
+    "avg_repair_cost_max": 17000,
+    "content_body": "Boston's foundation challenges reflect its history as a coastal city built largely on filled land, with underlying marine clay and glacial deposits. Much of the city sits on artificial fill that can settle over time. The humid continental climate with harsh winters creates freeze-thaw cycles that can damage foundations, particularly in older construction.\n\nFoundation repair in Boston often involves addressing settlement in filled areas, dealing with marine clay instability, and repairing freeze-thaw damage in historic structures. The city's age means many buildings have unique foundation challenges that require specialized approaches. Building codes and historical preservation requirements can influence repair methods.",
+    "tips": ["Understand your property's fill and construction history", "Address water infiltration in older foundations", "Consider historic building requirements", "Prepare for winter freeze-thaw effects"]
+  }
+]

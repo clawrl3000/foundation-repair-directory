@@ -46,6 +46,15 @@ interface CityPageData {
     slug: string
   }
   businesses: BusinessListing[]
+  cityContent?: {
+    soil_type: string
+    climate_zone: string
+    common_issues: string[]
+    avg_repair_cost_min: number
+    avg_repair_cost_max: number
+    content_body: string
+    tips: string[]
+  }
 }
 
 // Fallback data for demo/testing purposes
@@ -154,6 +163,13 @@ async function getCityData(stateSlug: string, citySlug: string): Promise<CityPag
       return fallbackData || null
     }
 
+    // Get city-specific content if available
+    const { data: cityContent } = await supabase
+      .from('city_content')
+      .select('*')
+      .eq('city_id', cityData.id)
+      .single()
+
     // Get businesses for this city
     const { data: businesses, error: businessError } = await supabase
       .from('businesses')
@@ -217,7 +233,8 @@ async function getCityData(stateSlug: string, citySlug: string): Promise<CityPag
     return {
       city: cityData,
       state: cityData.states as any,
-      businesses: formattedBusinesses
+      businesses: formattedBusinesses,
+      cityContent: cityContent || undefined
     }
   } catch (error) {
     console.error('Database error, using fallback data:', error)
@@ -288,7 +305,7 @@ export default async function CityPage({ params }: Props) {
     notFound()
   }
 
-  const { city: cityInfo, state: stateInfo, businesses } = pageData
+  const { city: cityInfo, state: stateInfo, businesses, cityContent } = pageData
   
   // Generate structured data
   const breadcrumbs = [
@@ -513,34 +530,122 @@ export default async function CityPage({ params }: Props) {
               <h2 className="text-3xl font-bold text-slate-900 mb-6">
                 About Foundation Repair in {cityInfo.name}
               </h2>
-              <p className="text-slate-600 leading-relaxed mb-8">
-                {cityInfo.name}, {stateInfo.name} homeowners face unique foundation challenges due to local soil conditions 
-                and climate. Whether you're dealing with settling, cracks, or water damage, finding a qualified 
-                foundation repair contractor is essential to protecting your investment. Our directory helps you 
-                compare local professionals, their services, warranties, and pricing to make an informed decision.
-              </p>
+              
+              {cityContent ? (
+                <>
+                  {/* City-specific geological and climate info */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <div className="p-4 bg-amber-50 border border-amber-200 rounded-lg">
+                      <h4 className="font-bold text-slate-900 mb-2">Soil Type</h4>
+                      <p className="text-slate-700 text-sm">{cityContent.soil_type}</p>
+                    </div>
+                    <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                      <h4 className="font-bold text-slate-900 mb-2">Climate Zone</h4>
+                      <p className="text-slate-700 text-sm">{cityContent.climate_zone}</p>
+                    </div>
+                  </div>
+                  
+                  {/* City-specific content body */}
+                  <div className="prose prose-slate max-w-none mb-8">
+                    {cityContent.content_body.split('\n\n').map((paragraph, index) => (
+                      <p key={index} className="text-slate-600 leading-relaxed mb-4">
+                        {paragraph}
+                      </p>
+                    ))}
+                  </div>
+                  
+                  {/* Common Issues */}
+                  {cityContent.common_issues && cityContent.common_issues.length > 0 && (
+                    <div className="mb-8">
+                      <h3 className="text-xl font-bold text-slate-900 mb-4">
+                        Common Foundation Issues in {cityInfo.name}
+                      </h3>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        {cityContent.common_issues.map((issue, index) => (
+                          <div key={index} className="flex items-center gap-3 p-3 bg-red-50 border border-red-200 rounded-lg">
+                            <span className="material-symbols-outlined text-red-600 text-sm">warning</span>
+                            <span className="text-slate-700 text-sm">{issue}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  
+                  {/* Tips */}
+                  {cityContent.tips && cityContent.tips.length > 0 && (
+                    <div className="mb-8">
+                      <h3 className="text-xl font-bold text-slate-900 mb-4">
+                        Foundation Maintenance Tips for {cityInfo.name}
+                      </h3>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        {cityContent.tips.map((tip, index) => (
+                          <div key={index} className="flex items-start gap-3 p-3 bg-green-50 border border-green-200 rounded-lg">
+                            <span className="material-symbols-outlined text-green-600 text-sm mt-0.5">lightbulb</span>
+                            <span className="text-slate-700 text-sm">{tip}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </>
+              ) : (
+                <p className="text-slate-600 leading-relaxed mb-8">
+                  {cityInfo.name}, {stateInfo.name} homeowners face unique foundation challenges due to local soil conditions 
+                  and climate. Whether you're dealing with settling, cracks, or water damage, finding a qualified 
+                  foundation repair contractor is essential to protecting your investment. Our directory helps you 
+                  compare local professionals, their services, warranties, and pricing to make an informed decision.
+                </p>
+              )}
               
               <h3 className="text-xl font-bold text-slate-900 mb-6">
-                Average Foundation Repair Costs in {cityInfo.name}
+                {cityContent ? `Foundation Repair Costs in ${cityInfo.name}` : `Average Foundation Repair Costs in ${cityInfo.name}`}
               </h3>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div className="text-center p-4 bg-slate-50 border border-slate-200 rounded-lg">
-                  <p className="text-xs text-slate-500 mb-2">Minor Repair</p>
-                  <p className="text-xl font-bold text-amber-600">$500–$2,000</p>
+              
+              {cityContent ? (
+                /* Use city-specific cost ranges */
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  <div className="text-center p-4 bg-slate-50 border border-slate-200 rounded-lg">
+                    <p className="text-xs text-slate-500 mb-2">Minor Repair</p>
+                    <p className="text-xl font-bold text-amber-600">$500–$2,000</p>
+                  </div>
+                  <div className="text-center p-4 bg-slate-50 border border-slate-200 rounded-lg">
+                    <p className="text-xs text-slate-500 mb-2">Average Repair</p>
+                    <p className="text-xl font-bold text-amber-600">
+                      ${(cityContent.avg_repair_cost_min / 1000).toFixed(0)}k–${(cityContent.avg_repair_cost_max / 1000).toFixed(0)}k
+                    </p>
+                  </div>
+                  <div className="text-center p-4 bg-slate-50 border border-slate-200 rounded-lg">
+                    <p className="text-xs text-slate-500 mb-2">Major Repair</p>
+                    <p className="text-xl font-bold text-amber-600">
+                      ${Math.round(cityContent.avg_repair_cost_max * 1.2 / 1000)}k–${Math.round(cityContent.avg_repair_cost_max * 1.8 / 1000)}k
+                    </p>
+                  </div>
+                  <div className="text-center p-4 bg-slate-50 border border-slate-200 rounded-lg">
+                    <p className="text-xs text-slate-500 mb-2">Per Pier</p>
+                    <p className="text-xl font-bold text-amber-600">$1,000–$3,000</p>
+                  </div>
                 </div>
-                <div className="text-center p-4 bg-slate-50 border border-slate-200 rounded-lg">
-                  <p className="text-xs text-slate-500 mb-2">Average Repair</p>
-                  <p className="text-xl font-bold text-amber-600">$4,500–$8,000</p>
+              ) : (
+                /* Use generic cost ranges */
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  <div className="text-center p-4 bg-slate-50 border border-slate-200 rounded-lg">
+                    <p className="text-xs text-slate-500 mb-2">Minor Repair</p>
+                    <p className="text-xl font-bold text-amber-600">$500–$2,000</p>
+                  </div>
+                  <div className="text-center p-4 bg-slate-50 border border-slate-200 rounded-lg">
+                    <p className="text-xs text-slate-500 mb-2">Average Repair</p>
+                    <p className="text-xl font-bold text-amber-600">$4,500–$8,000</p>
+                  </div>
+                  <div className="text-center p-4 bg-slate-50 border border-slate-200 rounded-lg">
+                    <p className="text-xs text-slate-500 mb-2">Major Repair</p>
+                    <p className="text-xl font-bold text-amber-600">$10,000–$20,000</p>
+                  </div>
+                  <div className="text-center p-4 bg-slate-50 border border-slate-200 rounded-lg">
+                    <p className="text-xs text-slate-500 mb-2">Per Pier</p>
+                    <p className="text-xl font-bold text-amber-600">$1,000–$3,000</p>
+                  </div>
                 </div>
-                <div className="text-center p-4 bg-slate-50 border border-slate-200 rounded-lg">
-                  <p className="text-xs text-slate-500 mb-2">Major Repair</p>
-                  <p className="text-xl font-bold text-amber-600">$10,000–$20,000</p>
-                </div>
-                <div className="text-center p-4 bg-slate-50 border border-slate-200 rounded-lg">
-                  <p className="text-xs text-slate-500 mb-2">Per Pier</p>
-                  <p className="text-xl font-bold text-amber-600">$1,000–$3,000</p>
-                </div>
-              </div>
+              )}
             </div>
           </div>
         </section>

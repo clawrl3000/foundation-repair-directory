@@ -284,3 +284,23 @@ CREATE TRIGGER businesses_updated_at
   BEFORE UPDATE ON businesses
   FOR EACH ROW
   EXECUTE FUNCTION update_updated_at();
+
+-- ============================================
+-- CITY-SPECIFIC CONTENT
+-- ============================================
+
+-- City-specific foundation repair content (geological, climate, costs)
+CREATE TABLE IF NOT EXISTS city_content (
+  city_id integer PRIMARY KEY REFERENCES cities(id),
+  soil_type text,
+  climate_zone text,
+  common_issues text[],
+  avg_repair_cost_min integer,
+  avg_repair_cost_max integer,
+  content_body text,
+  tips text[],
+  created_at timestamptz DEFAULT now()
+);
+
+-- Add index for performance
+CREATE INDEX IF NOT EXISTS idx_city_content_city_id ON city_content(city_id);
