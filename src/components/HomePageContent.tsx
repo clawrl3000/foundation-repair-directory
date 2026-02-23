@@ -114,7 +114,7 @@ export default function HomePageContent({ featuredBusinesses, onOpenLeadForm }: 
                     <div className="mt-auto pt-4">
                       <button
                         onClick={() => onOpenLeadForm(biz.id, biz.name)}
-                        className="w-full bg-primary hover:bg-blue-800 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-300 group-hover:shadow-lg"
+                        className="w-full bg-amber-500 hover:bg-amber-600 text-slate-900 font-semibold py-3 px-4 rounded-lg transition-all duration-300 group-hover:shadow-lg"
                       >
                         Contact Now
                       </button>
