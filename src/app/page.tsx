@@ -1,5 +1,5 @@
 import { Metadata } from 'next'
-import HomePageClient from './home-client'
+import HomePage from '@/components/HomePage'
 import { generateFAQSchema, jsonLdScript } from '@/lib/structured-data'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 
@@ -61,7 +61,7 @@ async function getFeaturedBusinesses() {
   }
 }
 
-export default async function HomePage() {
+export default async function Page() {
   const featuredBusinesses = await getFeaturedBusinesses()
   // FAQ data for schema markup
   const faqs = [
@@ -90,14 +90,14 @@ export default async function HomePage() {
   const faqSchema = generateFAQSchema(faqs)
 
   return (
-    <div className="bg-white font-display text-slate-900 antialiased overflow-x-hidden">
-      <HomePageClient featuredBusinesses={featuredBusinesses} />
+    <>
+      <HomePage featuredBusinesses={featuredBusinesses} />
       
       {/* FAQ Schema */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={jsonLdScript(faqSchema)}
       />
-    </div>
+    </>
   )
 }
