@@ -52,7 +52,7 @@ export default function HomePageContent({ featuredBusinesses, onOpenLeadForm }: 
         <div className="mx-auto max-w-7xl px-6 lg:px-10">
           <div className="text-center mb-16">
             <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-slate-900 mb-6 animate-on-scroll">
-              Top-Rated <span className="text-gradient bg-gradient-to-r from-amber-600 to-amber-500 bg-clip-text text-transparent">Foundation Pros</span> Near You
+              Top-Rated <span className="text-amber-600">Foundation Pros</span> Near You
             </h2>
             <p className="text-xl lg:text-2xl text-slate-600 max-w-4xl mx-auto animate-on-scroll">
               These contractors earned their reputation through exceptional work and stellar customer reviews.
@@ -222,7 +222,7 @@ export default function HomePageContent({ featuredBusinesses, onOpenLeadForm }: 
         <div className="mx-auto max-w-7xl text-center">
           <div className="mb-16 animate-on-scroll">
             <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-slate-900 mb-6">
-              Foundation Repair <span className="text-gradient bg-gradient-to-r from-primary to-blue-800 bg-clip-text text-transparent">Services</span>
+              Foundation Repair <span className="text-primary">Services</span>
             </h2>
             <p className="text-xl lg:text-2xl text-slate-600 max-w-4xl mx-auto">From minor cracks to major structural issues, find specialists for every foundation problem.</p>
           </div>
@@ -255,7 +255,7 @@ export default function HomePageContent({ featuredBusinesses, onOpenLeadForm }: 
         <div className="mx-auto max-w-7xl">
           <div className="text-center mb-16 animate-on-scroll">
             <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-slate-900 mb-6">
-              Join <span className="text-gradient bg-gradient-to-r from-primary to-amber-500 bg-clip-text text-transparent">Thousands</span> of Smart Homeowners
+              Join <span className="bg-gradient-to-r from-amber-400 to-orange-500 text-white px-3 py-1 rounded-lg">Thousands</span> of Smart Homeowners
             </h2>
             <p className="text-xl lg:text-2xl text-slate-600 max-w-4xl mx-auto">Real results from real people who chose FoundationScout to solve their foundation problems.</p>
           </div>
@@ -434,7 +434,7 @@ export default function HomePageContent({ featuredBusinesses, onOpenLeadForm }: 
         <div className="mx-auto max-w-7xl">
           <div className="text-center mb-16 animate-on-scroll">
             <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-slate-900 mb-6">
-              About <span className="text-gradient bg-gradient-to-r from-primary to-blue-800 bg-clip-text text-transparent">FoundationScout</span>
+              About <span className="text-primary">FoundationScout</span>
             </h2>
             <p className="text-xl lg:text-2xl text-slate-600 max-w-4xl mx-auto">The most comprehensive directory of foundation repair contractors in America. We help homeowners make informed decisions.</p>
           </div>
