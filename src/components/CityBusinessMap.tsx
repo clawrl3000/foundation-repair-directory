@@ -30,11 +30,24 @@ export default function CityBusinessMap({
   const [isLoaded, setIsLoaded] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Filter businesses with valid coordinates
-  const validBusinesses = businesses.filter(
+  // Filter businesses with valid coordinates, then remove geographic outliers
+  const geoValidBusinesses = businesses.filter(
     business => business.latitude && business.longitude && 
     !isNaN(business.latitude) && !isNaN(business.longitude)
   );
+
+  // Remove outliers: if a business is >2 degrees (~140mi) from the median, drop it
+  const validBusinesses = (() => {
+    if (geoValidBusinesses.length <= 1) return geoValidBusinesses;
+    const lats = geoValidBusinesses.map(b => b.latitude).sort((a, b) => a - b);
+    const lngs = geoValidBusinesses.map(b => b.longitude).sort((a, b) => a - b);
+    const medLat = lats[Math.floor(lats.length / 2)];
+    const medLng = lngs[Math.floor(lngs.length / 2)];
+    const filtered = geoValidBusinesses.filter(
+      b => Math.abs(b.latitude - medLat) < 2 && Math.abs(b.longitude - medLng) < 2
+    );
+    return filtered.length > 0 ? filtered : geoValidBusinesses;
+  })();
 
   useEffect(() => {
     // Load Google Maps API if not already loaded
