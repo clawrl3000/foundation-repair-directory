@@ -398,13 +398,12 @@ export default async function CityPage({ params }: Props) {
             {businesses.length > 0 ? (
               <div className="space-y-6">
                 {businesses.map((business) => (
-                  <Link
+                  <div
                     key={business.id}
-                    href={`/${state}/${city}/${business.slug}`}
                     className="bg-white border border-slate-200 rounded-xl shadow-sm group flex flex-col lg:flex-row overflow-hidden transition-all hover:-translate-y-1 hover:shadow-lg hover:border-amber-300"
                   >
                     {/* Business Image */}
-                    <div className="relative h-48 lg:h-auto lg:w-64 overflow-hidden">
+                    <Link href={`/${state}/${city}/${business.slug}`} className="relative h-48 lg:h-auto lg:w-64 overflow-hidden block">
                       <BusinessImage
                         businessId={business.id}
                         businessName={business.name}
@@ -420,15 +419,17 @@ export default async function CityPage({ params }: Props) {
                           Verified Pro
                         </div>
                       )}
-                    </div>
+                    </Link>
 
                     {/* Business Details */}
                     <div className="flex flex-1 flex-col p-6 lg:p-8">
                       <div className="flex items-start justify-between mb-4">
                         <div className="flex-1">
-                          <h3 className="text-2xl font-bold text-slate-900 group-hover:text-amber-600 transition-colors mb-2">
-                            {business.name}
-                          </h3>
+                          <Link href={`/${state}/${city}/${business.slug}`} className="block">
+                            <h3 className="text-2xl font-bold text-slate-900 group-hover:text-amber-600 transition-colors mb-2">
+                              {business.name}
+                            </h3>
+                          </Link>
                           <p className="text-slate-500 text-sm mb-2">
                             {business.address ? `${business.address}, ` : ''}{cityInfo.name}, {stateInfo.abbreviation}
                           </p>
@@ -496,7 +497,7 @@ export default async function CityPage({ params }: Props) {
                         estimateUrl={`/${state}/${city}/${business.slug}#get-estimate`}
                       />
                     </div>
-                  </Link>
+                  </div>
                 ))}
                 
                 {/* More contractors coming soon message for single contractor */}
