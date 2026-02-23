@@ -53,7 +53,7 @@ export default function CityBusinessMap({
     // Load Google Maps API if not already loaded
     if (!window.google) {
       const script = document.createElement('script');
-      script.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&libraries=maps,marker`;
+      script.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&libraries=maps,marker&loading=async`;
       script.async = true;
       script.defer = true;
       script.onload = () => setIsLoaded(true);
@@ -62,6 +62,16 @@ export default function CityBusinessMap({
     } else {
       setIsLoaded(true);
     }
+
+    // Catch Google Maps API errors (e.g. OverQuotaMapError) to prevent page freeze
+    const handleGMapsError = (e: ErrorEvent) => {
+      if (e.message && e.message.includes('Google Maps')) {
+        setError('Map temporarily unavailable');
+        e.preventDefault();
+      }
+    };
+    window.addEventListener('error', handleGMapsError);
+    return () => window.removeEventListener('error', handleGMapsError);
   }, []);
 
   useEffect(() => {
