@@ -73,12 +73,10 @@ export default function HomePageContent({ featuredBusinesses, onOpenLeadForm }: 
             ].map((step, i) => (
               <div key={i} className={`text-center group animate-on-scroll`}>
                 <div className="relative mb-8">
-                  <div className="w-24 h-24 mx-auto bg-gradient-to-br from-primary to-blue-800 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-500 shadow-lg">
-                    <span className="material-symbols-outlined text-3xl text-white">{step.icon}</span>
+                  <div className="w-20 h-20 mx-auto rounded-full border-2 border-slate-200 flex items-center justify-center group-hover:border-amber-500 group-hover:scale-110 transition-all duration-500">
+                    <span className="material-symbols-outlined text-4xl text-amber-500">{step.icon}</span>
                   </div>
-                  <div className="absolute -top-3 -right-3 w-8 h-8 bg-amber-500 text-slate-900 rounded-full flex items-center justify-center text-sm font-bold shadow-md">
-                    {step.number}
-                  </div>
+                  <span className="block mt-3 text-sm font-bold text-slate-400">{step.number}</span>
                 </div>
                 <h3 className="text-xl font-bold text-slate-900 mb-3">{step.title}</h3>
                 <p className="text-slate-600 leading-relaxed">{step.desc}</p>
