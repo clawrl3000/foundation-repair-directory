@@ -76,23 +76,23 @@ export default function HomeHeroSection({ onOpenLeadForm }: HomeHeroSectionProps
             </div>
 
             {/* Stats - Entrance Phase 5 */}
-            <div className={`stats-container grid grid-cols-3 gap-4 sm:gap-8 pt-8 mt-2 border-t border-slate-700/50 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] delay-[800ms] ${
+            <div className={`stats-container grid grid-cols-3 gap-4 sm:gap-8 pt-8 mt-8 border-t border-slate-700/50 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] delay-[800ms] ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
             }`}>
               <div className="stat-item text-center group hover:scale-105 transition-all duration-300 cursor-default">
-                <div className="text-3xl sm:text-4xl lg:text-5xl font-black text-amber-400 mb-1 font-mono whitespace-nowrap group-hover:drop-shadow-[0_0_12px_rgba(245,158,11,0.5)]">
+                <div className="text-2xl sm:text-3xl lg:text-4xl font-black text-amber-400 mb-1 font-mono whitespace-nowrap group-hover:drop-shadow-[0_0_12px_rgba(245,158,11,0.5)]">
                   <SmoothCounter end={15000} duration={2500} suffix="+" />
                 </div>
                 <div className="text-xs sm:text-sm text-slate-400 font-medium group-hover:text-slate-300 transition-colors">Jobs Completed</div>
               </div>
               <div className="stat-item text-center group hover:scale-105 transition-all duration-300 cursor-default">
-                <div className="text-3xl sm:text-4xl lg:text-5xl font-black text-amber-400 mb-1 font-mono group-hover:drop-shadow-[0_0_12px_rgba(245,158,11,0.5)] hover-star-glow">
+                <div className="text-2xl sm:text-3xl lg:text-4xl font-black text-amber-400 mb-1 font-mono group-hover:drop-shadow-[0_0_12px_rgba(245,158,11,0.5)] hover-star-glow">
                   4.9★
                 </div>
                 <div className="text-xs sm:text-sm text-slate-400 font-medium group-hover:text-slate-300 transition-colors">Avg Rating</div>
               </div>
               <div className="stat-item text-center group hover:scale-105 transition-all duration-300 cursor-default">
-                <div className="text-3xl sm:text-4xl lg:text-5xl font-black text-amber-400 mb-1 font-mono whitespace-nowrap group-hover:drop-shadow-[0_0_12px_rgba(245,158,11,0.5)]">
+                <div className="text-2xl sm:text-3xl lg:text-4xl font-black text-amber-400 mb-1 font-mono whitespace-nowrap group-hover:drop-shadow-[0_0_12px_rgba(245,158,11,0.5)]">
                   <SmoothCounter end={2847} duration={3200} />
                 </div>
                 <div className="text-xs sm:text-sm text-slate-400 font-medium group-hover:text-slate-300 transition-colors">Active Contractors</div>

@@ -1009,3 +1009,11 @@
     filter: none;
   }
 }
+/* Hero CTA pulse glow — draws eye to the search button */
+@keyframes ctaPulseGlow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.5); }
+  50% { box-shadow: 0 0 20px 6px rgba(245, 158, 11, 0.25); }
+}
+.cta-pulse-glow {
+  animation: ctaPulseGlow 2.5s ease-in-out infinite;
+}
