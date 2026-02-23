@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import ExpertBio from '@/components/ExpertBio'
-import CounterAnimation from '@/components/CounterAnimation'
+import SmoothCounter from '@/components/SmoothCounter'
 
 const TOP_STATES = [
   { name: 'Texas', slug: 'texas', abbr: 'TX', count: 847 },
@@ -264,7 +264,7 @@ export default function HomePageContent({ featuredBusinesses, onOpenLeadForm }: 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
             <div className="text-center animate-on-scroll">
               <div className="text-6xl lg:text-7xl font-black text-primary mb-4">
-                <CounterAnimation end={15000} duration={2500} />+
+                <SmoothCounter end={15000} duration={2500} suffix="+" />
               </div>
               <div className="text-xl font-semibold text-slate-900 mb-2">Jobs Completed</div>
               <div className="text-slate-600">Since 2019, with 98% customer satisfaction</div>
@@ -278,7 +278,7 @@ export default function HomePageContent({ featuredBusinesses, onOpenLeadForm }: 
             </div>
             <div className="text-center animate-on-scroll animate-delay-400">
               <div className="text-6xl lg:text-7xl font-black text-primary mb-4">
-                $<CounterAnimation end={12000} duration={3000} />
+                <SmoothCounter end={12000} duration={3000} prefix="$" />
               </div>
               <div className="text-xl font-semibold text-slate-900 mb-2">Average Saved</div>
               <div className="text-slate-600">By comparing quotes through our platform</div>
