@@ -82,10 +82,10 @@ export default function HomePageContent({ featuredBusinesses, onOpenLeadForm }: 
                     <div className="flex items-center gap-2 mb-3">
                       <div className="flex items-center">
                         {[...Array(fullStars)].map((_, i) => (
-                          <span key={i} className="material-symbols-outlined text-amber-400 text-lg">star</span>
+                          <span key={i} className="material-symbols-outlined fill-1 text-amber-400 text-lg">star</span>
                         ))}
                         {hasHalf && (
-                          <span className="material-symbols-outlined text-amber-400 text-lg">star_half</span>
+                          <span className="material-symbols-outlined fill-1 text-amber-400 text-lg">star_half</span>
                         )}
                         {[...Array(5 - fullStars - (hasHalf ? 1 : 0))].map((_, i) => (
                           <span key={i} className="material-symbols-outlined text-slate-300 text-lg">star</span>
@@ -255,7 +255,7 @@ export default function HomePageContent({ featuredBusinesses, onOpenLeadForm }: 
         <div className="mx-auto max-w-7xl">
           <div className="text-center mb-16 animate-on-scroll">
             <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-slate-900 mb-6">
-              Join <span className="text-gradient bg-gradient-to-r from-primary to-primary-dark bg-clip-text text-transparent">Thousands</span> of Smart Homeowners
+              Join <span className="text-gradient bg-gradient-to-r from-primary to-amber-500 bg-clip-text text-transparent">Thousands</span> of Smart Homeowners
             </h2>
             <p className="text-xl lg:text-2xl text-slate-600 max-w-4xl mx-auto">Real results from real people who chose FoundationScout to solve their foundation problems.</p>
           </div>
@@ -293,7 +293,7 @@ export default function HomePageContent({ featuredBusinesses, onOpenLeadForm }: 
                 <div className="mb-6">
                   <div className="flex text-amber-400 mb-3">
                     {[...Array(5)].map((_, i) => (
-                      <span key={i} className="material-symbols-outlined">star</span>
+                      <span key={i} className="material-symbols-outlined fill-1">star</span>
                     ))}
                   </div>
                   <blockquote className="text-lg text-slate-700 italic mb-4">
@@ -307,7 +307,7 @@ export default function HomePageContent({ featuredBusinesses, onOpenLeadForm }: 
                 <div className="mb-6">
                   <div className="flex text-amber-400 mb-3">
                     {[...Array(5)].map((_, i) => (
-                      <span key={i} className="material-symbols-outlined">star</span>
+                      <span key={i} className="material-symbols-outlined fill-1">star</span>
                     ))}
                   </div>
                   <blockquote className="text-lg text-slate-700 italic mb-4">
