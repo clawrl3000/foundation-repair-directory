@@ -44,10 +44,10 @@ export default function HomeHeroSection({ onOpenLeadForm }: HomeHeroSectionProps
               Compare quotes from licensed contractors. Free estimates in minutes, not days.
             </p>
             <AnimatedSearchForm />
-            <div className="stats-container grid grid-cols-3 gap-4 sm:gap-8 pt-4 border-t border-slate-700/50">
+            <div className="stats-container grid grid-cols-3 gap-4 sm:gap-8 pt-8 mt-8 border-t border-slate-700/50">
               <div className="stat-item text-center animate-on-scroll animate-delay-200">
-                <div className="text-3xl sm:text-4xl lg:text-5xl font-black text-amber-400 mb-1 font-mono">
-                  <CounterAnimation end={15000} duration={2500} />+
+                <div className="text-3xl sm:text-4xl lg:text-5xl font-black text-amber-400 mb-1 font-mono whitespace-nowrap">
+                  <CounterAnimation end={15000} duration={2500} /><span>+</span>
                 </div>
                 <div className="text-xs sm:text-sm text-slate-400 font-medium">Jobs Completed</div>
               </div>
@@ -58,7 +58,7 @@ export default function HomeHeroSection({ onOpenLeadForm }: HomeHeroSectionProps
                 <div className="text-xs sm:text-sm text-slate-400 font-medium">Avg Rating</div>
               </div>
               <div className="stat-item text-center animate-on-scroll animate-delay-600">
-                <div className="text-3xl sm:text-4xl lg:text-5xl font-black text-amber-400 mb-1 font-mono">
+                <div className="text-3xl sm:text-4xl lg:text-5xl font-black text-amber-400 mb-1 font-mono whitespace-nowrap">
                   <CounterAnimation end={2847} duration={3000} />
                 </div>
                 <div className="text-xs sm:text-sm text-slate-400 font-medium">Active Contractors</div>
