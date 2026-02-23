@@ -66,7 +66,7 @@ export default function CounterAnimation({
   }
 
   return (
-    <div ref={counterRef} className={className}>
+    <span ref={counterRef} className={className}>
       {end >= 1000 ? (
         <>
           {formatNumber(count)}
@@ -78,6 +78,6 @@ export default function CounterAnimation({
           {suffix && count === end && suffix}
         </>
       )}
-    </div>
+    </span>
   )
 }
