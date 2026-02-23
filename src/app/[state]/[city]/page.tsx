@@ -6,6 +6,7 @@ import { notFound } from 'next/navigation'
 import StitchNav from '@/components/StitchNav'
 import StitchFooter from '@/components/StitchFooter'
 import BusinessImage from '@/components/BusinessImage'
+import CityBusinessMap from '@/components/CityBusinessMap'
 
 // Force dynamic rendering to avoid cookies issue during static generation
 export const dynamic = 'force-dynamic'
@@ -533,6 +534,47 @@ export default async function CityPage({ params }: Props) {
             )}
           </div>
         </section>
+
+        {/* Business Locations Map */}
+        {businesses.filter(b => b.latitude && b.longitude).length > 0 && (
+          <section className="py-20 lg:py-24 bg-white border-b border-slate-200">
+            <div className="mx-auto max-w-7xl px-6 lg:px-10">
+              <div className="text-center mb-12">
+                <h2 className="text-3xl font-bold text-slate-900 mb-4">
+                  Foundation Repair Contractors Near You
+                </h2>
+                <p className="text-slate-600 max-w-2xl mx-auto">
+                  View {businesses.filter(b => b.latitude && b.longitude).length} foundation repair contractor{businesses.filter(b => b.latitude && b.longitude).length !== 1 ? 's' : ''} located throughout {cityInfo.name}, {stateInfo.abbreviation}. 
+                  Click on any marker to view details and get estimates.
+                </p>
+              </div>
+              
+              <div className="max-w-4xl mx-auto">
+                <CityBusinessMap
+                  businesses={businesses.map(b => ({
+                    id: b.id,
+                    name: b.name,
+                    latitude: b.latitude!,
+                    longitude: b.longitude!,
+                    address: b.address,
+                    phone: b.phone,
+                    slug: b.slug
+                  })).filter(b => b.latitude && b.longitude)}
+                  cityName={cityInfo.name}
+                  stateAbbr={stateInfo.abbreviation}
+                  className="w-full h-96 lg:h-[500px] rounded-xl border border-slate-200 shadow-sm"
+                />
+              </div>
+              
+              <div className="text-center mt-8">
+                <p className="text-sm text-slate-500">
+                  <span className="material-symbols-outlined text-xs">info</span>
+                  Locations are approximate. Contact contractors directly for exact addresses and service areas.
+                </p>
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* City Information */}
         <section className="py-20 lg:py-24 bg-slate-50 border-y border-slate-200">
