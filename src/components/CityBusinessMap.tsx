@@ -51,12 +51,22 @@ export default function CityBusinessMap({
 
   useEffect(() => {
     // Load Google Maps API if not already loaded
-    if (!window.google) {
+    if (!window.google?.maps?.Map) {
       const script = document.createElement('script');
-      script.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&libraries=maps,marker&loading=async`;
+      script.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&libraries=maps,marker`;
       script.async = true;
       script.defer = true;
-      script.onload = () => setIsLoaded(true);
+      script.onload = () => {
+        // Poll until core classes are available (async loading can delay them)
+        const check = () => {
+          if (window.google?.maps?.LatLngBounds) {
+            setIsLoaded(true);
+          } else {
+            setTimeout(check, 100);
+          }
+        };
+        check();
+      };
       script.onerror = () => setError('Failed to load Google Maps');
       document.head.appendChild(script);
     } else {
