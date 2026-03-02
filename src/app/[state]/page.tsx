@@ -527,41 +527,46 @@ const stateContent: Record<string, {
   }
 }
 
-// State-specific hero images
+// State-specific hero images — rotated across 4 Envato licensed images
+const stateHeroImages = [
+  '/images/heroes/foundation-formwork-rebar-home-addition.jpg',
+  '/images/heroes/concrete-block-foundation-footing-repair.jpg',
+  '/images/heroes/poured-concrete-foundation-walls-residential.jpg',
+  '/images/heroes/concrete-block-foundation-construction-closeup.jpg',
+]
 const stateImages: Record<string, string> = {
-  'texas': 'https://images.unsplash.com/photo-1520637836862-4d197d17c534?w=1200&q=80', // Texas ranch landscape
-  'california': 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&q=80', // California coast
-  'florida': 'https://images.unsplash.com/photo-1578670812730-9c60c3ebc9e1?w=1200&q=80', // Florida beach homes
-  'new-york': 'https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?w=1200&q=80', // NYC buildings
-  'pennsylvania': 'https://images.unsplash.com/photo-1546436836-07a91091f160?w=1200&q=80', // Philadelphia/residential
-  'illinois': 'https://images.unsplash.com/photo-1494522855154-9297ac14b55f?w=1200&q=80', // Chicago skyline
-  'ohio': 'https://images.unsplash.com/photo-1571762105013-d6e79c71ab36?w=1200&q=80', // Ohio suburban homes
-  'georgia': 'https://images.unsplash.com/photo-1567449303078-57ad995bd17e?w=1200&q=80', // Atlanta/Georgia homes
-  'north-carolina': 'https://images.unsplash.com/photo-1605538883669-825200433431?w=1200&q=80', // NC mountains/homes
-  'michigan': 'https://images.unsplash.com/photo-1549451371-64d5d4020a6b?w=1200&q=80', // Michigan residential
-  'virginia': 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1200&q=80', // Virginia colonial homes
-  'tennessee': 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=1200&q=80', // Tennessee landscape/homes
-  'missouri': 'https://images.unsplash.com/photo-1571762105013-d6e79c71ab36?w=1200&q=80', // Missouri suburban
-  'arizona': 'https://images.unsplash.com/photo-1504208434309-cb69f4fe52b0?w=1200&q=80', // Arizona desert homes
-  'colorado': 'https://images.unsplash.com/photo-1502780402662-acc01917138e?w=1200&q=80', // Colorado mountains/homes
-  'washington': 'https://images.unsplash.com/photo-1524843914683-22d2ef0fbb71?w=1200&q=80', // Seattle/Washington homes
-  'oregon': 'https://images.unsplash.com/photo-1578910226055-e33dc3b43918?w=1200&q=80', // Oregon landscape/homes
-  'minnesota': 'https://images.unsplash.com/photo-1574092330419-09d4c903ca03?w=1200&q=80', // Minnesota homes
-  'indiana': 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1200&q=80', // Indiana residential
-  'louisiana': 'https://images.unsplash.com/photo-1574878164612-e8c9371a22bb?w=1200&q=80', // Louisiana homes
-  'alabama': 'https://images.unsplash.com/photo-1605538883669-825200433431?w=1200&q=80', // Alabama homes
-  'south-carolina': 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=1200&q=80', // South Carolina homes
-  'kentucky': 'https://images.unsplash.com/photo-1546436836-07a91091f160?w=1200&q=80', // Kentucky landscape/homes
-  'oklahoma': 'https://images.unsplash.com/photo-1520637736862-4d197d17c534?w=1200&q=80', // Oklahoma landscape
-  'mississippi': 'https://images.unsplash.com/photo-1574878164612-e8c9371a22bb?w=1200&q=80', // Mississippi homes
-  'arkansas': 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=1200&q=80', // Arkansas landscape
-  'kansas': 'https://images.unsplash.com/photo-1571762105013-d6e79c71ab36?w=1200&q=80', // Kansas farmland/homes
-  'maryland': 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1200&q=80', // Maryland colonial homes
-  'new-jersey': 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1200&q=80', // New Jersey residential
-  'connecticut': 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1200&q=80', // Connecticut colonial homes
-  'massachusetts': 'https://images.unsplash.com/photo-1546436836-07a91091f160?w=1200&q=80', // Massachusetts historic homes
-  // Fallback for states without specific images
-  'default': 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1200&q=80' // Generic suburban home
+  'texas': stateHeroImages[0],
+  'california': stateHeroImages[1],
+  'florida': stateHeroImages[2],
+  'new-york': stateHeroImages[3],
+  'pennsylvania': stateHeroImages[0],
+  'illinois': stateHeroImages[1],
+  'ohio': stateHeroImages[2],
+  'georgia': stateHeroImages[3],
+  'north-carolina': stateHeroImages[0],
+  'michigan': stateHeroImages[1],
+  'virginia': stateHeroImages[2],
+  'tennessee': stateHeroImages[3],
+  'missouri': stateHeroImages[0],
+  'arizona': stateHeroImages[1],
+  'colorado': stateHeroImages[2],
+  'washington': stateHeroImages[3],
+  'oregon': stateHeroImages[0],
+  'minnesota': stateHeroImages[1],
+  'indiana': stateHeroImages[2],
+  'louisiana': stateHeroImages[3],
+  'alabama': stateHeroImages[0],
+  'south-carolina': stateHeroImages[1],
+  'kentucky': stateHeroImages[2],
+  'oklahoma': stateHeroImages[3],
+  'mississippi': stateHeroImages[0],
+  'arkansas': stateHeroImages[1],
+  'kansas': stateHeroImages[2],
+  'maryland': stateHeroImages[3],
+  'new-jersey': stateHeroImages[0],
+  'connecticut': stateHeroImages[1],
+  'massachusetts': stateHeroImages[2],
+  'default': stateHeroImages[0],
 }
 
 // Generate static params for common states
@@ -657,7 +662,7 @@ export default async function StatePage({ params }: Props) {
           <div className="absolute inset-0">
             <img
               src={stateImages[state] || stateImages['default']}
-              alt={`${stateInfo.name} landscape`}
+              alt={`Foundation repair and construction work in ${stateInfo.name} — professional contractors installing concrete footings and structural reinforcement`}
               className="w-full h-full object-cover"
             />
             {/* Dark gradient overlay */}

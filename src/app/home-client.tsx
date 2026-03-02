@@ -59,10 +59,10 @@ export default function HomePageClient({ featuredBusinesses = [] }: { featuredBu
   const [heroImageIndex, setHeroImageIndex] = useState(0)
   
   const heroImages = [
-    { src: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&q=80', alt: 'Construction crew working on concrete foundation with rebar reinforcement' },
-    { src: 'https://images.pexels.com/photos/2219024/pexels-photo-2219024.jpeg?w=800', alt: 'Workers pouring and leveling concrete for a foundation slab' },
-    { src: 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=800&q=80', alt: 'Foundation slab construction with post-tension cables and rebar grid' },
-    { src: 'https://images.unsplash.com/photo-1517581177682-a085bb7ffb15?w=800&q=80', alt: 'Structural shoring and foundation stabilization work in progress' },
+    { src: '/images/heroes/foundation-formwork-rebar-home-addition.jpg', alt: 'Foundation formwork with rebar ties and pier blockouts for home addition next to existing residential house' },
+    { src: '/images/heroes/concrete-block-foundation-footing-repair.jpg', alt: 'Concrete block foundation footing being laid with spirit level and mortar during residential foundation repair' },
+    { src: '/images/heroes/poured-concrete-foundation-walls-residential.jpg', alt: 'Poured concrete foundation walls with window openings and rebar anchors in residential neighborhood' },
+    { src: '/images/heroes/concrete-block-foundation-construction-closeup.jpg', alt: 'Close-up of concrete block foundation corner with guide lines and spirit level during foundation construction' },
   ]
 
   const openLeadForm = (businessId?: string, businessName?: string) => {
