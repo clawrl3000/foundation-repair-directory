@@ -36,7 +36,7 @@ export default function BusinessImage({
   
   // If we have a photo reference, use Google Places photo
   if (photoReference && !imageError) {
-    const googlePhotoUrl = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=${sizeMap[size]}&photoreference=${photoReference}&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`
+    const googlePhotoUrl = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=${sizeMap[size]}&photoreference=${photoReference}&key=${process.env.NEXT_PUBLIC_GOOGLE_PLACES_API_KEY}`
     
     return (
       <div className={`relative ${className}`}>
@@ -57,7 +57,7 @@ export default function BusinessImage({
   
   // If we have coordinates but no photo, try Street View
   if (latitude && longitude && !isPlaceholder && !imageError) {
-    const streetViewUrl = `https://maps.googleapis.com/maps/api/streetview?size=${sizeMap[size]}x${Math.floor(sizeMap[size] * 0.75)}&location=${latitude},${longitude}&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`
+    const streetViewUrl = `https://maps.googleapis.com/maps/api/streetview?size=${sizeMap[size]}x${Math.floor(sizeMap[size] * 0.75)}&location=${latitude},${longitude}&key=${process.env.NEXT_PUBLIC_GOOGLE_PLACES_API_KEY}`
     
     return (
       <div className={`relative ${className}`}>
@@ -73,10 +73,11 @@ export default function BusinessImage({
     )
   }
   
-  // Fallback to placeholder
+  // Fallback to placeholder with SEO-friendly alt text
   return (
-    <div className={`${className} bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center`}>
-      <span className="material-symbols-outlined text-4xl text-slate-400" role="img" aria-label="Foundation repair company">foundation</span>
+    <div className={`${className} bg-gradient-to-br from-slate-100 to-slate-200 flex flex-col items-center justify-center gap-2`}>
+      <span className="material-symbols-outlined text-4xl text-slate-400" role="img" aria-label={`${businessName} foundation repair contractor`}>foundation</span>
+      <span className="text-xs text-slate-400 text-center px-2">{businessName}</span>
     </div>
   )
 }
