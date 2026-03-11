@@ -76,8 +76,8 @@ export async function POST(request: NextRequest) {
 
     console.log('New lead saved:', data?.[0])
 
-    // Send Telegram notification (fire-and-forget, don't block response)
-    sendTelegramNotification({
+    // Send Telegram notification (must await on serverless — Vercel kills process otherwise)
+    await sendTelegramNotification({
       name, email, phone: phone || '',
       service_needed: service_needed || '',
       zip_code: zip_code || '', city: city || '',
