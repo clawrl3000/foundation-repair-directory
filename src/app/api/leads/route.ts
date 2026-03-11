@@ -1,25 +1,31 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createClient } from '@/lib/supabase-server'
+import { createClient } from '@supabase/supabase-js'
+
+// Use service role key for inserts (anon key blocked by RLS)
+function getSupabase() {
+  return createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  )
+}
 
 async function sendTelegramNotification(lead: Record<string, string>) {
   const botToken = process.env.TELEGRAM_BOT_TOKEN
   const chatId = process.env.TELEGRAM_CHAT_ID
   if (!botToken || !chatId) return
 
-  const urgencyEmoji = lead.urgency === 'emergency' ? '🚨' : lead.urgency === 'high' ? '⚠️' : '📋'
   const lines = [
-    `${urgencyEmoji} **New Foundation Scout Lead**`,
+    `📋 *New Foundation Scout Lead*`,
     ``,
-    `👤 **${lead.name}**`,
+    `👤 *${lead.name}*`,
     lead.email ? `📧 ${lead.email}` : '',
     lead.phone ? `📞 ${lead.phone}` : '',
-    lead.zip ? `📍 ZIP: ${lead.zip}` : '',
+    lead.zip_code ? `📍 ZIP: ${lead.zip_code}` : '',
     lead.service_needed ? `🔧 Service: ${lead.service_needed}` : '',
-    lead.property_type ? `🏠 Property: ${lead.property_type}` : '',
-    lead.urgency ? `⏰ Urgency: ${lead.urgency}` : '',
-    lead.message ? `\n💬 "${lead.message}"` : '',
+    lead.city ? `📍 City: ${lead.city}` : '',
+    lead.notes ? `\n💬 "${lead.notes}"` : '',
     ``,
-    `🔗 Source: ${lead.source_page || 'direct'}`,
+    `🔗 Source: ${lead.source || 'website'}`,
   ].filter(Boolean).join('\n')
 
   try {
@@ -41,35 +47,26 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
     
-    const { business_id, name, email, phone, message, service_needed, property_type, urgency, zip } = body
+    const { business_id, name, email, phone, service_needed, zip_code, city, state, notes } = body
 
     if (!name || !email) {
       return NextResponse.json({ error: 'Name and email are required' }, { status: 400 })
     }
 
-    const supabase = await createClient()
-    
-    // Get source page and user agent
-    const source_page = request.headers.get('referer') || ''
-    const user_agent = request.headers.get('user-agent') || ''
-    const forwarded_for = request.headers.get('x-forwarded-for') || ''
-    const real_ip = request.headers.get('x-real-ip') || ''
-    const client_ip = forwarded_for?.split(',')[0] || real_ip || ''
+    const supabase = getSupabase()
 
     const { data, error } = await supabase.from('leads').insert({
-      business_id,
+      business_id: business_id || null,
       name,
       email,
-      phone: phone || '',
-      message: message || '',
-      service_needed: service_needed || '',
-      property_type: property_type || '',
-      urgency: urgency || 'medium',
-      zip: zip || '',
-      source_page,
-      user_agent,
-      client_ip,
-      created_at: new Date().toISOString()
+      phone: phone || null,
+      service_needed: service_needed || null,
+      zip_code: zip_code || null,
+      city: city || null,
+      state: state || null,
+      notes: notes || null,
+      source: 'website',
+      status: 'new',
     }).select()
 
     if (error) {
@@ -81,9 +78,10 @@ export async function POST(request: NextRequest) {
 
     // Send Telegram notification (fire-and-forget, don't block response)
     sendTelegramNotification({
-      name, email, phone: phone || '', message: message || '',
-      service_needed: service_needed || '', property_type: property_type || '',
-      urgency: urgency || 'medium', zip: zip || '', source_page,
+      name, email, phone: phone || '',
+      service_needed: service_needed || '',
+      zip_code: zip_code || '', city: city || '',
+      notes: notes || '', source: 'website',
     })
 
     return NextResponse.json({ 
