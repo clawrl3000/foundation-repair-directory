@@ -7,7 +7,6 @@ import HomeHeroSection from '@/components/HomeHeroSection'
 import HomePageContent from '@/components/HomePageContent'
 import HomeFooter from '@/components/HomeFooter'
 import ScrollProgressIndicator from '@/components/ScrollProgressIndicator'
-import EnhancedScrollAnimations from '@/components/EnhancedScrollAnimations'
 
 // Lazy load components that are not immediately needed
 const LeadForm = dynamic(() => import('@/components/LeadForm'), { ssr: false })
@@ -27,11 +26,17 @@ interface FeaturedBusiness {
   services: { name: string; slug: string }[]
 }
 
-interface HomePageProps {
-  featuredBusinesses: FeaturedBusiness[]
+interface FAQItem {
+  question: string
+  answer: string
 }
 
-export default function HomePage({ featuredBusinesses = [] }: HomePageProps) {
+interface HomePageProps {
+  featuredBusinesses: FeaturedBusiness[]
+  faqs?: FAQItem[]
+}
+
+export default function HomePage({ featuredBusinesses = [], faqs = [] }: HomePageProps) {
   const [leadFormOpen, setLeadFormOpen] = useState(false)
   const [selectedBusiness, setSelectedBusiness] = useState<{id: string, name: string} | null>(null)
 
@@ -72,13 +77,12 @@ export default function HomePage({ featuredBusinesses = [] }: HomePageProps) {
   }, [])
 
   return (
-    <div className="relative flex min-h-screen flex-col bg-white font-display text-slate-900 antialiased overflow-x-hidden">
+    <div className="relative flex min-h-screen flex-col bg-white text-slate-900 antialiased overflow-x-hidden">
       <ScrollProgressIndicator />
-      <EnhancedScrollAnimations />
       
       <HomeNavigation />
       <HomeHeroSection onOpenLeadForm={openLeadForm} />
-      <HomePageContent featuredBusinesses={featuredBusinesses} onOpenLeadForm={openLeadForm} />
+      <HomePageContent featuredBusinesses={featuredBusinesses} onOpenLeadForm={openLeadForm} faqs={faqs} />
       <HomeFooter />
 
       {/* Lead Form Modal - only loads when opened */}

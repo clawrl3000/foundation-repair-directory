@@ -94,8 +94,8 @@ export default function ServicesPage() {
         {/* Hero Section */}
         <section className="py-20 lg:py-24 bg-slate-50">
           <div className="mx-auto max-w-7xl px-6 lg:px-10">
-            <h1 className="text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl lg:text-6xl mb-6">
-              Foundation Repair Services
+            <h1 className="font-display text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.1] text-slate-900 mb-6">
+              Fix Your Foundation — Compare Services & Costs
             </h1>
             <p className="text-slate-600 text-lg mb-12 max-w-3xl leading-relaxed">
               Professional foundation repair services available nationwide. Compare contractors, 
@@ -107,12 +107,12 @@ export default function ServicesPage() {
         {/* Services Grid */}
         <section className="py-20 lg:py-24 bg-white">
           <div className="mx-auto max-w-7xl px-6 lg:px-10">
-            <div className="mb-12">
-              <h2 className="text-3xl font-bold text-slate-900 mb-3">Complete Foundation Solutions</h2>
+            <div className="mb-12 animate-on-scroll">
+              <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.15] text-slate-900 mb-3">Complete Foundation Solutions</h2>
               <p className="text-slate-600">From minor crack repairs to complete foundation replacement, find the right service for your needs.</p>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate-on-scroll">
               {SERVICES.map((service) => (
                 <Link
                   key={service.slug}
@@ -124,7 +124,7 @@ export default function ServicesPage() {
                       <span className="material-symbols-outlined text-4xl" role="img" aria-label={`${service.name} service`}>{service.icon}</span>
                     </div>
                     <div>
-                      <h3 className="text-xl font-bold text-slate-900 group-hover:text-amber-600 transition-colors">{service.name}</h3>
+                      <h3 className="text-lg font-semibold text-slate-900 group-hover:text-amber-600 transition-colors">{service.name}</h3>
                     </div>
                   </div>
                   
@@ -140,7 +140,7 @@ export default function ServicesPage() {
                     </div>
                     
                     <div className="flex items-center justify-between">
-                      <div className="text-amber-600 font-bold text-lg">{service.priceRange}</div>
+                      <div className="text-amber-600 font-bold text-lg font-mono">{service.priceRange}</div>
                       <div className="flex items-center gap-1 text-amber-600 font-bold">
                         <span className="text-sm">Learn More</span>
                         <span className="material-symbols-outlined text-xl" aria-hidden="true">arrow_forward</span>
@@ -155,7 +155,7 @@ export default function ServicesPage() {
 
         {/* Expert Bio Section */}
         <section className="py-20 lg:py-24 bg-white">
-          <div className="mx-auto max-w-7xl px-6 lg:px-10">
+          <div className="mx-auto max-w-7xl px-6 lg:px-10 animate-on-scroll">
             <ExpertBio variant="compact" />
           </div>
         </section>
@@ -163,28 +163,28 @@ export default function ServicesPage() {
         {/* Process Section */}
         <section className="py-20 lg:py-24 bg-slate-50 border-y border-slate-200">
           <div className="mx-auto max-w-7xl px-6 lg:px-10">
-            <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-8 lg:p-12">
-              <h2 className="text-3xl font-bold text-slate-900 mb-8 text-center">How Our Service Matching Works</h2>
+            <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-8 lg:p-12 animate-on-scroll">
+              <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.15] text-slate-900 mb-8 text-center">How Our Service Matching Works</h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div className="text-center">
                   <div className="size-16 rounded-full bg-amber-100 flex items-center justify-center mx-auto mb-4 border border-amber-200">
                     <span className="material-symbols-outlined text-3xl text-amber-600" role="img" aria-label="Describe your foundation issue">search</span>
                   </div>
-                  <h3 className="text-xl font-bold text-slate-900 mb-3">1. Describe Your Issue</h3>
+                  <h3 className="text-lg font-semibold text-slate-900 mb-3">1. Describe Your Issue</h3>
                   <p className="text-slate-600">Tell us about your foundation problems, from minor cracks to major structural issues.</p>
                 </div>
                 <div className="text-center">
                   <div className="size-16 rounded-full bg-amber-100 flex items-center justify-center mx-auto mb-4 border border-amber-200">
                     <span className="material-symbols-outlined text-3xl text-amber-600" role="img" aria-label="Get matched with contractors">engineering</span>
                   </div>
-                  <h3 className="text-xl font-bold text-slate-900 mb-3">2. Get Matched</h3>
+                  <h3 className="text-lg font-semibold text-slate-900 mb-3">2. Get Matched</h3>
                   <p className="text-slate-600">We connect you with local contractors who specialize in your specific repair needs.</p>
                 </div>
                 <div className="text-center">
                   <div className="size-16 rounded-full bg-amber-100 flex items-center justify-center mx-auto mb-4 border border-amber-200">
                     <span className="material-symbols-outlined text-3xl text-amber-600" role="img" aria-label="Compare and choose contractor">handshake</span>
                   </div>
-                  <h3 className="text-xl font-bold text-slate-900 mb-3">3. Compare & Choose</h3>
+                  <h3 className="text-lg font-semibold text-slate-900 mb-3">3. Compare & Choose</h3>
                   <p className="text-slate-600">Review quotes, warranties, and timelines to select the best contractor for your project.</p>
                 </div>
               </div>
@@ -195,22 +195,24 @@ export default function ServicesPage() {
         {/* CTA Section */}
         <section className="py-20 lg:py-24 bg-white">
           <div className="mx-auto max-w-7xl px-6 lg:px-10">
-            <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-8 lg:p-12 text-center">
-              <h2 className="text-3xl font-bold text-slate-900 mb-6">Ready to Fix Your Foundation?</h2>
+            <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-8 lg:p-12 text-center animate-on-scroll">
+              <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.15] text-slate-900 mb-6">Ready to Fix Your Foundation?</h2>
               <p className="text-slate-600 text-lg mb-8 max-w-2xl mx-auto">
-Get quotes from foundation repair contractors in your area. 
-                Get estimates and compare services from top-rated professionals.
+Compare quotes from top-rated local contractors. Free, no-obligation estimates.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link 
                   href="/"
-                  className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-8 rounded-lg transition-all shadow-lg"
+                  className="bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold py-4 px-8 rounded-xl transition-all shadow-lg"
                 >
                   Find Local Experts
                 </Link>
-                <button className="bg-amber-500 hover:bg-amber-600 text-white font-bold py-4 px-8 rounded-lg transition-all">
+                <Link 
+                  href="/?openLead=true"
+                  className="bg-white hover:bg-slate-50 text-slate-900 border border-slate-300 font-bold py-4 px-8 rounded-xl transition-all"
+                >
                   Get Estimate
-                </button>
+                </Link>
               </div>
               <p className="mt-6 text-slate-500 text-sm flex items-center justify-center gap-2">
                 <span className="material-symbols-outlined text-xl text-amber-600" aria-hidden="true">verified_user</span>

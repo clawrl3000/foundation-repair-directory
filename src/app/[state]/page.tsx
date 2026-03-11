@@ -674,7 +674,7 @@ export default async function StatePage({ params }: Props) {
             <div className="grid lg:grid-cols-2 gap-12 items-center min-h-[350px]">
               {/* Left side - Text content */}
               <div className="text-white">
-                <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl mb-6">
+                <h1 className="font-display text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.1] mb-6">
                   Foundation Repair in {stateInfo.name}
                 </h1>
                 <p className="text-slate-200 text-lg mb-8 max-w-2xl leading-relaxed">
@@ -702,51 +702,68 @@ export default async function StatePage({ params }: Props) {
         {/* Cities Grid */}
         <section className="py-20 lg:py-24 bg-white">
           <div className="mx-auto max-w-7xl px-6 lg:px-10">
-            <div className="mb-12">
-              <h2 className="text-3xl font-bold text-slate-900 mb-3">Cities We Serve in {stateInfo.name}</h2>
+            <div className="mb-12 animate-on-scroll">
+              <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.15] text-slate-900 mb-3">Cities We Serve in {stateInfo.name}</h2>
               <p className="text-slate-600">Find foundation repair contractors in these cities across {stateInfo.name}.</p>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {cities.map((city) => (
+            {cities.length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 animate-on-scroll">
+                {cities.map((city) => (
+                  <Link
+                    key={city.slug}
+                    href={`/${state}/${city.slug}`}
+                    className="city-card bg-white border border-slate-200 rounded-xl shadow-sm group flex flex-col p-6"
+                  >
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-amber-100 text-amber-600">
+                        <span className="material-symbols-outlined text-xl">location_city</span>
+                      </div>
+                      <div>
+                        <h3 className="text-lg font-semibold text-slate-900 group-hover:text-amber-600 transition-colors">{city.name}</h3>
+                        <p className="text-xs text-slate-500">{stateInfo.abbreviation}</p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-center justify-between mt-auto">
+                      <div className="flex items-center gap-1">
+                        <span className="material-symbols-outlined text-amber-500 text-sm">engineering</span>
+                        <span className="text-slate-600 text-sm font-mono">
+                          {city.business_count} contractor{city.business_count !== 1 ? 's' : ''}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-1 text-amber-600">
+                        <span className="text-xs font-bold">View</span>
+                        <span className="material-symbols-outlined text-xs city-arrow">arrow_forward</span>
+                      </div>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            ) : (
+              <div className="animate-on-scroll text-center py-16 bg-slate-50 border border-slate-200 rounded-xl">
+                <span className="material-symbols-outlined text-5xl text-slate-300 mb-4 block">map</span>
+                <h3 className="text-lg font-semibold text-slate-900 mb-2">Coming Soon to {stateInfo.name}</h3>
+                <p className="text-slate-500 max-w-md mx-auto mb-6">
+                  We&apos;re actively expanding our contractor network in {stateInfo.name}. Check back soon or join as a contractor to be listed.
+                </p>
                 <Link
-                  key={city.slug}
-                  href={`/${state}/${city.slug}`}
-                  className="city-card bg-white border border-slate-200 rounded-xl shadow-sm group flex flex-col p-6"
+                  href="/auth/signup"
+                  className="inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold py-3 px-6 rounded-xl transition-all duration-300"
                 >
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-amber-100 text-amber-600">
-                      <span className="material-symbols-outlined text-xl">location_city</span>
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-bold text-slate-900 group-hover:text-amber-600 transition-colors">{city.name}</h3>
-                      <p className="text-xs text-slate-500">{stateInfo.abbreviation}</p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-center justify-between mt-auto">
-                    <div className="flex items-center gap-1">
-                      <span className="material-symbols-outlined text-amber-500 text-sm">engineering</span>
-                      <span className="text-slate-600 text-sm">
-                        {city.business_count} contractor{city.business_count !== 1 ? 's' : ''}
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-1 text-amber-600">
-                      <span className="text-xs font-bold">View</span>
-                      <span className="material-symbols-outlined text-xs city-arrow">arrow_forward</span>
-                    </div>
-                  </div>
+                  <span className="material-symbols-outlined text-lg">handshake</span>
+                  Join as a Contractor
                 </Link>
-              ))}
-            </div>
+              </div>
+            )}
           </div>
         </section>
 
         {/* State-Specific Content */}
         <section className="py-20 lg:py-24 bg-slate-50 border-y border-slate-200">
           <div className="mx-auto max-w-7xl px-6 lg:px-10">
-            <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-8 lg:p-12">
-              <h2 className="text-3xl font-bold text-slate-900 mb-6">
+            <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-8 lg:p-12 animate-on-scroll">
+              <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.15] text-slate-900 mb-6">
                 Don't Let {stateInfo.name} Soil Conditions Damage Your Foundation
               </h2>
               <p className="text-slate-600 leading-relaxed mb-8 text-lg">
@@ -760,7 +777,7 @@ export default async function StatePage({ params }: Props) {
                 <div className="bg-slate-50 border border-slate-200 rounded-xl p-6">
                   <div className="flex items-center gap-3 mb-4">
                     <span className="material-symbols-outlined text-amber-600 text-2xl">terrain</span>
-                    <h3 className="text-xl font-bold text-slate-900">Soil Conditions</h3>
+                    <h3 className="text-lg font-semibold text-slate-900">Soil Conditions</h3>
                   </div>
                   <p className="text-slate-600">{content.soilTypes}</p>
                 </div>
@@ -768,7 +785,7 @@ export default async function StatePage({ params }: Props) {
                 <div className="bg-slate-50 border border-slate-200 rounded-xl p-6">
                   <div className="flex items-center gap-3 mb-4">
                     <span className="material-symbols-outlined text-amber-600 text-2xl">warning</span>
-                    <h3 className="text-xl font-bold text-slate-900">Common Issues</h3>
+                    <h3 className="text-lg font-semibold text-slate-900">Common Issues</h3>
                   </div>
                   <p className="text-slate-600">{content.commonIssues}</p>
                 </div>
@@ -776,7 +793,7 @@ export default async function StatePage({ params }: Props) {
                 <div className="bg-slate-50 border border-slate-200 rounded-xl p-6">
                   <div className="flex items-center gap-3 mb-4">
                     <span className="material-symbols-outlined text-amber-600 text-2xl">payments</span>
-                    <h3 className="text-xl font-bold text-slate-900">Average Costs</h3>
+                    <h3 className="text-lg font-semibold text-slate-900">Average Costs</h3>
                   </div>
                   <p className="text-slate-600">{content.avgCosts}</p>
                 </div>
@@ -784,7 +801,7 @@ export default async function StatePage({ params }: Props) {
                 <div className="bg-slate-50 border border-slate-200 rounded-xl p-6">
                   <div className="flex items-center gap-3 mb-4">
                     <span className="material-symbols-outlined text-amber-600 text-2xl">schedule</span>
-                    <h3 className="text-xl font-bold text-slate-900">Seasonal Factors</h3>
+                    <h3 className="text-lg font-semibold text-slate-900">Seasonal Factors</h3>
                   </div>
                   <p className="text-slate-600">{content.seasonalFactors}</p>
                 </div>
@@ -792,7 +809,7 @@ export default async function StatePage({ params }: Props) {
                 <div className="bg-slate-50 border border-slate-200 rounded-xl p-6">
                   <div className="flex items-center gap-3 mb-4">
                     <span className="material-symbols-outlined text-amber-600 text-2xl">gavel</span>
-                    <h3 className="text-xl font-bold text-slate-900">Regulations & Licensing</h3>
+                    <h3 className="text-lg font-semibold text-slate-900">Regulations & Licensing</h3>
                   </div>
                   <p className="text-slate-600">{content.regulations}</p>
                 </div>
@@ -800,7 +817,7 @@ export default async function StatePage({ params }: Props) {
                 <div className="bg-slate-50 border border-slate-200 rounded-xl p-6">
                   <div className="flex items-center gap-3 mb-4">
                     <span className="material-symbols-outlined text-amber-600 text-2xl">location_city</span>
-                    <h3 className="text-xl font-bold text-slate-900">Top Cities</h3>
+                    <h3 className="text-lg font-semibold text-slate-900">Top Cities</h3>
                   </div>
                   <p className="text-slate-600">{content.topCities}</p>
                 </div>
@@ -811,14 +828,14 @@ export default async function StatePage({ params }: Props) {
 
         {/* Expert Bio Section */}
         <section className="py-20 lg:py-24 bg-white">
-          <div className="mx-auto max-w-7xl px-6 lg:px-10">
+          <div className="mx-auto max-w-7xl px-6 lg:px-10 animate-on-scroll">
             <ExpertBio variant="compact" className="mb-16" />
           </div>
         </section>
 
         {/* FAQ Section with Enhanced Animations */}
         <section className="py-20 lg:py-24 bg-slate-50">
-          <div className="mx-auto max-w-7xl px-6 lg:px-10">
+          <div className="mx-auto max-w-7xl px-6 lg:px-10 animate-on-scroll">
             <AnimatedFAQ
               title={`Foundation Repair FAQs for ${stateInfo.name}`}
               items={[

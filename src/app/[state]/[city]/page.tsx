@@ -358,7 +358,7 @@ export default async function CityPage({ params }: Props) {
         {/* Hero Section */}
         <section className="py-20 lg:py-24 bg-slate-50">
           <div className="mx-auto max-w-7xl px-6 lg:px-10">
-            <h1 className="text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl lg:text-6xl mb-6">
+            <h1 className="font-display text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.1] text-slate-900 mb-6">
               Foundation Repair in {cityInfo.name}, {stateInfo.abbreviation}
             </h1>
             <p className="text-slate-600 text-lg mb-12 max-w-3xl leading-relaxed">
@@ -377,7 +377,7 @@ export default async function CityPage({ params }: Props) {
         </section>
 
         {/* Filters */}
-        <section className="py-8 border-b border-slate-200 bg-white">
+        <section className="py-8 border-b border-slate-200 bg-white animate-on-scroll">
           <div className="mx-auto max-w-7xl px-6 lg:px-10">
             <div className="flex flex-wrap gap-3">
               {['All Services', 'Pier & Beam', 'Slab Repair', 'Crack Repair', 'Waterproofing'].map((filter) => (
@@ -393,14 +393,14 @@ export default async function CityPage({ params }: Props) {
         </section>
 
         {/* Business Listings */}
-        <section className="py-20 lg:py-24 bg-white">
+        <section className="py-20 lg:py-24 bg-white animate-on-scroll">
           <div className="mx-auto max-w-7xl px-6 lg:px-10">
             {businesses.length > 0 ? (
               <div className="space-y-6">
                 {businesses.map((business) => (
                   <div
                     key={business.id}
-                    className="bg-white border border-slate-200 rounded-xl shadow-sm group flex flex-col lg:flex-row overflow-hidden transition-all hover:-translate-y-1 hover:shadow-lg hover:border-amber-300"
+                    className="bg-white border border-slate-200 rounded-xl shadow-sm group flex flex-col lg:flex-row overflow-hidden transition-all hover:-translate-y-1 hover:shadow-lg hover:border-amber-300 animate-on-scroll"
                   >
                     {/* Business Image */}
                     <Link href={`/${state}/${city}/${business.slug}`} className="relative h-48 lg:h-auto lg:w-64 overflow-hidden block">
@@ -447,7 +447,7 @@ export default async function CityPage({ params }: Props) {
                                   </span>
                                 ))}
                               </div>
-                              <span className="text-slate-600 text-sm">
+                              <span className="font-mono text-slate-600 text-sm">
                                 {business.rating} ({business.review_count} reviews)
                               </span>
                             </div>
@@ -502,7 +502,7 @@ export default async function CityPage({ params }: Props) {
                 
                 {/* More contractors coming soon message for single contractor */}
                 {businesses.length === 1 && (
-                  <div className="bg-slate-50 border border-slate-200 rounded-xl p-6 text-center mt-8">
+                  <div className="bg-slate-50 border border-slate-200 rounded-xl p-6 text-center mt-8 animate-on-scroll">
                     <span className="material-symbols-outlined text-3xl text-slate-400 mb-3 block">schedule</span>
                     <h3 className="text-lg font-semibold text-slate-900 mb-2">More Contractors Coming Soon</h3>
                     <p className="text-slate-600 text-sm">
@@ -513,10 +513,10 @@ export default async function CityPage({ params }: Props) {
                 )}
               </div>
             ) : (
-              <div className="bg-white border border-slate-200 rounded-xl shadow-sm text-center py-16">
+              <div className="bg-white border border-slate-200 rounded-xl shadow-sm text-center py-16 animate-on-scroll">
                 <div className="max-w-md mx-auto">
                   <span className="material-symbols-outlined text-6xl text-slate-400 mb-4 block">search_off</span>
-                  <h3 className="text-xl font-bold text-slate-900 mb-4">No Foundation Repair Contractors Found</h3>
+                  <h3 className="text-lg font-semibold text-slate-900 mb-4">No Foundation Repair Contractors Found</h3>
                   <p className="text-slate-600 mb-6">
                     We don't have any foundation repair contractors listed in {cityInfo.name} yet.
                   </p>
@@ -539,10 +539,10 @@ export default async function CityPage({ params }: Props) {
 
         {/* Business Locations Map */}
         {businesses.filter(b => b.latitude && b.longitude).length > 0 && (
-          <section className="py-20 lg:py-24 bg-white border-b border-slate-200">
+          <section className="py-20 lg:py-24 bg-white border-b border-slate-200 animate-on-scroll">
             <div className="mx-auto max-w-7xl px-6 lg:px-10">
-              <div className="text-center mb-12">
-                <h2 className="text-3xl font-bold text-slate-900 mb-4">
+              <div className="text-center mb-12 animate-on-scroll">
+                <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.15] text-slate-900 mb-4">
                   Foundation Repair Contractors Near You
                 </h2>
                 <p className="text-slate-600 max-w-2xl mx-auto">
@@ -568,7 +568,7 @@ export default async function CityPage({ params }: Props) {
                 />
               </div>
               
-              <div className="text-center mt-8">
+              <div className="text-center mt-8 animate-on-scroll">
                 <p className="text-sm text-slate-500">
                   <span className="material-symbols-outlined text-xs">info</span>
                   Locations are approximate. Contact contractors directly for exact addresses and service areas.
@@ -579,10 +579,10 @@ export default async function CityPage({ params }: Props) {
         )}
 
         {/* City Information */}
-        <section className="py-20 lg:py-24 bg-slate-50 border-y border-slate-200">
+        <section className="py-20 lg:py-24 bg-slate-50 border-y border-slate-200 animate-on-scroll">
           <div className="mx-auto max-w-7xl px-6 lg:px-10">
-            <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-8 lg:p-12">
-              <h2 className="text-3xl font-bold text-slate-900 mb-6">
+            <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-8 lg:p-12 animate-on-scroll">
+              <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.15] text-slate-900 mb-6">
                 About Foundation Repair in {cityInfo.name}
               </h2>
               
@@ -627,7 +627,7 @@ export default async function CityPage({ params }: Props) {
                       {/* Common Issues */}
                       {issues.length > 0 && (
                         <div className="mb-8">
-                          <h3 className="text-xl font-bold text-slate-900 mb-4">
+                          <h3 className="text-lg font-semibold text-slate-900 mb-4">
                             Common Foundation Issues in {cityInfo.name}
                           </h3>
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -644,7 +644,7 @@ export default async function CityPage({ params }: Props) {
                       {/* Tips */}
                       {tips.length > 0 && (
                         <div className="mb-8">
-                          <h3 className="text-xl font-bold text-slate-900 mb-4">
+                          <h3 className="text-lg font-semibold text-slate-900 mb-4">
                             Foundation Maintenance Tips for {cityInfo.name}
                           </h3>
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -664,7 +664,7 @@ export default async function CityPage({ params }: Props) {
                           const faqs = JSON.parse(cityContent.faq_json)
                           return faqs.length > 0 ? (
                             <div className="mb-8">
-                              <h3 className="text-xl font-bold text-slate-900 mb-4">
+                              <h3 className="text-lg font-semibold text-slate-900 mb-4">
                                 Frequently Asked Questions
                               </h3>
                               <div className="space-y-4">
@@ -691,7 +691,7 @@ export default async function CityPage({ params }: Props) {
                 </p>
               )}
               
-              <h3 className="text-xl font-bold text-slate-900 mb-6">
+              <h3 className="text-lg font-semibold text-slate-900 mb-6">
                 {cityContent?.avg_price_min ? `Foundation Repair Costs in ${cityInfo.name}` : `Average Foundation Repair Costs in ${cityInfo.name}`}
               </h3>
               
@@ -700,23 +700,23 @@ export default async function CityPage({ params }: Props) {
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                   <div className="text-center p-4 bg-slate-50 border border-slate-200 rounded-lg">
                     <p className="text-xs text-slate-500 mb-2">Minor Repair</p>
-                    <p className="text-xl font-bold text-amber-600">$500–$2,000</p>
+                    <p className="text-xl font-bold font-mono text-amber-600">$500–$2,000</p>
                   </div>
                   <div className="text-center p-4 bg-slate-50 border border-slate-200 rounded-lg">
                     <p className="text-xs text-slate-500 mb-2">Average Repair</p>
-                    <p className="text-xl font-bold text-amber-600">
+                    <p className="text-xl font-bold font-mono text-amber-600">
                       ${(cityContent.avg_price_min / 1000).toFixed(0)}k–${(cityContent.avg_price_max / 1000).toFixed(0)}k
                     </p>
                   </div>
                   <div className="text-center p-4 bg-slate-50 border border-slate-200 rounded-lg">
                     <p className="text-xs text-slate-500 mb-2">Major Repair</p>
-                    <p className="text-xl font-bold text-amber-600">
+                    <p className="text-xl font-bold font-mono text-amber-600">
                       ${Math.round(cityContent.avg_price_max * 1.2 / 1000)}k–${Math.round(cityContent.avg_price_max * 1.8 / 1000)}k
                     </p>
                   </div>
                   <div className="text-center p-4 bg-slate-50 border border-slate-200 rounded-lg">
                     <p className="text-xs text-slate-500 mb-2">Per Pier</p>
-                    <p className="text-xl font-bold text-amber-600">$1,000–$3,000</p>
+                    <p className="text-xl font-bold font-mono text-amber-600">$1,000–$3,000</p>
                   </div>
                 </div>
               ) : (
@@ -724,19 +724,19 @@ export default async function CityPage({ params }: Props) {
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                   <div className="text-center p-4 bg-slate-50 border border-slate-200 rounded-lg">
                     <p className="text-xs text-slate-500 mb-2">Minor Repair</p>
-                    <p className="text-xl font-bold text-amber-600">$500–$2,000</p>
+                    <p className="text-xl font-bold font-mono text-amber-600">$500–$2,000</p>
                   </div>
                   <div className="text-center p-4 bg-slate-50 border border-slate-200 rounded-lg">
                     <p className="text-xs text-slate-500 mb-2">Average Repair</p>
-                    <p className="text-xl font-bold text-amber-600">$4,500–$8,000</p>
+                    <p className="text-xl font-bold font-mono text-amber-600">$4,500–$8,000</p>
                   </div>
                   <div className="text-center p-4 bg-slate-50 border border-slate-200 rounded-lg">
                     <p className="text-xs text-slate-500 mb-2">Major Repair</p>
-                    <p className="text-xl font-bold text-amber-600">$10,000–$20,000</p>
+                    <p className="text-xl font-bold font-mono text-amber-600">$10,000–$20,000</p>
                   </div>
                   <div className="text-center p-4 bg-slate-50 border border-slate-200 rounded-lg">
                     <p className="text-xs text-slate-500 mb-2">Per Pier</p>
-                    <p className="text-xl font-bold text-amber-600">$1,000–$3,000</p>
+                    <p className="text-xl font-bold font-mono text-amber-600">$1,000–$3,000</p>
                   </div>
                 </div>
               )}

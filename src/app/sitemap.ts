@@ -2,18 +2,12 @@ import { MetadataRoute } from 'next'
 import { supabaseAdmin as supabase } from '@/lib/supabase-admin'
 
 const SERVICES = [
-  { slug: 'foundation-repair', lastModified: '2026-02-17' },
-  { slug: 'pier-and-beam-repair', lastModified: '2026-02-17' },
-  { slug: 'slab-foundation-repair', lastModified: '2026-02-17' },
-  { slug: 'wall-anchor-installation', lastModified: '2026-02-17' },
-  { slug: 'foundation-crack-repair', lastModified: '2026-02-17' },
-  { slug: 'basement-waterproofing', lastModified: '2026-02-17' },
-  { slug: 'crawl-space-repair', lastModified: '2026-02-17' },
+  { slug: 'piering', lastModified: '2026-02-17' },
+  { slug: 'slab-repair', lastModified: '2026-02-17' },
+  { slug: 'waterproofing', lastModified: '2026-02-17' },
+  { slug: 'crawl-space', lastModified: '2026-02-17' },
+  { slug: 'crack-repair', lastModified: '2026-02-17' },
   { slug: 'house-leveling', lastModified: '2026-02-17' },
-  { slug: 'underpinning', lastModified: '2026-02-17' },
-  { slug: 'drainage-solutions', lastModified: '2026-02-17' },
-  { slug: 'concrete-lifting', lastModified: '2026-02-17' },
-  { slug: 'seawall-repair', lastModified: '2026-02-17' },
 ]
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {

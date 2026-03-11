@@ -9,7 +9,7 @@ export default function StitchFooter() {
             <div className="flex h-8 w-8 items-center justify-center rounded bg-primary text-white">
               <span className="material-symbols-outlined text-xl" aria-hidden="true">foundation</span>
             </div>
-            <span className="font-bold tracking-tight text-slate-900">Foundation Directory</span>
+            <span className="font-bold tracking-tight text-slate-900">Foundation<span className="text-amber-700">Scout</span></span>
           </div>
           <div className="flex gap-8 text-sm text-slate-600">
             <Link className="hover:text-primary transition-colors" href="/privacy">Privacy Policy</Link>

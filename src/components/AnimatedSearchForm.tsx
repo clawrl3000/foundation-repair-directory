@@ -91,14 +91,17 @@ export default function AnimatedSearchForm({
 
   return (
     <div className={`max-w-xl space-y-3 ${className}`}>
+      <form role="search" aria-label="Find contractors" onSubmit={(e) => { e.preventDefault(); handleSearch(); }}>
       <div className="flex flex-col sm:flex-row gap-3">
         <div className="relative flex-1">
+          <label htmlFor="hero-search" className="sr-only">Enter your ZIP code or city</label>
           <span className={`material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-xl transition-colors duration-300 ${
             isFocused ? 'text-amber-500' : 'text-slate-400'
           }`} aria-hidden="true">
             location_on
           </span>
           <input
+            id="hero-search"
             ref={inputRef}
             className={`w-full rounded-xl border py-4 pl-12 pr-4 text-white placeholder-slate-400 text-base focus:outline-none focus:ring-2 focus:border-transparent transition-all duration-300 ${
               isFocused 
@@ -129,7 +132,7 @@ export default function AnimatedSearchForm({
         </div>
         
         <button
-          onClick={handleSearch}
+          type="submit"
           disabled={isLoading || !searchQuery.trim()}
           className={`relative overflow-hidden bg-amber-500 hover:bg-amber-600 active:bg-amber-700 text-slate-900 font-bold px-8 py-4 rounded-xl text-base transition-all duration-300 flex items-center justify-center gap-2 whitespace-nowrap min-w-[200px] ${
             isLoading || !searchQuery.trim() 
@@ -150,6 +153,7 @@ export default function AnimatedSearchForm({
           )}
         </button>
       </div>
+      </form>
       
       {/* Feedback message */}
       {feedback && (

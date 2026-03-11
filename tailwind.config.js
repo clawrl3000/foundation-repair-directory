@@ -9,7 +9,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        "primary": "#1152d4",
+        "primary": "#d97706",
         "amber-accent": "#f59e0b",
         "background-light": "#f6f6f8",
         // 60/30/10 Color System for Foundation Repair
@@ -40,11 +40,10 @@ module.exports = {
         },
       },
       fontFamily: {
-        // Display font - Character and authority
-        "display": ["DM Serif Display", "Playfair Display", "serif"],
-        // Body font - High readability
-        "body": ["Inter", "DM Sans", "sans-serif"],
-        "sans": ["Inter", "DM Sans", "sans-serif"],
+        "display": ["var(--font-display)", "Georgia", "serif"],
+        "sans": ["var(--font-sans)", "system-ui", "sans-serif"],
+        "body": ["var(--font-sans)", "system-ui", "sans-serif"],
+        "mono": ["ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
       },
       borderRadius: {
         "DEFAULT": "0.25rem",

@@ -35,7 +35,7 @@ export default function AboutPage() {
         <section className="py-20 lg:py-24 bg-slate-50">
           <div className="mx-auto max-w-7xl px-6 lg:px-10">
             <div className="max-w-3xl mx-auto text-center">
-              <h1 className="text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl lg:text-6xl mb-6">
+              <h1 className="font-display text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.1] text-slate-900 mb-6">
                 About FoundationScout
               </h1>
               <p className="text-slate-600 text-lg mb-8 leading-relaxed">
@@ -49,9 +49,9 @@ export default function AboutPage() {
         {/* Our Mission */}
         <section className="py-20 lg:py-24 bg-white">
           <div className="mx-auto max-w-7xl px-6 lg:px-10">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center animate-on-scroll">
               <div>
-                <h2 className="text-3xl font-bold text-slate-900 mb-6">Our Mission</h2>
+                <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.15] text-slate-900 mb-6">Our Mission</h2>
                 <p className="text-slate-600 text-lg mb-6 leading-relaxed">
                   Foundation problems can be overwhelming and expensive. Many homeowners don't know where to start or who to trust. 
                   That's why we created FoundationScout — to simplify the process of finding qualified foundation repair professionals.
@@ -79,27 +79,27 @@ export default function AboutPage() {
         {/* Our Standards */}
         <section className="py-20 lg:py-24 bg-slate-50">
           <div className="mx-auto max-w-7xl px-6 lg:px-10">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl font-bold text-slate-900 mb-6">Our Contractor Standards</h2>
+            <div className="text-center mb-16 animate-on-scroll">
+              <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.15] text-slate-900 mb-6">Our Contractor Standards</h2>
               <p className="text-slate-600 text-lg max-w-2xl mx-auto">
                 Not every contractor makes it into our network. Here's what we require:
               </p>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 animate-on-scroll">
               <div className="bg-white border border-slate-200 rounded-xl p-6 text-center">
-                <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="material-symbols-outlined text-4xl text-blue-600" role="img" aria-label="Licensed and insured contractors">verified_user</span>
+                <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="material-symbols-outlined text-4xl text-amber-600" role="img" aria-label="Licensed and insured contractors">verified_user</span>
                 </div>
-                <h3 className="text-lg font-bold text-slate-900 mb-3">Licensed & Insured</h3>
+                <h3 className="text-lg font-semibold text-slate-900 mb-3">Licensed & Insured</h3>
                 <p className="text-slate-600 text-sm">Valid state contractor licenses and comprehensive liability insurance coverage.</p>
               </div>
               
               <div className="bg-white border border-slate-200 rounded-xl p-6 text-center">
-                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="material-symbols-outlined text-4xl text-green-600" role="img" aria-label="Industry experience">engineering</span>
+                <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="material-symbols-outlined text-4xl text-amber-600" role="img" aria-label="Industry experience">engineering</span>
                 </div>
-                <h3 className="text-lg font-bold text-slate-900 mb-3">Industry Experience</h3>
+                <h3 className="text-lg font-semibold text-slate-900 mb-3">Industry Experience</h3>
                 <p className="text-slate-600 text-sm">Minimum 5 years of foundation repair experience with proven track record.</p>
               </div>
               
@@ -107,15 +107,15 @@ export default function AboutPage() {
                 <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <span className="material-symbols-outlined text-4xl text-amber-600 fill-1" role="img" aria-label="Quality reviews">star</span>
                 </div>
-                <h3 className="text-lg font-bold text-slate-900 mb-3">Quality Reviews</h3>
+                <h3 className="text-lg font-semibold text-slate-900 mb-3">Quality Reviews</h3>
                 <p className="text-slate-600 text-sm">Consistently high customer satisfaction ratings and positive project outcomes.</p>
               </div>
               
               <div className="bg-white border border-slate-200 rounded-xl p-6 text-center">
-                <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="material-symbols-outlined text-4xl text-purple-600" role="img" aria-label="Warranty coverage">workspace_premium</span>
+                <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="material-symbols-outlined text-4xl text-amber-600" role="img" aria-label="Warranty coverage">workspace_premium</span>
                 </div>
-                <h3 className="text-lg font-bold text-slate-900 mb-3">Warranty Coverage</h3>
+                <h3 className="text-lg font-semibold text-slate-900 mb-3">Warranty Coverage</h3>
                 <p className="text-slate-600 text-sm">Comprehensive warranties on all foundation repair work performed.</p>
               </div>
             </div>
@@ -125,13 +125,13 @@ export default function AboutPage() {
         {/* By the Numbers */}
         <section className="py-20 lg:py-24 bg-white">
           <div className="mx-auto max-w-7xl px-6 lg:px-10">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl font-bold text-slate-900 mb-6">FoundationScout by the Numbers</h2>
+            <div className="text-center mb-16 animate-on-scroll">
+              <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.15] text-slate-900 mb-6">FoundationScout by the Numbers</h2>
             </div>
             
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center animate-on-scroll">
               <div>
-                <div className="text-4xl font-bold text-amber-600 mb-2">500+</div>
+                <div className="text-4xl font-bold text-amber-600 mb-2">2,800+</div>
                 <div className="text-slate-600 font-medium">Licensed Contractors</div>
               </div>
               <div>
@@ -143,7 +143,7 @@ export default function AboutPage() {
                 <div className="text-slate-600 font-medium">Contractor Network</div>
               </div>
               <div>
-                <div className="text-4xl font-bold text-amber-600 mb-2">4.7+★</div>
+                <div className="text-4xl font-bold text-amber-600 mb-2">4.9★</div>
                 <div className="text-slate-600 font-medium">Average Rating</div>
               </div>
             </div>
@@ -153,8 +153,8 @@ export default function AboutPage() {
         {/* Contact Section */}
         <section className="py-20 lg:py-24 bg-slate-50">
           <div className="mx-auto max-w-7xl px-6 lg:px-10">
-            <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-8 lg:p-12 text-center max-w-4xl mx-auto">
-              <h2 className="text-3xl font-bold text-slate-900 mb-6">Questions About Our Service?</h2>
+            <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-8 lg:p-12 text-center max-w-4xl mx-auto animate-on-scroll">
+              <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.15] text-slate-900 mb-6">Questions About Our Service?</h2>
               <p className="text-slate-600 text-lg mb-8">
                 We're here to help homeowners and contractors alike. Reach out with any questions about our directory, 
                 contractor requirements, or how to get the most from our platform.
@@ -162,13 +162,13 @@ export default function AboutPage() {
               <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
                 <Link 
                   href="/"
-                  className="bg-amber-500 hover:bg-amber-600 text-white font-bold py-4 px-8 rounded-lg transition-all"
+                  className="bg-amber-500 hover:bg-amber-600 text-white font-bold py-4 px-8 rounded-xl transition-all"
                 >
                   Find Contractors Near You
                 </Link>
                 <Link 
                   href="/auth/signup"
-                  className="bg-slate-900 hover:bg-slate-800 text-white font-bold py-4 px-8 rounded-lg transition-all"
+                  className="bg-slate-900 hover:bg-slate-800 text-white font-bold py-4 px-8 rounded-xl transition-all"
                 >
                   Join as a Contractor
                 </Link>
@@ -178,7 +178,7 @@ export default function AboutPage() {
                   <span className="material-symbols-outlined text-xl text-amber-600" aria-hidden="true">call</span>
                   <div>
                     <div className="font-bold text-slate-900">Phone Support</div>
-                    <div className="text-slate-600">1-800-FOUND-DIR</div>
+                    <div className="text-slate-600">(630) 407-1727</div>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">

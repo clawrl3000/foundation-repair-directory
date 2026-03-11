@@ -43,8 +43,8 @@ export default function HomeFooter() {
               <li><Link className="hover:text-amber-600 transition-colors" href="/states">Find Contractors</Link></li>
               <li><Link className="hover:text-amber-600 transition-colors" href="/cost/texas/foundation-repair-cost">Repair Costs</Link></li>
               <li><Link className="hover:text-amber-600 transition-colors" href="/services">Foundation Services</Link></li>
-              <li><Link className="hover:text-amber-600 transition-colors" href="#">Foundation Inspection</Link></li>
-              <li><Link className="hover:text-amber-600 transition-colors" href="#">Emergency Repairs</Link></li>
+              <li><Link className="hover:text-amber-600 transition-colors" href="/services">Foundation Inspection</Link></li>
+              <li><Link className="hover:text-amber-600 transition-colors" href="/services">Emergency Repairs</Link></li>
             </ul>
           </div>
           <div className="animate-on-scroll animate-delay-200">
@@ -52,19 +52,19 @@ export default function HomeFooter() {
             <ul className="space-y-3 text-slate-600">
               <li><Link className="hover:text-amber-600 transition-colors" href="/auth/signup">Join Our Network</Link></li>
               <li><Link className="hover:text-amber-600 transition-colors" href="/auth/login">Contractor Login</Link></li>
-              <li><Link className="hover:text-amber-600 transition-colors" href="#">Lead Management</Link></li>
-              <li><Link className="hover:text-amber-600 transition-colors" href="#">Premium Listings</Link></li>
-              <li><Link className="hover:text-amber-600 transition-colors" href="#">Marketing Tools</Link></li>
+              <li><Link className="hover:text-amber-600 transition-colors" href="/auth/signup">Lead Management</Link></li>
+              <li><Link className="hover:text-amber-600 transition-colors" href="/auth/signup">Premium Listings</Link></li>
+              <li><Link className="hover:text-amber-600 transition-colors" href="/auth/signup">Marketing Tools</Link></li>
             </ul>
           </div>
           <div className="animate-on-scroll animate-delay-300">
             <h3 className="text-lg font-semibold text-slate-900 mb-4">Company</h3>
             <ul className="space-y-3 text-slate-600">
-              <li><Link className="hover:text-amber-600 transition-colors" href="/">About FoundationScout</Link></li>
-              <li><Link className="hover:text-amber-600 transition-colors" href="#">Contact Us</Link></li>
+              <li><Link className="hover:text-amber-600 transition-colors" href="/about">About FoundationScout</Link></li>
+              <li><Link className="hover:text-amber-600 transition-colors" href="/about">Contact Us</Link></li>
               <li><Link className="hover:text-amber-600 transition-colors" href="/privacy">Privacy Policy</Link></li>
               <li><Link className="hover:text-amber-600 transition-colors" href="/terms">Terms of Service</Link></li>
-              <li><Link className="hover:text-amber-600 transition-colors" href="#">Help Center</Link></li>
+              <li><Link className="hover:text-amber-600 transition-colors" href="/about">Help Center</Link></li>
             </ul>
           </div>
         </div>
@@ -72,12 +72,12 @@ export default function HomeFooter() {
         {/* Footer Bottom */}
         <div className="border-t border-slate-200 pt-8 flex flex-col md:flex-row justify-between items-center">
           <div className="text-slate-600 text-sm mb-4 md:mb-0">
-            © 2024 FoundationScout. All rights reserved.
+            &copy; {new Date().getFullYear()} FoundationScout. All rights reserved.
           </div>
           <div className="flex gap-6 text-sm text-slate-600">
             <Link href="/privacy" className="hover:text-amber-600 transition-colors">Privacy</Link>
             <Link href="/terms" className="hover:text-amber-600 transition-colors">Terms</Link>
-            <Link href="#" className="hover:text-amber-600 transition-colors">Support</Link>
+            <Link href="/about" className="hover:text-amber-600 transition-colors">Support</Link>
           </div>
         </div>
       </div>

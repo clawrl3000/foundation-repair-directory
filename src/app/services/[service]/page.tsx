@@ -264,13 +264,13 @@ export default async function ServicePage({ params }: Props) {
             <div className="absolute inset-0 bg-gradient-to-r from-slate-900/80 via-slate-900/60 to-slate-900/80"></div>
           </div>
           <div className="relative mx-auto max-w-7xl px-6 lg:px-10">
-            <div className="max-w-4xl">
+            <div className="max-w-3xl">
               <div className="flex items-center gap-6 mb-6">
                 <div className="size-16 rounded-lg bg-amber-500/20 backdrop-blur-sm flex items-center justify-center border border-amber-500/30">
                   <span className="material-symbols-outlined text-4xl text-amber-400">{serviceData.icon}</span>
                 </div>
                 <div>
-                  <h1 className="text-4xl font-extrabold tracking-tight text-white sm:text-5xl">{serviceData.name}</h1>
+                  <h1 className="font-display text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.1] text-white">{serviceData.name}</h1>
                   <p className="text-amber-400 mt-2 text-lg font-semibold">Professional repair services nationwide</p>
                 </div>
               </div>
@@ -278,12 +278,12 @@ export default async function ServicePage({ params }: Props) {
                 {serviceData.longDescription}
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <button className="bg-amber-500 hover:bg-amber-600 text-white px-8 py-4 rounded-lg font-bold shadow-lg transition-all">
+                <Link href="/" className="bg-amber-500 hover:bg-amber-600 text-slate-900 px-8 py-4 rounded-xl font-bold shadow-lg transition-all">
                   Find Local Experts
-                </button>
-                <button className="bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/30 text-white px-8 py-4 rounded-lg font-bold transition-all">
+                </Link>
+                <Link href="/?openLead=true" className="bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/30 text-white px-8 py-4 rounded-xl font-bold transition-all">
                   Get Estimate
-                </button>
+                </Link>
               </div>
               <div className="flex items-center gap-6 mt-8 text-sm">
                 <div className="flex items-center gap-2 text-slate-300">
@@ -306,8 +306,8 @@ export default async function ServicePage({ params }: Props) {
         {/* Benefits Section */}
         <section className="py-20 lg:py-24 bg-white border-y border-slate-200">
           <div className="mx-auto max-w-7xl px-6 lg:px-10">
-            <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-8 lg:p-12">
-              <h2 className="text-3xl font-bold text-slate-900 mb-8">Benefits of {serviceData.name}</h2>
+            <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-8 lg:p-12 animate-on-scroll">
+              <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.15] text-slate-900 mb-8">Benefits of {serviceData.name}</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {serviceData.benefits.map((benefit, index) => (
                   <div key={index} className="flex items-center gap-4 p-4 rounded-lg bg-slate-50 border border-slate-200">
@@ -327,28 +327,28 @@ export default async function ServicePage({ params }: Props) {
         {/* Process Section */}
         <section className="py-20 lg:py-24 bg-slate-50">
           <div className="mx-auto max-w-7xl px-6 lg:px-10">
-            <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-8 lg:p-12">
-              <h2 className="text-3xl font-bold text-slate-900 mb-8 text-center">How {serviceData.name} Works</h2>
+            <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-8 lg:p-12 animate-on-scroll">
+              <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.15] text-slate-900 mb-8 text-center">How {serviceData.name} Works</h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div className="text-center">
                   <div className="size-16 rounded-full bg-amber-100 flex items-center justify-center mx-auto mb-4 border border-amber-200">
                     <span className="material-symbols-outlined text-3xl text-amber-600">search</span>
                   </div>
-                  <h3 className="text-xl font-bold text-slate-900 mb-3">1. Inspection</h3>
+                  <h3 className="text-lg font-semibold text-slate-900 mb-3">1. Inspection</h3>
                   <p className="text-slate-600">Professional assessment of your foundation issues and repair requirements.</p>
                 </div>
                 <div className="text-center">
                   <div className="size-16 rounded-full bg-amber-100 flex items-center justify-center mx-auto mb-4 border border-amber-200">
                     <span className="material-symbols-outlined text-3xl text-amber-600">engineering</span>
                   </div>
-                  <h3 className="text-xl font-bold text-slate-900 mb-3">2. Installation</h3>
+                  <h3 className="text-lg font-semibold text-slate-900 mb-3">2. Installation</h3>
                   <p className="text-slate-600">Expert installation using professional-grade equipment and materials.</p>
                 </div>
                 <div className="text-center">
                   <div className="size-16 rounded-full bg-amber-100 flex items-center justify-center mx-auto mb-4 border border-amber-200">
                     <span className="material-symbols-outlined text-3xl text-amber-600">verified</span>
                   </div>
-                  <h3 className="text-xl font-bold text-slate-900 mb-3">3. Warranty</h3>
+                  <h3 className="text-lg font-semibold text-slate-900 mb-3">3. Warranty</h3>
                   <p className="text-slate-600">Comprehensive warranties and ongoing support for your peace of mind.</p>
                 </div>
               </div>
@@ -359,12 +359,12 @@ export default async function ServicePage({ params }: Props) {
         {/* FAQ Section */}
         <section className="py-20 lg:py-24 bg-white border-y border-slate-200">
           <div className="mx-auto max-w-7xl px-6 lg:px-10">
-            <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-8 lg:p-12">
-              <h2 className="text-3xl font-bold text-slate-900 mb-8">Frequently Asked Questions</h2>
+            <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-8 lg:p-12 animate-on-scroll">
+              <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.15] text-slate-900 mb-8">Frequently Asked Questions</h2>
               <div className="space-y-6">
                 {serviceData.faqs.map((faq, index) => (
                   <div key={index} className="bg-slate-50 border border-slate-200 rounded-xl p-6">
-                    <h3 className="text-xl font-bold text-slate-900 mb-4">{faq.question}</h3>
+                    <h3 className="text-lg font-semibold text-slate-900 mb-4">{faq.question}</h3>
                     <p className="text-slate-600 leading-relaxed">{faq.answer}</p>
                   </div>
                 ))}
@@ -376,19 +376,18 @@ export default async function ServicePage({ params }: Props) {
         {/* CTA Section */}
         <section className="py-20 lg:py-24 bg-slate-50">
           <div className="mx-auto max-w-7xl px-6 lg:px-10">
-            <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-8 lg:p-12 text-center">
-              <h2 className="text-3xl font-bold text-slate-900 mb-6">Ready to Get Started?</h2>
+            <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-8 lg:p-12 text-center animate-on-scroll">
+              <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.15] text-slate-900 mb-6">Ready to Get Started?</h2>
               <p className="text-slate-600 text-lg mb-8 max-w-2xl mx-auto">
-                Get quotes from local {serviceData.name.toLowerCase()} contractors in your area.
-                Get estimates and compare services from top-rated professionals.
+                Local contractors are standing by. Compare quotes and choose with confidence.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-8 rounded-lg transition-all shadow-lg">
+                <Link href="/" className="bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold py-4 px-8 rounded-xl transition-all shadow-lg">
                   Find Local Experts
-                </button>
-                <button className="bg-amber-500 hover:bg-amber-600 text-white font-bold py-4 px-8 rounded-lg transition-all">
+                </Link>
+                <Link href="/?openLead=true" className="bg-white hover:bg-slate-50 text-slate-900 border border-slate-300 font-bold py-4 px-8 rounded-xl transition-all">
                   Get Quotes
-                </button>
+                </Link>
               </div>
               <p className="mt-6 text-slate-500 text-sm flex items-center justify-center gap-2">
                 <span className="material-symbols-outlined text-amber-600 text-base">verified_user</span>

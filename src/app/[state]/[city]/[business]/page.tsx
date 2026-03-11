@@ -309,7 +309,7 @@ export default async function BusinessPage({ params }: Props) {
                 <div className="flex-1">
                   <div className="flex items-start justify-between mb-4">
                     <div>
-                      <h1 className="text-3xl font-bold text-slate-900 mb-2">{name}</h1>
+                      <h1 className="font-display text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.1] text-slate-900 mb-2">{name}</h1>
                       <p className="text-slate-600 mb-3">
                         {address && `${address}, `}{cityInfo.name}, {cityInfo.state.abbreviation}
                       </p>
@@ -327,7 +327,7 @@ export default async function BusinessPage({ params }: Props) {
                               </span>
                             ))}
                           </div>
-                          <span className="text-slate-600">
+                          <span className="font-mono text-slate-600">
                             {rating} ({review_count} reviews)
                           </span>
                         </div>
@@ -398,10 +398,10 @@ export default async function BusinessPage({ params }: Props) {
         {/* Services & Features */}
         <section className="py-20 lg:py-24 bg-white border-y border-slate-200">
           <div className="mx-auto max-w-7xl px-6 lg:px-10">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 animate-on-scroll">
               {/* Services */}
               <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-8">
-                <h2 className="text-2xl font-bold text-slate-900 mb-6">Our Services</h2>
+                <h2 className="font-display text-2xl font-bold text-slate-900 mb-6">Our Services</h2>
                 <div className="space-y-4">
                   {services.map((service) => (
                     <div key={service.slug} className="flex items-center gap-3 p-4 bg-slate-50 border border-slate-200 rounded-lg">
@@ -414,7 +414,7 @@ export default async function BusinessPage({ params }: Props) {
               
               {/* Features */}
               <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-8">
-                <h2 className="text-2xl font-bold text-slate-900 mb-6">Why Choose Us</h2>
+                <h2 className="font-display text-2xl font-bold text-slate-900 mb-6">Why Choose Us</h2>
                 <div className="space-y-4">
                   {features.map((feature) => (
                     <div key={feature.slug} className="flex items-center gap-3 p-4 bg-slate-50 border border-slate-200 rounded-lg">
@@ -434,7 +434,7 @@ export default async function BusinessPage({ params }: Props) {
                     <div className="size-12 rounded-full bg-blue-100 border border-blue-200 flex items-center justify-center">
                       <span className="text-blue-600 font-bold text-lg">BBB</span>
                     </div>
-                    <h2 className="text-2xl font-bold text-slate-900">BBB Profile</h2>
+                    <h2 className="font-display text-2xl font-bold text-slate-900">BBB Profile</h2>
                   </div>
                   <div className="space-y-4">
                     {businessData.bbb_data.rating && (
@@ -492,14 +492,14 @@ export default async function BusinessPage({ params }: Props) {
         {reviews && reviews.length > 0 && (
           <section className="py-20 lg:py-24 bg-slate-50">
             <div className="mx-auto max-w-7xl px-6 lg:px-10">
-              <div className="text-center mb-12">
-                <h2 className="text-3xl font-bold text-slate-900 mb-4">Customer Reviews</h2>
+              <div className="text-center mb-12 animate-on-scroll">
+                <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.15] text-slate-900 mb-4">Customer Reviews</h2>
                 <p className="text-slate-600 text-lg">
                   See what our customers are saying about {name}
                 </p>
               </div>
               
-              <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 animate-on-scroll">
                 {reviews.slice(0, 6).map((review) => (
                   <div 
                     key={review.id} 
@@ -520,7 +520,7 @@ export default async function BusinessPage({ params }: Props) {
                             </span>
                           ))}
                         </div>
-                        <span className="text-sm text-slate-600">
+                        <span className="text-sm font-mono text-slate-600">
                           {review.rating}/5
                         </span>
                       </div>
@@ -583,15 +583,15 @@ export default async function BusinessPage({ params }: Props) {
         {/* Contact Information */}
         <section className="py-20 lg:py-24 bg-white">
           <div className="mx-auto max-w-7xl px-6 lg:px-10">
-            <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-8 lg:p-12">
-              <h2 className="text-3xl font-bold text-slate-900 mb-8 text-center">Contact {name}</h2>
+            <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-8 lg:p-12 animate-on-scroll">
+              <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.15] text-slate-900 mb-8 text-center">Contact {name}</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {phone && (
                   <div className="text-center">
                     <div className="size-16 rounded-full bg-amber-100 flex items-center justify-center mx-auto mb-4 border border-amber-200">
                       <span className="material-symbols-outlined text-3xl text-amber-600">phone</span>
                     </div>
-                    <h3 className="text-xl font-bold text-slate-900 mb-2">Phone</h3>
+                    <h3 className="text-lg font-semibold text-slate-900 mb-2">Phone</h3>
                     <a href={`tel:${phone}`} className="text-amber-600 hover:text-amber-700 text-lg font-medium">
                       {phone}
                     </a>
@@ -603,7 +603,7 @@ export default async function BusinessPage({ params }: Props) {
                     <div className="size-16 rounded-full bg-amber-100 flex items-center justify-center mx-auto mb-4 border border-amber-200">
                       <span className="material-symbols-outlined text-3xl text-amber-600">location_on</span>
                     </div>
-                    <h3 className="text-xl font-bold text-slate-900 mb-2">Address</h3>
+                    <h3 className="text-lg font-semibold text-slate-900 mb-2">Address</h3>
                     <p className="text-slate-600">
                       {address}<br />
                       {cityInfo.name}, {cityInfo.state.abbreviation}
@@ -615,14 +615,14 @@ export default async function BusinessPage({ params }: Props) {
                   <div className="size-16 rounded-full bg-amber-100 flex items-center justify-center mx-auto mb-4 border border-amber-200">
                     <span className="material-symbols-outlined text-3xl text-amber-600">schedule</span>
                   </div>
-                  <h3 className="text-xl font-bold text-slate-900 mb-2">Service Area</h3>
+                    <h3 className="text-lg font-semibold text-slate-900 mb-2">Service Area</h3>
                   <p className="text-slate-600">
                     {cityInfo.name} and surrounding areas in {cityInfo.state.name}
                   </p>
                 </div>
               </div>
               
-              <div className="text-center mt-8">
+              <div className="text-center mt-8 animate-on-scroll">
                 <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-8 rounded-lg transition-all shadow-lg">
                   Request a Foundation Inspection
                 </button>

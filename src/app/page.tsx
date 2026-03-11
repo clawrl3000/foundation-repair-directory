@@ -3,11 +3,11 @@ import HomePage from '@/components/HomePage'
 import { generateFAQSchema, jsonLdScript } from '@/lib/structured-data'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 3600
 
 export const metadata: Metadata = {
-  title: 'Find Trusted Foundation Repair Contractors Near You | Compare Local Quotes',
-  description: 'Compare Thousands of foundation repair contractors nationwide. Get estimates, read reviews, and connect with licensed professionals. Average rating: 4.9/5 stars.',
+  title: 'Foundation Repair Contractors Near You | Free Quotes',
+  description: 'Compare foundation repair contractors nationwide. Get free estimates, read reviews, and connect with licensed pros. Average rating: 4.9/5 stars.',
   alternates: {
     canonical: 'https://foundationscout.com',
   },
@@ -91,7 +91,7 @@ export default async function Page() {
 
   return (
     <>
-      <HomePage featuredBusinesses={featuredBusinesses} />
+      <HomePage featuredBusinesses={featuredBusinesses} faqs={faqs} />
       
       {/* FAQ Schema */}
       <script

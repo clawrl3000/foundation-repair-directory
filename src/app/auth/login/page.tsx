@@ -77,12 +77,12 @@ export default function LoginPage() {
             <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary text-white shadow-lg">
               <span className="material-symbols-outlined text-xl" aria-hidden="true">foundation</span>
             </div>
-            <span className="text-3xl font-extrabold tracking-tight text-slate-900">
+            <span className="text-3xl font-bold tracking-tight text-slate-900">
               Foundation<span className="text-primary">Scout</span>
             </span>
           </Link>
           
-          <h1 className="text-3xl font-bold text-slate-900 mb-2">Welcome back</h1>
+          <h1 className="font-display text-3xl font-bold tracking-tight leading-[1.1] text-slate-900 mb-2">Welcome back</h1>
           <p className="text-lg text-slate-600 max-w-md mx-auto leading-relaxed">
             Sign in to your contractor dashboard and start managing your leads.
           </p>
@@ -90,7 +90,7 @@ export default function LoginPage() {
       </div>
 
       <div className="relative mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="bg-white shadow-2xl rounded-xl border border-slate-200 py-8 px-6 sm:px-10">
+        <div className="bg-white shadow-2xl rounded-xl border border-slate-200 py-8 px-6 sm:px-10 animate-on-scroll">
           {error && (
             <div className="mb-6 p-4 rounded-lg bg-red-50 border border-red-200">
               <div className="flex">

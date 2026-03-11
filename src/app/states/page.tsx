@@ -104,8 +104,8 @@ export default function StatesPage() {
         {/* Hero Section */}
         <section className="py-20 lg:py-24 bg-slate-50">
           <div className="mx-auto max-w-7xl px-6 lg:px-10">
-            <h1 className="text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl lg:text-6xl mb-6">
-              Foundation Repair by State
+            <h1 className="font-display text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.1] text-slate-900 mb-6">
+              Find Licensed Foundation Pros Near You
             </h1>
             <p className="text-slate-600 text-lg mb-12 max-w-3xl leading-relaxed">
               Find foundation repair contractors in all 50 states. Browse by state to compare 
@@ -117,12 +117,12 @@ export default function StatesPage() {
         {/* Top States */}
         <section className="py-20 lg:py-24 bg-white">
           <div className="mx-auto max-w-7xl px-6 lg:px-10">
-            <div className="mb-12">
-              <h2 className="text-3xl font-bold text-slate-900 mb-3">Most Active States</h2>
+            <div className="mb-12 animate-on-scroll">
+              <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.15] text-slate-900 mb-3">Most Active States</h2>
               <p className="text-slate-600">States with the highest number of foundation repair contractors.</p>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16 animate-on-scroll">
               {STATES
                 .sort((a, b) => b.contractors - a.contractors)
                 .slice(0, 8)
@@ -137,7 +137,7 @@ export default function StatesPage() {
                       <span className="material-symbols-outlined text-xl" aria-hidden="true">location_on</span>
                     </div>
                     <div>
-                      <h3 className="text-lg font-bold text-slate-900 group-hover:text-amber-600 transition-colors">{state.name}</h3>
+                      <h3 className="text-lg font-semibold text-slate-900 group-hover:text-amber-600 transition-colors">{state.name}</h3>
                       <p className="text-xs text-slate-500 font-mono">{state.abbr}</p>
                     </div>
                   </div>
@@ -145,7 +145,7 @@ export default function StatesPage() {
                   <div className="flex items-center justify-between mt-auto">
                     <div className="flex items-center gap-1">
                       <span className="material-symbols-outlined text-xl text-amber-500" aria-hidden="true">engineering</span>
-                      <span className="text-slate-600 text-sm">
+                      <span className="text-slate-600 text-sm font-mono">
                         {state.contractors} contractor{state.contractors !== 1 ? 's' : ''}
                       </span>
                     </div>
@@ -163,14 +163,14 @@ export default function StatesPage() {
         {/* All States by Region */}
         <section className="py-20 lg:py-24 bg-slate-50 border-y border-slate-200">
           <div className="mx-auto max-w-7xl px-6 lg:px-10">
-            <div className="mb-12">
-              <h2 className="text-3xl font-bold text-slate-900 mb-3">Browse All States</h2>
+            <div className="mb-12 animate-on-scroll">
+              <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.15] text-slate-900 mb-3">Browse All States</h2>
               <p className="text-slate-600">Find foundation repair contractors organized by region.</p>
             </div>
             
             <div className="space-y-12">
               {Object.entries(REGIONS).map(([region, stateSlugs]) => (
-                <div key={region} className="bg-white border border-slate-200 rounded-xl shadow-sm p-8">
+                <div key={region} className="bg-white border border-slate-200 rounded-xl shadow-sm p-8 animate-on-scroll">
                   <h3 className="text-2xl font-bold text-slate-900 mb-6">{region}</h3>
                   <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                     {STATES
@@ -185,7 +185,7 @@ export default function StatesPage() {
                         <div className="flex items-center justify-between">
                           <div>
                             <h4 className="font-semibold text-slate-900 group-hover:text-amber-600 transition-colors">{state.name}</h4>
-                            <p className="text-xs text-slate-500">
+                            <p className="text-xs text-slate-500 font-mono">
                               {state.contractors} contractors
                             </p>
                           </div>
@@ -205,18 +205,18 @@ export default function StatesPage() {
         {/* CTA Section */}
         <section className="py-20 lg:py-24 bg-white">
           <div className="mx-auto max-w-7xl px-6 lg:px-10">
-            <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-8 lg:p-12 text-center">
-              <h2 className="text-3xl font-bold text-slate-900 mb-6">Can't Find Your State?</h2>
+            <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-8 lg:p-12 text-center animate-on-scroll">
+              <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.15] text-slate-900 mb-6">Every State Covered — Find Your Pros</h2>
               <p className="text-slate-600 text-lg mb-8 max-w-2xl mx-auto">
                 We're constantly expanding our network. If your state isn't listed or you'd like to join our directory as a contractor, let us know.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-8 rounded-lg transition-all shadow-lg">
-                  Request New State
-                </button>
-                <button className="bg-amber-500 hover:bg-amber-600 text-white font-bold py-4 px-8 rounded-lg transition-all">
-                  Join as Contractor
-                </button>
+                <Link href="/" className="bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold py-4 px-8 rounded-xl transition-all shadow-lg">
+                  Find Local Experts
+                </Link>
+                <Link href="/?openLead=true" className="bg-white hover:bg-slate-50 text-slate-900 border border-slate-300 font-bold py-4 px-8 rounded-xl transition-all">
+                  Get Estimate
+                </Link>
               </div>
             </div>
           </div>

@@ -91,7 +91,13 @@ export default function LeadForm({ isOpen, onClose, businessId, businessName }: 
   if (!isOpen) return null
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="lead-form-title"
+      onKeyDown={(e) => { if (e.key === 'Escape') handleClose(); }}
+    >
       {/* Backdrop */}
       <div 
         className="absolute inset-0 bg-black/60 backdrop-blur-sm"
@@ -121,7 +127,7 @@ export default function LeadForm({ isOpen, onClose, businessId, businessName }: 
             {/* Header */}
             <div className="flex items-center justify-between p-6 border-b border-slate-200">
               <div>
-                <h3 className="text-lg font-semibold text-slate-900">Get Estimates</h3>
+                <h3 id="lead-form-title" className="text-lg font-semibold text-slate-900">Get Estimates</h3>
                 {businessName && (
                   <p className="text-sm text-slate-600">Get quotes from {businessName}</p>
                 )}
@@ -140,7 +146,7 @@ export default function LeadForm({ isOpen, onClose, businessId, businessName }: 
                 <div className="p-3 rounded-md bg-red-50 border border-red-200">
                   <div className="flex">
                     <span className="material-symbols-outlined text-xl text-red-400 mr-2" aria-hidden="true">error</span>
-                    <div className="text-sm text-red-300">{error}</div>
+                    <div className="text-sm text-red-700">{error}</div>
                   </div>
                 </div>
               )}
@@ -154,6 +160,7 @@ export default function LeadForm({ isOpen, onClose, businessId, businessName }: 
                     id="name"
                     type="text"
                     required
+                    autoComplete="name"
                     value={formData.name}
                     onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
                     className="w-full px-3 py-2 border border-slate-300 rounded-md placeholder-slate-400 text-slate-900 bg-white focus:outline-none focus:ring-primary focus:border-primary text-sm"
@@ -169,6 +176,8 @@ export default function LeadForm({ isOpen, onClose, businessId, businessName }: 
                     id="zip"
                     type="text"
                     required
+                    autoComplete="postal-code"
+                    inputMode="numeric"
                     value={formData.zip}
                     onChange={(e) => setFormData(prev => ({ ...prev, zip: e.target.value }))}
                     className="w-full px-3 py-2 border border-slate-300 rounded-md placeholder-slate-400 text-slate-900 bg-white focus:outline-none focus:ring-primary focus:border-primary text-sm"
@@ -185,6 +194,7 @@ export default function LeadForm({ isOpen, onClose, businessId, businessName }: 
                   id="email"
                   type="email"
                   required
+                  autoComplete="email"
                   value={formData.email}
                   onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
                   className="w-full px-3 py-2 border border-slate-300 rounded-md placeholder-slate-400 text-slate-900 bg-white focus:outline-none focus:ring-primary focus:border-primary text-sm"
@@ -199,6 +209,7 @@ export default function LeadForm({ isOpen, onClose, businessId, businessName }: 
                 <input
                   id="phone"
                   type="tel"
+                  autoComplete="tel"
                   value={formData.phone}
                   onChange={(e) => setFormData(prev => ({ ...prev, phone: e.target.value }))}
                   className="w-full px-3 py-2 border border-slate-300 rounded-md placeholder-slate-400 text-slate-900 bg-white focus:outline-none focus:ring-primary focus:border-primary text-sm"

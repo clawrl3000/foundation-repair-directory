@@ -60,7 +60,7 @@ export default function AnimatedFAQ({
   return (
     <div className={className}>
       {title && (
-        <h2 className="text-3xl font-bold text-slate-900 mb-8">{title}</h2>
+        <h2 className="font-display text-3xl font-bold text-slate-900 mb-8 leading-[1.15]">{title}</h2>
       )}
       
       <div className="space-y-4">
@@ -76,11 +76,14 @@ export default function AnimatedFAQ({
             >
               <button
                 onClick={() => toggleItem(index)}
+                aria-expanded={isOpen}
+                aria-controls={`faq-panel-${index}`}
+                id={`faq-trigger-${index}`}
                 className={`w-full px-6 py-4 text-left flex items-center justify-between group transition-all duration-300 ${
                   isOpen ? 'bg-amber-50' : 'hover:bg-slate-50'
                 }`}
               >
-                <h3 className={`text-lg font-bold transition-colors duration-300 ${
+                <h3 className={`text-base font-semibold transition-colors duration-300 ${
                   isOpen ? 'text-amber-700' : 'text-slate-900 group-hover:text-amber-600'
                 }`}>
                   {item.question}
@@ -95,6 +98,9 @@ export default function AnimatedFAQ({
               
               <div
                 ref={(el) => { contentRefs.current[index] = el }}
+                id={`faq-panel-${index}`}
+                role="region"
+                aria-labelledby={`faq-trigger-${index}`}
                 className="transition-all duration-300 ease-out overflow-hidden"
                 style={{
                   maxHeight: isOpen ? 'fit-content' : '0px',
@@ -102,7 +108,7 @@ export default function AnimatedFAQ({
                 }}
               >
                 <div className="px-6 pb-6 pt-2">
-                  <div className={`text-slate-600 leading-relaxed transform transition-all duration-300 ${
+                  <div className={`text-slate-600 text-[15px] leading-relaxed max-w-prose transform transition-all duration-300 ${
                     isOpen ? 'translate-y-0' : '-translate-y-2'
                   }`}>
                     {item.answer}

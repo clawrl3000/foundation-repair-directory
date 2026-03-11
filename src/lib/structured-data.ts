@@ -234,7 +234,7 @@ export function generateOrganizationSchema() {
     "@context": "https://schema.org",
     "@type": "Organization",
     "@id": "https://foundationscout.com#Organization",
-    "name": "Foundation Repair Finder",
+    "name": "FoundationScout",
     "url": "https://foundationscout.com",
     "logo": "https://foundationscout.com/logo.png",
     "description": "Find trusted foundation repair contractors in your area. Compare quotes, read reviews, and connect with licensed professionals.",
@@ -274,12 +274,12 @@ export function generateWebSiteSchema() {
     "@context": "https://schema.org",
     "@type": "WebSite",
     "@id": "https://foundationscout.com#WebSite",
-    "name": "Foundation Repair Finder",
+    "name": "FoundationScout",
     "url": "https://foundationscout.com",
     "description": "Find and compare foundation repair contractors near you",
     "publisher": {
       "@type": "Organization",
-      "name": "Foundation Repair Finder"
+      "name": "FoundationScout"
     }
   }
 }
