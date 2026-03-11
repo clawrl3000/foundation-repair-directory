@@ -1063,14 +1063,12 @@
 
 .dial-char {
   display: inline-block;
-  opacity: 0;
+  opacity: 1;
 }
 
-.animate-fade-up .dial-char {
-  animation: dialIn 0.38s cubic-bezier(0.34, 1.56, 0.64, 1) both;
-}
-
+.animate-fade-up .dial-char,
 .dial-animate .dial-char {
+  opacity: 0;
   animation: dialIn 0.38s cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
 
@@ -1083,17 +1081,16 @@
 }
 
 .dial-number:hover .dial-char {
+  opacity: 1;
   animation: dialBounce 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .dial-char {
-    opacity: 1 !important;
-  }
   .dial-char,
   .animate-fade-up .dial-char,
   .dial-animate .dial-char,
   .dial-number:hover .dial-char {
+    opacity: 1 !important;
     animation: none !important;
   }
 }
