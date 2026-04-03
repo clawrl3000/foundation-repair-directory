@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
-import Anthropic from '@anthropic-ai/sdk'
+import OpenAI from 'openai'
 import { getEnrichedContractors, type ContractorProfile } from '@/lib/contractor-scraper'
 
 // ── Config ──────────────────────────────────────────────────────────────────
@@ -146,8 +146,8 @@ async function generateScoutReport(data: {
   contractors: ContractorProfile[]
   costData: typeof STATE_COST_DATA['IL']
 }) {
-  const anthropic = new Anthropic({
-    apiKey: process.env.ANTHROPIC_API_KEY,
+  const openai = new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY,
   })
 
   const issueList = data.issues.split(', ')
@@ -205,14 +205,13 @@ Write a personalized Scout Report with these sections:
 
 Keep the total report under 800 words. Be genuinely helpful — this person is worried about their home. The contractor section should feel like a knowledgeable friend did research for them, not like a generic directory listing.`
 
-  const response = await anthropic.messages.create({
-    model: 'claude-haiku-4-5-20250414',
+  const response = await openai.chat.completions.create({
+    model: 'gpt-4o-mini',
     max_tokens: 1024,
     messages: [{ role: 'user', content: prompt }],
   })
 
-  const textBlock = response.content.find(b => b.type === 'text')
-  return textBlock?.text || 'Unable to generate report. Please contact us directly.'
+  return response.choices[0]?.message?.content || 'Unable to generate report. Please contact us directly.'
 }
 
 // ── Format report as HTML email ─────────────────────────────────────────────

@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
       business_id: business_id || null,
       name,
       email,
-      phone: null,
+      phone: body.phone || '',
       service_needed: service_needed || null,
       zip_code: zip_code || null,
       city: city || null,
