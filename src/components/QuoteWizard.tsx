@@ -22,7 +22,7 @@ const URGENCY = [
 
 export default function QuoteWizard({ state, stateName }: { state: string; stateName: string }) {
   const [step, setStep] = useState(0)
-  const [issue, setIssue] = useState('')
+  const [issues, setIssues] = useState<string[]>([])
   const [urgency, setUrgency] = useState('')
   const [zip, setZip] = useState('')
   const [zipState, setZipState] = useState<string | null>(null)
@@ -45,9 +45,13 @@ export default function QuoteWizard({ state, stateName }: { state: string; state
     }, 200)
   }, [])
 
+  const toggleIssue = (id: string) => {
+    setIssues(prev => prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id])
+  }
+
   const canProceed = () => {
     switch (step) {
-      case 0: return issue !== ''
+      case 0: return issues.length > 0
       case 1: return urgency !== ''
       case 2: return /^\d{5}$/.test(zip) && !zipError
       case 3: return name.trim() !== '' && (email.trim() !== '' || phone.trim() !== '')
@@ -82,7 +86,7 @@ export default function QuoteWizard({ state, stateName }: { state: string; state
     setError('')
 
     try {
-      const issueLabel = ISSUES.find(i => i.id === issue)?.label || issue
+      const issueLabels = issues.map(id => ISSUES.find(i => i.id === id)?.label || id).join(', ')
       const urgencyLabel = URGENCY.find(u => u.id === urgency)?.label || urgency
 
       const res = await fetch('/api/leads', {
@@ -92,10 +96,10 @@ export default function QuoteWizard({ state, stateName }: { state: string; state
           name: name.trim(),
           email: email.trim() || null,
           phone: phone.trim() || null,
-          service_needed: issueLabel,
+          service_needed: issueLabels,
           zip_code: zip,
           state: state,
-          notes: `Issue: ${issueLabel} | Urgency: ${urgencyLabel} | From cost page: ${stateName}`,
+          notes: `Issues: ${issueLabels} | Urgency: ${urgencyLabel} | From: ${stateName}`,
           source: 'quote-wizard',
         }),
       })
@@ -172,29 +176,36 @@ export default function QuoteWizard({ state, stateName }: { state: string; state
         {step === 0 && (
           <div>
             <h4 className="text-lg font-semibold text-slate-900 mb-1">What&apos;s going on with your foundation?</h4>
-            <p className="text-sm text-slate-500 mb-5">Select the issue that best describes your situation.</p>
+            <p className="text-sm text-slate-500 mb-5">Select all that apply.</p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {ISSUES.map(i => (
-                <button
-                  key={i.id}
-                  onClick={() => setIssue(i.id)}
-                  className={`flex items-start gap-3 p-4 rounded-xl border-2 text-left transition-all duration-150 ${
-                    issue === i.id
-                      ? 'border-amber-500 bg-amber-50 shadow-sm'
-                      : 'border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50'
-                  }`}
-                >
-                  <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg transition-colors ${
-                    issue === i.id ? 'bg-amber-500 text-white' : 'bg-slate-100 text-slate-500'
-                  }`}>
-                    <span className="material-symbols-outlined text-xl">{i.icon}</span>
-                  </div>
-                  <div className="min-w-0">
-                    <span className={`text-sm font-semibold block ${issue === i.id ? 'text-slate-900' : 'text-slate-700'}`}>{i.label}</span>
-                    <span className="text-xs text-slate-500 leading-tight">{i.description}</span>
-                  </div>
-                </button>
-              ))}
+              {ISSUES.map(i => {
+                const selected = issues.includes(i.id)
+                return (
+                  <button
+                    key={i.id}
+                    onClick={() => toggleIssue(i.id)}
+                    className={`flex items-start gap-3 p-4 rounded-xl border-2 text-left transition-all duration-150 ${
+                      selected
+                        ? 'border-amber-500 bg-amber-50 shadow-sm'
+                        : 'border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50'
+                    }`}
+                  >
+                    <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg transition-colors ${
+                      selected ? 'bg-amber-500 text-white' : 'bg-slate-100 text-slate-500'
+                    }`}>
+                      {selected ? (
+                        <span className="material-symbols-outlined text-xl">check</span>
+                      ) : (
+                        <span className="material-symbols-outlined text-xl">{i.icon}</span>
+                      )}
+                    </div>
+                    <div className="min-w-0">
+                      <span className={`text-sm font-semibold block ${selected ? 'text-slate-900' : 'text-slate-700'}`}>{i.label}</span>
+                      <span className="text-xs text-slate-500 leading-tight">{i.description}</span>
+                    </div>
+                  </button>
+                )
+              })}
             </div>
           </div>
         )}
