@@ -79,27 +79,29 @@ export default function HomeHeroSection({ onOpenLeadForm }: HomeHeroSectionProps
             }`}>
               <AnimatedSearchForm />
               
-              {/* Phone CTA — divider + tap-to-call */}
+              {/* CTA buttons — quote form + phone */}
               <div className="max-w-xl mt-4 space-y-3">
                 <div className="flex items-center gap-3">
                   <div className="h-px flex-1 bg-slate-700/50" />
-                  <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">or call now</span>
+                  <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">or</span>
                   <div className="h-px flex-1 bg-slate-700/50" />
                 </div>
-                <a
-                  href={PHONE_HREF}
-                  className="flex items-center justify-center gap-2.5 w-full bg-slate-800/80 border border-slate-600 hover:border-amber-500/50 hover:bg-slate-800 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] text-white font-bold py-3.5 px-6 rounded-xl text-base transition-all duration-300 group"
-                >
-                  <span className="material-symbols-outlined text-amber-400 text-xl group-hover:scale-110 transition-transform" aria-hidden="true">call</span>
-                  <span className="text-lg font-mono tracking-wide dial-number dial-animate">
-                    {PHONE_NUMBER.split('').map((char, i) => (
-                      <span key={i} className="dial-char" style={{ animationDelay: `${0.9 + i * 0.07}s` }}>
-                        {char === ' ' ? '\u00A0' : char}
-                      </span>
-                    ))}
-                  </span>
-                  <span className="text-xs text-slate-400 font-normal hidden sm:inline">&mdash; Free consultation</span>
-                </a>
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <button
+                    onClick={onOpenLeadForm}
+                    className="flex-1 flex items-center justify-center gap-2.5 bg-amber-500 hover:bg-amber-600 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] text-slate-900 font-bold py-3.5 px-6 rounded-xl text-base transition-all duration-300 group shadow-lg shadow-amber-500/20"
+                  >
+                    <span className="material-symbols-outlined text-xl group-hover:scale-110 transition-transform" aria-hidden="true">request_quote</span>
+                    Get Free Quote
+                  </button>
+                  <a
+                    href={PHONE_HREF}
+                    className="flex-1 flex items-center justify-center gap-2.5 bg-slate-800/80 border border-slate-600 hover:border-amber-500/50 hover:bg-slate-800 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] text-white font-bold py-3.5 px-6 rounded-xl text-base transition-all duration-300 group"
+                  >
+                    <span className="material-symbols-outlined text-amber-400 text-xl group-hover:scale-110 transition-transform" aria-hidden="true">call</span>
+                    <span className="text-lg font-mono tracking-wide">{PHONE_NUMBER}</span>
+                  </a>
+                </div>
               </div>
             </div>
 
