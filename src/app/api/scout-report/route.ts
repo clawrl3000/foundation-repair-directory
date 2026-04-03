@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import Anthropic from '@anthropic-ai/sdk'
+import { getEnrichedContractors, type ContractorProfile } from '@/lib/contractor-scraper'
 
 // ── Config ──────────────────────────────────────────────────────────────────
 function getSupabase() {
@@ -142,7 +143,7 @@ async function generateScoutReport(data: {
   urgency: string
   zip: string
   state: string
-  contractors: any[]
+  contractors: ContractorProfile[]
   costData: typeof STATE_COST_DATA['IL']
 }) {
   const anthropic = new Anthropic({
@@ -153,11 +154,25 @@ async function generateScoutReport(data: {
   const issueDetails = issueList.map(i => ISSUE_DETAILS[i] || { name: i, description: '' })
   const urgencyContext = URGENCY_CONTEXT[data.urgency] || ''
 
-  const contractorList = data.contractors.slice(0, 5).map((c, i) => 
-    `${i + 1}. **${c.name}** — Rating: ${c.rating || 'N/A'}⭐ (${c.review_count || 0} reviews) | Phone: ${c.phone || 'N/A'} | Website: ${c.website_url || 'N/A'}`
-  ).join('\n')
+  // Build rich contractor profiles from scraped data
+  const contractorList = data.contractors.map((c, i) => {
+    const lines = [`${i + 1}. **${c.name}**`]
+    if (c.rating) lines.push(`   Rating: ${c.rating}⭐ (${c.review_count || 0} reviews)`)
+    if (c.phone) lines.push(`   Phone: ${c.phone}`)
+    if (c.website_url) lines.push(`   Website: ${c.website_url}`)
+    if (c.services.length > 0) lines.push(`   Services: ${c.services.slice(0, 6).join(', ')}`)
+    if (c.specialties.length > 0) lines.push(`   Specialties: ${c.specialties.join(', ')}`)
+    if (c.pricing_info) lines.push(`   Pricing: ${c.pricing_info}`)
+    if (c.warranty_info) lines.push(`   Warranty: ${c.warranty_info}`)
+    if (c.free_inspection) lines.push(`   ✅ Offers free inspections/estimates`)
+    if (c.years_in_business) lines.push(`   Experience: ${c.years_in_business}`)
+    if (c.certifications.length > 0) lines.push(`   Credentials: ${c.certifications.join(', ')}`)
+    if (c.service_area) lines.push(`   Service Area: ${c.service_area}`)
+    if (c.about_summary) lines.push(`   About: ${c.about_summary.substring(0, 200)}`)
+    return lines.join('\n')
+  }).join('\n\n')
 
-  const prompt = `You are a foundation repair expert writing a personalized Scout Report for a homeowner. Be helpful, specific, and actionable. Use a warm but professional tone. Do NOT use markdown headers — use plain text with line breaks. Keep it concise but thorough.
+  const prompt = `You are a foundation repair expert writing a personalized Scout Report for a homeowner. Be helpful, specific, and actionable. Use a warm but professional tone. Do NOT use markdown headers — use plain text with bold labels. Keep it concise but thorough.
 
 HOMEOWNER: ${data.name}
 LOCATION: ZIP ${data.zip} (${data.state})
@@ -171,24 +186,24 @@ LOCAL COST DATA:
 - Crack repair: ${data.costData.crack}
 - Waterproofing: ${data.costData.waterproof}
 
-LOCAL CONTRACTORS (from our database):
+LOCAL CONTRACTORS (researched from their actual websites):
 ${contractorList || 'No contractors found in immediate area — we recommend searching nearby cities.'}
 
 Write a personalized Scout Report with these sections:
 
-1. GREETING — Address them by first name, acknowledge their specific issues
+1. GREETING — Address them by first name, acknowledge their specific issues warmly.
 
 2. YOUR SITUATION — Explain what their reported issues likely mean in plain language. Be honest about severity based on urgency level. Include what could happen if left unaddressed.
 
 3. ESTIMATED COSTS — Give realistic cost ranges for THEIR specific issues using the local data. Explain what factors affect the price (home size, soil type, repair method, accessibility).
 
-4. RECOMMENDED CONTRACTORS — Present the local contractors with a brief note about each. If they have ratings, mention it. Encourage getting 2-3 quotes.
+4. YOUR LOCAL CONTRACTORS — This is the most valuable section. For each contractor, write a 2-3 sentence mini-profile based on REAL data from their website. Mention specific services they offer that match the homeowner's issues. Note if they offer free inspections, warranties, years of experience, or certifications. Include their phone number. Explain WHY each one might be a good fit for this specific homeowner's situation. If a contractor offers services that directly match the reported issues, call that out explicitly.
 
-5. QUESTIONS TO ASK — Give 5 specific questions they should ask every contractor they talk to (warranty, timeline, method, permits, references).
+5. QUESTIONS TO ASK — Give 5 specific questions they should ask every contractor, tailored to their reported issues (not generic).
 
-6. NEXT STEPS — Clear action items based on their urgency level.
+6. NEXT STEPS — Clear action items based on their urgency level. If any contractor offers free inspections, suggest starting there.
 
-Keep the total report under 600 words. Be genuinely helpful — this person is worried about their home.`
+Keep the total report under 800 words. Be genuinely helpful — this person is worried about their home. The contractor section should feel like a knowledgeable friend did research for them, not like a generic directory listing.`
 
   const response = await anthropic.messages.create({
     model: 'claude-haiku-4-5-20250414',
@@ -353,30 +368,32 @@ export async function POST(request: NextRequest) {
     const costData = STATE_COST_DATA[resolvedState] || STATE_COST_DATA['IL']
 
     // Fetch matching contractors from our database
-    // First try to find by ZIP area, then fall back to state
-    let contractors: any[] = []
+    let rawContractors: any[] = []
     
     if (zip_code) {
-      // Look up city by ZIP proximity (simplified — find cities in the same state)
+      // Look up cities in the same state, prioritize by rating
       const { data: stateCities } = await supabase
         .from('cities')
         .select('id, name, states!inner(abbreviation)')
         .eq('states.abbreviation', resolvedState)
-        .limit(10)
+        .limit(20)
 
       if (stateCities && stateCities.length > 0) {
         const cityIds = stateCities.map((c: any) => c.id)
         const { data: bizData } = await supabase
           .from('businesses')
-          .select('name, phone, website_url, rating, review_count, address')
+          .select('id, name, phone, website_url, rating, review_count, address, scraped_data, scraped_at')
           .in('city_id', cityIds)
           .eq('is_active', true)
           .order('rating', { ascending: false, nullsFirst: false })
-          .limit(5)
+          .limit(8) // Get 8 so we have options after filtering
         
-        contractors = bizData || []
+        rawContractors = bizData || []
       }
     }
+
+    // Enrich contractors with scraped website data
+    const enrichedContractors = await getEnrichedContractors(rawContractors)
 
     // Generate the AI Scout Report
     let reportText = ''
@@ -389,7 +406,7 @@ export async function POST(request: NextRequest) {
         urgency: urgency || 'Planning Ahead',
         zip: zip_code || 'unknown',
         state: resolvedState,
-        contractors,
+        contractors: enrichedContractors,
         costData,
       })
       reportGenerated = true
@@ -418,7 +435,20 @@ export async function POST(request: NextRequest) {
     if (lead_id && reportGenerated) {
       await supabase.from('scout_reports').insert({
         lead_id,
-        content: { text: reportText, contractors: contractors.map(c => c.name), state: resolvedState },
+        content: {
+          text: reportText,
+          contractors: enrichedContractors.map(c => ({
+            name: c.name,
+            phone: c.phone,
+            website: c.website_url,
+            services: c.services,
+            free_inspection: c.free_inspection,
+            warranty: c.warranty_info,
+            scraped: c.scraped,
+          })),
+          state: resolvedState,
+          zip: zip_code,
+        },
         email_sent_at: emailSent ? new Date().toISOString() : null,
       }).select()
     }
