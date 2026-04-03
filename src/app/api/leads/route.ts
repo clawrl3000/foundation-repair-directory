@@ -47,10 +47,10 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
     
-    const { business_id, name, email, phone, service_needed, zip_code, city, state, notes } = body
+    const { business_id, name, email, phone, service_needed, zip_code, city, state, notes, source } = body
 
-    if (!name || !email) {
-      return NextResponse.json({ error: 'Name and email are required' }, { status: 400 })
+    if (!name || (!email && !phone)) {
+      return NextResponse.json({ error: 'Name and at least one contact method (email or phone) are required' }, { status: 400 })
     }
 
     const supabase = getSupabase()
@@ -65,7 +65,7 @@ export async function POST(request: NextRequest) {
       city: city || null,
       state: state || null,
       notes: notes || null,
-      source: 'website',
+      source: source || 'website',
       status: 'new',
     }).select()
 

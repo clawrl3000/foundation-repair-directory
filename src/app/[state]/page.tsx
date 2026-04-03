@@ -602,15 +602,49 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { state: stateInfo } = stateData
   const url = `https://foundationscout.com/${state}`
 
+  // State-specific SEO metadata (NavBoost-optimized for CTR)
+  const stateSlug = stateInfo.slug
+  const content = stateContent[stateSlug]
+  
+  // Extract cost range from avgCosts text (e.g. "$4,500 to $18,000")
+  const costMatch = content?.avgCosts?.match(/\$[\d,]+\s*to\s*\$[\d,]+/)
+  const costRange = costMatch ? costMatch[0] : null
+  
+  // State-specific title/description overrides for high-value states
+  const stateMetaOverrides: Record<string, { title: string; description: string }> = {
+    'texas': {
+      title: `Texas Foundation Repair Specialists | Clay Soil Experts | $4,500–$18,000`,
+      description: `Texas clay soil destroying your foundation? Get emergency quotes from DFW, Houston & Austin specialists who understand Blackland Prairie conditions. Average repair: $8,000–$15,000. Licensed structural engineers.`,
+    },
+    'california': {
+      title: `California Foundation Repair & Seismic Retrofit | $5,000–$25,000`,
+      description: `Bay Area quake damage? LA hillside settling? Get quotes from CSLB-licensed foundation specialists who know California soil and seismic conditions. Free structural assessments.`,
+    },
+    'florida': {
+      title: `Florida Foundation Repair & Sinkhole Specialists | $3,500–$50,000`,
+      description: `Florida sinkhole or settlement damage? Connect with licensed foundation contractors in Tampa, Miami & Orlando. Sinkhole remediation, slab repair & pier installation. Free inspections.`,
+    },
+  }
+
+  const metaOverride = stateMetaOverrides[stateSlug]
+  const finalTitle = metaOverride?.title 
+    || (costRange 
+      ? `${stateInfo.name} Foundation Repair Contractors (2026) | ${costRange}`
+      : `${stateInfo.name} Foundation Repair Contractors (2026) | Free Quotes`)
+  const finalDescription = metaOverride?.description 
+    || (content 
+      ? `Foundation problems in ${stateInfo.name}? Compare licensed contractors, read reviews, and get repair quotes. ${costRange ? `Average cost: ${costRange}.` : ''} Serving 50+ cities statewide.`
+      : `Find foundation repair contractors in ${stateInfo.name}. Compare ratings, read reviews, and get free local quotes. Licensed professionals serving 50+ cities statewide.`)
+
   return {
-    title: `Top Foundation Repair Contractors in ${stateInfo.name} (2026) | Compare Contractors`,
-    description: `Find foundation repair contractors in ${stateInfo.name}. Compare ratings, read reviews, get compare local quotes. Licensed professionals serving 50+ cities statewide.`,
+    title: finalTitle,
+    description: finalDescription,
     alternates: {
       canonical: url,
     },
     openGraph: {
-      title: `${stateInfo.name} Foundation Repair Contractors | Foundation Repair Directory`,
-      description: `Find trusted foundation repair contractors in ${stateInfo.name}. Compare local experts, read verified reviews, and get estimates for pier & beam, slab, and basement repairs.`,
+      title: finalTitle,
+      description: finalDescription,
       url: url,
       images: [
         {

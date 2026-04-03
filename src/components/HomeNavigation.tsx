@@ -21,6 +21,7 @@ export default function HomeNavigation() {
           <nav aria-label="Main navigation" className="hidden md:flex items-center gap-8">
             <Link className="text-sm font-semibold text-white hover:text-amber-400 transition-colors" href="/states">Find Contractors</Link>
             <Link className="text-sm font-semibold text-white border border-white/30 hover:border-amber-400 hover:text-amber-400 px-4 py-1.5 rounded-lg transition-colors" href="/auth/signup">For Contractors</Link>
+            <Link className="text-sm font-semibold text-white hover:text-amber-400 transition-colors" href="/calculator">Cost Calculator</Link>
             <Link className="text-sm font-semibold text-white hover:text-amber-400 transition-colors" href="/services">Services</Link>
           </nav>
           <div className="flex items-center gap-4">
@@ -68,8 +69,18 @@ export default function HomeNavigation() {
                 For Contractors
               </span>
             </Link>
-            <Link 
-              className="text-base font-semibold text-slate-300 hover:text-amber-400 transition-all duration-300 py-4 px-6 rounded-xl hover:bg-white/10 transform hover:translate-x-2 hover:scale-105 mobile-touch-target" 
+            <Link
+              className="text-base font-semibold text-slate-300 hover:text-amber-400 transition-all duration-300 py-4 px-6 rounded-xl hover:bg-white/10 transform hover:translate-x-2 hover:scale-105 mobile-touch-target"
+              href="/calculator"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              <span className="flex items-center gap-3">
+                <span className="material-symbols-outlined text-xl" aria-hidden="true">calculate</span>
+                Cost Calculator
+              </span>
+            </Link>
+            <Link
+              className="text-base font-semibold text-slate-300 hover:text-amber-400 transition-all duration-300 py-4 px-6 rounded-xl hover:bg-white/10 transform hover:translate-x-2 hover:scale-105 mobile-touch-target"
               href="/services"
               onClick={() => setMobileMenuOpen(false)}
             >

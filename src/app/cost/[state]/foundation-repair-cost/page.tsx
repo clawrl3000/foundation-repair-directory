@@ -2,6 +2,7 @@ import { Metadata } from 'next'
 import Link from 'next/link'
 import StitchNav from '@/components/StitchNav'
 import StitchFooter from '@/components/StitchFooter'
+import QuoteWizard from '@/components/QuoteWizard'
 
 interface Props {
   params: Promise<{ state: string }>
@@ -208,44 +209,47 @@ export default async function FoundationRepairCostPage({ params }: Props) {
           </div>
         </section>
 
-        {/* Pricing Transparency Section */}
+        {/* Quote Wizard Section */}
         <section className="py-20 lg:py-24 bg-slate-50 border-y border-slate-200">
           <div className="mx-auto max-w-7xl px-6 lg:px-10">
-            <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-8 lg:p-12 animate-on-scroll">
-              <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.15] text-slate-900 mb-8 text-center">Get Transparent Pricing</h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-                <div className="text-center">
-                  <div className="size-16 rounded-full bg-amber-100 flex items-center justify-center mx-auto mb-4 border border-amber-200">
-                    <span className="material-symbols-outlined text-3xl text-amber-600" role="img" aria-label="Inspection process">search</span>
-                  </div>
-                  <h3 className="text-lg font-semibold text-slate-900 mb-3">1. Request Inspection</h3>
-                  <p className="text-slate-600">Professional assessment of your foundation issues at no cost.</p>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+              {/* Left: value props */}
+              <div className="animate-on-scroll">
+                <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.15] text-slate-900 mb-6">Get Free Estimates from {stateName} Contractors</h2>
+                <p className="text-slate-600 text-lg mb-8 leading-relaxed">
+                  Tell us about your foundation issue and we&apos;ll connect you with licensed contractors in your area — no obligation, no cost.
+                </p>
+                <div className="space-y-5">
+                  {[
+                    { icon: 'search', title: 'Free Inspection', desc: 'Professional assessment of your foundation at no cost' },
+                    { icon: 'calculate', title: 'Detailed Quote', desc: 'Itemized estimate with materials, labor, and timeline' },
+                    { icon: 'compare', title: 'Compare Options', desc: 'Review multiple quotes to find the best value' },
+                  ].map(item => (
+                    <div key={item.icon} className="flex items-start gap-4">
+                      <div className="size-12 rounded-full bg-amber-100 flex items-center justify-center shrink-0 border border-amber-200">
+                        <span className="material-symbols-outlined text-2xl text-amber-600">{item.icon}</span>
+                      </div>
+                      <div>
+                        <h3 className="text-base font-semibold text-slate-900">{item.title}</h3>
+                        <p className="text-sm text-slate-600">{item.desc}</p>
+                      </div>
+                    </div>
+                  ))}
                 </div>
-                <div className="text-center">
-                  <div className="size-16 rounded-full bg-amber-100 flex items-center justify-center mx-auto mb-4 border border-amber-200">
-                    <span className="material-symbols-outlined text-3xl text-amber-600" role="img" aria-label="Quote calculation">calculate</span>
-                  </div>
-                  <h3 className="text-lg font-semibold text-slate-900 mb-3">2. Detailed Quote</h3>
-                  <p className="text-slate-600">Itemized estimate with materials, labor, and timeline breakdown.</p>
-                </div>
-                <div className="text-center">
-                  <div className="size-16 rounded-full bg-amber-100 flex items-center justify-center mx-auto mb-4 border border-amber-200">
-                    <span className="material-symbols-outlined text-3xl text-amber-600" role="img" aria-label="Compare options">compare</span>
-                  </div>
-                  <h3 className="text-lg font-semibold text-slate-900 mb-3">3. Compare Options</h3>
-                  <p className="text-slate-600">Review multiple quotes and repair approaches to find the best value.</p>
+                <div className="mt-8">
+                  <Link
+                    href={`/${state}`}
+                    className="inline-flex items-center gap-2 text-amber-600 hover:text-amber-700 font-semibold text-sm transition-colors"
+                  >
+                    <span className="material-symbols-outlined text-lg">search</span>
+                    Or browse contractors in {stateName} directly
+                    <span className="material-symbols-outlined text-lg">arrow_forward</span>
+                  </Link>
                 </div>
               </div>
-              <div className="text-center">
-                <Link 
-                  href={`/${state}`}
-                  className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-8 rounded-lg transition-all shadow-lg mr-4"
-                >
-                  Find Contractors in {stateName}
-                </Link>
-                <button className="bg-amber-500 hover:bg-amber-600 text-white font-bold py-4 px-8 rounded-lg transition-all">
-                  Get Quote
-                </button>
+              {/* Right: the wizard */}
+              <div className="animate-on-scroll">
+                <QuoteWizard state={state} stateName={stateName} />
               </div>
             </div>
           </div>
