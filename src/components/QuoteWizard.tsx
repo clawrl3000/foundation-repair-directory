@@ -99,7 +99,7 @@ export default function QuoteWizard({ state, stateName, defaultZip }: { state: s
           service_needed: issueLabels,
           zip_code: zip,
           state: state,
-          notes: `Issues: ${issueLabels} | Urgency: ${urgencyLabel} | From: ${stateName}`,
+          notes: `Issues: ${issueLabels} | Urgency: ${urgencyLabel}${stateName ? ` | From: ${stateName}` : ''}`,
           source: 'quote-wizard',
         }),
       })
@@ -141,7 +141,7 @@ export default function QuoteWizard({ state, stateName, defaultZip }: { state: s
         </div>
         <h3 className="font-display text-2xl font-bold text-slate-900 mb-2">You&apos;re All Set!</h3>
         <p className="text-slate-600 mb-1">
-          We&apos;ll connect you with licensed foundation repair contractors in {stateName}.
+          We&apos;ll connect you with licensed foundation repair contractors{stateName ? ` in ${stateName}` : ' in your area'}.
         </p>
         <p className="text-sm text-slate-500">Expect to hear back within 24 hours.</p>
       </div>

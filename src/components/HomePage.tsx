@@ -9,7 +9,7 @@ import HomeFooter from '@/components/HomeFooter'
 import ScrollProgressIndicator from '@/components/ScrollProgressIndicator'
 
 // Lazy load components that are not immediately needed
-const LeadForm = dynamic(() => import('@/components/LeadForm'), { ssr: false })
+const QuoteWizardModal = dynamic(() => import('@/components/QuoteWizardModal'), { ssr: false })
 const ConversionTracker = dynamic(() => import('@/components/ConversionTracker'), { ssr: false })
 
 interface FeaturedBusiness {
@@ -85,13 +85,11 @@ export default function HomePage({ featuredBusinesses = [], faqs = [] }: HomePag
       <HomePageContent featuredBusinesses={featuredBusinesses} onOpenLeadForm={openLeadForm} faqs={faqs} />
       <HomeFooter />
 
-      {/* Lead Form Modal - only loads when opened */}
+      {/* Quote Wizard Modal - only loads when opened */}
       {leadFormOpen && (
-        <LeadForm
+        <QuoteWizardModal
           isOpen={leadFormOpen}
           onClose={() => setLeadFormOpen(false)}
-          businessId={selectedBusiness?.id}
-          businessName={selectedBusiness?.name}
         />
       )}
 
