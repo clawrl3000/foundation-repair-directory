@@ -8,6 +8,7 @@ export const dynamic = 'force-dynamic'
 import StitchNav from '@/components/StitchNav'
 import StitchFooter from '@/components/StitchFooter'
 import BusinessImage from '@/components/BusinessImage'
+import QuoteWizard from '@/components/QuoteWizard'
 
 interface Props {
   params: Promise<{
@@ -580,55 +581,53 @@ export default async function BusinessPage({ params }: Props) {
           </section>
         )}
 
-        {/* Contact Information */}
-        <section className="py-20 lg:py-24 bg-white">
+        {/* Get Estimate Section */}
+        <section id="get-estimate" className="py-20 lg:py-24 bg-slate-50 border-y border-slate-200">
           <div className="mx-auto max-w-7xl px-6 lg:px-10">
-            <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-8 lg:p-12 animate-on-scroll">
-              <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.15] text-slate-900 mb-8 text-center">Contact {name}</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {phone && (
-                  <div className="text-center">
-                    <div className="size-16 rounded-full bg-amber-100 flex items-center justify-center mx-auto mb-4 border border-amber-200">
-                      <span className="material-symbols-outlined text-3xl text-amber-600">phone</span>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+              <div className="animate-on-scroll">
+                <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.15] text-slate-900 mb-6">
+                  Get a Free Estimate from {name}
+                </h2>
+                <p className="text-slate-600 text-lg mb-8 leading-relaxed">
+                  Tell us about your foundation issue and we&apos;ll connect you with {name} for a no-obligation assessment.
+                </p>
+                <div className="space-y-5">
+                  {phone && (
+                    <div className="flex items-start gap-4">
+                      <div className="size-12 rounded-full bg-amber-100 flex items-center justify-center shrink-0 border border-amber-200">
+                        <span className="material-symbols-outlined text-2xl text-amber-600">phone</span>
+                      </div>
+                      <div>
+                        <h3 className="text-base font-semibold text-slate-900">Call Directly</h3>
+                        <a href={`tel:${phone}`} className="text-amber-600 hover:text-amber-700 font-medium">{phone}</a>
+                      </div>
                     </div>
-                    <h3 className="text-lg font-semibold text-slate-900 mb-2">Phone</h3>
-                    <a href={`tel:${phone}`} className="text-amber-600 hover:text-amber-700 text-lg font-medium">
-                      {phone}
-                    </a>
-                  </div>
-                )}
-                
-                {address && (
-                  <div className="text-center">
-                    <div className="size-16 rounded-full bg-amber-100 flex items-center justify-center mx-auto mb-4 border border-amber-200">
-                      <span className="material-symbols-outlined text-3xl text-amber-600">location_on</span>
+                  )}
+                  {address && (
+                    <div className="flex items-start gap-4">
+                      <div className="size-12 rounded-full bg-amber-100 flex items-center justify-center shrink-0 border border-amber-200">
+                        <span className="material-symbols-outlined text-2xl text-amber-600">location_on</span>
+                      </div>
+                      <div>
+                        <h3 className="text-base font-semibold text-slate-900">Location</h3>
+                        <p className="text-sm text-slate-600">{address}, {cityInfo.name}, {cityInfo.state.abbreviation}</p>
+                      </div>
                     </div>
-                    <h3 className="text-lg font-semibold text-slate-900 mb-2">Address</h3>
-                    <p className="text-slate-600">
-                      {address}<br />
-                      {cityInfo.name}, {cityInfo.state.abbreviation}
-                    </p>
+                  )}
+                  <div className="flex items-start gap-4">
+                    <div className="size-12 rounded-full bg-amber-100 flex items-center justify-center shrink-0 border border-amber-200">
+                      <span className="material-symbols-outlined text-2xl text-amber-600">schedule</span>
+                    </div>
+                    <div>
+                      <h3 className="text-base font-semibold text-slate-900">Service Area</h3>
+                      <p className="text-sm text-slate-600">{cityInfo.name} and surrounding areas in {cityInfo.state.name}</p>
+                    </div>
                   </div>
-                )}
-                
-                <div className="text-center">
-                  <div className="size-16 rounded-full bg-amber-100 flex items-center justify-center mx-auto mb-4 border border-amber-200">
-                    <span className="material-symbols-outlined text-3xl text-amber-600">schedule</span>
-                  </div>
-                    <h3 className="text-lg font-semibold text-slate-900 mb-2">Service Area</h3>
-                  <p className="text-slate-600">
-                    {cityInfo.name} and surrounding areas in {cityInfo.state.name}
-                  </p>
                 </div>
               </div>
-              
-              <div className="text-center mt-8 animate-on-scroll">
-                <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-8 rounded-lg transition-all shadow-lg">
-                  Request a Foundation Inspection
-                </button>
-                <p className="mt-4 text-slate-500 text-sm">
-                  Professional assessment • Browse freely • Licensed & insured
-                </p>
+              <div className="animate-on-scroll">
+                <QuoteWizard state={state} stateName={cityInfo.state.name} />
               </div>
             </div>
           </div>

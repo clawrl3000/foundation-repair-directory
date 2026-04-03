@@ -4,17 +4,17 @@ interface BusinessCardActionsProps {
   businessUrl: string
   phone?: string
   websiteUrl?: string
-  estimateUrl: string
+  estimateUrl?: string
 }
 
-export default function BusinessCardActions({ businessUrl, phone, websiteUrl, estimateUrl }: BusinessCardActionsProps) {
+export default function BusinessCardActions({ businessUrl, phone, websiteUrl }: BusinessCardActionsProps) {
   return (
     <div className="mt-auto flex flex-col sm:flex-row gap-3" onClick={(e) => e.stopPropagation()}>
       <a
-        href={estimateUrl}
+        href={businessUrl}
         className="flex-1 text-center rounded-lg bg-amber-500 py-3 px-6 text-base font-bold text-white transition-colors hover:bg-amber-600"
       >
-        Get Estimate
+        View Profile
       </a>
       {phone && (
         <a 
