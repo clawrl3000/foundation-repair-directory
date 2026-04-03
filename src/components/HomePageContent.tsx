@@ -78,12 +78,12 @@ export default function HomePageContent({ featuredBusinesses, onOpenLeadForm, fa
               Takes 2 minutes
             </span>
             <p className="text-lg lg:text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
-              No phone calls, no runaround. Enter your ZIP and let qualified contractors come to you.
+              No phone calls, no runaround. Tell us your issue and let qualified contractors come to you.
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
             {[
-              { number: '01', title: 'Enter Your ZIP', desc: 'Find licensed pros in your area instantly.', icon: 'location_on' },
+              { number: '01', title: 'Describe Your Issue', desc: 'Tell us what\'s going on — takes 2 minutes.', icon: 'edit_note' },
               { number: '02', title: 'Compare Quotes', desc: 'Get up to 3 free estimates. No obligation.', icon: 'compare' },
               { number: '03', title: 'Hire & Fix', desc: 'Choose your contractor. Get it done right.', icon: 'construction' },
             ].map((step, i) => (
@@ -124,22 +124,16 @@ export default function HomePageContent({ featuredBusinesses, onOpenLeadForm, fa
             ))}
           </div>
           <div className="text-center mt-12 animate-on-scroll">
-            <a
-              href="tel:+16304071727"
+            <button
+              onClick={() => onOpenLeadForm()}
               className="group inline-flex flex-col items-center gap-1"
             >
               <span className="inline-flex items-center gap-3 bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold py-4 px-10 rounded-xl text-xl transition-all duration-300 transform group-hover:scale-105 shadow-lg group-hover:shadow-2xl hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98]">
-                <span className="material-symbols-outlined text-2xl group-hover:scale-110 transition-transform" aria-hidden="true">call</span>
-                <span className="font-mono tracking-tight dial-number">
-                  {'(630) 407-1727'.split('').map((char, i) => (
-                    <span key={i} className="dial-char" style={{ animationDelay: `${i * 0.07}s` }}>
-                      {char === ' ' ? '\u00A0' : char}
-                    </span>
-                  ))}
-                </span>
+                <span className="material-symbols-outlined text-2xl group-hover:scale-110 transition-transform" aria-hidden="true">request_quote</span>
+                Get Your Free Quote
               </span>
-              <span className="text-xs text-slate-400 mt-1">Tap to call &middot; No obligation</span>
-            </a>
+              <span className="text-xs text-slate-400 mt-1">Takes 2 minutes &middot; No obligation</span>
+            </button>
           </div>
         </div>
       </section>
