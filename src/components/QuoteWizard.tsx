@@ -20,12 +20,12 @@ const URGENCY = [
   { id: 'emergency', label: 'Emergency', icon: 'emergency', color: 'text-red-600 bg-red-50 border-red-200', description: 'Active damage or safety concern' },
 ]
 
-export default function QuoteWizard({ state, stateName }: { state: string; stateName: string }) {
+export default function QuoteWizard({ state, stateName, defaultZip }: { state: string; stateName: string; defaultZip?: string }) {
   const [step, setStep] = useState(0)
   const [issues, setIssues] = useState<string[]>([])
   const [urgency, setUrgency] = useState('')
-  const [zip, setZip] = useState('')
-  const [zipState, setZipState] = useState<string | null>(null)
+  const [zip, setZip] = useState(defaultZip || '')
+  const [zipState, setZipState] = useState<string | null>(defaultZip ? stateName : null)
   const [zipError, setZipError] = useState('')
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')

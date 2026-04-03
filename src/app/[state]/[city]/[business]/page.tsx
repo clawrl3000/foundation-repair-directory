@@ -53,6 +53,7 @@ interface BusinessData {
   is_verified: boolean
   year_established?: number
   email?: string
+  zip?: string
   bbb_data?: BBBData
   city: {
     name: string
@@ -258,7 +259,7 @@ export default async function BusinessPage({ params }: Props) {
     notFound()
   }
 
-  const { name, description, phone, website_url, address, latitude, longitude, rating, review_count, is_verified, year_established, city: cityInfo, services, features, reviews, images } = businessData
+  const { name, description, phone, website_url, address, latitude, longitude, rating, review_count, is_verified, year_established, city: cityInfo, services, features, reviews, images, zip: businessZip } = businessData
   
   // Generate structured data
   const breadcrumbs = [
@@ -627,7 +628,7 @@ export default async function BusinessPage({ params }: Props) {
                 </div>
               </div>
               <div className="animate-on-scroll">
-                <QuoteWizard state={state} stateName={cityInfo.state.name} />
+                <QuoteWizard state={state} stateName={cityInfo.state.name} defaultZip={businessZip || undefined} />
               </div>
             </div>
           </div>
