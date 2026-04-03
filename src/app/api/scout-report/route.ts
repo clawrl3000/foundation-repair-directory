@@ -189,21 +189,33 @@ LOCAL COST DATA:
 LOCAL CONTRACTORS (researched from their actual websites):
 ${contractorList || 'No contractors found in immediate area — we recommend searching nearby cities.'}
 
-Write a personalized Scout Report with these sections:
+Write a personalized Scout Report. Use EXACTLY these section headers on their own line, in ALL CAPS:
 
-1. GREETING — Address them by first name, acknowledge their specific issues warmly.
+GREETING
+(Address them by first name, 1-2 warm sentences acknowledging their specific issues.)
 
-2. YOUR SITUATION — Explain what their reported issues likely mean in plain language. Be honest about severity based on urgency level. Include what could happen if left unaddressed.
+YOUR SITUATION
+(Explain what their reported issues likely mean in plain language. Be honest about severity. 2-3 paragraphs max.)
 
-3. ESTIMATED COSTS — Give realistic cost ranges for THEIR specific issues using the local data. Explain what factors affect the price (home size, soil type, repair method, accessibility).
+ESTIMATED COSTS
+(Brief paragraph about cost factors specific to their situation — home size, soil type, repair method. Keep it short — we display the actual numbers separately.)
 
-4. YOUR LOCAL CONTRACTORS — This is the most valuable section. For each contractor, write a 2-3 sentence mini-profile based on REAL data from their website. Mention specific services they offer that match the homeowner's issues. Note if they offer free inspections, warranties, years of experience, or certifications. Include their phone number. Explain WHY each one might be a good fit for this specific homeowner's situation. If a contractor offers services that directly match the reported issues, call that out explicitly.
+YOUR LOCAL CONTRACTORS
+(Skip this section entirely — just write "See comparison below." We generate this section automatically from structured data.)
 
-5. QUESTIONS TO ASK — Give 5 specific questions they should ask every contractor, tailored to their reported issues (not generic).
+QUESTIONS TO ASK
+(5 specific numbered questions they should ask contractors, tailored to their reported issues. Not generic.)
 
-6. NEXT STEPS — Clear action items based on their urgency level. If any contractor offers free inspections, suggest starting there.
+NEXT STEPS
+(3-4 clear action items based on their urgency level. If any contractor offers free inspections, mention that.)
 
-Keep the total report under 800 words. Be genuinely helpful — this person is worried about their home. The contractor section should feel like a knowledgeable friend did research for them, not like a generic directory listing.`
+IMPORTANT FORMATTING RULES:
+- Each section header must be on its own line, ALL CAPS, no extra punctuation
+- Use **bold** for emphasis sparingly
+- Use numbered lists (1. 2. 3.) for questions and steps
+- Separate paragraphs with blank lines
+- Keep total under 500 words (the contractor comparison grid is added separately)
+- Be genuinely helpful — this person is worried about their home`
 
   const response = await openai.chat.completions.create({
     model: 'gpt-4o-mini',
@@ -215,48 +227,213 @@ Keep the total report under 800 words. Be genuinely helpful — this person is w
 }
 
 // ── Format report as HTML email ─────────────────────────────────────────────
-function formatReportEmail(reportText: string, data: { name: string; issues: string; zip: string; state: string }) {
-  // Convert plain text to HTML paragraphs
-  const htmlBody = reportText
-    .split('\n\n')
-    .map(para => {
-      // Bold text marked with **
-      const formatted = para.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-      // Numbered lists
-      if (/^\d+\./.test(formatted)) {
-        return `<p style="margin: 0 0 8px 0; padding-left: 16px;">${formatted}</p>`
+function formatReportEmail(
+  reportText: string,
+  data: {
+    name: string
+    issues: string
+    zip: string
+    state: string
+    contractors: ContractorProfile[]
+    costData: typeof STATE_COST_DATA['IL']
+  }
+) {
+  // Convert plain text sections to structured HTML
+  const sections = reportText.split('\n\n')
+  let htmlBody = ''
+  let currentSection = ''
+
+  for (const para of sections) {
+    const formatted = para.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+
+    // Detect section headers (all caps labels like "YOUR SITUATION", "ESTIMATED COSTS", etc.)
+    const sectionMatch = para.match(/^(GREETING|YOUR SITUATION|ESTIMATED COSTS|YOUR LOCAL CONTRACTORS|QUESTIONS TO ASK|NEXT STEPS)\s*[-—:]?\s*/i)
+    if (sectionMatch) {
+      currentSection = sectionMatch[1].toUpperCase()
+      // Skip the "YOUR LOCAL CONTRACTORS" header — we replace it with our grid
+      if (currentSection === 'YOUR LOCAL CONTRACTORS') continue
+      const sectionLabel = formatted.replace(/^[A-Z\s/]+\s*[-—:]?\s*/, '')
+      const icons: Record<string, string> = {
+        'GREETING': '👋',
+        'YOUR SITUATION': '🏠',
+        'ESTIMATED COSTS': '💰',
+        'QUESTIONS TO ASK': '❓',
+        'NEXT STEPS': '✅',
       }
-      return `<p style="margin: 0 0 16px 0; line-height: 1.6; color: #334155;">${formatted}</p>`
-    })
-    .join('')
+      const icon = icons[currentSection] || '📋'
+      if (sectionLabel.trim()) {
+        htmlBody += `<h2 style="margin: 28px 0 12px; font-size: 18px; font-weight: 700; color: #0f172a; border-bottom: 2px solid #f59e0b; padding-bottom: 8px;">${icon} ${currentSection}</h2>`
+        htmlBody += `<p style="margin: 0 0 16px; line-height: 1.7; color: #334155; font-size: 15px;">${sectionLabel}</p>`
+      } else {
+        htmlBody += `<h2 style="margin: 28px 0 12px; font-size: 18px; font-weight: 700; color: #0f172a; border-bottom: 2px solid #f59e0b; padding-bottom: 8px;">${icon} ${currentSection}</h2>`
+      }
+      continue
+    }
+
+    // Skip individual contractor paragraphs from AI — we use the grid instead
+    if (currentSection === 'YOUR LOCAL CONTRACTORS') continue
+
+    // Numbered list items (questions, steps)
+    if (/^\d+\./.test(formatted)) {
+      htmlBody += `<p style="margin: 0 0 10px; padding-left: 8px; line-height: 1.7; color: #334155; font-size: 15px; border-left: 3px solid #e2e8f0; padding: 4px 0 4px 12px;">${formatted}</p>`
+    } else {
+      htmlBody += `<p style="margin: 0 0 16px; line-height: 1.7; color: #334155; font-size: 15px;">${formatted}</p>`
+    }
+  }
+
+  // ── Build the Contractor Comparison Grid ──────────────────────────────────
+  const contractors = data.contractors.slice(0, 5) // Top 5
+  let comparisonGrid = ''
+
+  if (contractors.length > 0) {
+    // Section header
+    comparisonGrid += `<h2 style="margin: 28px 0 12px; font-size: 18px; font-weight: 700; color: #0f172a; border-bottom: 2px solid #f59e0b; padding-bottom: 8px;">🏗️ YOUR LOCAL CONTRACTORS — AT A GLANCE</h2>`
+    comparisonGrid += `<p style="margin: 0 0 16px; color: #64748b; font-size: 13px;">Compare your top-rated local contractors side by side.</p>`
+
+    // Build individual contractor cards (stacked — email-safe, mobile-friendly)
+    for (const c of contractors) {
+      const stars = c.rating ? '⭐'.repeat(Math.round(c.rating)) : '—'
+      const ratingText = c.rating ? `${c.rating}/5` : 'N/A'
+      const reviewText = c.review_count ? `(${c.review_count} reviews)` : ''
+      const services = c.services.slice(0, 3).join(' · ') || '—'
+      const freeInspection = c.free_inspection ? '✅ Yes' : '—'
+      const warranty = c.warranty_info || '—'
+      const experience = c.years_in_business || '—'
+      const certs = c.certifications.slice(0, 2).join(', ') || '—'
+
+      comparisonGrid += `
+      <div style="border: 1px solid #e2e8f0; border-radius: 8px; margin-bottom: 12px; overflow: hidden;">
+        <!-- Contractor name bar -->
+        <div style="background: #0f172a; padding: 12px 16px;">
+          <h3 style="margin: 0; color: #f59e0b; font-size: 16px; font-weight: 700;">${c.name}</h3>
+          <div style="margin-top: 4px;">
+            <span style="color: #fbbf24; font-size: 13px;">${stars}</span>
+            <span style="color: #94a3b8; font-size: 13px; margin-left: 6px;">${ratingText} ${reviewText}</span>
+          </div>
+        </div>
+        <!-- Details grid -->
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-collapse: collapse;">
+          <tr>
+            <td style="padding: 10px 16px; border-bottom: 1px solid #f1f5f9; width: 40%; vertical-align: top;">
+              <span style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: #94a3b8; font-weight: 600;">Phone</span><br>
+              <span style="font-size: 14px; color: #0f172a; font-weight: 600;">${c.phone ? `<a href="tel:${c.phone}" style="color: #0f172a; text-decoration: none;">${c.phone}</a>` : '—'}</span>
+            </td>
+            <td style="padding: 10px 16px; border-bottom: 1px solid #f1f5f9; width: 60%; vertical-align: top;">
+              <span style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: #94a3b8; font-weight: 600;">Free Inspection</span><br>
+              <span style="font-size: 14px; color: #0f172a; font-weight: 600;">${freeInspection}</span>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding: 10px 16px; border-bottom: 1px solid #f1f5f9; vertical-align: top;">
+              <span style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: #94a3b8; font-weight: 600;">Experience</span><br>
+              <span style="font-size: 14px; color: #334155;">${experience}</span>
+            </td>
+            <td style="padding: 10px 16px; border-bottom: 1px solid #f1f5f9; vertical-align: top;">
+              <span style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: #94a3b8; font-weight: 600;">Warranty</span><br>
+              <span style="font-size: 14px; color: #334155;">${warranty}</span>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2" style="padding: 10px 16px; border-bottom: 1px solid #f1f5f9; vertical-align: top;">
+              <span style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: #94a3b8; font-weight: 600;">Services</span><br>
+              <span style="font-size: 14px; color: #334155;">${services}</span>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2" style="padding: 10px 16px; vertical-align: top;">
+              <span style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: #94a3b8; font-weight: 600;">Credentials</span><br>
+              <span style="font-size: 14px; color: #334155;">${certs}</span>
+            </td>
+          </tr>
+        </table>
+        ${c.website_url ? `<div style="padding: 10px 16px; background: #f8fafc; text-align: center;"><a href="${c.website_url}" style="color: #f59e0b; font-size: 13px; font-weight: 600; text-decoration: none;">Visit Website →</a></div>` : ''}
+      </div>`
+    }
+  }
+
+  // ── Cost Summary Card ─────────────────────────────────────────────────────
+  const costCard = `
+    <div style="background: linear-gradient(135deg, #fffbeb, #fef3c7); border: 1px solid #fbbf24; border-radius: 8px; padding: 20px; margin: 20px 0;">
+      <h3 style="margin: 0 0 12px; font-size: 16px; font-weight: 700; color: #92400e;">💰 ${data.state} Cost Estimates</h3>
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-collapse: collapse;">
+        <tr>
+          <td style="padding: 6px 0; font-size: 13px; color: #78350f; font-weight: 600;">Average Repair</td>
+          <td style="padding: 6px 0; font-size: 14px; color: #0f172a; font-weight: 700; text-align: right;">${data.costData.avg}</td>
+        </tr>
+        <tr>
+          <td style="padding: 6px 0; font-size: 13px; color: #78350f; border-top: 1px solid #fde68a;">Typical Range</td>
+          <td style="padding: 6px 0; font-size: 14px; color: #0f172a; font-weight: 700; text-align: right; border-top: 1px solid #fde68a;">${data.costData.range}</td>
+        </tr>
+        <tr>
+          <td style="padding: 6px 0; font-size: 13px; color: #78350f; border-top: 1px solid #fde68a;">Pier Install</td>
+          <td style="padding: 6px 0; font-size: 14px; color: #0f172a; font-weight: 700; text-align: right; border-top: 1px solid #fde68a;">${data.costData.pier}</td>
+        </tr>
+        <tr>
+          <td style="padding: 6px 0; font-size: 13px; color: #78350f; border-top: 1px solid #fde68a;">Crack Repair</td>
+          <td style="padding: 6px 0; font-size: 14px; color: #0f172a; font-weight: 700; text-align: right; border-top: 1px solid #fde68a;">${data.costData.crack}</td>
+        </tr>
+        <tr>
+          <td style="padding: 6px 0; font-size: 13px; color: #78350f; border-top: 1px solid #fde68a;">Waterproofing</td>
+          <td style="padding: 6px 0; font-size: 14px; color: #0f172a; font-weight: 700; text-align: right; border-top: 1px solid #fde68a;">${data.costData.waterproof}</td>
+        </tr>
+      </table>
+    </div>`
+
+  // ── Inject the grid into the HTML body ────────────────────────────────────
+  // Find the ESTIMATED COSTS section and insert cost card after it
+  // Then find where contractors section would be and insert grid
+  // Simple approach: insert grid after the main body, before footer-ish content
+  const bodyWithCostCard = htmlBody.replace(
+    /(<h2[^>]*>💰 ESTIMATED COSTS<\/h2>)/,
+    `$1${costCard}`
+  )
+
+  // Insert contractor grid after cost-related content
+  const contractorInsertPoint = bodyWithCostCard.indexOf('🏗️ YOUR LOCAL CONTRACTORS')
+  let finalBody: string
+  if (contractorInsertPoint === -1) {
+    // If the AI didn't output a contractor section header, append grid before questions
+    const questionsPoint = bodyWithCostCard.indexOf('❓ QUESTIONS TO ASK')
+    if (questionsPoint !== -1) {
+      finalBody = bodyWithCostCard.slice(0, questionsPoint) + comparisonGrid + bodyWithCostCard.slice(questionsPoint)
+    } else {
+      finalBody = bodyWithCostCard + comparisonGrid
+    }
+  } else {
+    finalBody = bodyWithCostCard
+  }
 
   return `<!DOCTYPE html>
 <html>
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width"></head>
-<body style="margin: 0; padding: 0; background-color: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
-  <div style="max-width: 600px; margin: 0 auto; padding: 24px;">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"></head>
+<body style="margin: 0; padding: 0; background-color: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; -webkit-font-smoothing: antialiased;">
+  <div style="max-width: 600px; margin: 0 auto; padding: 24px 16px;">
     <!-- Header -->
-    <div style="background: linear-gradient(135deg, #0f172a, #1e293b); border-radius: 12px 12px 0 0; padding: 32px; text-align: center;">
-      <h1 style="margin: 0; color: #f59e0b; font-size: 28px; font-weight: 800;">🔍 Your Scout Report</h1>
-      <p style="margin: 8px 0 0; color: #94a3b8; font-size: 14px;">Personalized Foundation Repair Analysis</p>
+    <div style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); border-radius: 12px 12px 0 0; padding: 36px 32px; text-align: center;">
+      <h1 style="margin: 0; color: #f59e0b; font-size: 26px; font-weight: 800; letter-spacing: -0.5px;">🔍 Your Scout Report</h1>
+      <p style="margin: 8px 0 0; color: #94a3b8; font-size: 14px; letter-spacing: 0.3px;">Personalized Foundation Repair Analysis for <strong style="color: #cbd5e1;">${data.name}</strong></p>
+      <div style="margin-top: 12px; display: inline-block; background: rgba(245,158,11,0.15); border: 1px solid rgba(245,158,11,0.3); border-radius: 20px; padding: 4px 14px;">
+        <span style="font-size: 12px; color: #fbbf24; font-weight: 600;">📍 ZIP ${data.zip} · ${data.state}</span>
+      </div>
     </div>
     
     <!-- Body -->
-    <div style="background: white; padding: 32px; border: 1px solid #e2e8f0; border-top: none;">
-      ${htmlBody}
+    <div style="background: white; padding: 32px 28px; border: 1px solid #e2e8f0; border-top: none;">
+      ${finalBody}
     </div>
     
     <!-- Footer -->
     <div style="background: #f1f5f9; border-radius: 0 0 12px 12px; padding: 24px; text-align: center; border: 1px solid #e2e8f0; border-top: none;">
-      <p style="margin: 0 0 8px; color: #64748b; font-size: 13px;">
+      <p style="margin: 0 0 8px; color: #64748b; font-size: 13px; line-height: 1.5;">
         This report was generated by <strong>FoundationScout</strong> based on your submitted information.
       </p>
-      <p style="margin: 0 0 8px; color: #64748b; font-size: 13px;">
-        Cost estimates are approximations and may vary based on your specific situation.
+      <p style="margin: 0 0 12px; color: #64748b; font-size: 13px; line-height: 1.5;">
+        Cost estimates are approximations. Get 2-3 quotes for the most accurate pricing.
       </p>
-      <a href="https://foundationscout.com" style="color: #f59e0b; text-decoration: none; font-weight: 600; font-size: 14px;">
-        foundationscout.com
+      <a href="https://foundationscout.com" style="display: inline-block; background: #f59e0b; color: #0f172a; text-decoration: none; font-weight: 700; font-size: 14px; padding: 10px 24px; border-radius: 6px;">
+        Visit FoundationScout
       </a>
+      <p style="margin: 16px 0 0; color: #94a3b8; font-size: 11px;">© ${new Date().getFullYear()} FoundationScout · All rights reserved</p>
     </div>
   </div>
 </body>
@@ -415,7 +592,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Send the report to the user via email
-    const emailHtml = formatReportEmail(reportText, { name, issues, zip: zip_code, state: resolvedState })
+    const emailHtml = formatReportEmail(reportText, { name, issues, zip: zip_code, state: resolvedState, contractors: enrichedContractors, costData })
     const emailSent = await sendReportEmail(
       email,
       `🔍 Your Foundation Repair Scout Report — ${resolvedState}`,
