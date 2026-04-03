@@ -5,6 +5,7 @@ import { generateBreadcrumbSchema, jsonLdScript } from '@/lib/structured-data'
 import { notFound } from 'next/navigation'
 import StitchNav from '@/components/StitchNav'
 import StitchFooter from '@/components/StitchFooter'
+import QuoteWizard from '@/components/QuoteWizard'
 import BusinessImage from '@/components/BusinessImage'
 import CityBusinessMap from '@/components/CityBusinessMap'
 import BusinessCardActions from '@/components/BusinessCardActions'
@@ -741,6 +742,21 @@ export default async function CityPage({ params }: Props) {
                 </div>
               )}
             </div>
+          </div>
+        </section>
+
+        {/* Scout Report CTA */}
+        <section className="py-20 lg:py-24 bg-white border-t border-slate-200 animate-on-scroll">
+          <div className="mx-auto max-w-3xl px-6 lg:px-10">
+            <div className="text-center mb-8">
+              <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.15] text-slate-900 mb-4">
+                Get Your Scout Report for {cityInfo.name}
+              </h2>
+              <p className="text-slate-600 max-w-2xl mx-auto">
+                Get a personalized foundation repair analysis with cost estimates and contractor recommendations for your area.
+              </p>
+            </div>
+            <QuoteWizard state={state} stateName={stateInfo.name} />
           </div>
         </section>
       </main>

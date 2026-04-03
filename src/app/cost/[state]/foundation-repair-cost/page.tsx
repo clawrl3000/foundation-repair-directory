@@ -215,13 +215,13 @@ export default async function FoundationRepairCostPage({ params }: Props) {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
               {/* Left: value props */}
               <div className="animate-on-scroll">
-                <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.15] text-slate-900 mb-6">Get Free Estimates from {stateName} Contractors</h2>
+                <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.15] text-slate-900 mb-6">Get Estimates from {stateName} Contractors</h2>
                 <p className="text-slate-600 text-lg mb-8 leading-relaxed">
                   Tell us about your foundation issue and we&apos;ll connect you with licensed contractors in your area — no obligation, no cost.
                 </p>
                 <div className="space-y-5">
                   {[
-                    { icon: 'search', title: 'Free Inspection', desc: 'Professional assessment of your foundation at no cost' },
+                    { icon: 'search', title: 'Professional Assessment', desc: 'Expert evaluation of your foundation condition' },
                     { icon: 'calculate', title: 'Detailed Quote', desc: 'Itemized estimate with materials, labor, and timeline' },
                     { icon: 'compare', title: 'Compare Options', desc: 'Review multiple quotes to find the best value' },
                   ].map(item => (

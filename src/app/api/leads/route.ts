@@ -9,57 +9,24 @@ function getSupabase() {
   )
 }
 
-async function sendTelegramNotification(lead: Record<string, string>) {
-  const botToken = process.env.TELEGRAM_BOT_TOKEN
-  const chatId = process.env.TELEGRAM_CHAT_ID
-  if (!botToken || !chatId) return
-
-  const lines = [
-    `📋 *New Foundation Scout Lead*`,
-    ``,
-    `👤 *${lead.name}*`,
-    lead.email ? `📧 ${lead.email}` : '',
-    lead.phone ? `📞 ${lead.phone}` : '',
-    lead.zip_code ? `📍 ZIP: ${lead.zip_code}` : '',
-    lead.service_needed ? `🔧 Service: ${lead.service_needed}` : '',
-    lead.city ? `📍 City: ${lead.city}` : '',
-    lead.notes ? `\n💬 "${lead.notes}"` : '',
-    ``,
-    `🔗 Source: ${lead.source || 'website'}`,
-  ].filter(Boolean).join('\n')
-
-  try {
-    await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        chat_id: chatId,
-        text: lines,
-        parse_mode: 'Markdown',
-      }),
-    })
-  } catch (err) {
-    console.error('Telegram notification failed:', err)
-  }
-}
-
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
     
-    const { business_id, name, email, phone, service_needed, zip_code, city, state, notes, source } = body
+    const { business_id, name, email, service_needed, zip_code, city, state, notes, source } = body
 
-    if (!name || (!email && !phone)) {
-      return NextResponse.json({ error: 'Name and at least one contact method (email or phone) are required' }, { status: 400 })
+    if (!name || !email) {
+      return NextResponse.json({ error: 'Name and email are required' }, { status: 400 })
     }
 
     const supabase = getSupabase()
 
+    // Save the lead
     const { data, error } = await supabase.from('leads').insert({
       business_id: business_id || null,
       name,
       email,
-      phone: phone || null,
+      phone: null,
       service_needed: service_needed || null,
       zip_code: zip_code || null,
       city: city || null,
@@ -74,20 +41,40 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Failed to save lead' }, { status: 500 })
     }
 
-    console.log('New lead saved:', data?.[0])
+    const leadId = data?.[0]?.id
+    console.log('New lead saved:', leadId)
 
-    // Send Telegram notification (must await on serverless — Vercel kills process otherwise)
-    await sendTelegramNotification({
-      name, email, phone: phone || '',
-      service_needed: service_needed || '',
-      zip_code: zip_code || '', city: city || '',
-      notes: notes || '', source: 'website',
+    // Parse the urgency from notes (format: "Issues: X | Urgency: Y | From: Z")
+    const urgencyMatch = notes?.match(/Urgency:\s*([^|]+)/)
+    const urgency = urgencyMatch?.[1]?.trim() || 'Planning Ahead'
+
+    // Trigger Scout Report generation (fire and don't block the response)
+    // We use the internal API route — on Vercel this stays within the same process
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.VERCEL_URL 
+      ? `https://${process.env.VERCEL_URL}` 
+      : 'http://localhost:3000'
+    
+    // Fire scout report generation asynchronously
+    fetch(`${baseUrl}/api/scout-report`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        lead_id: leadId,
+        name,
+        email,
+        issues: service_needed || 'General foundation concerns',
+        urgency,
+        zip_code: zip_code || null,
+        state: state || null,
+      }),
+    }).catch(err => {
+      console.error('Scout report trigger failed:', err)
     })
 
     return NextResponse.json({ 
       success: true, 
-      message: 'Your request has been submitted! We\'ll connect you with contractors shortly.',
-      lead_id: data?.[0]?.id
+      message: 'Your Scout Report is being generated! Check your email in a few minutes.',
+      lead_id: leadId,
     })
   } catch (error) {
     console.error('Lead submission error:', error)

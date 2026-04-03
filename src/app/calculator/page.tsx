@@ -5,7 +5,7 @@ import CostCalculator from '@/components/CostCalculator'
 import { generateFAQSchema, jsonLdScript } from '@/lib/structured-data'
 
 export const metadata: Metadata = {
-  title: 'Foundation Repair Cost Calculator | Free Estimate Tool',
+  title: 'Foundation Repair Cost Calculator | Repair Estimate Tool',
   description:
     'Use our free foundation repair cost calculator to get an instant estimate. Enter your state, foundation type, and damage severity to see realistic 2026 pricing with labor, materials, and permit breakdowns.',
   keywords: [

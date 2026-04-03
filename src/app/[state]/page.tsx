@@ -5,6 +5,7 @@ import { generateBreadcrumbSchema, jsonLdScript } from '@/lib/structured-data'
 import { notFound } from 'next/navigation'
 import StitchNav from '@/components/StitchNav'
 import StitchFooter from '@/components/StitchFooter'
+import QuoteWizard from '@/components/QuoteWizard'
 import ExpertBio from '@/components/ExpertBio'
 import AnimatedFAQ from '@/components/AnimatedFAQ'
 
@@ -630,7 +631,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const finalTitle = metaOverride?.title 
     || (costRange 
       ? `${stateInfo.name} Foundation Repair Contractors (2026) | ${costRange}`
-      : `${stateInfo.name} Foundation Repair Contractors (2026) | Free Quotes`)
+      : `${stateInfo.name} Foundation Repair Contractors (2026) | Compare Estimates`)
   const finalDescription = metaOverride?.description 
     || (content 
       ? `Foundation problems in ${stateInfo.name}? Compare licensed contractors, read reviews, and get repair quotes. ${costRange ? `Average cost: ${costRange}.` : ''} Serving 50+ cities statewide.`
@@ -896,6 +897,21 @@ export default async function StatePage({ params }: Props) {
               ]}
               className="bg-white border border-slate-200 rounded-xl shadow-sm p-8 lg:p-12"
             />
+          </div>
+        </section>
+
+        {/* Scout Report CTA */}
+        <section className="py-20 lg:py-24 bg-white border-t border-slate-200 animate-on-scroll">
+          <div className="mx-auto max-w-3xl px-6 lg:px-10">
+            <div className="text-center mb-8">
+              <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.15] text-slate-900 mb-4">
+                Get Your {stateInfo.name} Scout Report
+              </h2>
+              <p className="text-slate-600 max-w-2xl mx-auto">
+                Get a personalized foundation repair analysis with cost estimates and contractor matches in {stateInfo.name}.
+              </p>
+            </div>
+            <QuoteWizard state={state} stateName={stateInfo.name} />
           </div>
         </section>
       </main>

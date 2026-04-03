@@ -6,8 +6,8 @@ import { supabaseAdmin } from '@/lib/supabase-admin'
 export const revalidate = 3600
 
 export const metadata: Metadata = {
-  title: 'Foundation Repair Contractors Near You | Free Quotes',
-  description: 'Compare foundation repair contractors nationwide. Get free estimates, read reviews, and connect with licensed pros. Average rating: 4.9/5 stars.',
+  title: 'Foundation Repair Contractors Near You | Compare Estimates',
+  description: 'Compare foundation repair contractors nationwide. Get your Scout Report with cost estimates, read reviews, and connect with licensed pros. Average rating: 4.9/5 stars.',
   alternates: {
     canonical: 'https://foundationscout.com',
   },

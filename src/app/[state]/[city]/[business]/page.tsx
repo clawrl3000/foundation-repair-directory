@@ -588,7 +588,7 @@ export default async function BusinessPage({ params }: Props) {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
               <div className="animate-on-scroll">
                 <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.15] text-slate-900 mb-6">
-                  Get a Free Estimate from {name}
+                  Request an Estimate from {name}
                 </h2>
                 <p className="text-slate-600 text-lg mb-8 leading-relaxed">
                   Tell us about your foundation issue and we&apos;ll connect you with {name} for a no-obligation assessment.

@@ -32,7 +32,7 @@ export default function QuoteWizardModal({ isOpen, onClose }: QuoteWizardModalPr
       className="fixed inset-0 z-[100] flex items-center justify-center p-4"
       role="dialog"
       aria-modal="true"
-      aria-label="Get a free quote"
+      aria-label="Get your Scout Report"
     >
       {/* Backdrop */}
       <div

@@ -54,7 +54,7 @@ export default function QuoteWizard({ state, stateName, defaultZip }: { state: s
       case 0: return issues.length > 0
       case 1: return urgency !== ''
       case 2: return /^\d{5}$/.test(zip) && !zipError
-      case 3: return name.trim() !== '' && (email.trim() !== '' || phone.trim() !== '')
+      case 3: return name.trim() !== '' && email.trim() !== ''
       default: return false
     }
   }
@@ -139,11 +139,11 @@ export default function QuoteWizard({ state, stateName, defaultZip }: { state: s
         <div className="inline-flex items-center justify-center size-16 rounded-full bg-emerald-100 mb-4">
           <span className="material-symbols-outlined text-4xl text-emerald-600">check_circle</span>
         </div>
-        <h3 className="font-display text-2xl font-bold text-slate-900 mb-2">You&apos;re All Set!</h3>
+        <h3 className="font-display text-2xl font-bold text-slate-900 mb-2">Your Scout Report is on the way!</h3>
         <p className="text-slate-600 mb-1">
-          We&apos;ll connect you with licensed foundation repair contractors{stateName ? ` in ${stateName}` : ' in your area'}.
+          We&apos;re generating your personalized foundation repair analysis{stateName ? ` for ${stateName}` : ''} right now.
         </p>
-        <p className="text-sm text-slate-500">Expect to hear back within 24 hours.</p>
+        <p className="text-sm text-slate-500">Check your email — it&apos;ll arrive within a few minutes.</p>
       </div>
     )
   }
@@ -154,7 +154,7 @@ export default function QuoteWizard({ state, stateName, defaultZip }: { state: s
       <div className="px-6 pt-6 pb-4 border-b border-slate-100">
         <div className="flex items-center gap-2 mb-3">
           <span className="material-symbols-outlined text-amber-600">request_quote</span>
-          <h3 className="font-display text-xl font-bold text-slate-900">Get Your Free Quote</h3>
+          <h3 className="font-display text-xl font-bold text-slate-900">Get Your Scout Report</h3>
         </div>
         <div className="flex items-center gap-3">
           <div className="flex-1 h-2 bg-slate-100 rounded-full overflow-hidden">
@@ -276,8 +276,8 @@ export default function QuoteWizard({ state, stateName, defaultZip }: { state: s
         {/* Step 3: Contact info */}
         {step === 3 && (
           <div>
-            <h4 className="text-lg font-semibold text-slate-900 mb-1">How can contractors reach you?</h4>
-            <p className="text-sm text-slate-500 mb-5">Provide at least an email or phone number.</p>
+            <h4 className="text-lg font-semibold text-slate-900 mb-1">Where should we send your Scout Report?</h4>
+            <p className="text-sm text-slate-500 mb-5">We&apos;ll email your personalized repair analysis within minutes.</p>
             <div className="space-y-4 max-w-sm">
               <div>
                 <label htmlFor="quote-name" className="block text-sm font-medium text-slate-700 mb-1">Name *</label>
@@ -292,7 +292,7 @@ export default function QuoteWizard({ state, stateName, defaultZip }: { state: s
                 />
               </div>
               <div>
-                <label htmlFor="quote-email" className="block text-sm font-medium text-slate-700 mb-1">Email</label>
+                <label htmlFor="quote-email" className="block text-sm font-medium text-slate-700 mb-1">Email *</label>
                 <input
                   id="quote-email"
                   type="email"
@@ -303,21 +303,6 @@ export default function QuoteWizard({ state, stateName, defaultZip }: { state: s
                   autoComplete="email"
                 />
               </div>
-              <div>
-                <label htmlFor="quote-phone" className="block text-sm font-medium text-slate-700 mb-1">Phone</label>
-                <input
-                  id="quote-phone"
-                  type="tel"
-                  value={phone}
-                  onChange={e => setPhone(e.target.value)}
-                  placeholder="(555) 123-4567"
-                  className="w-full px-4 py-3 border border-slate-300 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent bg-white"
-                  autoComplete="tel"
-                />
-              </div>
-              {!email.trim() && !phone.trim() && (
-                <p className="text-xs text-slate-400">* Please provide at least one contact method</p>
-              )}
             </div>
           </div>
         )}
@@ -361,7 +346,7 @@ export default function QuoteWizard({ state, stateName, defaultZip }: { state: s
             </>
           ) : step === totalSteps - 1 ? (
             <>
-              Get My Quote
+              Get My Scout Report
               <span className="material-symbols-outlined text-lg">send</span>
             </>
           ) : (

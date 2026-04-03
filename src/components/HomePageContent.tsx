@@ -84,7 +84,7 @@ export default function HomePageContent({ featuredBusinesses, onOpenLeadForm, fa
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
             {[
               { number: '01', title: 'Describe Your Issue', desc: 'Tell us what\'s going on — takes 2 minutes.', icon: 'edit_note' },
-              { number: '02', title: 'Compare Quotes', desc: 'Get up to 3 free estimates. No obligation.', icon: 'compare' },
+              { number: '02', title: 'Compare Quotes', desc: 'Get up to 3 estimates. No obligation.', icon: 'compare' },
               { number: '03', title: 'Hire & Fix', desc: 'Choose your contractor. Get it done right.', icon: 'construction' },
             ].map((step, i) => (
               <div key={i} className={`text-center group animate-on-scroll relative`}>
@@ -130,7 +130,7 @@ export default function HomePageContent({ featuredBusinesses, onOpenLeadForm, fa
             >
               <span className="inline-flex items-center gap-3 bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold py-4 px-10 rounded-xl text-xl transition-all duration-300 transform group-hover:scale-105 shadow-lg group-hover:shadow-2xl hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98]">
                 <span className="material-symbols-outlined text-2xl group-hover:scale-110 transition-transform" aria-hidden="true">request_quote</span>
-                Get Your Free Quote
+                Get Your Scout Report
               </span>
               <span className="text-xs text-slate-400 mt-1">Takes 2 minutes &middot; No obligation</span>
             </button>

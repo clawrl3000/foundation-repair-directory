@@ -20,10 +20,10 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL('https://foundationscout.com'),
   title: {
-    default: 'Foundation Repair Contractors Near You | Free Quotes',
+    default: 'Foundation Repair Contractors Near You | Compare Estimates',
     template: '%s | FoundationScout',
   },
-  description: 'Compare foundation repair contractors nationwide. Get free estimates, read reviews, and connect with licensed pros. Average rating: 4.9/5 stars.',
+  description: 'Compare foundation repair contractors nationwide. Get your Scout Report with cost estimates, read reviews, and connect with licensed pros. Average rating: 4.9/5 stars.',
   keywords: [
     'foundation repair',
     'foundation contractors',

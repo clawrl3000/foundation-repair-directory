@@ -5,8 +5,7 @@ import Image from 'next/image'
 import AnimatedSearchForm from '@/components/AnimatedSearchForm'
 import SmoothCounter from '@/components/SmoothCounter'
 
-const PHONE_NUMBER = '(630) 407-1727'
-const PHONE_HREF = 'tel:+16304071727'
+// Phone CTA removed — Scout Report is the primary conversion path
 
 interface HomeHeroSectionProps {
   onOpenLeadForm: () => void
@@ -70,7 +69,7 @@ export default function HomeHeroSection({ onOpenLeadForm }: HomeHeroSectionProps
             <p className={`text-lg font-medium lg:text-xl text-slate-300 leading-relaxed max-w-xl transition-all duration-600 ease-[cubic-bezier(0.16,1,0.3,1)] delay-[400ms] ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
             }`}>
-              Compare quotes from licensed contractors. Free estimates in minutes, not days.
+              Compare quotes from licensed contractors. Estimates in minutes, not days.
             </p>
 
             {/* Search Form + Phone CTA */}
@@ -86,22 +85,13 @@ export default function HomeHeroSection({ onOpenLeadForm }: HomeHeroSectionProps
                   <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">or</span>
                   <div className="h-px flex-1 bg-slate-700/50" />
                 </div>
-                <div className="flex flex-col sm:flex-row gap-3">
-                  <button
-                    onClick={onOpenLeadForm}
-                    className="flex-1 flex items-center justify-center gap-2.5 bg-amber-500 hover:bg-amber-600 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] text-slate-900 font-bold py-3.5 px-6 rounded-xl text-base transition-all duration-300 group shadow-lg shadow-amber-500/20"
-                  >
-                    <span className="material-symbols-outlined text-xl group-hover:scale-110 transition-transform" aria-hidden="true">request_quote</span>
-                    Get Free Quote
-                  </button>
-                  <a
-                    href={PHONE_HREF}
-                    className="flex-1 flex items-center justify-center gap-2.5 bg-slate-800/80 border border-slate-600 hover:border-amber-500/50 hover:bg-slate-800 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] text-white font-bold py-3.5 px-6 rounded-xl text-base transition-all duration-300 group"
-                  >
-                    <span className="material-symbols-outlined text-amber-400 text-xl group-hover:scale-110 transition-transform" aria-hidden="true">call</span>
-                    <span className="text-lg font-mono tracking-wide">{PHONE_NUMBER}</span>
-                  </a>
-                </div>
+                <button
+                  onClick={onOpenLeadForm}
+                  className="w-full flex items-center justify-center gap-2.5 bg-amber-500 hover:bg-amber-600 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] text-slate-900 font-bold py-4 px-6 rounded-xl text-lg transition-all duration-300 group shadow-lg shadow-amber-500/20"
+                >
+                  <span className="material-symbols-outlined text-xl group-hover:scale-110 transition-transform" aria-hidden="true">description</span>
+                  Get Your Scout Report
+                </button>
               </div>
             </div>
 
