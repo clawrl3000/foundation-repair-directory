@@ -288,13 +288,13 @@ export default async function BusinessPage({ params }: Props) {
       </nav>
 
       <main className="flex-1">
-        {/* Business Header */}
-        <section className="py-20 lg:py-24 bg-slate-50">
+        {/* Business Hero */}
+        <section className="py-12 lg:py-16 bg-slate-50">
           <div className="mx-auto max-w-7xl px-6 lg:px-10">
-            <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-8 lg:p-12">
-              <div className="flex flex-col lg:flex-row gap-8 items-start">
+            <div className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
+              <div className="flex flex-col lg:flex-row">
                 {/* Business Image */}
-                <div className="w-full lg:w-64 h-48 lg:h-64 rounded-xl overflow-hidden">
+                <div className="w-full lg:w-80 h-64 lg:h-auto flex-shrink-0">
                   <BusinessImage
                     businessId={businessData.id}
                     businessName={name}
@@ -306,85 +306,87 @@ export default async function BusinessPage({ params }: Props) {
                     size="large"
                   />
                 </div>
-                
+
                 {/* Business Info */}
-                <div className="flex-1">
-                  <div className="flex items-start justify-between mb-4">
-                    <div>
-                      <h1 className="font-display text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.1] text-slate-900 mb-2">{name}</h1>
-                      <p className="text-slate-600 mb-3">
-                        {address && `${address}, `}{cityInfo.name}, {cityInfo.state.abbreviation}
-                      </p>
-                      
-                      {/* Rating */}
-                      {rating && review_count > 0 && (
-                        <div className="flex items-center gap-3 mb-4">
-                          <div className="flex text-amber-500">
-                            {[...Array(5)].map((_, i) => (
-                              <span 
-                                key={i} 
-                                className={`material-symbols-outlined text-lg ${i < Math.round(rating) ? 'fill-1' : ''}`}
-                              >
-                                star
-                              </span>
-                            ))}
-                          </div>
-                          <span className="font-mono text-slate-600">
-                            {rating} ({review_count} reviews)
+                <div className="flex-1 p-8 lg:p-10">
+                  <h1 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.1] text-slate-900 mb-3">{name}</h1>
+
+                  <p className="text-slate-500 mb-4 flex items-center gap-1.5">
+                    <span className="material-symbols-outlined text-base">location_on</span>
+                    {address && `${address}, `}{cityInfo.name}, {cityInfo.state.abbreviation}
+                  </p>
+
+                  {/* Rating */}
+                  {rating && review_count > 0 && (
+                    <div className="flex items-center gap-3 mb-5">
+                      <div className="flex text-amber-500">
+                        {[...Array(5)].map((_, i) => (
+                          <span
+                            key={i}
+                            className={`material-symbols-outlined text-xl ${i < Math.round(rating) ? 'fill-1' : ''}`}
+                          >
+                            star
                           </span>
-                        </div>
-                      )}
-                      
-                      {/* Badges */}
-                      <div className="flex flex-wrap gap-2 mb-4">
-                        {is_verified && (
-                          <span className="px-3 py-1 bg-green-100 text-green-700 text-sm rounded-full border border-green-200">
-                            ✓ Verified Business
-                          </span>
-                        )}
-                        {year_established && (
-                          <span className="px-3 py-1 bg-slate-100 text-slate-700 text-sm rounded-full border border-slate-200">
-                            Est. {year_established}
-                          </span>
-                        )}
-                        {businessData.bbb_data?.rating && (
-                          <span className="px-3 py-1 bg-blue-100 text-blue-700 text-sm rounded-full border border-blue-200">
-                            BBB {businessData.bbb_data.rating}
-                          </span>
-                        )}
-                        {businessData.bbb_data?.is_accredited && (
-                          <span className="px-3 py-1 bg-indigo-100 text-indigo-700 text-sm rounded-full border border-indigo-200">
-                            BBB Accredited {businessData.bbb_data.years_accredited && `${businessData.bbb_data.years_accredited} Years`}
-                          </span>
-                        )}
+                        ))}
                       </div>
+                      <span className="font-mono text-slate-600">
+                        {rating} ({review_count} reviews)
+                      </span>
                     </div>
+                  )}
+
+                  {/* Badges */}
+                  <div className="flex flex-wrap gap-2 mb-5">
+                    {is_verified && (
+                      <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-green-50 text-green-700 text-sm font-medium rounded-full border border-green-200">
+                        <span className="material-symbols-outlined text-sm fill-1">verified</span>
+                        Verified
+                      </span>
+                    )}
+                    {year_established && (
+                      <span className="px-3 py-1.5 bg-slate-100 text-slate-700 text-sm font-medium rounded-full border border-slate-200">
+                        Est. {year_established}
+                      </span>
+                    )}
+                    {businessData.bbb_data?.rating && (
+                      <span className="px-3 py-1.5 bg-blue-50 text-blue-700 text-sm font-medium rounded-full border border-blue-200">
+                        BBB {businessData.bbb_data.rating}
+                      </span>
+                    )}
+                    {businessData.bbb_data?.is_accredited && (
+                      <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-indigo-50 text-indigo-700 text-sm font-medium rounded-full border border-indigo-200">
+                        <span className="material-symbols-outlined text-sm">workspace_premium</span>
+                        BBB Accredited{businessData.bbb_data.years_accredited ? ` ${businessData.bbb_data.years_accredited}yr` : ''}
+                      </span>
+                    )}
                   </div>
-                  
+
                   {/* Description */}
                   {description && (
-                    <p className="text-slate-600 leading-relaxed mb-6">{description}</p>
+                    <p className="text-slate-600 leading-relaxed mb-8">{description}</p>
                   )}
-                  
-                  {/* Contact Actions */}
-                  <div className="flex flex-col sm:flex-row gap-3">
-                    <a href="#get-estimate" className="flex-1 text-center rounded-lg bg-amber-500 py-4 px-6 text-base font-bold text-white transition-colors hover:bg-amber-600">
+
+                  {/* Action Buttons */}
+                  <div className="flex flex-col sm:flex-row gap-3" id="get-estimate">
+                    <a href="#contact" className="flex-1 inline-flex items-center justify-center gap-2 rounded-lg bg-amber-500 py-3.5 px-6 text-base font-bold text-white transition-colors hover:bg-amber-600 shadow-sm">
+                      <span className="material-symbols-outlined text-lg">request_quote</span>
                       Get Estimate
                     </a>
                     {phone && (
-                      <a 
+                      <a
                         href={`tel:${phone}`}
-                        className="flex-1 text-center border border-blue-500 text-blue-600 px-6 py-4 rounded-lg text-base font-bold hover:bg-blue-50 transition-colors"
+                        className="flex-1 inline-flex items-center justify-center gap-2 rounded-lg border-2 border-slate-300 bg-white px-6 py-3.5 text-base font-bold text-slate-800 hover:border-amber-400 hover:text-amber-600 transition-colors"
                       >
+                        <span className="material-symbols-outlined text-lg">phone</span>
                         {phone}
                       </a>
                     )}
                     {website_url && (
-                      <a 
+                      <a
                         href={website_url}
                         target="_blank"
                         rel="nofollow noopener noreferrer"
-                        className="flex-1 flex items-center justify-center gap-2 rounded-lg border border-slate-300 bg-slate-50 px-6 py-4 text-slate-700 font-bold hover:bg-slate-100 transition-colors"
+                        className="flex-1 inline-flex items-center justify-center gap-2 rounded-lg border-2 border-slate-300 bg-white px-6 py-3.5 text-base font-bold text-slate-800 hover:border-amber-400 hover:text-amber-600 transition-colors"
                       >
                         <span className="material-symbols-outlined text-lg">open_in_new</span>
                         Visit Website
@@ -397,123 +399,133 @@ export default async function BusinessPage({ params }: Props) {
           </div>
         </section>
 
-        {/* Services & Features */}
-        <section className="py-20 lg:py-24 bg-white border-y border-slate-200">
+        {/* Services, Features & BBB */}
+        <section className="py-16 lg:py-20 bg-white border-b border-slate-200">
           <div className="mx-auto max-w-7xl px-6 lg:px-10">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 animate-on-scroll">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {/* Services */}
-              <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-8">
-                <h2 className="font-display text-2xl font-bold text-slate-900 mb-6">Our Services</h2>
-                <div className="space-y-4">
+              <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-8 hover:shadow-md transition-shadow">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="size-10 rounded-lg bg-amber-100 border border-amber-200 flex items-center justify-center">
+                    <span className="material-symbols-outlined text-amber-600">construction</span>
+                  </div>
+                  <h2 className="font-display text-xl font-bold text-slate-900">Our Services</h2>
+                </div>
+                <div className="space-y-3">
                   {services.map((service) => (
-                    <div key={service.slug} className="flex items-center gap-3 p-4 bg-slate-50 border border-slate-200 rounded-lg">
-                      <span className="material-symbols-outlined text-amber-600">engineering</span>
-                      <span className="text-slate-900 font-medium">{service.name}</span>
+                    <div key={service.slug} className="flex items-center gap-3 p-3.5 bg-slate-50 border border-slate-100 rounded-lg">
+                      <span className="material-symbols-outlined text-amber-500 text-lg">engineering</span>
+                      <span className="text-slate-800 font-medium text-sm">{service.name}</span>
                     </div>
                   ))}
+                  {services.length === 0 && (
+                    <p className="text-slate-500 text-sm">Services information coming soon.</p>
+                  )}
                 </div>
               </div>
-              
+
               {/* Features */}
-              <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-8">
-                <h2 className="font-display text-2xl font-bold text-slate-900 mb-6">Why Choose Us</h2>
-                <div className="space-y-4">
+              <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-8 hover:shadow-md transition-shadow">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="size-10 rounded-lg bg-green-100 border border-green-200 flex items-center justify-center">
+                    <span className="material-symbols-outlined text-green-600">verified</span>
+                  </div>
+                  <h2 className="font-display text-xl font-bold text-slate-900">Why Choose Us</h2>
+                </div>
+                <div className="space-y-3">
                   {features.map((feature) => (
-                    <div key={feature.slug} className="flex items-center gap-3 p-4 bg-slate-50 border border-slate-200 rounded-lg">
-                      <div className="size-8 rounded-full bg-green-100 border border-green-200 flex items-center justify-center">
-                        <span className="material-symbols-outlined text-green-600 text-lg">check</span>
-                      </div>
-                      <span className="text-slate-900 font-medium">{feature.name}</span>
+                    <div key={feature.slug} className="flex items-center gap-3 p-3.5 bg-slate-50 border border-slate-100 rounded-lg">
+                      <span className="material-symbols-outlined text-green-500 text-lg">check_circle</span>
+                      <span className="text-slate-800 font-medium text-sm">{feature.name}</span>
                     </div>
                   ))}
+                  {features.length === 0 && (
+                    <p className="text-slate-500 text-sm">Features information coming soon.</p>
+                  )}
                 </div>
               </div>
 
               {/* BBB Information */}
-              {businessData.bbb_data && (businessData.bbb_data.rating || businessData.bbb_data.is_accredited) && (
-                <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-8">
-                  <div className="flex items-center gap-3 mb-6">
-                    <div className="size-12 rounded-full bg-blue-100 border border-blue-200 flex items-center justify-center">
-                      <span className="text-blue-600 font-bold text-lg">BBB</span>
-                    </div>
-                    <h2 className="font-display text-2xl font-bold text-slate-900">BBB Profile</h2>
+              <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-8 hover:shadow-md transition-shadow">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="size-10 rounded-lg bg-blue-100 border border-blue-200 flex items-center justify-center">
+                    <span className="text-blue-600 font-bold text-sm">BBB</span>
                   </div>
-                  <div className="space-y-4">
+                  <h2 className="font-display text-xl font-bold text-slate-900">BBB Profile</h2>
+                </div>
+                {businessData.bbb_data && (businessData.bbb_data.rating || businessData.bbb_data.is_accredited) ? (
+                  <div className="space-y-3">
                     {businessData.bbb_data.rating && (
-                      <div className="flex items-center gap-3 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-                        <div className="size-8 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-sm">
+                      <div className="flex items-center gap-3 p-3.5 bg-blue-50 border border-blue-100 rounded-lg">
+                        <div className="size-8 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-xs">
                           {businessData.bbb_data.rating}
                         </div>
-                        <span className="text-slate-900 font-medium">BBB Rating: {businessData.bbb_data.rating}</span>
+                        <span className="text-slate-800 font-medium text-sm">BBB Rating: {businessData.bbb_data.rating}</span>
                       </div>
                     )}
                     {businessData.bbb_data.is_accredited && (
-                      <div className="flex items-center gap-3 p-4 bg-indigo-50 border border-indigo-200 rounded-lg">
-                        <div className="size-8 rounded-full bg-indigo-100 border border-indigo-200 flex items-center justify-center">
-                          <span className="material-symbols-outlined text-indigo-600 text-lg">verified</span>
-                        </div>
+                      <div className="flex items-center gap-3 p-3.5 bg-indigo-50 border border-indigo-100 rounded-lg">
+                        <span className="material-symbols-outlined text-indigo-500 text-lg">workspace_premium</span>
                         <div>
-                          <span className="text-slate-900 font-medium block">BBB Accredited Business</span>
+                          <span className="text-slate-800 font-medium text-sm block">BBB Accredited</span>
                           {businessData.bbb_data.years_accredited && (
-                            <span className="text-slate-600 text-sm">Accredited for {businessData.bbb_data.years_accredited} years</span>
+                            <span className="text-slate-500 text-xs">Accredited for {businessData.bbb_data.years_accredited} years</span>
                           )}
                         </div>
                       </div>
                     )}
                     {typeof businessData.bbb_data.complaint_count === 'number' && (
-                      <div className="flex items-center gap-3 p-4 bg-slate-50 border border-slate-200 rounded-lg">
-                        <div className="size-8 rounded-full bg-green-100 border border-green-200 flex items-center justify-center">
-                          <span className="material-symbols-outlined text-green-600 text-lg">info</span>
-                        </div>
-                        <span className="text-slate-900 font-medium">
-                          {businessData.bbb_data.complaint_count} complaints in last 3 years
+                      <div className="flex items-center gap-3 p-3.5 bg-slate-50 border border-slate-100 rounded-lg">
+                        <span className="material-symbols-outlined text-slate-400 text-lg">info</span>
+                        <span className="text-slate-800 font-medium text-sm">
+                          {businessData.bbb_data.complaint_count} complaint{businessData.bbb_data.complaint_count !== 1 ? 's' : ''} in last 3 years
                         </span>
                       </div>
                     )}
                     {businessData.bbb_data.profile_url && (
-                      <div className="pt-4 border-t border-slate-200">
-                        <a 
-                          href={businessData.bbb_data.profile_url}
-                          target="_blank"
-                          rel="nofollow noopener noreferrer"
-                          className="flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium"
-                        >
-                          <span className="material-symbols-outlined text-lg">open_in_new</span>
-                          View Full BBB Profile
-                        </a>
-                      </div>
+                      <a
+                        href={businessData.bbb_data.profile_url}
+                        target="_blank"
+                        rel="nofollow noopener noreferrer"
+                        className="flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium text-sm pt-3 border-t border-slate-100 mt-3"
+                      >
+                        <span className="material-symbols-outlined text-base">open_in_new</span>
+                        View Full BBB Profile
+                      </a>
                     )}
                   </div>
-                </div>
-              )}
+                ) : (
+                  <p className="text-slate-500 text-sm">BBB information not yet available for this business.</p>
+                )}
+              </div>
             </div>
           </div>
         </section>
 
-        {/* Reviews */}
+        {/* Customer Reviews */}
         {reviews && reviews.length > 0 && (
-          <section className="py-20 lg:py-24 bg-slate-50">
+          <section className="py-16 lg:py-20 bg-slate-50">
             <div className="mx-auto max-w-7xl px-6 lg:px-10">
-              <div className="text-center mb-12 animate-on-scroll">
-                <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.15] text-slate-900 mb-4">Customer Reviews</h2>
-                <p className="text-slate-600 text-lg">
-                  See what our customers are saying about {name}
+              <div className="text-center mb-10">
+                <h2 className="font-display text-3xl sm:text-4xl font-bold tracking-tight text-slate-900 mb-3">Customer Reviews</h2>
+                <p className="text-slate-500 text-lg">
+                  What customers are saying about {name}
                 </p>
               </div>
-              
-              <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 animate-on-scroll">
+
+              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
                 {reviews.slice(0, 6).map((review) => (
-                  <div 
-                    key={review.id} 
-                    className="bg-white border border-slate-200 rounded-xl shadow-sm p-6 hover:shadow-md transition-shadow"
+                  <div
+                    key={review.id}
+                    className="bg-white border border-slate-200 rounded-xl shadow-sm p-6 hover:shadow-md transition-shadow flex flex-col"
                   >
                     {/* Rating */}
                     {review.rating && (
-                      <div className="flex items-center gap-2 mb-3">
+                      <div className="flex items-center gap-2 mb-4">
                         <div className="flex text-amber-500">
                           {[...Array(5)].map((_, i) => (
-                            <span 
-                              key={i} 
+                            <span
+                              key={i}
                               className={`material-symbols-outlined text-lg ${
                                 i < review.rating! ? 'fill-1' : 'text-slate-300'
                               }`}
@@ -522,27 +534,25 @@ export default async function BusinessPage({ params }: Props) {
                             </span>
                           ))}
                         </div>
-                        <span className="text-sm font-mono text-slate-600">
+                        <span className="text-sm font-mono text-slate-500">
                           {review.rating}/5
                         </span>
                       </div>
                     )}
-                    
+
                     {/* Review Text */}
-                    <p className="text-slate-700 leading-relaxed mb-4">
-                      "{review.review_text}"
+                    <p className="text-slate-700 leading-relaxed mb-5 flex-1">
+                      &ldquo;{review.review_text}&rdquo;
                     </p>
-                    
+
                     {/* Reviewer Info */}
                     <div className="flex items-center justify-between pt-4 border-t border-slate-100">
                       <div>
                         {review.reviewer_name && (
-                          <p className="font-medium text-slate-900">
-                            {review.reviewer_name}
-                          </p>
+                          <p className="font-semibold text-slate-900 text-sm">{review.reviewer_name}</p>
                         )}
                         {review.review_date && (
-                          <p className="text-sm text-slate-500">
+                          <p className="text-xs text-slate-400 mt-0.5">
                             {new Date(review.review_date).toLocaleDateString('en-US', {
                               year: 'numeric',
                               month: 'long',
@@ -551,32 +561,26 @@ export default async function BusinessPage({ params }: Props) {
                           </p>
                         )}
                       </div>
-                      
-                      {/* Source Badge */}
-                      <div className="flex items-center gap-1">
-                        <span className={`px-2 py-1 text-xs font-medium rounded-full ${
-                          review.source === 'google' 
-                            ? 'bg-blue-100 text-blue-700 border border-blue-200'
-                            : review.source === 'website'
-                            ? 'bg-green-100 text-green-700 border border-green-200'
-                            : 'bg-gray-100 text-gray-700 border border-gray-200'
-                        }`}>
-                          {review.source === 'google' ? '📍 Google' : 
-                           review.source === 'website' ? '🌐 Website' : 
-                           review.source.charAt(0).toUpperCase() + review.source.slice(1)}
-                        </span>
-                      </div>
+                      <span className={`px-2.5 py-1 text-xs font-medium rounded-full ${
+                        review.source === 'google'
+                          ? 'bg-blue-50 text-blue-600 border border-blue-200'
+                          : review.source === 'website'
+                          ? 'bg-green-50 text-green-600 border border-green-200'
+                          : 'bg-gray-50 text-gray-600 border border-gray-200'
+                      }`}>
+                        {review.source === 'google' ? 'Google' :
+                         review.source === 'website' ? 'Website' :
+                         review.source.charAt(0).toUpperCase() + review.source.slice(1)}
+                      </span>
                     </div>
                   </div>
                 ))}
               </div>
-              
+
               {reviews.length > 6 && (
-                <div className="text-center mt-8">
-                  <p className="text-slate-600">
-                    Showing {Math.min(6, reviews.length)} of {reviews.length} reviews
-                  </p>
-                </div>
+                <p className="text-center text-slate-500 text-sm mt-8">
+                  Showing 6 of {reviews.length} reviews
+                </p>
               )}
             </div>
           </section>

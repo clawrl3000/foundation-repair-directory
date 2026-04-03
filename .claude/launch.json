@@ -1,0 +1,21 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "next-dev",
+      "runtimeExecutable": "/Users/mg/.nvm/versions/node/v24.12.0/bin/node",
+      "runtimeArgs": ["node_modules/.bin/next", "dev"],
+      "port": 3000,
+      "autoPort": true,
+      "env": {
+        "PATH": "/Users/mg/.nvm/versions/node/v24.12.0/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+      }
+    },
+    {
+      "name": "next-start",
+      "runtimeExecutable": "/Users/mg/.nvm/versions/node/v24.12.0/bin/node",
+      "runtimeArgs": ["node_modules/.bin/next", "start"],
+      "port": 3000
+    }
+  ]
+}

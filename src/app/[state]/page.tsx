@@ -8,6 +8,7 @@ import StitchFooter from '@/components/StitchFooter'
 import QuoteWizard from '@/components/QuoteWizard'
 import ExpertBio from '@/components/ExpertBio'
 import AnimatedFAQ from '@/components/AnimatedFAQ'
+import MapDirectoryLayout from '@/components/MapDirectoryLayout'
 
 // Force dynamic rendering to avoid cookies issue during static generation
 export const dynamic = 'force-dynamic'
@@ -28,6 +29,28 @@ interface CityData {
   name: string
   slug: string
   business_count: number
+}
+
+interface StateBusinessData {
+  id: string
+  name: string
+  slug: string
+  phone?: string
+  website_url?: string
+  address?: string
+  latitude?: number
+  longitude?: number
+  description?: string
+  rating?: number
+  review_count: number
+  is_verified: boolean
+  year_established?: number
+  bbb_data?: { rating?: string; is_accredited?: boolean }
+  services: { name: string; slug: string }[]
+  features: { name: string; slug: string; value?: string }[]
+  images?: { url: string; alt_text?: string; source?: string }[]
+  citySlug?: string
+  cityName?: string
 }
 
 // Fallback state data for when database is not available
@@ -70,7 +93,40 @@ const FALLBACK_CITIES: Record<string, CityData[]> = {
   // Add more states as needed
 }
 
-async function getStateData(stateSlug: string): Promise<{state: StateData, cities: CityData[]} | null> {
+// Fallback businesses for state pages
+const FALLBACK_STATE_BUSINESSES: Record<string, StateBusinessData[]> = {
+  'texas': [
+    {
+      id: '1', name: 'Houston Foundation Experts', slug: 'houston-foundation-experts',
+      phone: '(713) 555-0123', address: '1234 Main St', latitude: 29.7604, longitude: -95.3698,
+      description: 'Leading foundation repair specialists in Houston with over 20 years of experience.',
+      rating: 4.8, review_count: 127, is_verified: true, year_established: 2003,
+      services: [{ name: 'Pier & Beam Repair', slug: 'pier-beam-repair' }, { name: 'Slab Foundation Repair', slug: 'slab-repair' }],
+      features: [{ name: 'Licensed & Insured', slug: 'licensed-insured' }],
+      citySlug: 'houston', cityName: 'Houston',
+    },
+    {
+      id: '2', name: 'Texas Foundation Solutions', slug: 'texas-foundation-solutions',
+      phone: '(713) 555-0456', address: '5678 Oak Ave', latitude: 29.7490, longitude: -95.3585,
+      description: 'Comprehensive foundation repair and waterproofing services throughout Houston.',
+      rating: 4.6, review_count: 89, is_verified: true, year_established: 2010,
+      services: [{ name: 'Foundation Leveling', slug: 'foundation-leveling' }, { name: 'Waterproofing', slug: 'waterproofing' }],
+      features: [{ name: 'Lifetime Warranty', slug: 'lifetime-warranty' }],
+      citySlug: 'houston', cityName: 'Houston',
+    },
+    {
+      id: '3', name: 'Dallas Foundation Pros', slug: 'dallas-foundation-pros',
+      phone: '(214) 555-0789', address: '9012 Elm St', latitude: 32.7767, longitude: -96.7970,
+      description: 'Trusted foundation repair contractors serving the Dallas metroplex for over 15 years.',
+      rating: 4.9, review_count: 156, is_verified: true, year_established: 2008,
+      services: [{ name: 'Concrete Lifting', slug: 'concrete-lifting' }, { name: 'Crack Repair', slug: 'crack-repair' }],
+      features: [{ name: 'Same Day Service', slug: 'same-day-service' }],
+      citySlug: 'dallas', cityName: 'Dallas',
+    },
+  ],
+}
+
+async function getStateData(stateSlug: string): Promise<{state: StateData, cities: CityData[], businesses: StateBusinessData[]} | null> {
   try {
     const supabase = supabaseAdmin
     
@@ -81,12 +137,11 @@ async function getStateData(stateSlug: string): Promise<{state: StateData, citie
       .single()
 
     if (stateError || !state) {
-      // Fallback to hardcoded state data
       const fallbackState = FALLBACK_STATES[stateSlug]
       if (!fallbackState) return null
-      
       const fallbackCities = FALLBACK_CITIES[stateSlug] || []
-      return { state: fallbackState, cities: fallbackCities }
+      const fallbackBusinesses = FALLBACK_STATE_BUSINESSES[stateSlug] || []
+      return { state: fallbackState, cities: fallbackCities, businesses: fallbackBusinesses }
     }
 
     const { data: cities, error: citiesError } = await supabase
@@ -105,15 +160,43 @@ async function getStateData(stateSlug: string): Promise<{state: StateData, citie
       business_count: city.businesses?.[0]?.count || city.businesses?.length || 0
     })).filter((city: CityData) => city.business_count > 0) || []
 
-    return { state, cities: citiesWithCount }
+    // Fetch all businesses in this state (for map)
+    const { data: businessRows } = await supabase
+      .from('businesses')
+      .select(`
+        id, name, slug, phone, website_url, address, latitude, longitude,
+        description, rating, review_count, is_verified, year_established, bbb_data,
+        business_services(services(name, slug)),
+        business_features(features(name, slug)),
+        business_images(url, alt_text, source, is_primary, sort_order),
+        cities!inner(name, slug)
+      `)
+      .eq('cities.state_id', state.id)
+      .order('is_featured', { ascending: false })
+      .order('rating', { ascending: false, nullsFirst: false })
+      .limit(50)
+
+    const stateBusinesses: StateBusinessData[] = (businessRows || []).map((b: any) => ({
+      ...b,
+      services: b.business_services?.map((bs: any) => bs.services) || [],
+      features: b.business_features?.map((bf: any) => bf.features) || [],
+      images: b.business_images?.sort((a: any, b2: any) => {
+        if (a.is_primary && !b2.is_primary) return -1
+        if (!a.is_primary && b2.is_primary) return 1
+        return (a.sort_order || 0) - (b2.sort_order || 0)
+      }) || [],
+      citySlug: b.cities?.slug,
+      cityName: b.cities?.name,
+    }))
+
+    return { state, cities: citiesWithCount, businesses: stateBusinesses.length > 0 ? stateBusinesses : (FALLBACK_STATE_BUSINESSES[stateSlug] || []) }
   } catch (error) {
     console.error('Database error, using fallback data:', error)
-    // Fallback to hardcoded state data
     const fallbackState = FALLBACK_STATES[stateSlug]
     if (!fallbackState) return null
-    
     const fallbackCities = FALLBACK_CITIES[stateSlug] || []
-    return { state: fallbackState, cities: fallbackCities }
+    const fallbackBusinesses = FALLBACK_STATE_BUSINESSES[stateSlug] || []
+    return { state: fallbackState, cities: fallbackCities, businesses: fallbackBusinesses }
   }
 }
 
@@ -667,7 +750,7 @@ export default async function StatePage({ params }: Props) {
     notFound()
   }
 
-  const { state: stateInfo, cities } = stateData
+  const { state: stateInfo, cities, businesses } = stateData
   const content = stateContent[state] || stateContent['texas'] // Fallback
   
   // Generate structured data
@@ -691,108 +774,16 @@ export default async function StatePage({ params }: Props) {
       </nav>
 
       <main className="flex-1">
-        {/* Hero Section */}
-        <section className="relative py-20 lg:py-24 bg-slate-900 overflow-hidden">
-          {/* Background Image */}
-          <div className="absolute inset-0">
-            <img
-              src={stateImages[state] || stateImages['default']}
-              alt={`Foundation repair and construction work in ${stateInfo.name} — professional contractors installing concrete footings and structural reinforcement`}
-              className="w-full h-full object-cover"
-            />
-            {/* Dark gradient overlay */}
-            <div className="absolute inset-0 bg-gradient-to-r from-slate-900/90 via-slate-900/70 to-slate-900/50"></div>
-          </div>
-          
-          {/* Content */}
-          <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-10">
-            <div className="grid lg:grid-cols-2 gap-12 items-center min-h-[350px]">
-              {/* Left side - Text content */}
-              <div className="text-white">
-                <h1 className="font-display text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.1] mb-6">
-                  Foundation Repair in {stateInfo.name}
-                </h1>
-                <p className="text-slate-200 text-lg mb-8 max-w-2xl leading-relaxed">
-                  Browse foundation repair contractors by city in {stateInfo.name}. 
-                  Find licensed professionals near you. Currently serving {cities.length} cities with verified contractors.
-                </p>
-                <div className="flex flex-wrap gap-4">
-                  <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2">
-                    <span className="material-symbols-outlined text-amber-400 text-sm">verified</span>
-                    <span className="text-white text-sm font-medium">Licensed Contractors</span>
-                  </div>
-                  <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2">
-                    <span className="material-symbols-outlined text-amber-400 text-sm fill-1">star</span>
-                    <span className="text-white text-sm font-medium">Verified Reviews</span>
-                  </div>
-                </div>
-              </div>
-              
-              {/* Right side - Image space (image is in background) */}
-              <div className="hidden lg:block"></div>
-            </div>
-          </div>
-        </section>
-
-        {/* Cities Grid */}
-        <section className="py-20 lg:py-24 bg-white">
-          <div className="mx-auto max-w-7xl px-6 lg:px-10">
-            <div className="mb-12 animate-on-scroll">
-              <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.15] text-slate-900 mb-3">Cities We Serve in {stateInfo.name}</h2>
-              <p className="text-slate-600">Find foundation repair contractors in these cities across {stateInfo.name}.</p>
-            </div>
-            
-            {cities.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 animate-on-scroll">
-                {cities.map((city) => (
-                  <Link
-                    key={city.slug}
-                    href={`/${state}/${city.slug}`}
-                    className="city-card bg-white border border-slate-200 rounded-xl shadow-sm group flex flex-col p-6"
-                  >
-                    <div className="flex items-center gap-3 mb-4">
-                      <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-amber-100 text-amber-600">
-                        <span className="material-symbols-outlined text-xl">location_city</span>
-                      </div>
-                      <div>
-                        <h3 className="text-lg font-semibold text-slate-900 group-hover:text-amber-600 transition-colors">{city.name}</h3>
-                        <p className="text-xs text-slate-500">{stateInfo.abbreviation}</p>
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-center justify-between mt-auto">
-                      <div className="flex items-center gap-1">
-                        <span className="material-symbols-outlined text-amber-500 text-sm">engineering</span>
-                        <span className="text-slate-600 text-sm font-mono">
-                          {city.business_count} contractor{city.business_count !== 1 ? 's' : ''}
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-1 text-amber-600">
-                        <span className="text-xs font-bold">View</span>
-                        <span className="material-symbols-outlined text-xs city-arrow">arrow_forward</span>
-                      </div>
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            ) : (
-              <div className="animate-on-scroll text-center py-16 bg-slate-50 border border-slate-200 rounded-xl">
-                <span className="material-symbols-outlined text-5xl text-slate-300 mb-4 block">map</span>
-                <h3 className="text-lg font-semibold text-slate-900 mb-2">Coming Soon to {stateInfo.name}</h3>
-                <p className="text-slate-500 max-w-md mx-auto mb-6">
-                  We&apos;re actively expanding our contractor network in {stateInfo.name}. Check back soon or join as a contractor to be listed.
-                </p>
-                <Link
-                  href="/auth/signup"
-                  className="inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold py-3 px-6 rounded-xl transition-all duration-300"
-                >
-                  <span className="material-symbols-outlined text-lg">handshake</span>
-                  Join as a Contractor
-                </Link>
-              </div>
-            )}
-          </div>
-        </section>
+        {/* Map Directory Layout */}
+        <MapDirectoryLayout
+          businesses={businesses}
+          cities={cities}
+          stateSlug={state}
+          stateName={stateInfo.name}
+          stateAbbr={stateInfo.abbreviation}
+          heading={`Foundation Repair in ${stateInfo.name}`}
+          description={`Browse ${businesses.length} foundation repair contractors across ${cities.length} cities in ${stateInfo.name}. Click a city to zoom in.`}
+        />
 
         {/* State-Specific Content */}
         <section className="py-20 lg:py-24 bg-slate-50 border-y border-slate-200">

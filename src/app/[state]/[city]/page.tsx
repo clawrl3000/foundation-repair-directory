@@ -7,8 +7,7 @@ import StitchNav from '@/components/StitchNav'
 import StitchFooter from '@/components/StitchFooter'
 import QuoteWizard from '@/components/QuoteWizard'
 import BusinessImage from '@/components/BusinessImage'
-import CityBusinessMap from '@/components/CityBusinessMap'
-import BusinessCardActions from '@/components/BusinessCardActions'
+import MapDirectoryLayout from '@/components/MapDirectoryLayout'
 
 // Force dynamic rendering to avoid cookies issue during static generation
 export const dynamic = 'force-dynamic'
@@ -60,6 +59,7 @@ interface CityPageData {
     slug: string
   }
   businesses: BusinessListing[]
+  siblingCities: { name: string; slug: string; business_count: number }[]
   cityContent?: {
     intro_text: string
     meta_title: string
@@ -85,6 +85,12 @@ const FALLBACK_CITY_DATA: Record<string, Record<string, CityPageData>> = {
     'houston': {
       city: { id: 1, name: 'Houston', slug: 'houston' },
       state: { id: 1, name: 'Texas', abbreviation: 'TX', slug: 'texas' },
+      siblingCities: [
+        { name: 'Houston', slug: 'houston', business_count: 2 },
+        { name: 'Dallas', slug: 'dallas', business_count: 1 },
+        { name: 'Austin', slug: 'austin', business_count: 12 },
+        { name: 'San Antonio', slug: 'san-antonio', business_count: 15 },
+      ],
       businesses: [
         {
           id: '1',
@@ -92,6 +98,8 @@ const FALLBACK_CITY_DATA: Record<string, Record<string, CityPageData>> = {
           slug: 'houston-foundation-experts',
           phone: '(713) 555-0123',
           address: '1234 Main St',
+          latitude: 29.7604,
+          longitude: -95.3698,
           description: 'Leading foundation repair specialists in Houston with over 20 years of experience serving residential and commercial properties.',
           rating: 4.8,
           review_count: 127,
@@ -112,6 +120,8 @@ const FALLBACK_CITY_DATA: Record<string, Record<string, CityPageData>> = {
           slug: 'texas-foundation-solutions',
           phone: '(713) 555-0456',
           address: '5678 Oak Ave',
+          latitude: 29.7490,
+          longitude: -95.3585,
           description: 'Comprehensive foundation repair and waterproofing services throughout Houston and surrounding areas.',
           rating: 4.6,
           review_count: 89,
@@ -131,6 +141,11 @@ const FALLBACK_CITY_DATA: Record<string, Record<string, CityPageData>> = {
     'dallas': {
       city: { id: 2, name: 'Dallas', slug: 'dallas' },
       state: { id: 1, name: 'Texas', abbreviation: 'TX', slug: 'texas' },
+      siblingCities: [
+        { name: 'Houston', slug: 'houston', business_count: 2 },
+        { name: 'Dallas', slug: 'dallas', business_count: 1 },
+        { name: 'Austin', slug: 'austin', business_count: 12 },
+      ],
       businesses: [
         {
           id: '3',
@@ -138,6 +153,8 @@ const FALLBACK_CITY_DATA: Record<string, Record<string, CityPageData>> = {
           slug: 'dallas-foundation-pros',
           phone: '(214) 555-0789',
           address: '9012 Elm St',
+          latitude: 32.7767,
+          longitude: -96.7970,
           description: 'Trusted foundation repair contractors serving the Dallas metroplex for over 15 years.',
           rating: 4.9,
           review_count: 156,
@@ -252,15 +269,32 @@ async function getCityData(stateSlug: string, citySlug: string): Promise<CityPag
       }
     }) || []
 
+    // Fetch sibling cities for navigation chips
+    const stateId = (cityData.states as any).id
+    const { data: siblingCitiesData } = await supabase
+      .from('cities')
+      .select('name, slug, businesses!inner(count)')
+      .eq('state_id', stateId)
+      .not('businesses', 'is', null)
+
+    const siblingCities = (siblingCitiesData || [])
+      .map((c: any) => ({
+        name: c.name,
+        slug: c.slug,
+        business_count: c.businesses?.[0]?.count || c.businesses?.length || 0,
+      }))
+      .filter((c: any) => c.business_count > 0)
+      .sort((a: any, b: any) => b.business_count - a.business_count)
+
     return {
       city: cityData,
       state: cityData.states as any,
       businesses: formattedBusinesses,
+      siblingCities,
       cityContent: cityContent || undefined
     }
   } catch (error) {
     console.error('Database error, using fallback data:', error)
-    // Fallback to hardcoded city data
     const fallbackData = FALLBACK_CITY_DATA[stateSlug]?.[citySlug]
     return fallbackData || null
   }
@@ -330,7 +364,7 @@ export default async function CityPage({ params }: Props) {
     notFound()
   }
 
-  const { city: cityInfo, state: stateInfo, businesses, cityContent } = pageData
+  const { city: cityInfo, state: stateInfo, businesses, siblingCities, cityContent } = pageData
   
   // Generate structured data
   const breadcrumbs = [
@@ -356,228 +390,21 @@ export default async function CityPage({ params }: Props) {
       </nav>
 
       <main className="flex-1">
-        {/* Hero Section */}
-        <section className="py-20 lg:py-24 bg-slate-50">
-          <div className="mx-auto max-w-7xl px-6 lg:px-10">
-            <h1 className="font-display text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.1] text-slate-900 mb-6">
-              Foundation Repair in {cityInfo.name}, {stateInfo.abbreviation}
-            </h1>
-            <p className="text-slate-600 text-lg mb-12 max-w-3xl leading-relaxed">
-              {businesses.length > 1 ? (
-                <>Compare {businesses.length} licensed foundation repair contractors in {cityInfo.name}. 
-                Get estimates and find the right professional for your project.</>
-              ) : businesses.length === 1 ? (
-                <>Featured foundation repair contractor in {cityInfo.name}. 
-                Get estimates and more contractors coming soon.</>
-              ) : (
-                <>Foundation repair contractors in {cityInfo.name}, {stateInfo.abbreviation}. 
-                Get estimates from qualified professionals in your area.</>
-              )}
-            </p>
-          </div>
-        </section>
-
-        {/* Filters */}
-        <section className="py-8 border-b border-slate-200 bg-white animate-on-scroll">
-          <div className="mx-auto max-w-7xl px-6 lg:px-10">
-            <div className="flex flex-wrap gap-3">
-              {['All Services', 'Pier & Beam', 'Slab Repair', 'Crack Repair', 'Waterproofing'].map((filter) => (
-                <button
-                  key={filter}
-                  className="px-4 py-2 rounded-full border border-slate-300 text-sm hover:border-amber-500 hover:text-amber-600 text-slate-700 transition-colors bg-slate-50"
-                >
-                  {filter}
-                </button>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Business Listings */}
-        <section className="py-20 lg:py-24 bg-white animate-on-scroll">
-          <div className="mx-auto max-w-7xl px-6 lg:px-10">
-            {businesses.length > 0 ? (
-              <div className="space-y-6">
-                {businesses.map((business) => (
-                  <div
-                    key={business.id}
-                    className="bg-white border border-slate-200 rounded-xl shadow-sm group flex flex-col lg:flex-row overflow-hidden transition-all hover:-translate-y-1 hover:shadow-lg hover:border-amber-300 animate-on-scroll"
-                  >
-                    {/* Business Image */}
-                    <Link href={`/${state}/${city}/${business.slug}`} className="relative h-48 lg:h-auto lg:w-64 overflow-hidden block">
-                      <BusinessImage
-                        businessId={business.id}
-                        businessName={business.name}
-                        latitude={business.latitude}
-                        longitude={business.longitude}
-                        photoReference={business.images?.[0]?.source === 'google_places' ? business.images[0].url : undefined}
-                        alt={business.images?.[0]?.alt_text || `${business.name} photo`}
-                        className="h-full w-full"
-                        size="medium"
-                      />
-                      {business.is_verified && (
-                        <div className="absolute top-4 right-4 rounded-full bg-green-100 backdrop-blur px-3 py-1 text-[10px] font-black uppercase text-green-700 border border-green-300">
-                          Verified Pro
-                        </div>
-                      )}
-                    </Link>
-
-                    {/* Business Details */}
-                    <div className="flex flex-1 flex-col p-6 lg:p-8">
-                      <div className="flex items-start justify-between mb-4">
-                        <div className="flex-1">
-                          <Link href={`/${state}/${city}/${business.slug}`} className="block">
-                            <h3 className="text-2xl font-bold text-slate-900 group-hover:text-amber-600 transition-colors mb-2">
-                              {business.name}
-                            </h3>
-                          </Link>
-                          <p className="text-slate-500 text-sm mb-2">
-                            {business.address ? `${business.address}, ` : ''}{cityInfo.name}, {stateInfo.abbreviation}
-                          </p>
-                          
-                          {/* Rating */}
-                          {business.rating && business.review_count > 0 && (
-                            <div className="flex items-center gap-2 mb-3">
-                              <div className="flex text-amber-500">
-                                {[...Array(5)].map((_, i) => (
-                                  <span 
-                                    key={i} 
-                                    className={`material-symbols-outlined text-sm ${i < Math.round(business.rating!) ? 'fill-1' : ''}`}
-                                  >
-                                    star
-                                  </span>
-                                ))}
-                              </div>
-                              <span className="font-mono text-slate-600 text-sm">
-                                {business.rating} ({business.review_count} reviews)
-                              </span>
-                            </div>
-                          )}
-                        </div>
-                        
-                        <div className="flex items-center gap-2 text-slate-500 text-xs ml-4">
-                          {business.year_established && (
-                            <span>Est. {business.year_established}</span>
-                          )}
-                        </div>
-                      </div>
-                      
-                      {business.description && (
-                        <p className="text-slate-600 mb-4 leading-relaxed">{business.description}</p>
-                      )}
-                      
-                      {/* Services & Features */}
-                      <div className="flex flex-wrap gap-2 mb-6">
-                        {business.services.slice(0, 2).map((service) => (
-                          <span key={service.slug} className="px-3 py-1 bg-amber-100 text-amber-700 text-xs rounded-full border border-amber-200">
-                            {service.name}
-                          </span>
-                        ))}
-                        {business.bbb_data?.rating && (
-                          <span className="px-3 py-1 bg-blue-100 text-blue-700 text-xs rounded-full border border-blue-200 font-semibold">
-                            BBB {business.bbb_data.rating}
-                          </span>
-                        )}
-                        {business.bbb_data?.is_accredited && (
-                          <span className="px-3 py-1 bg-indigo-100 text-indigo-700 text-xs rounded-full border border-indigo-200">
-                            BBB Accredited
-                          </span>
-                        )}
-                        {business.features.slice(0, business.bbb_data?.rating || business.bbb_data?.is_accredited ? 2 : 3).map((feature) => (
-                          <span key={feature.slug} className="px-3 py-1 bg-slate-100 text-slate-700 text-xs rounded-full border border-slate-200">
-                            {feature.name}
-                          </span>
-                        ))}
-                      </div>
-
-                      {/* Action Buttons */}
-                      <BusinessCardActions
-                        businessUrl={`/${state}/${city}/${business.slug}`}
-                        phone={business.phone}
-                        websiteUrl={business.website_url}
-                        estimateUrl={`/${state}/${city}/${business.slug}#get-estimate`}
-                      />
-                    </div>
-                  </div>
-                ))}
-                
-                {/* More contractors coming soon message for single contractor */}
-                {businesses.length === 1 && (
-                  <div className="bg-slate-50 border border-slate-200 rounded-xl p-6 text-center mt-8 animate-on-scroll">
-                    <span className="material-symbols-outlined text-3xl text-slate-400 mb-3 block">schedule</span>
-                    <h3 className="text-lg font-semibold text-slate-900 mb-2">More Contractors Coming Soon</h3>
-                    <p className="text-slate-600 text-sm">
-                      We're actively adding more foundation repair professionals to {cityInfo.name}. 
-                      Check back soon for additional options or expand your search to nearby cities.
-                    </p>
-                  </div>
-                )}
-              </div>
-            ) : (
-              <div className="bg-white border border-slate-200 rounded-xl shadow-sm text-center py-16 animate-on-scroll">
-                <div className="max-w-md mx-auto">
-                  <span className="material-symbols-outlined text-6xl text-slate-400 mb-4 block">search_off</span>
-                  <h3 className="text-lg font-semibold text-slate-900 mb-4">No Foundation Repair Contractors Found</h3>
-                  <p className="text-slate-600 mb-6">
-                    We don't have any foundation repair contractors listed in {cityInfo.name} yet.
-                  </p>
-                  <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                    <Link 
-                      href={`/${state}`}
-                      className="rounded-lg bg-blue-600 py-3 px-6 text-white font-bold hover:bg-blue-700 transition-colors"
-                    >
-                      Browse {stateInfo.name} Cities
-                    </Link>
-                    <button className="rounded-lg border border-slate-300 py-3 px-6 text-slate-700 font-bold hover:bg-slate-50 transition-colors">
-                      List Your Business
-                    </button>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-        </section>
-
-        {/* Business Locations Map */}
-        {businesses.filter(b => b.latitude && b.longitude).length > 0 && (
-          <section className="py-20 lg:py-24 bg-white border-b border-slate-200 animate-on-scroll">
-            <div className="mx-auto max-w-7xl px-6 lg:px-10">
-              <div className="text-center mb-12 animate-on-scroll">
-                <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.15] text-slate-900 mb-4">
-                  Foundation Repair Contractors Near You
-                </h2>
-                <p className="text-slate-600 max-w-2xl mx-auto">
-                  View {businesses.filter(b => b.latitude && b.longitude).length} foundation repair contractor{businesses.filter(b => b.latitude && b.longitude).length !== 1 ? 's' : ''} located throughout {cityInfo.name}, {stateInfo.abbreviation}. 
-                  Click on any marker to view details and get estimates.
-                </p>
-              </div>
-              
-              <div className="max-w-4xl mx-auto">
-                <CityBusinessMap
-                  businesses={businesses.map(b => ({
-                    id: b.id,
-                    name: b.name,
-                    latitude: b.latitude!,
-                    longitude: b.longitude!,
-                    address: b.address,
-                    phone: b.phone,
-                    slug: b.slug
-                  })).filter(b => b.latitude && b.longitude)}
-                  cityName={cityInfo.name}
-                  stateAbbr={stateInfo.abbreviation}
-                  className="w-full h-96 lg:h-[500px] rounded-xl border border-slate-200 shadow-sm"
-                />
-              </div>
-              
-              <div className="text-center mt-8 animate-on-scroll">
-                <p className="text-sm text-slate-500">
-                  <span className="material-symbols-outlined text-xs">info</span>
-                  Locations are approximate. Contact contractors directly for exact addresses and service areas.
-                </p>
-              </div>
-            </div>
-          </section>
-        )}
+        {/* Map Directory Layout */}
+        <MapDirectoryLayout
+          businesses={businesses}
+          cities={siblingCities}
+          stateSlug={state}
+          stateName={stateInfo.name}
+          stateAbbr={stateInfo.abbreviation}
+          currentCitySlug={city}
+          currentCityName={cityInfo.name}
+          heading={`Foundation Repair in ${cityInfo.name}, ${stateInfo.abbreviation}`}
+          description={businesses.length > 1
+            ? `Compare ${businesses.length} licensed foundation repair contractors in ${cityInfo.name}. Get estimates and find the right professional.`
+            : `Foundation repair contractors in ${cityInfo.name}, ${stateInfo.abbreviation}. Get estimates from qualified professionals.`
+          }
+        />
 
         {/* City Information */}
         <section className="py-20 lg:py-24 bg-slate-50 border-y border-slate-200 animate-on-scroll">
