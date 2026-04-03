@@ -48,33 +48,37 @@ export async function POST(request: NextRequest) {
     const urgencyMatch = notes?.match(/Urgency:\s*([^|]+)/)
     const urgency = urgencyMatch?.[1]?.trim() || 'Planning Ahead'
 
-    // Trigger Scout Report generation (fire and don't block the response)
-    // We use the internal API route — on Vercel this stays within the same process
-    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.VERCEL_URL 
-      ? `https://${process.env.VERCEL_URL}` 
-      : 'http://localhost:3000'
+    // Trigger Scout Report generation — MUST await or Vercel kills the function
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL 
+      || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000')
     
-    // Fire scout report generation asynchronously
-    fetch(`${baseUrl}/api/scout-report`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        lead_id: leadId,
-        name,
-        email,
-        issues: service_needed || 'General foundation concerns',
-        urgency,
-        zip_code: zip_code || null,
-        state: state || null,
-      }),
-    }).catch(err => {
+    let reportResult = { report_generated: false, email_sent: false }
+    try {
+      const reportRes = await fetch(`${baseUrl}/api/scout-report`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          lead_id: leadId,
+          name,
+          email,
+          issues: service_needed || 'General foundation concerns',
+          urgency,
+          zip_code: zip_code || null,
+          state: state || null,
+        }),
+      })
+      reportResult = await reportRes.json()
+      console.log('Scout report result:', reportResult)
+    } catch (err) {
       console.error('Scout report trigger failed:', err)
-    })
+    }
 
     return NextResponse.json({ 
       success: true, 
       message: 'Your Scout Report is being generated! Check your email in a few minutes.',
       lead_id: leadId,
+      report_generated: reportResult.report_generated,
+      email_sent: reportResult.email_sent,
     })
   } catch (error) {
     console.error('Lead submission error:', error)
