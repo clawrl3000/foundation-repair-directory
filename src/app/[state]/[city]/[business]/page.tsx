@@ -137,6 +137,30 @@ const FALLBACK_BUSINESS_DATA: Record<string, Record<string, Record<string, Busin
   }
 }
 
+function getFeatureBadge(slug: string, name: string): { icon: string; classes: string } {
+  const map: Record<string, { icon: string; classes: string }> = {
+    'free-inspection': { icon: '🔍', classes: 'bg-green-50 text-green-700 border-green-200' },
+    'lifetime-warranty': { icon: '🛡️', classes: 'bg-green-50 text-green-700 border-green-200' },
+    'transferable-warranty': { icon: '🔄', classes: 'bg-green-50 text-green-700 border-green-200' },
+    '25-year-warranty': { icon: '🛡️', classes: 'bg-green-50 text-green-700 border-green-200' },
+    'licensed-insured': { icon: '📋', classes: 'bg-green-50 text-green-700 border-green-200' },
+    'financing-available': { icon: '💰', classes: 'bg-blue-50 text-blue-700 border-blue-200' },
+    'emergency-service': { icon: '🚨', classes: 'bg-red-50 text-red-700 border-red-200' },
+    'free-estimates': { icon: '📝', classes: 'bg-green-50 text-green-700 border-green-200' },
+    'residential': { icon: '🏠', classes: 'bg-blue-50 text-blue-700 border-blue-200' },
+    'commercial': { icon: '🏢', classes: 'bg-blue-50 text-blue-700 border-blue-200' },
+    'bbb-accredited': { icon: '⭐', classes: 'bg-indigo-50 text-indigo-700 border-indigo-200' },
+    'veteran-owned': { icon: '🎖️', classes: 'bg-blue-50 text-blue-700 border-blue-200' },
+    'family-owned': { icon: '👨‍👩‍👧', classes: 'bg-amber-50 text-amber-700 border-amber-200' },
+    '24-7-available': { icon: '🕐', classes: 'bg-red-50 text-red-700 border-red-200' },
+    'accepts-insurance': { icon: '📄', classes: 'bg-blue-50 text-blue-700 border-blue-200' },
+    'locally-owned': { icon: '📍', classes: 'bg-amber-50 text-amber-700 border-amber-200' },
+    'senior-discount': { icon: '🎁', classes: 'bg-amber-50 text-amber-700 border-amber-200' },
+    'military-discount': { icon: '🎗️', classes: 'bg-amber-50 text-amber-700 border-amber-200' },
+  }
+  return map[slug] || { icon: '✅', classes: 'bg-green-50 text-green-700 border-green-200' }
+}
+
 async function getBusinessData(stateSlug: string, citySlug: string, businessSlug: string): Promise<BusinessData | null> {
   try {
     const supabase = supabaseAdmin
@@ -337,7 +361,7 @@ export default async function BusinessPage({ params }: Props) {
                   )}
 
                   {/* Badges */}
-                  <div className="flex flex-wrap gap-2 mb-5">
+                  <div className="flex flex-wrap gap-2 mb-3">
                     {is_verified && (
                       <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-green-50 text-green-700 text-sm font-medium rounded-full border border-green-200">
                         <span className="material-symbols-outlined text-sm fill-1">verified</span>
@@ -346,7 +370,7 @@ export default async function BusinessPage({ params }: Props) {
                     )}
                     {year_established && (
                       <span className="px-3 py-1.5 bg-slate-100 text-slate-700 text-sm font-medium rounded-full border border-slate-200">
-                        Est. {year_established}
+                        Serving since {year_established} ({new Date().getFullYear() - year_established} years)
                       </span>
                     )}
                     {businessData.bbb_data?.rating && (
@@ -361,6 +385,24 @@ export default async function BusinessPage({ params }: Props) {
                       </span>
                     )}
                   </div>
+
+                  {/* Feature Trust Badges */}
+                  {features.length > 0 && (
+                    <div className="flex flex-wrap gap-2 mb-5">
+                      {features.map((feature) => {
+                        const badge = getFeatureBadge(feature.slug, feature.name)
+                        return (
+                          <span
+                            key={feature.slug}
+                            className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-full border ${badge.classes}`}
+                          >
+                            <span>{badge.icon}</span>
+                            {feature.name}
+                          </span>
+                        )
+                      })}
+                    </div>
+                  )}
 
                   {/* Description */}
                   {description && (
@@ -414,12 +456,12 @@ export default async function BusinessPage({ params }: Props) {
                   </div>
                   <h2 className="font-display text-xl font-bold text-slate-900">Our Services</h2>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                <div className="flex flex-wrap gap-2.5">
                   {services.map((service) => (
-                    <div key={service.slug} className="flex items-center gap-3 p-3.5 bg-slate-50 border border-slate-100 rounded-lg">
-                      <span className="material-symbols-outlined text-amber-500 text-lg">engineering</span>
-                      <span className="text-slate-800 font-medium text-sm">{service.name}</span>
-                    </div>
+                    <span key={service.slug} className="inline-flex items-center gap-2 px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm font-medium text-slate-800 hover:border-amber-300 transition-colors">
+                      <span className="material-symbols-outlined text-amber-500 text-base">engineering</span>
+                      {service.name}
+                    </span>
                   ))}
                   {services.length === 0 && (
                     <p className="text-slate-500 text-sm">Services information coming soon.</p>
@@ -439,12 +481,15 @@ export default async function BusinessPage({ params }: Props) {
                   <h2 className="font-display text-xl font-bold text-slate-900">Why Choose Us</h2>
                 </div>
                 <div className="space-y-3">
-                  {features.map((feature) => (
-                    <div key={feature.slug} className="flex items-center gap-3 p-3.5 bg-slate-50 border border-slate-100 rounded-lg">
-                      <span className="material-symbols-outlined text-green-500 text-lg">check_circle</span>
-                      <span className="text-slate-800 font-medium text-sm">{feature.name}</span>
-                    </div>
-                  ))}
+                  {features.map((feature) => {
+                    const badge = getFeatureBadge(feature.slug, feature.name)
+                    return (
+                      <div key={feature.slug} className="flex items-center gap-3 p-3.5 bg-slate-50 border border-slate-100 rounded-lg">
+                        <span className="text-lg">{badge.icon}</span>
+                        <span className="text-slate-800 font-medium text-sm">{feature.name}</span>
+                      </div>
+                    )
+                  })}
                   {features.length === 0 && (
                     <p className="text-slate-500 text-sm">Features information coming soon.</p>
                   )}
