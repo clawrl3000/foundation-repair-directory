@@ -139,26 +139,26 @@ const FALLBACK_BUSINESS_DATA: Record<string, Record<string, Record<string, Busin
 
 function getFeatureBadge(slug: string, name: string): { icon: string; classes: string } {
   const map: Record<string, { icon: string; classes: string }> = {
-    'free-inspection': { icon: '🔍', classes: 'bg-green-50 text-green-700 border-green-200' },
-    'lifetime-warranty': { icon: '🛡️', classes: 'bg-green-50 text-green-700 border-green-200' },
-    'transferable-warranty': { icon: '🔄', classes: 'bg-green-50 text-green-700 border-green-200' },
-    '25-year-warranty': { icon: '🛡️', classes: 'bg-green-50 text-green-700 border-green-200' },
-    'licensed-insured': { icon: '📋', classes: 'bg-green-50 text-green-700 border-green-200' },
-    'financing-available': { icon: '💰', classes: 'bg-blue-50 text-blue-700 border-blue-200' },
-    'emergency-service': { icon: '🚨', classes: 'bg-red-50 text-red-700 border-red-200' },
-    'free-estimates': { icon: '📝', classes: 'bg-green-50 text-green-700 border-green-200' },
-    'residential': { icon: '🏠', classes: 'bg-blue-50 text-blue-700 border-blue-200' },
-    'commercial': { icon: '🏢', classes: 'bg-blue-50 text-blue-700 border-blue-200' },
-    'bbb-accredited': { icon: '⭐', classes: 'bg-indigo-50 text-indigo-700 border-indigo-200' },
-    'veteran-owned': { icon: '🎖️', classes: 'bg-blue-50 text-blue-700 border-blue-200' },
-    'family-owned': { icon: '👨‍👩‍👧', classes: 'bg-amber-50 text-amber-700 border-amber-200' },
-    '24-7-available': { icon: '🕐', classes: 'bg-red-50 text-red-700 border-red-200' },
-    'accepts-insurance': { icon: '📄', classes: 'bg-blue-50 text-blue-700 border-blue-200' },
-    'locally-owned': { icon: '📍', classes: 'bg-amber-50 text-amber-700 border-amber-200' },
-    'senior-discount': { icon: '🎁', classes: 'bg-amber-50 text-amber-700 border-amber-200' },
-    'military-discount': { icon: '🎗️', classes: 'bg-amber-50 text-amber-700 border-amber-200' },
+    'free-inspection': { icon: '🔍', classes: 'bg-green-800 text-green-100 border-green-700' },
+    'lifetime-warranty': { icon: '🛡️', classes: 'bg-green-800 text-green-100 border-green-700' },
+    'transferable-warranty': { icon: '🔄', classes: 'bg-green-800 text-green-100 border-green-700' },
+    '25-year-warranty': { icon: '🛡️', classes: 'bg-green-800 text-green-100 border-green-700' },
+    'licensed-insured': { icon: '📋', classes: 'bg-green-800 text-green-100 border-green-700' },
+    'financing-available': { icon: '💰', classes: 'bg-blue-800 text-blue-100 border-blue-700' },
+    'emergency-service': { icon: '🚨', classes: 'bg-red-800 text-red-100 border-red-700' },
+    'free-estimates': { icon: '📝', classes: 'bg-green-800 text-green-100 border-green-700' },
+    'residential': { icon: '🏠', classes: 'bg-blue-800 text-blue-100 border-blue-700' },
+    'commercial': { icon: '🏢', classes: 'bg-blue-800 text-blue-100 border-blue-700' },
+    'bbb-accredited': { icon: '⭐', classes: 'bg-indigo-800 text-indigo-100 border-indigo-700' },
+    'veteran-owned': { icon: '🎖️', classes: 'bg-blue-800 text-blue-100 border-blue-700' },
+    'family-owned': { icon: '👨‍👩‍👧', classes: 'bg-amber-800 text-amber-100 border-amber-700' },
+    '24-7-available': { icon: '🕐', classes: 'bg-red-800 text-red-100 border-red-700' },
+    'accepts-insurance': { icon: '📄', classes: 'bg-blue-800 text-blue-100 border-blue-700' },
+    'locally-owned': { icon: '📍', classes: 'bg-amber-800 text-amber-100 border-amber-700' },
+    'senior-discount': { icon: '🎁', classes: 'bg-amber-800 text-amber-100 border-amber-700' },
+    'military-discount': { icon: '🎗️', classes: 'bg-amber-800 text-amber-100 border-amber-700' },
   }
-  return map[slug] || { icon: '✅', classes: 'bg-green-50 text-green-700 border-green-200' }
+  return map[slug] || { icon: '✅', classes: 'bg-green-800 text-green-100 border-green-700' }
 }
 
 async function getBusinessData(stateSlug: string, citySlug: string, businessSlug: string): Promise<BusinessData | null> {
@@ -369,8 +369,8 @@ export default async function BusinessPage({ params }: Props) {
                       </span>
                     )}
                     {year_established && (
-                      <span className="px-3 py-1.5 bg-slate-100 text-slate-700 text-sm font-medium rounded-full border border-slate-200">
-                        Serving since {year_established} ({new Date().getFullYear() - year_established} years)
+                      <span className="px-3 py-1.5 bg-slate-800 text-slate-200 text-sm font-medium rounded-full border border-slate-700">
+                        Est. {year_established} · {new Date().getFullYear() - year_established} yrs
                       </span>
                     )}
                     {businessData.bbb_data?.rating && (
