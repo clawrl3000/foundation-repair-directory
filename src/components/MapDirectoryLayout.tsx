@@ -67,24 +67,24 @@ const FEATURE_PRIORITY: string[] = [
 ];
 
 const FEATURE_BADGE_MAP: Record<string, { icon: string; classes: string }> = {
-  'free-inspection': { icon: '🔍', classes: 'bg-green-50 text-green-700 border-green-200' },
-  'lifetime-warranty': { icon: '🛡️', classes: 'bg-green-50 text-green-700 border-green-200' },
-  'transferable-warranty': { icon: '🔄', classes: 'bg-green-50 text-green-700 border-green-200' },
-  '25-year-warranty': { icon: '🛡️', classes: 'bg-green-50 text-green-700 border-green-200' },
-  'licensed-insured': { icon: '📋', classes: 'bg-green-50 text-green-700 border-green-200' },
-  'financing-available': { icon: '💰', classes: 'bg-blue-50 text-blue-700 border-blue-200' },
-  'emergency-service': { icon: '🚨', classes: 'bg-red-50 text-red-700 border-red-200' },
-  'free-estimates': { icon: '📝', classes: 'bg-green-50 text-green-700 border-green-200' },
-  'residential': { icon: '🏠', classes: 'bg-blue-50 text-blue-700 border-blue-200' },
-  'commercial': { icon: '🏢', classes: 'bg-blue-50 text-blue-700 border-blue-200' },
-  'bbb-accredited': { icon: '⭐', classes: 'bg-indigo-50 text-indigo-700 border-indigo-200' },
-  'veteran-owned': { icon: '🎖️', classes: 'bg-blue-50 text-blue-700 border-blue-200' },
-  'family-owned': { icon: '👨‍👩‍👧', classes: 'bg-amber-50 text-amber-700 border-amber-200' },
-  '24-7-available': { icon: '🕐', classes: 'bg-red-50 text-red-700 border-red-200' },
-  'accepts-insurance': { icon: '📄', classes: 'bg-blue-50 text-blue-700 border-blue-200' },
-  'locally-owned': { icon: '📍', classes: 'bg-amber-50 text-amber-700 border-amber-200' },
-  'senior-discount': { icon: '🎁', classes: 'bg-amber-50 text-amber-700 border-amber-200' },
-  'military-discount': { icon: '🎗️', classes: 'bg-amber-50 text-amber-700 border-amber-200' },
+  'free-inspection': { icon: '🔍', classes: 'bg-green-800 text-green-100 border-green-700' },
+  'lifetime-warranty': { icon: '🛡️', classes: 'bg-green-800 text-green-100 border-green-700' },
+  'transferable-warranty': { icon: '🔄', classes: 'bg-green-800 text-green-100 border-green-700' },
+  '25-year-warranty': { icon: '🛡️', classes: 'bg-green-800 text-green-100 border-green-700' },
+  'licensed-insured': { icon: '📋', classes: 'bg-green-800 text-green-100 border-green-700' },
+  'financing-available': { icon: '💰', classes: 'bg-blue-800 text-blue-100 border-blue-700' },
+  'emergency-service': { icon: '🚨', classes: 'bg-red-800 text-red-100 border-red-700' },
+  'free-estimates': { icon: '📝', classes: 'bg-green-800 text-green-100 border-green-700' },
+  'residential': { icon: '🏠', classes: 'bg-blue-800 text-blue-100 border-blue-700' },
+  'commercial': { icon: '🏢', classes: 'bg-blue-800 text-blue-100 border-blue-700' },
+  'bbb-accredited': { icon: '⭐', classes: 'bg-indigo-800 text-indigo-100 border-indigo-700' },
+  'veteran-owned': { icon: '🎖️', classes: 'bg-blue-800 text-blue-100 border-blue-700' },
+  'family-owned': { icon: '👨‍👩‍👧', classes: 'bg-amber-800 text-amber-100 border-amber-700' },
+  '24-7-available': { icon: '🕐', classes: 'bg-red-800 text-red-100 border-red-700' },
+  'accepts-insurance': { icon: '📄', classes: 'bg-blue-800 text-blue-100 border-blue-700' },
+  'locally-owned': { icon: '📍', classes: 'bg-amber-800 text-amber-100 border-amber-700' },
+  'senior-discount': { icon: '🎁', classes: 'bg-amber-800 text-amber-100 border-amber-700' },
+  'military-discount': { icon: '🎗️', classes: 'bg-amber-800 text-amber-100 border-amber-700' },
 };
 
 function getTopFeatures(features: { name: string; slug: string }[], max = 4) {
@@ -417,13 +417,13 @@ export default function MapDirectoryLayout({
                       {business.services.slice(0, 2).map((s) => (
                         <span
                           key={s.slug}
-                          className="px-2 py-0.5 bg-amber-50 text-amber-700 text-[11px] rounded-full border border-amber-200"
+                          className="px-2 py-0.5 bg-amber-800 text-amber-100 text-[11px] rounded-full border border-amber-700"
                         >
                           {s.name}
                         </span>
                       ))}
                       {business.bbb_data?.rating && (
-                        <span className="px-2 py-0.5 bg-blue-50 text-blue-700 text-[11px] rounded-full border border-blue-200 font-semibold">
+                        <span className="px-2 py-0.5 bg-blue-800 text-blue-100 text-[11px] rounded-full border border-blue-700 font-semibold">
                           BBB {business.bbb_data.rating}
                         </span>
                       )}
@@ -432,8 +432,8 @@ export default function MapDirectoryLayout({
                     {/* Feature Badges */}
                     {business.features.length > 0 && (
                       <div className="flex flex-wrap gap-1 mb-3">
-                        {getTopFeatures(business.features, 4).map((f) => {
-                          const badge = FEATURE_BADGE_MAP[f.slug] || { icon: '✅', classes: 'bg-green-50 text-green-700 border-green-200' };
+                        {getTopFeatures(business.features, 3).map((f) => {
+                          const badge = FEATURE_BADGE_MAP[f.slug] || { icon: '✅', classes: 'bg-green-800 text-green-100 border-green-700' };
                           return (
                             <span
                               key={f.slug}
