@@ -402,8 +402,8 @@ export default async function BusinessPage({ params }: Props) {
         {/* Services, Features & BBB */}
         <section className="py-16 lg:py-20 bg-white border-b border-slate-200">
           <div className="mx-auto max-w-7xl px-6 lg:px-10">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {/* Services */}
+            {/* Services - full width, 2-column grid */}
+            <div className="mb-8">
               <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-8 hover:shadow-md transition-shadow">
                 <div className="flex items-center gap-3 mb-6">
                   <div className="size-10 rounded-lg bg-amber-100 border border-amber-200 flex items-center justify-center">
@@ -411,7 +411,7 @@ export default async function BusinessPage({ params }: Props) {
                   </div>
                   <h2 className="font-display text-xl font-bold text-slate-900">Our Services</h2>
                 </div>
-                <div className="space-y-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                   {services.map((service) => (
                     <div key={service.slug} className="flex items-center gap-3 p-3.5 bg-slate-50 border border-slate-100 rounded-lg">
                       <span className="material-symbols-outlined text-amber-500 text-lg">engineering</span>
@@ -423,7 +423,10 @@ export default async function BusinessPage({ params }: Props) {
                   )}
                 </div>
               </div>
+            </div>
 
+            {/* Features & BBB - side by side */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {/* Features */}
               <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-8 hover:shadow-md transition-shadow">
                 <div className="flex items-center gap-3 mb-6">
