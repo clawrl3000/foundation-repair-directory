@@ -39,13 +39,15 @@ interface HomePageProps {
 export default function HomePage({ featuredBusinesses = [], faqs = [] }: HomePageProps) {
   const [leadFormOpen, setLeadFormOpen] = useState(false)
   const [selectedBusiness, setSelectedBusiness] = useState<{id: string, name: string} | null>(null)
+  const [defaultUrgency, setDefaultUrgency] = useState<string | undefined>(undefined)
 
-  const openLeadForm = (businessId?: string, businessName?: string) => {
+  const openLeadForm = (businessId?: string, businessName?: string, urgency?: string) => {
     if (businessId && businessName) {
       setSelectedBusiness({ id: businessId, name: businessName })
     } else {
       setSelectedBusiness(null)
     }
+    setDefaultUrgency(urgency)
     setLeadFormOpen(true)
   }
 
@@ -89,7 +91,8 @@ export default function HomePage({ featuredBusinesses = [], faqs = [] }: HomePag
       {leadFormOpen && (
         <QuoteWizardModal
           isOpen={leadFormOpen}
-          onClose={() => setLeadFormOpen(false)}
+          onClose={() => { setLeadFormOpen(false); setDefaultUrgency(undefined) }}
+          defaultUrgency={defaultUrgency}
         />
       )}
 

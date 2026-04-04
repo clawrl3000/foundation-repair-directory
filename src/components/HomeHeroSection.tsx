@@ -8,7 +8,7 @@ import SmoothCounter from '@/components/SmoothCounter'
 // Phone CTA removed — Scout Report is the primary conversion path
 
 interface HomeHeroSectionProps {
-  onOpenLeadForm: () => void
+  onOpenLeadForm: (businessId?: string, businessName?: string, urgency?: string) => void
 }
 
 export default function HomeHeroSection({ onOpenLeadForm }: HomeHeroSectionProps) {

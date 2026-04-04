@@ -54,7 +54,7 @@ interface FAQItem {
 
 interface HomePageContentProps {
   featuredBusinesses: FeaturedBusiness[]
-  onOpenLeadForm: (businessId?: string, businessName?: string) => void
+  onOpenLeadForm: (businessId?: string, businessName?: string, urgency?: string) => void
   faqs?: FAQItem[]
 }
 
@@ -412,7 +412,7 @@ export default function HomePageContent({ featuredBusinesses, onOpenLeadForm, fa
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-on-scroll">
             <button
-              onClick={() => onOpenLeadForm()}
+              onClick={() => onOpenLeadForm(undefined, undefined, 'emergency')}
               className="bg-red-600 hover:bg-red-700 text-white font-bold py-5 px-10 rounded-xl text-xl transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl active:translate-y-0 active:scale-[0.98] shadow-lg"
             >
               Get Emergency Estimates Now

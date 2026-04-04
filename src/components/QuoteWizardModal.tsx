@@ -9,9 +9,10 @@ interface QuoteWizardModalProps {
   state?: string
   stateName?: string
   defaultZip?: string
+  defaultUrgency?: string
 }
 
-export default function QuoteWizardModal({ isOpen, onClose, state = '', stateName = '', defaultZip }: QuoteWizardModalProps) {
+export default function QuoteWizardModal({ isOpen, onClose, state = '', stateName = '', defaultZip, defaultUrgency }: QuoteWizardModalProps) {
   // Close on Escape
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
     if (e.key === 'Escape') onClose()
@@ -54,7 +55,7 @@ export default function QuoteWizardModal({ isOpen, onClose, state = '', stateNam
           <span className="material-symbols-outlined text-lg">close</span>
         </button>
 
-        <QuoteWizard state={state} stateName={stateName} defaultZip={defaultZip} />
+        <QuoteWizard state={state} stateName={stateName} defaultZip={defaultZip} defaultUrgency={defaultUrgency} />
       </div>
 
       <style jsx>{`
