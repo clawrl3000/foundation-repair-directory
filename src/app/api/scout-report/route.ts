@@ -290,63 +290,84 @@ function formatReportEmail(
     comparisonGrid += `<h2 style="margin: 28px 0 12px; font-size: 18px; font-weight: 700; color: #0f172a; border-bottom: 2px solid #f59e0b; padding-bottom: 8px;">🏗️ YOUR LOCAL CONTRACTORS — AT A GLANCE</h2>`
     comparisonGrid += `<p style="margin: 0 0 16px; color: #64748b; font-size: 13px;">Compare your top-rated local contractors side by side.</p>`
 
-    // Build individual contractor cards (stacked — email-safe, mobile-friendly)
+    // ── Part 1: Side-by-side Comparison Table ──
+    const colWidth = Math.floor(70 / contractors.length)
+    const headerCells = contractors.map(c => {
+      const stars = c.rating ? '⭐'.repeat(Math.round(c.rating)) : ''
+      const ratingText = c.rating ? `${c.rating}/5` : ''
+      const reviewText = c.review_count ? `(${c.review_count})` : ''
+      return `<td style="padding: 10px 8px; background: #0f172a; color: #f59e0b; font-size: 13px; font-weight: 700; text-align: center; width: ${colWidth}%;">${c.name}${stars ? `<br><span style="font-size: 12px; color: #fbbf24;">${stars}</span>` : ''}${ratingText ? `<br><span style="font-size: 11px; color: #94a3b8;">${ratingText} ${reviewText}</span>` : ''}</td>`
+    }).join('')
+
+    const rowStyle = 'padding: 8px; border-bottom: 1px solid #f1f5f9; font-size: 13px; text-align: center; color: #334155;'
+    const labelStyle = 'padding: 8px 10px; border-bottom: 1px solid #f1f5f9; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: #94a3b8; font-weight: 600; white-space: nowrap; width: 30%;'
+    const emptyCell = '<span style="color: #d1d5db;">—</span>'
+
+    const rows = [
+      { label: 'Phone', cells: contractors.map(c => c.phone ? `<a href="tel:${c.phone}" style="color: #0f172a; text-decoration: none; font-weight: 600;">${c.phone}</a>` : emptyCell) },
+      { label: 'Free Inspection', cells: contractors.map(c => c.free_inspection ? '✅' : emptyCell) },
+      { label: 'Experience', cells: contractors.map(c => c.years_in_business ? `${c.years_in_business}` : emptyCell) },
+      { label: 'Warranty', cells: contractors.map(c => c.warranty_info || emptyCell) },
+      { label: 'Services', cells: contractors.map(c => c.services.length > 0 ? c.services.slice(0, 3).join(', ') : emptyCell) },
+      { label: 'Credentials', cells: contractors.map(c => c.certifications.length > 0 ? c.certifications.slice(0, 2).join(', ') : emptyCell) },
+    ]
+
+    const tableRows = rows.map(r =>
+      `<tr><td style="${labelStyle}">${r.label}</td>${r.cells.map(cell => `<td style="${rowStyle}">${cell}</td>`).join('')}</tr>`
+    ).join('')
+
+    comparisonGrid += `
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-collapse: collapse; border: 1px solid #e2e8f0; border-radius: 8px; margin-bottom: 20px;">
+        <tr><td style="padding: 10px; background: #0f172a; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: #64748b; font-weight: 600; width: 30%;"></td>${headerCells}</tr>
+        ${tableRows}
+      </table>`
+
+    // ── Part 2: Individual Business Synopses ──
     for (const c of contractors) {
-      const stars = c.rating ? '⭐'.repeat(Math.round(c.rating)) : '—'
-      const ratingText = c.rating ? `${c.rating}/5` : 'N/A'
-      const reviewText = c.review_count ? `(${c.review_count} reviews)` : ''
-      const services = c.services.slice(0, 3).join(' · ') || '—'
-      const freeInspection = c.free_inspection ? '✅ Yes' : '—'
-      const warranty = c.warranty_info || '—'
-      const experience = c.years_in_business || '—'
-      const certs = c.certifications.slice(0, 2).join(', ') || '—'
+      const synopsisParts: string[] = []
+
+      // Build a natural language synopsis from available data
+      if (c.services.length > 0) {
+        synopsisParts.push(`${c.name} offers ${c.services.slice(0, 4).join(', ')}`)
+      }
+      if (c.years_in_business) {
+        synopsisParts.push(`with ${c.years_in_business} of experience`)
+      }
+      if (c.warranty_info) {
+        synopsisParts.push(`and backs their work with a ${c.warranty_info} warranty`)
+      }
+
+      let sentence1 = synopsisParts.length > 0
+        ? synopsisParts.join(' ') + '.'
+        : `${c.name} is a local foundation repair contractor.`
+
+      const extras: string[] = []
+      if (c.rating && c.review_count) {
+        extras.push(`Rated ${c.rating}/5 across ${c.review_count} reviews`)
+      } else if (c.rating) {
+        extras.push(`Rated ${c.rating}/5`)
+      }
+      if (c.certifications.length > 0) {
+        extras.push(`credentials include ${c.certifications.join(', ')}`)
+      }
+      if (c.free_inspection) {
+        extras.push(`free inspections available`)
+      }
+      const sentence2 = extras.length > 0 ? extras.join('; ') + '.' : ''
+
+      const contactLinks: string[] = []
+      if (c.phone) contactLinks.push(`<a href="tel:${c.phone}" style="color: #f59e0b; text-decoration: none; font-weight: 600;">📞 ${c.phone}</a>`)
+      if (c.website_url) contactLinks.push(`<a href="${c.website_url}" style="color: #f59e0b; text-decoration: none; font-weight: 600;">🌐 Website</a>`)
 
       comparisonGrid += `
-      <div style="border: 1px solid #e2e8f0; border-radius: 8px; margin-bottom: 12px; overflow: hidden;">
-        <!-- Contractor name bar -->
-        <div style="background: #0f172a; padding: 12px 16px;">
-          <h3 style="margin: 0; color: #f59e0b; font-size: 16px; font-weight: 700;">${c.name}</h3>
-          <div style="margin-top: 4px;">
-            <span style="color: #fbbf24; font-size: 13px;">${stars}</span>
-            <span style="color: #94a3b8; font-size: 13px; margin-left: 6px;">${ratingText} ${reviewText}</span>
-          </div>
+      <div style="border: 1px solid #e2e8f0; border-radius: 8px; margin-bottom: 10px; overflow: hidden;">
+        <div style="background: #f8fafc; padding: 10px 14px; border-bottom: 1px solid #e2e8f0;">
+          <strong style="font-size: 14px; color: #0f172a;">${c.name}</strong>
         </div>
-        <!-- Details grid -->
-        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-collapse: collapse;">
-          <tr>
-            <td style="padding: 10px 16px; border-bottom: 1px solid #f1f5f9; width: 40%; vertical-align: top;">
-              <span style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: #94a3b8; font-weight: 600;">Phone</span><br>
-              <span style="font-size: 14px; color: #0f172a; font-weight: 600;">${c.phone ? `<a href="tel:${c.phone}" style="color: #0f172a; text-decoration: none;">${c.phone}</a>` : '—'}</span>
-            </td>
-            <td style="padding: 10px 16px; border-bottom: 1px solid #f1f5f9; width: 60%; vertical-align: top;">
-              <span style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: #94a3b8; font-weight: 600;">Free Inspection</span><br>
-              <span style="font-size: 14px; color: #0f172a; font-weight: 600;">${freeInspection}</span>
-            </td>
-          </tr>
-          <tr>
-            <td style="padding: 10px 16px; border-bottom: 1px solid #f1f5f9; vertical-align: top;">
-              <span style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: #94a3b8; font-weight: 600;">Experience</span><br>
-              <span style="font-size: 14px; color: #334155;">${experience}</span>
-            </td>
-            <td style="padding: 10px 16px; border-bottom: 1px solid #f1f5f9; vertical-align: top;">
-              <span style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: #94a3b8; font-weight: 600;">Warranty</span><br>
-              <span style="font-size: 14px; color: #334155;">${warranty}</span>
-            </td>
-          </tr>
-          <tr>
-            <td colspan="2" style="padding: 10px 16px; border-bottom: 1px solid #f1f5f9; vertical-align: top;">
-              <span style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: #94a3b8; font-weight: 600;">Services</span><br>
-              <span style="font-size: 14px; color: #334155;">${services}</span>
-            </td>
-          </tr>
-          <tr>
-            <td colspan="2" style="padding: 10px 16px; vertical-align: top;">
-              <span style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: #94a3b8; font-weight: 600;">Credentials</span><br>
-              <span style="font-size: 14px; color: #334155;">${certs}</span>
-            </td>
-          </tr>
-        </table>
-        ${c.website_url ? `<div style="padding: 10px 16px; background: #f8fafc; text-align: center;"><a href="${c.website_url}" style="color: #f59e0b; font-size: 13px; font-weight: 600; text-decoration: none;">Visit Website →</a></div>` : ''}
+        <div style="padding: 12px 14px;">
+          <p style="margin: 0 0 8px; font-size: 13px; line-height: 1.5; color: #334155;">${sentence1}${sentence2 ? ' ' + sentence2 : ''}</p>
+          ${contactLinks.length > 0 ? `<p style="margin: 0; font-size: 13px;">${contactLinks.join(' &nbsp;·&nbsp; ')}</p>` : ''}
+        </div>
       </div>`
     }
   }
