@@ -1,11 +1,11 @@
 @import "tailwindcss";
-/* Material Symbols Outlined - direct @font-face with verified woff2 URL (v323) */
+/* Material Symbols Outlined - self-hosted, no external dependencies */
 @font-face {
   font-family: 'Material Symbols Outlined';
   font-style: normal;
   font-weight: 100 700;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/materialsymbolsoutlined/v323/kJEhBvYX7BgnkSrUwT8OhrdQw4oELdPIeeII9v6oFsLjBuVY.woff2) format('woff2');
+  src: url('/fonts/material-symbols-outlined.woff2') format('woff2');
 }
 
 /* Critical inline hero styles for LCP optimization */
