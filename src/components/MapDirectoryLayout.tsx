@@ -24,6 +24,8 @@ interface BusinessListing {
   services: { name: string; slug: string }[];
   features: { name: string; slug: string; value?: string }[];
   images?: { url: string; alt_text?: string; source?: string }[];
+  citySlug?: string;
+  cityName?: string;
 }
 
 interface CityChip {
@@ -162,7 +164,7 @@ export default function MapDirectoryLayout({
       address: b.address,
       phone: b.phone,
       slug: b.slug,
-      citySlug: currentCitySlug,
+      citySlug: b.citySlug || currentCitySlug,
     }));
 
   // Quick stats
@@ -337,7 +339,7 @@ export default function MapDirectoryLayout({
                 >
                   {/* Image */}
                   <Link
-                    href={`/${stateSlug}/${currentCitySlug || ''}/${business.slug}`}
+                    href={`/${stateSlug}/${business.citySlug || currentCitySlug || ''}/${business.slug}`}
                     className="relative h-40 sm:h-auto sm:w-36 flex-shrink-0 overflow-hidden block"
                     onClick={(e) => e.stopPropagation()}
                   >
@@ -366,7 +368,7 @@ export default function MapDirectoryLayout({
                   <div className="flex flex-1 flex-col p-4">
                     <div className="flex items-start justify-between mb-1">
                       <Link
-                        href={`/${stateSlug}/${currentCitySlug || ''}/${business.slug}`}
+                        href={`/${stateSlug}/${business.citySlug || currentCitySlug || ''}/${business.slug}`}
                         className="block"
                         onClick={(e) => e.stopPropagation()}
                       >
@@ -383,7 +385,7 @@ export default function MapDirectoryLayout({
 
                     <p className="text-slate-500 text-xs mb-1">
                       {business.address ? `${business.address}, ` : ''}
-                      {currentCityName || ''} {stateAbbr}
+                      {business.cityName || currentCityName || ''} {stateAbbr}
                     </p>
 
                     {business.rating && business.review_count > 0 && (
@@ -453,7 +455,7 @@ export default function MapDirectoryLayout({
                       onClick={(e) => e.stopPropagation()}
                     >
                       <a
-                        href={`/${stateSlug}/${currentCitySlug || ''}/${business.slug}#get-estimate`}
+                        href={`/${stateSlug}/${business.citySlug || currentCitySlug || ''}/${business.slug}#get-estimate`}
                         className="flex-1 text-center rounded-lg bg-amber-500 py-2 px-4 text-sm font-bold text-white hover:bg-amber-600 transition-colors"
                       >
                         Get Estimate
@@ -468,7 +470,7 @@ export default function MapDirectoryLayout({
                         </a>
                       )}
                       <Link
-                        href={`/${stateSlug}/${currentCitySlug || ''}/${business.slug}`}
+                        href={`/${stateSlug}/${business.citySlug || currentCitySlug || ''}/${business.slug}`}
                         className="flex items-center justify-center rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-700 hover:bg-slate-50 transition-colors"
                         title="View details"
                       >
