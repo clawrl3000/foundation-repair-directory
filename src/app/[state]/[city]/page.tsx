@@ -3,7 +3,6 @@ import Link from 'next/link'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 import { generateBreadcrumbSchema, jsonLdScript } from '@/lib/structured-data'
 import { notFound } from 'next/navigation'
-import { Suspense } from 'react'
 import StitchNav from '@/components/StitchNav'
 import StitchFooter from '@/components/StitchFooter'
 import QuoteWizard from '@/components/QuoteWizard'
@@ -392,101 +391,20 @@ export default async function CityPage({ params }: Props) {
 
       <main className="flex-1">
         {/* Map Directory Layout */}
-        <Suspense fallback={<div className="min-h-[calc(100vh-64px)] flex items-center justify-center"><span className="text-slate-400">Loading contractors...</span></div>}>
-          <MapDirectoryLayout
-            businesses={businesses}
-            cities={siblingCities}
-            stateSlug={state}
-            stateName={stateInfo.name}
-            stateAbbr={stateInfo.abbreviation}
-            currentCitySlug={city}
-            currentCityName={cityInfo.name}
-            heading={`Foundation Repair in ${cityInfo.name}, ${stateInfo.abbreviation}`}
-            description={businesses.length > 1
-              ? `Compare ${businesses.length} licensed foundation repair contractors in ${cityInfo.name}. Get estimates and find the right professional.`
-              : `Foundation repair contractors in ${cityInfo.name}, ${stateInfo.abbreviation}. Get estimates from qualified professionals.`
-            }
-          />
-        </Suspense>
-
-        {/* Comparison Grid */}
-        {businesses.length >= 2 && (() => {
-          const COMPARISON_FEATURES = [
-            { slug: 'free-inspection', label: 'Free Inspection', icon: '🔍' },
-            { slug: 'lifetime-warranty', label: 'Lifetime Warranty', icon: '🛡️' },
-            { slug: 'transferable-warranty', label: 'Transferable Warranty', icon: '🔄' },
-            { slug: 'licensed-insured', label: 'Licensed & Insured', icon: '📋' },
-            { slug: 'financing-available', label: 'Financing Available', icon: '💰' },
-            { slug: 'emergency-service', label: 'Emergency Service', icon: '🚨' },
-            { slug: 'free-estimates', label: 'Free Estimates', icon: '📝' },
-            { slug: 'bbb-accredited', label: 'BBB Accredited', icon: '⭐' },
-            { slug: 'family-owned', label: 'Family Owned', icon: '👨‍👩‍👧' },
-            { slug: 'veteran-owned', label: 'Veteran Owned', icon: '🎖️' },
-            { slug: 'senior-discount', label: 'Senior Discount', icon: '🎁' },
-            { slug: 'military-discount', label: 'Military Discount', icon: '🎗️' },
-          ]
-          // Top contractors by rating (max 6)
-          const topContractors = [...businesses]
-            .filter(b => b.features.length > 0)
-            .sort((a, b) => (b.rating || 0) - (a.rating || 0))
-            .slice(0, 6)
-          if (topContractors.length < 2) return null
-          // Only show features that at least one contractor has
-          const relevantFeatures = COMPARISON_FEATURES.filter(cf =>
-            topContractors.some(b => b.features.some(f => f.slug === cf.slug))
-          )
-          if (relevantFeatures.length === 0) return null
-          return (
-            <section className="py-16 lg:py-20 bg-white border-b border-slate-200">
-              <div className="mx-auto max-w-7xl px-6 lg:px-10">
-                <h2 className="font-display text-3xl sm:text-4xl font-bold tracking-tight text-slate-900 mb-3">
-                  Compare Contractors in {cityInfo.name}
-                </h2>
-                <p className="text-slate-500 mb-8">Side-by-side comparison of top-rated foundation repair companies.</p>
-                <div className="overflow-x-auto -mx-6 px-6">
-                  <table className="w-full text-sm border-collapse min-w-[600px]">
-                    <thead>
-                      <tr className="border-b-2 border-slate-200">
-                        <th className="text-left py-3 pr-4 text-slate-500 font-medium w-48">Feature</th>
-                        {topContractors.map(b => (
-                          <th key={b.id} className="py-3 px-3 text-center">
-                            <Link href={`/${state}/${city}/${b.slug}`} className="hover:text-amber-600 transition-colors">
-                              <span className="font-bold text-slate-900 text-xs leading-tight block">{b.name}</span>
-                            </Link>
-                            {b.rating && (
-                              <div className="flex items-center justify-center gap-1 mt-1">
-                                <span className="material-symbols-outlined text-amber-500 text-xs fill-1">star</span>
-                                <span className="font-mono text-xs text-slate-500">{b.rating}</span>
-                              </div>
-                            )}
-                          </th>
-                        ))}
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {relevantFeatures.map((cf, i) => (
-                        <tr key={cf.slug} className={i % 2 === 0 ? 'bg-slate-50' : 'bg-white'}>
-                          <td className="py-3 pr-4 text-slate-700 font-medium">
-                            <span className="mr-1.5">{cf.icon}</span>{cf.label}
-                          </td>
-                          {topContractors.map(b => (
-                            <td key={b.id} className="py-3 px-3 text-center">
-                              {b.features.some(f => f.slug === cf.slug) ? (
-                                <span className="text-green-600 text-lg">✅</span>
-                              ) : (
-                                <span className="text-slate-300">—</span>
-                              )}
-                            </td>
-                          ))}
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </section>
-          )
-        })()}
+        <MapDirectoryLayout
+          businesses={businesses}
+          cities={siblingCities}
+          stateSlug={state}
+          stateName={stateInfo.name}
+          stateAbbr={stateInfo.abbreviation}
+          currentCitySlug={city}
+          currentCityName={cityInfo.name}
+          heading={`Foundation Repair in ${cityInfo.name}, ${stateInfo.abbreviation}`}
+          description={businesses.length > 1
+            ? `Compare ${businesses.length} licensed foundation repair contractors in ${cityInfo.name}. Get estimates and find the right professional.`
+            : `Foundation repair contractors in ${cityInfo.name}, ${stateInfo.abbreviation}. Get estimates from qualified professionals.`
+          }
+        />
 
         {/* City Information */}
         <section className="py-20 lg:py-24 bg-slate-50 border-y border-slate-200 animate-on-scroll">
