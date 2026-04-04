@@ -161,6 +161,52 @@ function getFeatureBadge(slug: string, name: string): { icon: string; classes: s
   return map[slug] || { icon: '✅', classes: 'bg-green-800 text-green-100 border-green-700' }
 }
 
+async function getSimilarBusinesses(cityId: string, businessId: string, stateSlug: string, citySlug: string): Promise<{ name: string; slug: string; rating?: number; review_count: number; city_name: string; city_slug: string; state_slug: string }[]> {
+  try {
+    // First try same city
+    const { data: sameCityBusinesses } = await supabaseAdmin
+      .from('businesses')
+      .select('id, name, slug, rating, review_count, cities!inner(name, slug, states!inner(slug))')
+      .eq('cities.id', cityId)
+      .neq('id', businessId)
+      .order('rating', { ascending: false, nullsFirst: false })
+      .limit(5)
+
+    if (sameCityBusinesses && sameCityBusinesses.length >= 3) {
+      return sameCityBusinesses.slice(0, 5).map((b: any) => ({
+        name: b.name,
+        slug: b.slug,
+        rating: b.rating,
+        review_count: b.review_count,
+        city_name: b.cities.name,
+        city_slug: b.cities.slug,
+        state_slug: b.cities.states.slug,
+      }))
+    }
+
+    // Fall back to same state
+    const { data: sameStateBusinesses } = await supabaseAdmin
+      .from('businesses')
+      .select('id, name, slug, rating, review_count, cities!inner(name, slug, states!inner(slug))')
+      .eq('cities.states.slug', stateSlug)
+      .neq('id', businessId)
+      .order('rating', { ascending: false, nullsFirst: false })
+      .limit(5)
+
+    return (sameStateBusinesses || []).slice(0, 5).map((b: any) => ({
+      name: b.name,
+      slug: b.slug,
+      rating: b.rating,
+      review_count: b.review_count,
+      city_name: b.cities.name,
+      city_slug: b.cities.slug,
+      state_slug: b.cities.states.slug,
+    }))
+  } catch {
+    return []
+  }
+}
+
 async function getBusinessData(stateSlug: string, citySlug: string, businessSlug: string): Promise<BusinessData | null> {
   try {
     const supabase = supabaseAdmin
@@ -251,27 +297,47 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     }
   }
 
-  const { name, description, city: cityInfo } = businessData
+  const { name, description, city: cityInfo, images, latitude, longitude } = businessData
   const url = `https://foundationscout.com/${state}/${city}/${business}`
+  const metaDescription = description || `${name} provides professional foundation repair in ${cityInfo.name}, ${cityInfo.state.abbreviation}. Licensed, insured. Get estimates and read verified reviews.`
+
+  // Determine best og:image - business photo > Street View > generic fallback
+  let ogImageUrl = 'https://foundationscout.com/og-image.jpg'
+  if (images && images.length > 0 && images[0].url) {
+    if (images[0].source === 'google_places' && process.env.NEXT_PUBLIC_GOOGLE_PLACES_API_KEY) {
+      ogImageUrl = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photoreference=${images[0].url}&key=${process.env.NEXT_PUBLIC_GOOGLE_PLACES_API_KEY}`
+    } else if (images[0].source !== 'google_places') {
+      ogImageUrl = images[0].url
+    }
+  } else if (latitude && longitude && process.env.NEXT_PUBLIC_GOOGLE_PLACES_API_KEY) {
+    ogImageUrl = `https://maps.googleapis.com/maps/api/streetview?size=1200x630&location=${latitude},${longitude}&key=${process.env.NEXT_PUBLIC_GOOGLE_PLACES_API_KEY}`
+  }
 
   return {
     title: `${name} — Foundation Repair in ${cityInfo.name}, ${cityInfo.state.abbreviation} | Reviews & Quotes`,
-    description: description || `${name} provides professional foundation repair in ${cityInfo.name}, ${cityInfo.state.abbreviation}. Licensed, insured. Get estimates and read verified reviews.`,
+    description: metaDescription,
+    keywords: null,
     alternates: {
       canonical: url,
     },
     openGraph: {
+      type: 'website',
       title: `${name} - Foundation Repair in ${cityInfo.name}, ${cityInfo.state.abbreviation}`,
       description: description || `Professional foundation repair services by ${name} in ${cityInfo.name}, ${cityInfo.state.name}.`,
       url: url,
       images: [
         {
-          url: 'https://foundationscout.com/og-image.jpg',
+          url: ogImageUrl,
           width: 1200,
           height: 630,
           alt: `${name} Foundation Repair Services`,
         },
       ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${name} — ${cityInfo.name}, ${cityInfo.state.abbreviation}`,
+      description: metaDescription,
     },
   }
 }
@@ -285,7 +351,27 @@ export default async function BusinessPage({ params }: Props) {
   }
 
   const { name, description, phone, website_url, address, latitude, longitude, rating, review_count, is_verified, year_established, city: cityInfo, services, features, reviews, images, zip: businessZip } = businessData
-  
+
+  // Fetch similar businesses for internal linking
+  const similarBusinesses = await getSimilarBusinesses(
+    (businessData as any).city_id || (businessData as any).cities?.id || '',
+    businessData.id,
+    state,
+    city
+  )
+
+  // Determine schema image
+  let schemaImageUrl: string | undefined
+  if (images && images.length > 0 && images[0].url) {
+    if (images[0].source === 'google_places' && process.env.NEXT_PUBLIC_GOOGLE_PLACES_API_KEY) {
+      schemaImageUrl = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference=${images[0].url}&key=${process.env.NEXT_PUBLIC_GOOGLE_PLACES_API_KEY}`
+    } else if (images[0].source !== 'google_places') {
+      schemaImageUrl = images[0].url
+    }
+  } else if (latitude && longitude && process.env.NEXT_PUBLIC_GOOGLE_PLACES_API_KEY) {
+    schemaImageUrl = `https://maps.googleapis.com/maps/api/streetview?size=800x600&location=${latitude},${longitude}&key=${process.env.NEXT_PUBLIC_GOOGLE_PLACES_API_KEY}`
+  }
+
   // Generate structured data
   const breadcrumbs = [
     { name: 'Home', url: 'https://foundationscout.com' },
@@ -447,32 +533,32 @@ export default async function BusinessPage({ params }: Props) {
         {/* Services, Features & BBB */}
         <section className="py-16 lg:py-20 bg-white border-b border-slate-200">
           <div className="mx-auto max-w-7xl px-6 lg:px-10">
-            {/* Services - full width, 2-column grid */}
-            <div className="mb-8">
-              <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-8 hover:shadow-md transition-shadow">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="size-10 rounded-lg bg-amber-100 border border-amber-200 flex items-center justify-center">
-                    <span className="material-symbols-outlined text-amber-600">construction</span>
+            {/* Services - full width, only shown when data exists */}
+            {services.length > 0 && (
+              <div className="mb-8">
+                <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-8 hover:shadow-md transition-shadow">
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="size-10 rounded-lg bg-amber-100 border border-amber-200 flex items-center justify-center">
+                      <span className="material-symbols-outlined text-amber-600">construction</span>
+                    </div>
+                    <h2 className="font-display text-xl font-bold text-slate-900">Our Services</h2>
                   </div>
-                  <h2 className="font-display text-xl font-bold text-slate-900">Our Services</h2>
-                </div>
-                <div className="flex flex-wrap gap-2.5">
-                  {services.map((service) => (
-                    <span key={service.slug} className="inline-flex items-center gap-2 px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm font-medium text-slate-800 hover:border-amber-300 transition-colors">
-                      <span className="material-symbols-outlined text-amber-500 text-base">engineering</span>
-                      {service.name}
-                    </span>
-                  ))}
-                  {services.length === 0 && (
-                    <p className="text-slate-500 text-sm">Services information coming soon.</p>
-                  )}
+                  <div className="flex flex-wrap gap-2.5">
+                    {services.map((service) => (
+                      <span key={service.slug} className="inline-flex items-center gap-2 px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm font-medium text-slate-800 hover:border-amber-300 transition-colors">
+                        <span className="material-symbols-outlined text-amber-500 text-base">engineering</span>
+                        {service.name}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
 
             {/* Features & BBB - side by side */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {/* Features */}
+            <div className={`grid grid-cols-1 ${features.length > 0 ? 'md:grid-cols-2' : ''} gap-8`}>
+              {/* Features - only shown when data exists */}
+              {features.length > 0 && (
               <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-8 hover:shadow-md transition-shadow">
                 <div className="flex items-center gap-3 mb-6">
                   <div className="size-10 rounded-lg bg-green-100 border border-green-200 flex items-center justify-center">
@@ -490,11 +576,9 @@ export default async function BusinessPage({ params }: Props) {
                       </div>
                     )
                   })}
-                  {features.length === 0 && (
-                    <p className="text-slate-500 text-sm">Features information coming soon.</p>
-                  )}
                 </div>
               </div>
+              )}
 
               {/* BBB Information */}
               <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-8 hover:shadow-md transition-shadow">
@@ -688,6 +772,53 @@ export default async function BusinessPage({ params }: Props) {
             </div>
           </div>
         </section>
+        {/* Similar Contractors - Internal Links */}
+        {similarBusinesses.length > 0 && (
+          <section className="py-16 lg:py-20 bg-white border-t border-slate-200">
+            <div className="mx-auto max-w-7xl px-6 lg:px-10">
+              <h2 className="font-display text-3xl sm:text-4xl font-bold tracking-tight text-slate-900 mb-3 text-center">
+                Similar Foundation Repair Contractors
+              </h2>
+              <p className="text-slate-500 text-lg text-center mb-10">
+                Compare other top-rated contractors in the area
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {similarBusinesses.map((biz) => (
+                  <Link
+                    key={biz.slug}
+                    href={`/${biz.state_slug}/${biz.city_slug}/${biz.slug}`}
+                    className="bg-white border border-slate-200 rounded-xl shadow-sm p-6 hover:shadow-md hover:border-amber-300 transition-all group"
+                  >
+                    <h3 className="font-display text-lg font-bold text-slate-900 group-hover:text-amber-600 transition-colors mb-2">
+                      {biz.name}
+                    </h3>
+                    <p className="text-sm text-slate-500 mb-3 flex items-center gap-1">
+                      <span className="material-symbols-outlined text-sm">location_on</span>
+                      {biz.city_name}
+                    </p>
+                    {biz.rating && biz.review_count > 0 && (
+                      <div className="flex items-center gap-2">
+                        <div className="flex text-amber-500">
+                          {[...Array(5)].map((_, i) => (
+                            <span
+                              key={i}
+                              className={`material-symbols-outlined text-base ${i < Math.round(biz.rating!) ? 'fill-1' : 'text-slate-300'}`}
+                            >
+                              star
+                            </span>
+                          ))}
+                        </div>
+                        <span className="text-sm font-mono text-slate-500">
+                          {biz.rating} ({biz.review_count})
+                        </span>
+                      </div>
+                    )}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
       </main>
 
       <StitchFooter />
@@ -708,12 +839,26 @@ export default async function BusinessPage({ params }: Props) {
           "telephone": phone,
           "email": businessData.email,
           "description": description,
+          "image": schemaImageUrl || undefined,
           "address": {
             "@type": "PostalAddress",
             "streetAddress": address,
             "addressLocality": cityInfo.name,
             "addressRegion": cityInfo.state.abbreviation,
             "addressCountry": "US"
+          },
+          "geo": latitude && longitude ? {
+            "@type": "GeoCoordinates",
+            "latitude": latitude,
+            "longitude": longitude
+          } : undefined,
+          "areaServed": {
+            "@type": "City",
+            "name": cityInfo.name,
+            "containedInPlace": {
+              "@type": "State",
+              "name": cityInfo.state.name
+            }
           },
           "aggregateRating": rating && review_count > 0 ? {
             "@type": "AggregateRating",
