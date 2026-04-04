@@ -86,7 +86,7 @@ export default function HomeHeroSection({ onOpenLeadForm }: HomeHeroSectionProps
                   <div className="h-px flex-1 bg-slate-700/50" />
                 </div>
                 <button
-                  onClick={onOpenLeadForm}
+                  onClick={() => onOpenLeadForm()}
                   className="w-full flex items-center justify-center gap-2.5 bg-amber-500 hover:bg-amber-600 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] text-slate-900 font-bold py-4 px-6 rounded-xl text-lg transition-all duration-300 group shadow-lg shadow-amber-500/20"
                 >
                   <span className="material-symbols-outlined text-xl group-hover:scale-110 transition-transform" aria-hidden="true">description</span>

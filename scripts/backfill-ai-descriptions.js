@@ -14,7 +14,7 @@ const cheerio = require('cheerio');
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://zvfobtpgucmitsaeltig.supabase.co';
 const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
+const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
@@ -82,15 +82,14 @@ ${websiteInfo}
 
 Write the description now (2-3 sentences only, no quotes):`;
 
-  const res = await fetch('https://api.anthropic.com/v1/messages', {
+  const res = await fetch('https://api.openai.com/v1/chat/completions', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'x-api-key': ANTHROPIC_API_KEY,
-      'anthropic-version': '2023-06-01',
+      'Authorization': `Bearer ${OPENAI_API_KEY}`,
     },
     body: JSON.stringify({
-      model: 'claude-haiku-4-5-20241022',
+      model: 'gpt-4o-mini',
       max_tokens: 200,
       messages: [{ role: 'user', content: prompt }],
     }),
@@ -98,11 +97,11 @@ Write the description now (2-3 sentences only, no quotes):`;
 
   if (!res.ok) {
     const err = await res.text();
-    throw new Error(`Haiku API error ${res.status}: ${err}`);
+    throw new Error(`OpenAI API error ${res.status}: ${err}`);
   }
 
   const data = await res.json();
-  return data.content[0].text.trim();
+  return data.choices[0].message.content.trim();
 }
 
 async function main() {
