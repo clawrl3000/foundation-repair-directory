@@ -9,6 +9,7 @@ import StitchNav from '@/components/StitchNav'
 import StitchFooter from '@/components/StitchFooter'
 import BusinessImage from '@/components/BusinessImage'
 import QuoteWizard from '@/components/QuoteWizard'
+import EstimateButton from '@/components/EstimateButton'
 
 interface Props {
   params: Promise<{
@@ -368,10 +369,12 @@ export default async function BusinessPage({ params }: Props) {
 
                   {/* Action Buttons */}
                   <div className="flex flex-col sm:flex-row gap-3" id="get-estimate">
-                    <a href="#contact" className="flex-1 inline-flex items-center justify-center gap-2 rounded-lg bg-amber-500 py-3.5 px-6 text-base font-bold text-white transition-colors hover:bg-amber-600 shadow-sm">
-                      <span className="material-symbols-outlined text-lg">request_quote</span>
-                      Get Estimate
-                    </a>
+                    <EstimateButton
+                      state={state}
+                      stateName={cityInfo.state.name}
+                      defaultZip={businessZip || undefined}
+                      className="flex-1 inline-flex items-center justify-center gap-2 rounded-lg bg-amber-500 py-3.5 px-6 text-base font-bold text-white transition-colors hover:bg-amber-600 shadow-sm cursor-pointer"
+                    />
                     {phone && (
                       <a
                         href={`tel:${phone}`}

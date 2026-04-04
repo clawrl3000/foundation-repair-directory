@@ -6,9 +6,12 @@ import QuoteWizard from '@/components/QuoteWizard'
 interface QuoteWizardModalProps {
   isOpen: boolean
   onClose: () => void
+  state?: string
+  stateName?: string
+  defaultZip?: string
 }
 
-export default function QuoteWizardModal({ isOpen, onClose }: QuoteWizardModalProps) {
+export default function QuoteWizardModal({ isOpen, onClose, state = '', stateName = '', defaultZip }: QuoteWizardModalProps) {
   // Close on Escape
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
     if (e.key === 'Escape') onClose()
@@ -51,7 +54,7 @@ export default function QuoteWizardModal({ isOpen, onClose }: QuoteWizardModalPr
           <span className="material-symbols-outlined text-lg">close</span>
         </button>
 
-        <QuoteWizard state="" stateName="" />
+        <QuoteWizard state={state} stateName={stateName} defaultZip={defaultZip} />
       </div>
 
       <style jsx>{`
