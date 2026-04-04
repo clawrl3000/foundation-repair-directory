@@ -5,6 +5,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
+      disallow: ['/auth/', '/api/'],
     },
     sitemap: 'https://foundationscout.com/sitemap.xml',
   }
