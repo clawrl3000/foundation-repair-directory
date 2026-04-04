@@ -174,6 +174,18 @@ const FALLBACK_CITY_DATA: Record<string, Record<string, CityPageData>> = {
   }
 }
 
+const COMPARE_FEATURES = [
+  { name: 'Free Inspection', slug: 'free-inspection', icon: '🔍', category: 'trust' },
+  { name: 'Lifetime Warranty', slug: 'lifetime-warranty', icon: '🛡️', category: 'trust' },
+  { name: 'Licensed & Insured', slug: 'licensed-insured', icon: '📋', category: 'trust' },
+  { name: 'Financing Available', slug: 'financing-available', icon: '💰', category: 'service' },
+  { name: 'Emergency Service', slug: 'emergency-service', icon: '🚨', category: 'service' },
+  { name: 'BBB Accredited', slug: 'bbb-accredited', icon: '⭐', category: 'trust' },
+  { name: 'Veteran Owned', slug: 'veteran-owned', icon: '🎖️', category: 'trust' },
+  { name: 'Family Owned', slug: 'family-owned', icon: '👨‍👩‍👧', category: 'trust' },
+  { name: 'Locally Owned', slug: 'locally-owned', icon: '📍', category: 'trust' },
+] as const
+
 async function getCityData(stateSlug: string, citySlug: string): Promise<CityPageData | null> {
   try {
     const supabase = supabaseAdmin
@@ -405,6 +417,59 @@ export default async function CityPage({ params }: Props) {
             : `Foundation repair contractors in ${cityInfo.name}, ${stateInfo.abbreviation}. Get estimates from qualified professionals.`
           }
         />
+
+        {/* Compare Contractors */}
+        {businesses.length >= 2 && (
+          <section className="py-16 bg-slate-900 border-y border-slate-700">
+            <div className="mx-auto max-w-7xl px-6 lg:px-10">
+              <h2 className="font-display text-2xl sm:text-3xl font-bold tracking-tight text-white mb-2">
+                Compare Contractors in {cityInfo.name}
+              </h2>
+              <p className="text-slate-400 text-sm mb-8">Feature-by-feature comparison of top contractors</p>
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm border-collapse">
+                  <thead>
+                    <tr className="border-b border-slate-700">
+                      <th className="text-left text-slate-400 font-medium py-3 pr-6 w-48">Feature</th>
+                      {businesses.slice(0, 5).map((biz) => (
+                        <th key={biz.id} className="text-center py-3 px-3 min-w-[110px]">
+                          <Link href={`/${state}/${city}/${biz.slug}`} className="group block">
+                            <span className="block text-white font-semibold text-xs leading-tight group-hover:text-amber-400 transition-colors line-clamp-2">{biz.name}</span>
+                            {biz.rating && <span className="text-amber-400 text-[10px] font-mono">★ {biz.rating}</span>}
+                          </Link>
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {COMPARE_FEATURES.map((feat, i) => (
+                      <tr key={feat.slug} className={`border-b border-slate-800 ${i % 2 === 0 ? 'bg-slate-800/30' : ''}`}>
+                        <td className="py-3 pr-6">
+                          <div className="flex items-center gap-2 text-slate-300 font-medium">
+                            <span>{feat.icon}</span>
+                            <span>{feat.name}</span>
+                          </div>
+                        </td>
+                        {businesses.slice(0, 5).map((biz) => {
+                          const has = biz.features.some((f) => f.slug === feat.slug)
+                          return (
+                            <td key={biz.id} className="text-center py-3 px-3">
+                              {has ? (
+                                <span className={`inline-flex items-center justify-center w-6 h-6 rounded-full text-xs font-bold ${feat.category === 'trust' ? 'bg-green-800 text-green-300' : 'bg-blue-800 text-blue-300'}`}>✓</span>
+                              ) : (
+                                <span className="text-slate-600 text-lg leading-none">—</span>
+                              )}
+                            </td>
+                          )
+                        })}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* City Information */}
         <section className="py-20 lg:py-24 bg-slate-50 border-y border-slate-200 animate-on-scroll">
