@@ -1,7 +1,8 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useMemo } from 'react';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import BusinessImage from '@/components/BusinessImage';
 import DirectoryMap, { type MapBusinessLocation } from '@/components/DirectoryMap';
 
@@ -43,6 +44,69 @@ interface MapDirectoryLayoutProps {
   description: string;
 }
 
+// Feature badge priority order and display config
+const FEATURE_PRIORITY: string[] = [
+  'lifetime-warranty',
+  'free-inspection',
+  'licensed-insured',
+  'financing-available',
+  'bbb-accredited',
+  'family-owned',
+  'veteran-owned',
+  'emergency-service',
+  '24-7-available',
+  'free-estimates',
+  'transferable-warranty',
+  '25-year-warranty',
+  'locally-owned',
+  'senior-discount',
+  'military-discount',
+  'residential',
+  'commercial',
+  'accepts-insurance',
+];
+
+const FEATURE_BADGE_MAP: Record<string, { icon: string; classes: string }> = {
+  'free-inspection': { icon: '🔍', classes: 'bg-green-50 text-green-700 border-green-200' },
+  'lifetime-warranty': { icon: '🛡️', classes: 'bg-green-50 text-green-700 border-green-200' },
+  'transferable-warranty': { icon: '🔄', classes: 'bg-green-50 text-green-700 border-green-200' },
+  '25-year-warranty': { icon: '🛡️', classes: 'bg-green-50 text-green-700 border-green-200' },
+  'licensed-insured': { icon: '📋', classes: 'bg-green-50 text-green-700 border-green-200' },
+  'financing-available': { icon: '💰', classes: 'bg-blue-50 text-blue-700 border-blue-200' },
+  'emergency-service': { icon: '🚨', classes: 'bg-red-50 text-red-700 border-red-200' },
+  'free-estimates': { icon: '📝', classes: 'bg-green-50 text-green-700 border-green-200' },
+  'residential': { icon: '🏠', classes: 'bg-blue-50 text-blue-700 border-blue-200' },
+  'commercial': { icon: '🏢', classes: 'bg-blue-50 text-blue-700 border-blue-200' },
+  'bbb-accredited': { icon: '⭐', classes: 'bg-indigo-50 text-indigo-700 border-indigo-200' },
+  'veteran-owned': { icon: '🎖️', classes: 'bg-blue-50 text-blue-700 border-blue-200' },
+  'family-owned': { icon: '👨‍👩‍👧', classes: 'bg-amber-50 text-amber-700 border-amber-200' },
+  '24-7-available': { icon: '🕐', classes: 'bg-red-50 text-red-700 border-red-200' },
+  'accepts-insurance': { icon: '📄', classes: 'bg-blue-50 text-blue-700 border-blue-200' },
+  'locally-owned': { icon: '📍', classes: 'bg-amber-50 text-amber-700 border-amber-200' },
+  'senior-discount': { icon: '🎁', classes: 'bg-amber-50 text-amber-700 border-amber-200' },
+  'military-discount': { icon: '🎗️', classes: 'bg-amber-50 text-amber-700 border-amber-200' },
+};
+
+function getTopFeatures(features: { name: string; slug: string }[], max = 4) {
+  return [...features]
+    .sort((a, b) => {
+      const ai = FEATURE_PRIORITY.indexOf(a.slug);
+      const bi = FEATURE_PRIORITY.indexOf(b.slug);
+      return (ai === -1 ? 999 : ai) - (bi === -1 ? 999 : bi);
+    })
+    .slice(0, max);
+}
+
+// Filter chips available on the city page
+const FILTER_OPTIONS = [
+  { slug: 'free-inspection', label: 'Free Inspection' },
+  { slug: 'lifetime-warranty', label: 'Lifetime Warranty' },
+  { slug: 'financing-available', label: 'Financing' },
+  { slug: 'emergency-service', label: 'Emergency Service' },
+  { slug: 'licensed-insured', label: 'Licensed & Insured' },
+  { slug: 'free-estimates', label: 'Free Estimates' },
+];
+
 export default function MapDirectoryLayout({
   businesses,
   cities,
@@ -57,9 +121,38 @@ export default function MapDirectoryLayout({
   const [selectedBusinessId, setSelectedBusinessId] = useState<string | null>(null);
   const [showAllCities, setShowAllCities] = useState(false);
   const listingsRef = useRef<HTMLDivElement>(null);
+  const searchParams = useSearchParams();
+
+  // Feature filtering from URL params
+  const activeFilters = useMemo(() => {
+    const param = searchParams.get('feature');
+    return param ? param.split(',').filter(Boolean) : [];
+  }, [searchParams]);
+
+  const filteredBusinesses = useMemo(() => {
+    if (activeFilters.length === 0) return businesses;
+    return businesses.filter((b) =>
+      activeFilters.every((f) => b.features.some((bf) => bf.slug === f))
+    );
+  }, [businesses, activeFilters]);
+
+  const toggleFilter = (slug: string) => {
+    const next = activeFilters.includes(slug)
+      ? activeFilters.filter((f) => f !== slug)
+      : [...activeFilters, slug];
+    const url = new URL(window.location.href);
+    if (next.length > 0) {
+      url.searchParams.set('feature', next.join(','));
+    } else {
+      url.searchParams.delete('feature');
+    }
+    window.history.pushState({}, '', url.toString());
+    // Force re-render by dispatching popstate
+    window.dispatchEvent(new PopStateEvent('popstate'));
+  };
 
   // Map businesses for the DirectoryMap component
-  const mapBusinesses: MapBusinessLocation[] = businesses
+  const mapBusinesses: MapBusinessLocation[] = filteredBusinesses
     .filter((b) => b.latitude && b.longitude)
     .map((b) => ({
       id: b.id,
@@ -73,11 +166,11 @@ export default function MapDirectoryLayout({
     }));
 
   // Quick stats
-  const totalBusinesses = businesses.length;
-  const avgRating = businesses.filter((b) => b.rating).length > 0
-    ? (businesses.reduce((sum, b) => sum + (b.rating || 0), 0) / businesses.filter((b) => b.rating).length).toFixed(1)
+  const totalBusinesses = filteredBusinesses.length;
+  const avgRating = filteredBusinesses.filter((b) => b.rating).length > 0
+    ? (filteredBusinesses.reduce((sum, b) => sum + (b.rating || 0), 0) / filteredBusinesses.filter((b) => b.rating).length).toFixed(1)
     : null;
-  const totalReviews = businesses.reduce((sum, b) => sum + b.review_count, 0);
+  const totalReviews = filteredBusinesses.reduce((sum, b) => sum + b.review_count, 0);
 
   const visibleCities = showAllCities ? cities : cities.slice(0, 8);
   const hasMoreCities = cities.length > 8;
@@ -169,6 +262,50 @@ export default function MapDirectoryLayout({
             </div>
           )}
 
+          {/* Feature Filter Chips */}
+          <div className="mb-6">
+            <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Filter by feature</p>
+            <div className="flex flex-wrap gap-2">
+              {FILTER_OPTIONS.map((opt) => {
+                const active = activeFilters.includes(opt.slug);
+                const badge = FEATURE_BADGE_MAP[opt.slug];
+                return (
+                  <button
+                    key={opt.slug}
+                    onClick={() => toggleFilter(opt.slug)}
+                    className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium border transition-colors cursor-pointer ${
+                      active
+                        ? 'bg-amber-500 text-white border-amber-500'
+                        : 'bg-white text-slate-600 border-slate-300 hover:border-amber-400 hover:text-amber-600'
+                    }`}
+                  >
+                    {badge && <span>{badge.icon}</span>}
+                    {opt.label}
+                    {active && <span className="ml-0.5">×</span>}
+                  </button>
+                );
+              })}
+              {activeFilters.length > 0 && (
+                <button
+                  onClick={() => {
+                    const url = new URL(window.location.href);
+                    url.searchParams.delete('feature');
+                    window.history.pushState({}, '', url.toString());
+                    window.dispatchEvent(new PopStateEvent('popstate'));
+                  }}
+                  className="px-3 py-1.5 rounded-full text-xs font-medium text-red-600 border border-red-200 hover:bg-red-50 transition-colors cursor-pointer"
+                >
+                  Clear all
+                </button>
+              )}
+            </div>
+            {activeFilters.length > 0 && (
+              <p className="text-xs text-slate-400 mt-2">
+                Showing {filteredBusinesses.length} of {businesses.length} contractor{businesses.length !== 1 ? 's' : ''}
+              </p>
+            )}
+          </div>
+
           {/* Mobile Map (visible only on mobile) */}
           {mapBusinesses.length > 0 && (
             <div className="lg:hidden mb-6 rounded-xl overflow-hidden border border-slate-200 shadow-sm">
@@ -185,9 +322,9 @@ export default function MapDirectoryLayout({
           )}
 
           {/* Business Cards */}
-          {businesses.length > 0 ? (
+          {filteredBusinesses.length > 0 ? (
             <div className="space-y-4">
-              {businesses.map((business) => (
+              {filteredBusinesses.map((business) => (
                 <div
                   key={business.id}
                   id={`listing-${business.id}`}
@@ -276,7 +413,7 @@ export default function MapDirectoryLayout({
                     )}
 
                     {/* Tags */}
-                    <div className="flex flex-wrap gap-1.5 mb-3">
+                    <div className="flex flex-wrap gap-1.5 mb-2">
                       {business.services.slice(0, 2).map((s) => (
                         <span
                           key={s.slug}
@@ -291,6 +428,24 @@ export default function MapDirectoryLayout({
                         </span>
                       )}
                     </div>
+
+                    {/* Feature Badges */}
+                    {business.features.length > 0 && (
+                      <div className="flex flex-wrap gap-1 mb-3">
+                        {getTopFeatures(business.features, 4).map((f) => {
+                          const badge = FEATURE_BADGE_MAP[f.slug] || { icon: '✅', classes: 'bg-green-50 text-green-700 border-green-200' };
+                          return (
+                            <span
+                              key={f.slug}
+                              className={`inline-flex items-center gap-1 px-1.5 py-0.5 text-[10px] font-medium rounded border ${badge.classes}`}
+                            >
+                              <span className="text-[10px]">{badge.icon}</span>
+                              {f.name}
+                            </span>
+                          );
+                        })}
+                      </div>
+                    )}
 
                     {/* Actions */}
                     <div
