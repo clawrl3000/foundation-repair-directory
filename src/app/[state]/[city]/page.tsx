@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
 import { supabaseAdmin } from '@/lib/supabase-admin'
-import { generateBreadcrumbSchema, jsonLdScript } from '@/lib/structured-data'
+import { generateBreadcrumbSchema, generateFAQSchema, jsonLdScript } from '@/lib/structured-data'
 import { notFound } from 'next/navigation'
 import StitchNav from '@/components/StitchNav'
 import StitchFooter from '@/components/StitchFooter'
@@ -174,17 +174,6 @@ const FALLBACK_CITY_DATA: Record<string, Record<string, CityPageData>> = {
   }
 }
 
-const COMPARE_FEATURES = [
-  { name: 'Free Inspection', slug: 'free-inspection', icon: '🔍', category: 'trust' },
-  { name: 'Lifetime Warranty', slug: 'lifetime-warranty', icon: '🛡️', category: 'trust' },
-  { name: 'Licensed & Insured', slug: 'licensed-insured', icon: '📋', category: 'trust' },
-  { name: 'Financing Available', slug: 'financing-available', icon: '💰', category: 'service' },
-  { name: 'Emergency Service', slug: 'emergency-service', icon: '🚨', category: 'service' },
-  { name: 'BBB Accredited', slug: 'bbb-accredited', icon: '⭐', category: 'trust' },
-  { name: 'Veteran Owned', slug: 'veteran-owned', icon: '🎖️', category: 'trust' },
-  { name: 'Family Owned', slug: 'family-owned', icon: '👨‍👩‍👧', category: 'trust' },
-  { name: 'Locally Owned', slug: 'locally-owned', icon: '📍', category: 'trust' },
-] as const
 
 async function getCityData(stateSlug: string, citySlug: string): Promise<CityPageData | null> {
   try {
@@ -340,15 +329,24 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     }
   }
 
-  const { city: cityInfo, state: stateInfo } = pageData
+  const { city: cityInfo, state: stateInfo, businesses } = pageData
   const url = `https://foundationscout.com/${state}/${city}`
+  const businessCount = businesses?.length || 0
 
-  const metaTitle = pageData.cityContent?.meta_title || `${cityInfo.name}, ${stateInfo.abbreviation} Foundation Repair — Compare Top-Rated Contractors`
-  const metaDesc = pageData.cityContent?.meta_description || `Find foundation repair contractors in ${cityInfo.name}, ${stateInfo.abbreviation}. Compare ratings, read reviews, get quotes. Licensed professionals for pier & beam, slab, basement repairs.`
+  const metaTitle = pageData.cityContent?.meta_title
+    || (businessCount > 0
+      ? `${businessCount} Best Foundation Repair Contractors in ${cityInfo.name}, ${stateInfo.abbreviation} (2026) | Free Quotes`
+      : `Foundation Repair Contractors in ${cityInfo.name}, ${stateInfo.abbreviation} (2026)`)
+  const metaDesc = pageData.cityContent?.meta_description
+    || (businessCount > 0
+      ? `Compare ${businessCount} licensed foundation repair contractors in ${cityInfo.name}, ${stateInfo.abbreviation}. See ratings, read reviews & get free estimates. Pier & beam, slab, basement — find your pro today.`
+      : `Find foundation repair contractors in ${cityInfo.name}, ${stateInfo.abbreviation}. Compare ratings, read reviews, get quotes. Licensed professionals for pier & beam, slab, basement repairs.`)
 
   return {
     title: metaTitle,
     description: metaDesc,
+    // Noindex city pages with no contractors — thin content
+    ...(businessCount === 0 && { robots: { index: false, follow: true } }),
     alternates: {
       canonical: url,
     },
@@ -418,59 +416,8 @@ export default async function CityPage({ params }: Props) {
           }
         />
 
-        {/* Compare Contractors */}
-        {businesses.length >= 2 && (
-          <section className="py-16 bg-slate-900 border-y border-slate-700">
-            <div className="mx-auto max-w-7xl px-6 lg:px-10">
-              <h2 className="font-display text-2xl sm:text-3xl font-bold tracking-tight text-white mb-2">
-                Compare Contractors in {cityInfo.name}
-              </h2>
-              <p className="text-slate-400 text-sm mb-8">Feature-by-feature comparison of top contractors</p>
-              <div className="overflow-x-auto">
-                <table className="w-full text-sm border-collapse">
-                  <thead>
-                    <tr className="border-b border-slate-700">
-                      <th className="text-left text-slate-400 font-medium py-3 pr-6 w-48">Feature</th>
-                      {businesses.slice(0, 5).map((biz) => (
-                        <th key={biz.id} className="text-center py-3 px-3 min-w-[110px]">
-                          <Link href={`/${state}/${city}/${biz.slug}`} className="group block">
-                            <span className="block text-white font-semibold text-xs leading-tight group-hover:text-amber-400 transition-colors line-clamp-2">{biz.name}</span>
-                            {biz.rating && <span className="text-amber-400 text-[10px] font-mono">★ {biz.rating}</span>}
-                          </Link>
-                        </th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {COMPARE_FEATURES.map((feat, i) => (
-                      <tr key={feat.slug} className={`border-b border-slate-800 ${i % 2 === 0 ? 'bg-slate-800/30' : ''}`}>
-                        <td className="py-3 pr-6">
-                          <div className="flex items-center gap-2 text-slate-300 font-medium">
-                            <span>{feat.icon}</span>
-                            <span>{feat.name}</span>
-                          </div>
-                        </td>
-                        {businesses.slice(0, 5).map((biz) => {
-                          const has = biz.features.some((f) => f.slug === feat.slug)
-                          return (
-                            <td key={biz.id} className="text-center py-3 px-3">
-                              {has ? (
-                                <span className={`inline-flex items-center justify-center w-6 h-6 rounded-full text-xs font-bold ${feat.category === 'trust' ? 'bg-green-800 text-green-300' : 'bg-blue-800 text-blue-300'}`}>✓</span>
-                              ) : (
-                                <span className="text-slate-600 text-lg leading-none">—</span>
-                              )}
-                            </td>
-                          )
-                        })}
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </section>
-        )}
-
+        {/* Content below map — relative + z-10 so sections cover the fixed map on scroll */}
+        <div className="relative z-10">
         {/* City Information */}
         <section className="py-20 lg:py-24 bg-slate-50 border-y border-slate-200 animate-on-scroll">
           <div className="mx-auto max-w-7xl px-6 lg:px-10">
@@ -633,6 +580,12 @@ export default async function CityPage({ params }: Props) {
                   </div>
                 </div>
               )}
+
+              <p className="text-sm text-slate-500 mt-4">
+                <Link href={`/cost/${state}/foundation-repair-cost`} className="text-amber-700 hover:text-amber-800 underline underline-offset-2">
+                  See detailed foundation repair costs in {stateInfo.name}
+                </Link>
+              </p>
             </div>
           </div>
         </section>
@@ -651,9 +604,12 @@ export default async function CityPage({ params }: Props) {
             <QuoteWizard state={state} stateName={stateInfo.name} />
           </div>
         </section>
+        </div>{/* end relative z-10 wrapper */}
       </main>
 
-      <StitchFooter />
+      <div className="relative z-10">
+        <StitchFooter />
+      </div>
 
       {/* JSON-LD Schema */}
       <script
@@ -693,6 +649,26 @@ export default async function CityPage({ params }: Props) {
           })}
         />
       )}
+      {/* FAQPage schema for city pages with FAQ content */}
+      {(() => {
+        try {
+          const faqs = cityContent?.faq_json ? JSON.parse(cityContent.faq_json) : null
+          if (faqs && faqs.length > 0) {
+            return (
+              <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={jsonLdScript(generateFAQSchema(
+                  faqs.map((faq: { q: string; a: string }) => ({
+                    question: faq.q,
+                    answer: faq.a,
+                  }))
+                ))}
+              />
+            )
+          }
+          return null
+        } catch { return null }
+      })()}
     </div>
   )
 }

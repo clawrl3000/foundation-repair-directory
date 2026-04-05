@@ -34,9 +34,10 @@ interface FAQItem {
 interface HomePageProps {
   featuredBusinesses: FeaturedBusiness[]
   faqs?: FAQItem[]
+  contractorCount?: number
 }
 
-export default function HomePage({ featuredBusinesses = [], faqs = [] }: HomePageProps) {
+export default function HomePage({ featuredBusinesses = [], faqs = [], contractorCount }: HomePageProps) {
   const [leadFormOpen, setLeadFormOpen] = useState(false)
   const [selectedBusiness, setSelectedBusiness] = useState<{id: string, name: string} | null>(null)
   const [defaultUrgency, setDefaultUrgency] = useState<string | undefined>(undefined)
@@ -83,7 +84,7 @@ export default function HomePage({ featuredBusinesses = [], faqs = [] }: HomePag
       <ScrollProgressIndicator />
       
       <HomeNavigation />
-      <HomeHeroSection onOpenLeadForm={openLeadForm} />
+      <HomeHeroSection onOpenLeadForm={openLeadForm} contractorCount={contractorCount} />
       <HomePageContent featuredBusinesses={featuredBusinesses} onOpenLeadForm={openLeadForm} faqs={faqs} />
       <HomeFooter />
 

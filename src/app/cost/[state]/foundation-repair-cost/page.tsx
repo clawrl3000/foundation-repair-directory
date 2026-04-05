@@ -14,8 +14,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const url = `https://foundationscout.com/cost/${state}/foundation-repair-cost`
 
   return {
-    title: `Foundation Repair Cost in ${stateName} (2026) — Average Prices & Compare Quotes`,
-    description: `Complete foundation repair cost guide for ${stateName}: pier installation $8K-$25K, slab repair $500-$15K, waterproofing $1.5K-$10K. Get estimates from licensed contractors.`,
+    title: `Foundation Repair Cost in ${stateName} (2026): $500–$25K+ | Price Guide`,
+    description: `How much does foundation repair cost in ${stateName}? Minor repairs start at $500; major piering runs $8K–$25K+. See 2026 local pricing & get free quotes from licensed contractors.`,
     alternates: {
       canonical: url,
     },
@@ -81,9 +81,7 @@ export default async function FoundationRepairCostPage({ params }: Props) {
         <div className="max-w-7xl mx-auto flex items-center gap-2 text-sm text-slate-600">
           <Link href="/" className="hover:text-amber-600 transition-colors">Home</Link>
           <span>/</span>
-          <span>Pricing</span>
-          <span>/</span>
-          <span>{stateName}</span>
+          <Link href={`/${state}`} className="hover:text-amber-600 transition-colors">{stateName}</Link>
           <span>/</span>
           <span className="text-slate-900 font-medium">Foundation Repair Cost</span>
         </div>
@@ -304,7 +302,7 @@ export default async function FoundationRepairCostPage({ params }: Props) {
           __html: JSON.stringify([
             {
               "@context": "https://schema.org",
-              "@type": "BreadcrumbList", 
+              "@type": "BreadcrumbList",
               "itemListElement": [
                 {
                   "@type": "ListItem",
@@ -315,6 +313,12 @@ export default async function FoundationRepairCostPage({ params }: Props) {
                 {
                   "@type": "ListItem",
                   "position": 2,
+                  "name": `${stateName} Foundation Repair`,
+                  "item": `https://foundationscout.com/${state}`
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
                   "name": "Foundation Repair Cost",
                   "item": `https://foundationscout.com/cost/${state}/foundation-repair-cost`
                 }

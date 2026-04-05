@@ -299,7 +299,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const { name, description, city: cityInfo, images, latitude, longitude } = businessData
   const url = `https://foundationscout.com/${state}/${city}/${business}`
-  const metaDescription = description || `${name} provides professional foundation repair in ${cityInfo.name}, ${cityInfo.state.abbreviation}. Licensed, insured. Get estimates and read verified reviews.`
+  const ratingText = businessData.rating && businessData.review_count ? `Rated ${businessData.rating}/5 from ${businessData.review_count} reviews. ` : ''
+  const metaDescription = description
+    || `${name} in ${cityInfo.name}, ${cityInfo.state.abbreviation} — ${ratingText}Professional foundation repair services. Get a free estimate or call today.`
 
   // Determine best og:image - business photo > Street View > generic fallback
   let ogImageUrl = 'https://foundationscout.com/og-image.jpg'
@@ -313,8 +315,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     ogImageUrl = `https://maps.googleapis.com/maps/api/streetview?size=1200x630&location=${latitude},${longitude}&key=${process.env.NEXT_PUBLIC_GOOGLE_PLACES_API_KEY}`
   }
 
+  const titleWithRating = businessData.rating && businessData.review_count && businessData.review_count > 0
+    ? `${name} — ${cityInfo.name}, ${cityInfo.state.abbreviation} Foundation Repair | ★ ${businessData.rating} (${businessData.review_count} Reviews)`
+    : `${name} — Foundation Repair in ${cityInfo.name}, ${cityInfo.state.abbreviation} | Reviews & Quotes`
+
   return {
-    title: `${name} — Foundation Repair in ${cityInfo.name}, ${cityInfo.state.abbreviation} | Reviews & Quotes`,
+    title: titleWithRating,
     description: metaDescription,
     keywords: null,
     alternates: {

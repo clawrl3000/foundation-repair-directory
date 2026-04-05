@@ -9,9 +9,10 @@ import SmoothCounter from '@/components/SmoothCounter'
 
 interface HomeHeroSectionProps {
   onOpenLeadForm: (businessId?: string, businessName?: string, urgency?: string) => void
+  contractorCount?: number
 }
 
-export default function HomeHeroSection({ onOpenLeadForm }: HomeHeroSectionProps) {
+export default function HomeHeroSection({ onOpenLeadForm, contractorCount }: HomeHeroSectionProps) {
   const [heroImageIndex, setHeroImageIndex] = useState(0)
   const [isVisible, setIsVisible] = useState(false)
   
@@ -113,7 +114,7 @@ export default function HomeHeroSection({ onOpenLeadForm }: HomeHeroSectionProps
               </div>
               <div className="stat-item text-center group hover:scale-105 transition-all duration-300 cursor-default">
                 <div className="text-2xl sm:text-3xl lg:text-4xl font-black text-amber-400 mb-1 font-mono whitespace-nowrap group-hover:drop-shadow-[0_0_12px_rgba(245,158,11,0.5)]">
-                  <SmoothCounter end={2847} duration={3200} />
+                  <SmoothCounter end={contractorCount || 2847} duration={3200} />
                 </div>
                 <div className="text-[11px] sm:text-xs text-slate-400 font-semibold uppercase tracking-wider group-hover:text-slate-300 transition-colors">Active Contractors</div>
               </div>

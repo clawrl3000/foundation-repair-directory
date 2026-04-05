@@ -683,7 +683,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     }
   }
 
-  const { state: stateInfo } = stateData
+  const { state: stateInfo, businesses } = stateData
+  const businessCount = businesses?.length || 0
   const url = `https://foundationscout.com/${state}`
 
   // State-specific SEO metadata (NavBoost-optimized for CTR)
@@ -711,10 +712,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   const metaOverride = stateMetaOverrides[stateSlug]
-  const finalTitle = metaOverride?.title 
-    || (costRange 
-      ? `${stateInfo.name} Foundation Repair Contractors (2026) | ${costRange}`
-      : `${stateInfo.name} Foundation Repair Contractors (2026) | Compare Estimates`)
+  const countPrefix = businessCount > 0 ? `${businessCount}+ ` : ''
+  const finalTitle = metaOverride?.title
+    || (costRange
+      ? `${countPrefix}Foundation Repair Pros in ${stateInfo.name} (2026) | ${costRange}`
+      : `${countPrefix}Foundation Repair Pros in ${stateInfo.name} (2026) | Compare & Save`)
   const finalDescription = metaOverride?.description 
     || (content 
       ? `Foundation problems in ${stateInfo.name}? Compare licensed contractors, read reviews, and get repair quotes. ${costRange ? `Average cost: ${costRange}.` : ''} Serving 50+ cities statewide.`
@@ -849,6 +851,16 @@ export default async function StatePage({ params }: Props) {
                 </div>
               </div>
             </div>
+          </div>
+        </section>
+
+        {/* Cost Guide Cross-Link */}
+        <section className="py-8 bg-white border-t border-slate-200">
+          <div className="mx-auto max-w-7xl px-6 lg:px-10 text-center">
+            <Link href={`/cost/${state}/foundation-repair-cost`} className="inline-flex items-center gap-2 text-amber-700 hover:text-amber-800 font-medium underline underline-offset-2">
+              <span className="material-symbols-outlined text-lg">payments</span>
+              See foundation repair costs in {stateInfo.name} — full pricing guide
+            </Link>
           </div>
         </section>
 

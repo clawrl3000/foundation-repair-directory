@@ -61,8 +61,24 @@ async function getFeaturedBusinesses() {
   }
 }
 
+async function getContractorCount(): Promise<number> {
+  try {
+    const { count, error } = await supabaseAdmin
+      .from('businesses')
+      .select('*', { count: 'exact', head: true })
+      .eq('is_active', true)
+    if (error || count === null) return 0
+    return count
+  } catch {
+    return 0
+  }
+}
+
 export default async function Page() {
-  const featuredBusinesses = await getFeaturedBusinesses()
+  const [featuredBusinesses, contractorCount] = await Promise.all([
+    getFeaturedBusinesses(),
+    getContractorCount(),
+  ])
   // FAQ data for schema markup
   const faqs = [
     {
@@ -91,7 +107,7 @@ export default async function Page() {
 
   return (
     <>
-      <HomePage featuredBusinesses={featuredBusinesses} faqs={faqs} />
+      <HomePage featuredBusinesses={featuredBusinesses} faqs={faqs} contractorCount={contractorCount} />
       
       {/* FAQ Schema */}
       <script
