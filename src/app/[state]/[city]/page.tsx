@@ -400,6 +400,21 @@ export default async function CityPage({ params }: Props) {
       </nav>
 
       <main className="flex-1">
+        {/* Server-rendered H1 for SEO — visible to crawlers without JS */}
+        <section className="bg-slate-50 border-b border-slate-200 px-6 lg:px-10 py-8 lg:py-10">
+          <div className="max-w-7xl mx-auto">
+            <h1 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.1] text-slate-900 mb-3">
+              Foundation Repair in {cityInfo.name}, {stateInfo.abbreviation}
+            </h1>
+            <p className="text-slate-600 text-lg max-w-3xl leading-relaxed">
+              {businesses.length > 1
+                ? `Compare ${businesses.length} licensed foundation repair contractors in ${cityInfo.name}. Get estimates and find the right professional for your project.`
+                : `Foundation repair contractors in ${cityInfo.name}, ${stateInfo.abbreviation}. Get estimates from qualified professionals in your area.`
+              }
+            </p>
+          </div>
+        </section>
+
         {/* Map Directory Layout */}
         <MapDirectoryLayout
           businesses={businesses}

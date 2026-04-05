@@ -776,6 +776,19 @@ export default async function StatePage({ params }: Props) {
       </nav>
 
       <main className="flex-1">
+        {/* Server-rendered H1 for SEO — visible to crawlers without JS */}
+        <section className="bg-slate-50 border-b border-slate-200 px-6 lg:px-10 py-8 lg:py-10">
+          <div className="max-w-7xl mx-auto">
+            <h1 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.1] text-slate-900 mb-3">
+              Foundation Repair in {stateInfo.name}
+            </h1>
+            <p className="text-slate-600 text-lg max-w-3xl leading-relaxed">
+              Compare {businesses.length > 0 ? businesses.length : ''} licensed foundation repair contractors across {cities.length} cities in {stateInfo.name}.
+              Find verified professionals, read reviews, and get estimates.
+            </p>
+          </div>
+        </section>
+
         {/* Map Directory Layout */}
         <MapDirectoryLayout
           businesses={businesses}

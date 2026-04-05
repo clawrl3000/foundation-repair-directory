@@ -196,9 +196,9 @@ export default function MapDirectoryLayout({
       <div className="w-full lg:w-[55%] overflow-y-auto" ref={listingsRef}>
         <div className="px-6 lg:px-8 py-6">
           {/* Heading */}
-          <h1 className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-slate-900 mb-2">
+          <h2 className="font-display text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 mb-2">
             {heading}
-          </h1>
+          </h2>
           <p className="text-slate-500 text-sm mb-6">{description}</p>
 
           {/* Quick Stats */}
