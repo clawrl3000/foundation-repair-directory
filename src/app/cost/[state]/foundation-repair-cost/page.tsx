@@ -2,7 +2,7 @@ import { Metadata } from 'next'
 import Link from 'next/link'
 import StitchNav from '@/components/StitchNav'
 import StitchFooter from '@/components/StitchFooter'
-import QuoteWizard from '@/components/QuoteWizard'
+import EstimateButton from '@/components/EstimateButton'
 
 interface Props {
   params: Promise<{ state: string }>
@@ -88,25 +88,42 @@ export default async function FoundationRepairCostPage({ params }: Props) {
       </nav>
 
       <main className="flex-1">
-        {/* Hero Section */}
-        <section className="py-20 lg:py-24 bg-slate-50">
-          <div className="mx-auto max-w-7xl px-6 lg:px-10">
-            <h1 className="font-display text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.1] text-slate-900 mb-6">
-              Foundation Repair Cost in {stateName}
-            </h1>
-            <div className="inline-flex items-center gap-2 rounded-full border border-amber-500 bg-amber-100 px-4 py-1.5 mb-8">
+        {/* Compact hero with modal CTA */}
+        <section className="py-10 lg:py-14 bg-slate-50 border-b border-slate-200">
+          <div className="mx-auto max-w-4xl px-6 lg:px-10 text-center">
+            <div className="inline-flex items-center gap-2 rounded-full border border-amber-500 bg-amber-100 px-4 py-1.5 mb-4">
               <span className="material-symbols-outlined text-xl text-amber-600" aria-hidden="true">paid</span>
               <span className="text-xs font-bold uppercase tracking-wider text-amber-700">2026 Pricing Guide</span>
             </div>
-            <p className="text-slate-600 text-lg mb-12 max-w-3xl leading-relaxed">
-              Complete pricing guide for foundation repair services in {stateName}. 
-              Compare costs, get estimates, and understand what affects pricing in your area.
+            <h1 className="font-display text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.1] text-slate-900 mb-4">
+              Foundation Repair Cost in {stateName}
+            </h1>
+            <p className="text-slate-600 text-lg mb-6 max-w-2xl mx-auto leading-relaxed">
+              Complete pricing guide for foundation repair services in {stateName}. Compare costs, get estimates, and understand what affects pricing in your area.
             </p>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+              <EstimateButton
+                state={state}
+                stateName={stateName}
+                className="inline-flex items-center gap-2 rounded-full bg-amber-500 hover:bg-amber-600 text-white font-semibold text-base px-6 py-3 shadow-sm hover:shadow-md transition-all"
+              >
+                <span className="material-symbols-outlined text-xl">request_quote</span>
+                Get Your Free {stateName} Estimate
+                <span className="material-symbols-outlined text-lg">arrow_forward</span>
+              </EstimateButton>
+              <Link
+                href={`/${state}`}
+                className="inline-flex items-center gap-1.5 text-slate-600 hover:text-amber-600 font-medium text-sm transition-colors"
+              >
+                or browse {stateName} contractors
+                <span className="material-symbols-outlined text-base">arrow_forward</span>
+              </Link>
+            </div>
           </div>
         </section>
 
         {/* Cost Overview */}
-        <section className="py-20 lg:py-24 bg-white">
+        <section className="py-14 lg:py-18 bg-white">
           <div className="mx-auto max-w-7xl px-6 lg:px-10">
             <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-8 lg:p-12 animate-on-scroll">
               <div className="flex items-center gap-3 mb-8">
@@ -127,12 +144,34 @@ export default async function FoundationRepairCostPage({ params }: Props) {
                   </div>
                 ))}
               </div>
+              {/* Methodology / sources — E-E-A-T trust signal */}
+              <div className="mt-8 rounded-xl border border-slate-200 bg-slate-50 p-5 lg:p-6">
+                <div className="flex items-start gap-3">
+                  <span className="material-symbols-outlined text-2xl text-amber-600 shrink-0 mt-0.5" aria-hidden="true">verified</span>
+                  <div className="text-sm text-slate-600">
+                    <p className="font-semibold text-slate-900 mb-1.5">How we calculated these ranges</p>
+                    <p className="leading-relaxed">
+                      Cost ranges aggregate 2026 pricing data from <span className="font-medium text-slate-800">HomeAdvisor&apos;s TrueCost guide</span>, <span className="font-medium text-slate-800">Forbes Home</span>, <span className="font-medium text-slate-800">Angi</span>, and <span className="font-medium text-slate-800">Bob Vila</span> — cross-referenced with quotes from licensed {stateName} contractors in the FoundationScout directory and published rates from the <span className="font-medium text-slate-800">Concrete Foundations Association</span>. <span className="font-medium text-slate-800">Last reviewed: April 2026.</span> Actual costs vary by soil type, foundation depth, site accessibility, and local labor rates.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div className="mt-8 text-center">
+                <EstimateButton
+                  state={state}
+                  stateName={stateName}
+                  className="inline-flex items-center gap-2 rounded-full bg-amber-500 hover:bg-amber-600 text-white font-semibold text-base px-6 py-3 shadow-sm hover:shadow-md transition-all"
+                >
+                  <span className="material-symbols-outlined text-xl">request_quote</span>
+                  Get a Real Quote for Your {stateName} Home
+                </EstimateButton>
+              </div>
             </div>
           </div>
         </section>
 
         {/* Cost Factors */}
-        <section className="py-20 lg:py-24 bg-slate-50 border-y border-slate-200">
+        <section className="py-14 lg:py-18 bg-slate-50 border-y border-slate-200">
           <div className="mx-auto max-w-7xl px-6 lg:px-10">
             <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-8 lg:p-12 animate-on-scroll">
               <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.15] text-slate-900 mb-8 text-center">What Affects Foundation Repair Costs?</h2>
@@ -191,7 +230,7 @@ export default async function FoundationRepairCostPage({ params }: Props) {
         </section>
 
         {/* FAQ Section */}
-        <section className="py-20 lg:py-24 bg-white">
+        <section className="py-14 lg:py-18 bg-white">
           <div className="mx-auto max-w-7xl px-6 lg:px-10">
             <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-8 lg:p-12 animate-on-scroll">
               <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.15] text-slate-900 mb-8">Foundation Repair Cost FAQs</h2>
@@ -207,54 +246,8 @@ export default async function FoundationRepairCostPage({ params }: Props) {
           </div>
         </section>
 
-        {/* Quote Wizard Section */}
-        <section className="py-20 lg:py-24 bg-slate-50 border-y border-slate-200">
-          <div className="mx-auto max-w-7xl px-6 lg:px-10">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-              {/* Left: value props */}
-              <div className="animate-on-scroll">
-                <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.15] text-slate-900 mb-6">Get Estimates from {stateName} Contractors</h2>
-                <p className="text-slate-600 text-lg mb-8 leading-relaxed">
-                  Tell us about your foundation issue and we&apos;ll connect you with licensed contractors in your area — no obligation, no cost.
-                </p>
-                <div className="space-y-5">
-                  {[
-                    { icon: 'search', title: 'Professional Assessment', desc: 'Expert evaluation of your foundation condition' },
-                    { icon: 'calculate', title: 'Detailed Quote', desc: 'Itemized estimate with materials, labor, and timeline' },
-                    { icon: 'compare', title: 'Compare Options', desc: 'Review multiple quotes to find the best value' },
-                  ].map(item => (
-                    <div key={item.icon} className="flex items-start gap-4">
-                      <div className="size-12 rounded-full bg-amber-100 flex items-center justify-center shrink-0 border border-amber-200">
-                        <span className="material-symbols-outlined text-2xl text-amber-600">{item.icon}</span>
-                      </div>
-                      <div>
-                        <h3 className="text-base font-semibold text-slate-900">{item.title}</h3>
-                        <p className="text-sm text-slate-600">{item.desc}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                <div className="mt-8">
-                  <Link
-                    href={`/${state}`}
-                    className="inline-flex items-center gap-2 text-amber-600 hover:text-amber-700 font-semibold text-sm transition-colors"
-                  >
-                    <span className="material-symbols-outlined text-lg">search</span>
-                    Or browse contractors in {stateName} directly
-                    <span className="material-symbols-outlined text-lg">arrow_forward</span>
-                  </Link>
-                </div>
-              </div>
-              {/* Right: the wizard */}
-              <div className="animate-on-scroll">
-                <QuoteWizard state={state} stateName={stateName} />
-              </div>
-            </div>
-          </div>
-        </section>
-
         {/* Cost Savings Tips */}
-        <section className="py-20 lg:py-24 bg-white">
+        <section className="py-14 lg:py-18 bg-white">
           <div className="mx-auto max-w-7xl px-6 lg:px-10">
             <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-8 lg:p-12 animate-on-scroll">
               <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.15] text-slate-900 mb-8">How to Save on Foundation Repair Costs</h2>
