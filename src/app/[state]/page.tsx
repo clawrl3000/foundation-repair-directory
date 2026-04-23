@@ -709,6 +709,42 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: `Florida Foundation Repair & Sinkhole Specialists | $3,500–$50,000`,
       description: `Florida sinkhole or settlement damage? Connect with licensed foundation contractors in Tampa, Miami & Orlando. Sinkhole remediation, slab repair & pier installation. Free inspections.`,
     },
+    'pennsylvania': {
+      title: `Top-Rated Foundation Repair Companies in Pennsylvania | Compare & Get Quotes`,
+      description: `Philly row home settling or PA limestone sinkhole damage? Get quotes from Philadelphia, Pittsburgh & Allentown specialists who know karst and clay conditions. Average repair: $6,500–$12,500. HIC-registered contractors.`,
+    },
+    'north-carolina': {
+      title: `Top-Rated Foundation Repair Companies in North Carolina | Compare & Get Quotes`,
+      description: `NC Piedmont red clay cracking your foundation? Get fast quotes from Charlotte, Raleigh & Greensboro specialists who understand expansive clay soils. Average repair: $7,000–$11,500. NC-licensed contractors.`,
+    },
+    'illinois': {
+      title: `Top-Rated Foundation Repair Companies in Illinois | Compare & Get Quotes`,
+      description: `Chicago basement walls cracking or prairie clay settling? Get quotes from Chicago, Aurora & Rockford specialists who handle glacial till and lake plain soils. Average repair: $6,500–$13,000. IDFPR-licensed.`,
+    },
+    'michigan': {
+      title: `Top-Rated Foundation Repair Companies in Michigan | Compare & Get Quotes`,
+      description: `Michigan frost heave or Detroit clay settling destroying your foundation? Get quotes from Detroit, Grand Rapids & Lansing specialists built for freeze-thaw cycles. Average repair: $6,000–$11,500. LARA-licensed.`,
+    },
+    'ohio': {
+      title: `Top-Rated Foundation Repair Companies in Ohio | Compare & Get Quotes`,
+      description: `Ohio clay soil cracking your basement walls? Get quotes from Columbus, Cleveland & Cincinnati specialists who handle glacial till and lake clay. Average repair: $6,500–$10,500. Permitted structural work.`,
+    },
+    'tennessee': {
+      title: `Tennessee Foundation Repair | Limestone Clay Experts | $3,500–$11,500`,
+      description: `Middle Tennessee limestone clay cracking your foundation? Get quotes from Nashville, Memphis & Knoxville specialists who know TN karst and Mississippi alluvial conditions. Average repair: $5,500–$9,500. TN-licensed.`,
+    },
+    'georgia': {
+      title: `Georgia Foundation Repair Pros | Red Clay Experts | $3,500–$12,500`,
+      description: `Atlanta red clay expansion cracking your foundation? Get quotes from Atlanta, Augusta & Savannah specialists who understand Piedmont clay and coastal sandy soils. Average repair: $7,500–$11,000. GA-licensed.`,
+    },
+    'missouri': {
+      title: `Missouri Foundation Repair | Clay & Karst Experts | $3,800–$12,500`,
+      description: `Kansas City clay expansion or Ozark sinkhole issues? Get quotes from St. Louis, KC & Springfield specialists who handle MO expansive clay and limestone karst. Average repair: $6,500–$10,500.`,
+    },
+    'virginia': {
+      title: `Virginia Foundation Repair Pros | Piedmont Clay | $4,500–$14,000`,
+      description: `Northern Virginia clay settlement or Tidewater coastal damage? Get quotes from Arlington, Richmond & Virginia Beach specialists who know Piedmont red clay and marine soils. Average repair: $7,500–$12,000. Board-licensed.`,
+    },
   }
 
   const metaOverride = stateMetaOverrides[stateSlug]
