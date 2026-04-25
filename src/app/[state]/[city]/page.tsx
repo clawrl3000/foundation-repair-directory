@@ -8,6 +8,7 @@ import StitchFooter from '@/components/StitchFooter'
 import QuoteWizard from '@/components/QuoteWizard'
 import BusinessImage from '@/components/BusinessImage'
 import MapDirectoryLayout from '@/components/MapDirectoryLayout'
+import CostCalculator from '@/components/CostCalculator'
 
 // Force dynamic rendering to avoid cookies issue during static generation
 export const dynamic = 'force-dynamic'
@@ -598,10 +599,25 @@ export default async function CityPage({ params }: Props) {
 
               <p className="text-sm text-slate-500 mt-4">
                 <Link href={`/cost/${state}/foundation-repair-cost`} className="text-amber-700 hover:text-amber-800 underline underline-offset-2">
-                  See detailed foundation repair costs in {stateInfo.name}
+                  View full {stateInfo.name} cost breakdown &amp; methodology
                 </Link>
               </p>
             </div>
+          </div>
+        </section>
+
+        {/* Inline Cost Calculator */}
+        <section className="py-16 lg:py-20 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 animate-on-scroll">
+          <div className="mx-auto max-w-7xl px-6 lg:px-10">
+            <div className="text-center mb-10">
+              <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white mb-3">
+                Estimate Your Repair Cost in {cityInfo.name}
+              </h2>
+              <p className="text-slate-400 max-w-2xl mx-auto">
+                Get a personalized estimate based on your foundation type, damage severity, and home size.
+              </p>
+            </div>
+            <CostCalculator defaultState={state} />
           </div>
         </section>
 

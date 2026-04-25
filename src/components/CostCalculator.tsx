@@ -155,11 +155,16 @@ function fmt(n: number) {
 }
 
 // ── Component ────────────────────────────────────────────────────────────────
-export default function CostCalculator() {
+interface CostCalculatorProps {
+  /** Pass a state slug to pre-select the state and skip step 0 */
+  defaultState?: string
+}
+
+export default function CostCalculator({ defaultState }: CostCalculatorProps = {}) {
   // Read ?state=<slug> from URL — when linked from a state cost page, pre-select
   // the state and skip the user past step 0.
   const searchParams = useSearchParams()
-  const prefillStateSlug = searchParams?.get('state')?.toLowerCase() || null
+  const prefillStateSlug = defaultState?.toLowerCase() || searchParams?.get('state')?.toLowerCase() || null
   const prefillStateIdx = prefillStateSlug
     ? STATES.findIndex(s => s.slug === prefillStateSlug)
     : -1
