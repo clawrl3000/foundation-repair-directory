@@ -103,7 +103,7 @@ export default function AnimatedSearchForm({
           <input
             id="hero-search"
             ref={inputRef}
-            className={`w-full rounded-xl border py-4 pl-12 pr-4 text-white placeholder-slate-400 text-base focus:outline-none focus:ring-2 focus:border-transparent transition-all duration-300 ${
+            className={`w-full rounded-xl border py-4 pl-14 pr-4 text-white placeholder-slate-400 text-base focus:outline-none focus:ring-2 focus:border-transparent transition-all duration-300 ${
               isFocused 
                 ? 'border-amber-500 bg-slate-800/90 ring-amber-500/50 ring-2' 
                 : 'border-slate-600 bg-slate-800/80'
