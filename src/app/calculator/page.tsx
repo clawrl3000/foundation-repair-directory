@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { Suspense } from 'react'
 import HomeNavigation from '@/components/HomeNavigation'
 import HomeFooter from '@/components/HomeFooter'
 import CostCalculator from '@/components/CostCalculator'
@@ -88,7 +89,9 @@ export default function CalculatorPage() {
 
       {/* Calculator section */}
       <section className="bg-[#0f0e0a] px-6 py-12">
-        <CostCalculator />
+        <Suspense fallback={<div className="mx-auto max-w-2xl h-[500px] bg-dominant-700/30 rounded-2xl animate-pulse" />}>
+          <CostCalculator />
+        </Suspense>
       </section>
 
       {/* SEO content below calculator */}

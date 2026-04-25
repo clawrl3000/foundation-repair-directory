@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useCallback } from 'react'
+import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 
 // ── State data with multipliers and soil info ──────────────────────────────
@@ -155,8 +156,17 @@ function fmt(n: number) {
 
 // ── Component ────────────────────────────────────────────────────────────────
 export default function CostCalculator() {
-  const [step, setStep] = useState(0)
-  const [stateIdx, setStateIdx] = useState(-1)
+  // Read ?state=<slug> from URL — when linked from a state cost page, pre-select
+  // the state and skip the user past step 0.
+  const searchParams = useSearchParams()
+  const prefillStateSlug = searchParams?.get('state')?.toLowerCase() || null
+  const prefillStateIdx = prefillStateSlug
+    ? STATES.findIndex(s => s.slug === prefillStateSlug)
+    : -1
+  const hasPrefill = prefillStateIdx >= 0
+
+  const [step, setStep] = useState(hasPrefill ? 1 : 0)
+  const [stateIdx, setStateIdx] = useState(hasPrefill ? prefillStateIdx : -1)
   const [foundationType, setFoundationType] = useState('')
   const [severity, setSeverity] = useState('')
   const [sqft, setSqft] = useState(1500)

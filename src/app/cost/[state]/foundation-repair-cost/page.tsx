@@ -112,8 +112,19 @@ export default async function FoundationRepairCostPage({ params }: Props) {
                 <span className="material-symbols-outlined text-lg">arrow_forward</span>
               </EstimateButton>
               <Link
+                href={`/calculator?state=${state}`}
+                data-event-name="cost_page_calculator_click_hero"
+                className="inline-flex items-center gap-2 rounded-full border border-amber-500 text-amber-700 hover:bg-amber-50 font-semibold text-base px-6 py-3 transition-all"
+              >
+                <span className="material-symbols-outlined text-xl">calculate</span>
+                Estimate your {stateName} foundation repair cost
+                <span className="material-symbols-outlined text-lg">arrow_forward</span>
+              </Link>
+            </div>
+            <div className="mt-4">
+              <Link
                 href={`/${state}`}
-                className="inline-flex items-center gap-1.5 text-slate-600 hover:text-amber-600 font-medium text-sm transition-colors"
+                className="inline-flex items-center gap-1.5 text-slate-500 hover:text-amber-600 font-medium text-sm transition-colors"
               >
                 or browse {stateName} contractors
                 <span className="material-symbols-outlined text-base">arrow_forward</span>
@@ -144,6 +155,18 @@ export default async function FoundationRepairCostPage({ params }: Props) {
                   </div>
                 ))}
               </div>
+              {/* Inline lead-in to the calculator — highest-intent placement */}
+              <p className="mt-6 text-base text-slate-600 leading-relaxed">
+                These are statewide ranges.{' '}
+                <Link
+                  href={`/calculator?state=${state}`}
+                  data-event-name="cost_page_calculator_click_inline"
+                  className="text-amber-700 hover:text-amber-800 font-semibold underline underline-offset-2 decoration-amber-300 hover:decoration-amber-500 transition-colors"
+                >
+                  Calculate your specific {stateName} cost based on home size and damage type
+                </Link>
+                {' '}— takes about 60 seconds.
+              </p>
               {/* Methodology / sources — E-E-A-T trust signal */}
               <div className="mt-8 rounded-xl border border-slate-200 bg-slate-50 p-5 lg:p-6">
                 <div className="flex items-start gap-3">
@@ -226,6 +249,31 @@ export default async function FoundationRepairCostPage({ params }: Props) {
                 </div>
               </div>
             </div>
+          </div>
+        </section>
+
+        {/* Personalized estimate section — calculator CTA before FAQs */}
+        <section className="py-14 lg:py-18 bg-slate-50 border-y border-slate-200">
+          <div className="mx-auto max-w-4xl px-6 lg:px-10 text-center">
+            <div className="inline-flex items-center gap-2 rounded-full bg-amber-100 border border-amber-200 px-3 py-1 mb-4">
+              <span className="material-symbols-outlined text-base text-amber-700">calculate</span>
+              <span className="text-xs font-bold uppercase tracking-wider text-amber-700">Free · No email required</span>
+            </div>
+            <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.15] text-slate-900 mb-4">
+              Get a personalized estimate
+            </h2>
+            <p className="text-slate-600 text-lg mb-8 max-w-2xl mx-auto leading-relaxed">
+              Statewide averages give you a ballpark. For a specific {stateName} estimate, our calculator factors in foundation type, damage severity, home size, and {stateName} soil conditions — all in under 60 seconds.
+            </p>
+            <Link
+              href={`/calculator?state=${state}`}
+              data-event-name="cost_page_calculator_click_pre_faq"
+              className="inline-flex items-center gap-2 rounded-full bg-slate-900 hover:bg-slate-800 text-white font-semibold text-base px-7 py-3.5 shadow-sm hover:shadow-md transition-all"
+            >
+              <span className="material-symbols-outlined text-xl">calculate</span>
+              Use our cost calculator
+              <span className="material-symbols-outlined text-lg">arrow_forward</span>
+            </Link>
           </div>
         </section>
 
