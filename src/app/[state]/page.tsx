@@ -836,6 +836,8 @@ export default async function StatePage({ params }: Props) {
           description={`Browse ${businesses.length} foundation repair contractors across ${cities.length} cities in ${stateInfo.name}. Click a city to zoom in.`}
         />
 
+        {/* Everything below the map directory needs to sit above the fixed map panel */}
+        <div className="relative z-10 bg-white">
         {/* State-Specific Content */}
         <section className="py-20 lg:py-24 bg-slate-50 border-y border-slate-200">
           <div className="mx-auto max-w-7xl px-6 lg:px-10">
@@ -966,9 +968,12 @@ export default async function StatePage({ params }: Props) {
             <QuoteWizard state={state} stateName={stateInfo.name} />
           </div>
         </section>
+        </div>{/* end z-10 wrapper — sits above fixed map */}
       </main>
 
-      <StitchFooter />
+      <div className="relative z-10">
+        <StitchFooter />
+      </div>
 
       {/* JSON-LD Schema */}
       <script
