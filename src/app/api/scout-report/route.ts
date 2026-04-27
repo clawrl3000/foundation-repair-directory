@@ -226,6 +226,32 @@ IMPORTANT FORMATTING RULES:
   return response.choices[0]?.message?.content || 'Unable to generate report. Please contact us directly.'
 }
 
+// Pretty-print a state value for email display.
+// Handles slugs ("california" → "California", "north-carolina" → "North Carolina")
+// and 2-letter abbreviations ("CA" → "California" via lookup).
+const STATE_ABBR_TO_NAME: Record<string, string> = {
+  AL: 'Alabama', AK: 'Alaska', AZ: 'Arizona', AR: 'Arkansas', CA: 'California',
+  CO: 'Colorado', CT: 'Connecticut', DE: 'Delaware', FL: 'Florida', GA: 'Georgia',
+  HI: 'Hawaii', ID: 'Idaho', IL: 'Illinois', IN: 'Indiana', IA: 'Iowa',
+  KS: 'Kansas', KY: 'Kentucky', LA: 'Louisiana', ME: 'Maine', MD: 'Maryland',
+  MA: 'Massachusetts', MI: 'Michigan', MN: 'Minnesota', MS: 'Mississippi', MO: 'Missouri',
+  MT: 'Montana', NE: 'Nebraska', NV: 'Nevada', NH: 'New Hampshire', NJ: 'New Jersey',
+  NM: 'New Mexico', NY: 'New York', NC: 'North Carolina', ND: 'North Dakota', OH: 'Ohio',
+  OK: 'Oklahoma', OR: 'Oregon', PA: 'Pennsylvania', RI: 'Rhode Island', SC: 'South Carolina',
+  SD: 'South Dakota', TN: 'Tennessee', TX: 'Texas', UT: 'Utah', VT: 'Vermont',
+  VA: 'Virginia', WA: 'Washington', WV: 'West Virginia', WI: 'Wisconsin', WY: 'Wyoming',
+}
+function formatStateDisplay(state: string): string {
+  if (!state) return ''
+  if (state.length === 2 && state === state.toUpperCase()) {
+    return STATE_ABBR_TO_NAME[state] || state
+  }
+  return state
+    .split('-')
+    .map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase())
+    .join(' ')
+}
+
 // ── Format report as HTML email ─────────────────────────────────────────────
 function formatReportEmail(
   reportText: string,
@@ -238,21 +264,30 @@ function formatReportEmail(
     costData: typeof STATE_COST_DATA['IL']
   }
 ) {
+  const stateDisplay = formatStateDisplay(data.state)
+
   // Convert plain text sections to structured HTML
   const sections = reportText.split('\n\n')
   let htmlBody = ''
   let currentSection = ''
 
+  // Reusable section-header regex — used for BOTH detection and stripping
+  // so we can't accidentally consume the first letter of the next sentence.
+  const SECTION_HEADER_RE = /^(GREETING|YOUR SITUATION|ESTIMATED COSTS|YOUR LOCAL CONTRACTORS|QUESTIONS TO ASK|NEXT STEPS)\s*[-—:]?\s*/i
+
   for (const para of sections) {
     const formatted = para.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
 
     // Detect section headers (all caps labels like "YOUR SITUATION", "ESTIMATED COSTS", etc.)
-    const sectionMatch = para.match(/^(GREETING|YOUR SITUATION|ESTIMATED COSTS|YOUR LOCAL CONTRACTORS|QUESTIONS TO ASK|NEXT STEPS)\s*[-—:]?\s*/i)
+    const sectionMatch = para.match(SECTION_HEADER_RE)
     if (sectionMatch) {
       currentSection = sectionMatch[1].toUpperCase()
       // Skip the "YOUR LOCAL CONTRACTORS" header — we replace it with our grid
       if (currentSection === 'YOUR LOCAL CONTRACTORS') continue
-      const sectionLabel = formatted.replace(/^[A-Z\s/]+\s*[-—:]?\s*/, '')
+      // Use the SAME regex to strip the header — fixes the greedy-regex bug
+      // that was eating the first uppercase letter of the next sentence
+      // ("Hi Michael" → "i Michael", "Visible cracks" → "isible cracks", etc.)
+      const sectionLabel = formatted.replace(SECTION_HEADER_RE, '').trim()
       const icons: Record<string, string> = {
         'GREETING': '👋',
         'YOUR SITUATION': '🏠',
@@ -261,17 +296,18 @@ function formatReportEmail(
         'NEXT STEPS': '✅',
       }
       const icon = icons[currentSection] || '📋'
-      if (sectionLabel.trim()) {
-        htmlBody += `<h2 style="margin: 28px 0 12px; font-size: 18px; font-weight: 700; color: #0f172a; border-bottom: 2px solid #f59e0b; padding-bottom: 8px;">${icon} ${currentSection}</h2>`
+      htmlBody += `<h2 style="margin: 28px 0 12px; font-size: 18px; font-weight: 700; color: #0f172a; border-bottom: 2px solid #f59e0b; padding-bottom: 8px;">${icon} ${currentSection}</h2>`
+      if (sectionLabel) {
         htmlBody += `<p style="margin: 0 0 16px; line-height: 1.7; color: #334155; font-size: 15px;">${sectionLabel}</p>`
-      } else {
-        htmlBody += `<h2 style="margin: 28px 0 12px; font-size: 18px; font-weight: 700; color: #0f172a; border-bottom: 2px solid #f59e0b; padding-bottom: 8px;">${icon} ${currentSection}</h2>`
       }
       continue
     }
 
     // Skip individual contractor paragraphs from AI — we use the grid instead
     if (currentSection === 'YOUR LOCAL CONTRACTORS') continue
+
+    // Skip empty paragraphs (avoids stray duplicate H2 from blank-line edge cases)
+    if (!formatted.trim()) continue
 
     // Numbered list items (questions, steps)
     if (/^\d+\./.test(formatted)) {
@@ -301,15 +337,38 @@ function formatReportEmail(
 
     const rowStyle = 'padding: 8px; border-bottom: 1px solid #f1f5f9; font-size: 13px; text-align: center; color: #334155;'
     const labelStyle = 'padding: 8px 10px; border-bottom: 1px solid #f1f5f9; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: #94a3b8; font-weight: 600; white-space: nowrap; width: 30%;'
+    const checkCell = '<span style="display: inline-block; width: 22px; height: 22px; border-radius: 11px; background: #16a34a; color: white; font-size: 12px; font-weight: 700; line-height: 22px;">✓</span>'
     const emptyCell = '<span style="color: #d1d5db;">—</span>'
 
+    // Helper: detect a feature from the certifications/services arrays + structured fields.
+    // Falls back to text matching since contractor data isn't always normalized.
+    const hasFeature = (c: ContractorProfile, keywords: string[]): boolean => {
+      const haystack = [
+        ...(c.certifications || []),
+        ...(c.services || []),
+        ...(c.specialties || []),
+        c.about_summary || '',
+        c.warranty_info || '',
+      ].join(' ').toLowerCase()
+      return keywords.some(kw => haystack.includes(kw.toLowerCase()))
+    }
+
     const rows = [
+      // Contact info (still useful at the top)
       { label: 'Phone', cells: contractors.map(c => c.phone ? `<a href="tel:${c.phone}" style="color: #0f172a; text-decoration: none; font-weight: 600;">${c.phone}</a>` : emptyCell) },
-      { label: 'Free Inspection', cells: contractors.map(c => c.free_inspection ? '✅' : emptyCell) },
+      // Trust signals (the 9-feature grid the user remembers from the city pages)
+      { label: '🔍 Free Inspection', cells: contractors.map(c => c.free_inspection || hasFeature(c, ['free inspection', 'free estimate', 'free quote']) ? checkCell : emptyCell) },
+      { label: '🛡️ Lifetime Warranty', cells: contractors.map(c => hasFeature(c, ['lifetime warranty', 'lifetime guarantee']) ? checkCell : (c.warranty_info ? `<span style="font-size: 12px; color: #475569;">${c.warranty_info}</span>` : emptyCell)) },
+      { label: '📋 Licensed & Insured', cells: contractors.map(c => hasFeature(c, ['licensed', 'insured', 'bonded']) ? checkCell : emptyCell) },
+      { label: '⭐ BBB Accredited', cells: contractors.map(c => hasFeature(c, ['bbb', 'better business']) ? checkCell : emptyCell) },
+      { label: '💰 Financing Available', cells: contractors.map(c => hasFeature(c, ['financing', 'payment plan']) ? checkCell : emptyCell) },
+      { label: '🚨 Emergency Service', cells: contractors.map(c => hasFeature(c, ['emergency', '24/7', '24 hour']) ? checkCell : emptyCell) },
+      { label: '🎖️ Veteran Owned', cells: contractors.map(c => hasFeature(c, ['veteran owned', 'veteran-owned']) ? checkCell : emptyCell) },
+      { label: '👨‍👩‍👧 Family Owned', cells: contractors.map(c => hasFeature(c, ['family owned', 'family-owned']) ? checkCell : emptyCell) },
+      { label: '📍 Locally Owned', cells: contractors.map(c => hasFeature(c, ['locally owned', 'locally-owned', 'local business']) ? checkCell : emptyCell) },
+      // Detail rows (kept from the previous comparison)
       { label: 'Experience', cells: contractors.map(c => c.years_in_business ? `${c.years_in_business}` : emptyCell) },
-      { label: 'Warranty', cells: contractors.map(c => c.warranty_info || emptyCell) },
       { label: 'Services', cells: contractors.map(c => c.services.length > 0 ? c.services.slice(0, 3).join(', ') : emptyCell) },
-      { label: 'Credentials', cells: contractors.map(c => c.certifications.length > 0 ? c.certifications.slice(0, 2).join(', ') : emptyCell) },
     ]
 
     const tableRows = rows.map(r =>
@@ -375,7 +434,7 @@ function formatReportEmail(
   // ── Cost Summary Card ─────────────────────────────────────────────────────
   const costCard = `
     <div style="background: linear-gradient(135deg, #fffbeb, #fef3c7); border: 1px solid #fbbf24; border-radius: 8px; padding: 20px; margin: 20px 0;">
-      <h3 style="margin: 0 0 12px; font-size: 16px; font-weight: 700; color: #92400e;">💰 ${data.state} Cost Estimates</h3>
+      <h3 style="margin: 0 0 12px; font-size: 16px; font-weight: 700; color: #92400e;">💰 ${stateDisplay} Cost Estimates</h3>
       <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-collapse: collapse;">
         <tr>
           <td style="padding: 6px 0; font-size: 13px; color: #78350f; font-weight: 600;">Average Repair</td>
@@ -401,12 +460,16 @@ function formatReportEmail(
     </div>`
 
   // ── Inject the grid into the HTML body ────────────────────────────────────
-  // Find the ESTIMATED COSTS section and insert cost card after it
-  // Then find where contractors section would be and insert grid
-  // Simple approach: insert grid after the main body, before footer-ish content
+  // Find the ESTIMATED COSTS section and insert cost card after it.
+  //
+  // BUG FIX: use the function form of replace() so dollar values inside
+  // costCard like "$14,000" don't get interpreted as regex backreferences.
+  // Previous implementation used `$1${costCard}` which caused JS to treat
+  // "$1" inside cost values as a backreference to the captured H2 group,
+  // shredding "$14,000" into "<h2>...</h2>4,000".
   const bodyWithCostCard = htmlBody.replace(
     /(<h2[^>]*>💰 ESTIMATED COSTS<\/h2>)/,
-    `$1${costCard}`
+    (match) => match + costCard
   )
 
   // Insert contractor grid after cost-related content
@@ -434,7 +497,7 @@ function formatReportEmail(
       <h1 style="margin: 0; color: #f59e0b; font-size: 26px; font-weight: 800; letter-spacing: -0.5px;">🔍 Your Scout Report</h1>
       <p style="margin: 8px 0 0; color: #94a3b8; font-size: 14px; letter-spacing: 0.3px;">Personalized Foundation Repair Analysis for <strong style="color: #cbd5e1;">${data.name}</strong></p>
       <div style="margin-top: 12px; display: inline-block; background: rgba(245,158,11,0.15); border: 1px solid rgba(245,158,11,0.3); border-radius: 20px; padding: 4px 14px;">
-        <span style="font-size: 12px; color: #fbbf24; font-weight: 600;">📍 ZIP ${data.zip} · ${data.state}</span>
+        <span style="font-size: 12px; color: #fbbf24; font-weight: 600;">📍 ZIP ${data.zip} · ${stateDisplay}</span>
       </div>
     </div>
     
@@ -560,8 +623,27 @@ export async function POST(request: NextRequest) {
 
     const supabase = getSupabase()
 
-    // Determine state from ZIP if not provided
-    const resolvedState = state || zipToState(zip_code || '') || 'IL'
+    // Normalize state input — frontend may send "CA", "california", or "California".
+    // STATE_COST_DATA and our internal logic are keyed by 2-letter abbreviations,
+    // so we coerce everything to that form here. Without this, slug-based input
+    // ("california") fell through STATE_COST_DATA[...] lookup and used the IL
+    // fallback while the email still labeled it "California".
+    const normalizeStateToAbbr = (raw?: string | null): string | null => {
+      if (!raw) return null
+      const trimmed = raw.trim()
+      if (trimmed.length === 2 && trimmed === trimmed.toUpperCase()) return trimmed
+      const normalized = trimmed.replace(/-/g, ' ').toLowerCase()
+      for (const [abbr, name] of Object.entries(STATE_ABBR_TO_NAME)) {
+        if (name.toLowerCase() === normalized) return abbr
+      }
+      return null
+    }
+
+    // Determine state — normalized request → ZIP fallback → IL final fallback
+    const resolvedState =
+      normalizeStateToAbbr(state) ||
+      zipToState(zip_code || '') ||
+      'IL'
     const costData = STATE_COST_DATA[resolvedState] || STATE_COST_DATA['IL']
 
     // Fetch matching contractors from our database
@@ -616,7 +698,7 @@ export async function POST(request: NextRequest) {
     const emailHtml = formatReportEmail(reportText, { name, issues, zip: zip_code, state: resolvedState, contractors: enrichedContractors, costData })
     const emailSent = await sendReportEmail(
       email,
-      `🔍 Your Foundation Repair Scout Report — ${resolvedState}`,
+      `🔍 Your Foundation Repair Scout Report — ${formatStateDisplay(resolvedState)}`,
       emailHtml
     )
 
