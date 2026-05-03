@@ -20,7 +20,14 @@ const URGENCY = [
   { id: 'emergency', label: 'Emergency', icon: 'emergency', color: 'text-red-600 bg-red-50 border-red-200', description: 'Active damage or safety concern' },
 ]
 
-export default function QuoteWizard({ state, stateName, defaultZip, defaultUrgency }: { state: string; stateName: string; defaultZip?: string; defaultUrgency?: string }) {
+// Plausible global type — populated by the script.tagged-events.js loader
+declare global {
+  interface Window {
+    plausible?: (eventName: string, options?: { props?: Record<string, string | number | boolean> }) => void
+  }
+}
+
+export default function QuoteWizard({ state, stateName, defaultZip, defaultUrgency, ctaSource }: { state: string; stateName: string; defaultZip?: string; defaultUrgency?: string; ctaSource?: string }) {
   const [step, setStep] = useState(0)
   const [issues, setIssues] = useState<string[]>([])
   const [urgency, setUrgency] = useState(defaultUrgency || '')
@@ -46,7 +53,17 @@ export default function QuoteWizard({ state, stateName, defaultZip, defaultUrgen
   }, [])
 
   const toggleIssue = (id: string) => {
-    setIssues(prev => prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id])
+    // Fire quote_wizard_started on the first issue selection (genuine engagement,
+    // not just modal-open noise). Guarded so it only fires once per session.
+    setIssues(prev => {
+      const next = prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]
+      if (prev.length === 0 && next.length > 0 && typeof window !== 'undefined' && window.plausible) {
+        window.plausible('quote_wizard_started', {
+          props: { cta_source: ctaSource || 'unknown', state: state || 'unknown' },
+        })
+      }
+      return next
+    })
   }
 
   const canProceed = () => {
@@ -89,6 +106,13 @@ export default function QuoteWizard({ state, stateName, defaultZip, defaultUrgen
       const issueLabels = issues.map(id => ISSUES.find(i => i.id === id)?.label || id).join(', ')
       const urgencyLabel = URGENCY.find(u => u.id === urgency)?.label || urgency
 
+      // Lead-source attribution fields — captured at submit time so the row
+      // permanently records which page + CTA produced the lead. Read in
+      // /api/leads/route.ts and written to the leads.landing_page / referrer /
+      // cta_source columns added in migration 20260503_add_lead_attribution.sql.
+      const landingPage = typeof window !== 'undefined' ? window.location.href : null
+      const referrer = typeof document !== 'undefined' ? (document.referrer || null) : null
+
       const res = await fetch('/api/leads', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -101,10 +125,25 @@ export default function QuoteWizard({ state, stateName, defaultZip, defaultUrgen
           state: state,
           notes: `Issues: ${issueLabels} | Urgency: ${urgencyLabel}${stateName ? ` | From: ${stateName}` : ''}`,
           source: 'quote-wizard',
+          landing_page: landingPage,
+          referrer: referrer,
+          cta_source: ctaSource || null,
         }),
       })
 
       if (res.ok) {
+        // Fire quote_wizard_completed event for funnel analysis in Plausible.
+        // Includes cta_source and state as props so we can attribute completion
+        // back to which CTA opened the wizard.
+        if (typeof window !== 'undefined' && window.plausible) {
+          window.plausible('quote_wizard_completed', {
+            props: {
+              cta_source: ctaSource || 'unknown',
+              state: state || 'unknown',
+              urgency: urgencyLabel || 'unknown',
+            },
+          })
+        }
         setSuccess(true)
       } else {
         const data = await res.json()

@@ -12,8 +12,21 @@ function getSupabase() {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    
+
     const { business_id, name, email, service_needed, zip_code, city, state, notes, source } = body
+
+    // Lead-source attribution — added 2026-05-03 (PRD-SERP-PROMISE-CONCIERGE-LOOP).
+    // Frontend captures these from window.location.href / document.referrer / the
+    // EstimateButton.eventName prop. Server falls back to the HTTP Referer header
+    // for `referrer` if the client didn't send one (e.g. submissions from contexts
+    // where document.referrer is empty due to noreferrer or app-shell handoff).
+    // All three are nullable; never block submission on missing attribution.
+    const landing_page: string | null = body.landing_page ?? null
+    const referrer: string | null =
+      body.referrer
+      ?? request.headers.get('referer')
+      ?? null
+    const cta_source: string | null = body.cta_source ?? null
 
     if (!name || !email) {
       return NextResponse.json({ error: 'Name and email are required' }, { status: 400 })
@@ -21,8 +34,8 @@ export async function POST(request: NextRequest) {
 
     const supabase = getSupabase()
 
-    // Save the lead
-    const { data, error } = await supabase.from('leads').insert({
+    // Base lead row — always written
+    const baseLead = {
       business_id: business_id || null,
       name,
       email,
@@ -34,7 +47,24 @@ export async function POST(request: NextRequest) {
       notes: notes || null,
       source: source || 'website',
       status: 'new',
-    }).select()
+    }
+
+    // Save the lead. Try with attribution columns first; if Supabase rejects
+    // because the migration (20260503_add_lead_attribution.sql) hasn't been
+    // applied yet, fall back to the base row so submissions never 500 during
+    // a deploy that races the schema change. Attribution is best-effort —
+    // missing columns are logged but never block the lead.
+    let { data, error } = await supabase
+      .from('leads')
+      .insert({ ...baseLead, landing_page, referrer, cta_source })
+      .select()
+
+    if (error && /column .* does not exist|landing_page|referrer|cta_source/i.test(error.message || '')) {
+      console.warn('Lead attribution columns missing — falling back. Run supabase/migrations/20260503_add_lead_attribution.sql to enable. Original error:', error.message)
+      const fallback = await supabase.from('leads').insert(baseLead).select()
+      data = fallback.data
+      error = fallback.error
+    }
 
     if (error) {
       console.error('Supabase error:', error)

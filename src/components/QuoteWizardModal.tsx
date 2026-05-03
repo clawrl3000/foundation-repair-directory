@@ -10,9 +10,11 @@ interface QuoteWizardModalProps {
   stateName?: string
   defaultZip?: string
   defaultUrgency?: string
+  /** Pass-through for lead-source attribution (see EstimateButton.eventName) */
+  ctaSource?: string
 }
 
-export default function QuoteWizardModal({ isOpen, onClose, state = '', stateName = '', defaultZip, defaultUrgency }: QuoteWizardModalProps) {
+export default function QuoteWizardModal({ isOpen, onClose, state = '', stateName = '', defaultZip, defaultUrgency, ctaSource }: QuoteWizardModalProps) {
   // Close on Escape
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
     if (e.key === 'Escape') onClose()
@@ -55,7 +57,7 @@ export default function QuoteWizardModal({ isOpen, onClose, state = '', stateNam
           <span className="material-symbols-outlined text-lg">close</span>
         </button>
 
-        <QuoteWizard state={state} stateName={stateName} defaultZip={defaultZip} defaultUrgency={defaultUrgency} />
+        <QuoteWizard state={state} stateName={stateName} defaultZip={defaultZip} defaultUrgency={defaultUrgency} ctaSource={ctaSource} />
       </div>
 
       <style jsx>{`

@@ -105,6 +105,7 @@ export default async function FoundationRepairCostPage({ params }: Props) {
               <EstimateButton
                 state={state}
                 stateName={stateName}
+                eventName="cost_page_estimate_click_hero"
                 className="inline-flex items-center gap-2 rounded-full bg-amber-500 hover:bg-amber-600 text-white font-semibold text-base px-6 py-3 shadow-sm hover:shadow-md transition-all"
               >
                 <span className="material-symbols-outlined text-xl">request_quote</span>
@@ -183,6 +184,7 @@ export default async function FoundationRepairCostPage({ params }: Props) {
                 <EstimateButton
                   state={state}
                   stateName={stateName}
+                  eventName="cost_page_estimate_click_cost_section"
                   className="inline-flex items-center gap-2 rounded-full bg-amber-500 hover:bg-amber-600 text-white font-semibold text-base px-6 py-3 shadow-sm hover:shadow-md transition-all"
                 >
                   <span className="material-symbols-outlined text-xl">request_quote</span>

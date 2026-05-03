@@ -93,11 +93,17 @@ export default function RootLayout({
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
         
         {/* Google Fonts - Material Symbols loaded via @import in globals.css */}
-        {/* Plausible Analytics */}
+        {/* Plausible Analytics — tagged-events variant enables data-event-name on buttons */}
         <script
           defer
           data-domain={process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN || 'foundationscout.com'}
-          src={process.env.NEXT_PUBLIC_PLAUSIBLE_SRC || 'https://plausible.io/js/script.js'}
+          src={process.env.NEXT_PUBLIC_PLAUSIBLE_SRC || 'https://plausible.io/js/script.tagged-events.js'}
+        />
+        {/* Plausible queue shim — allows window.plausible() calls before script loads */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }`
+          }}
         />
         {/* Microsoft Clarity */}
         <script
