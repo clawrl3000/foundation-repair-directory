@@ -323,56 +323,137 @@ Candidate monetization paths:
 
 This does not require closing revenue, but it does require learning who might pay and what language makes sense.
 
-### Phase 4: SERP title/meta experiment
+### Phase 4: SERP title/meta experiment — 4-hook directional test
 
-Run a controlled title/meta experiment on high-opportunity, 0-click cost pages.
+Run a controlled title/meta experiment on high-opportunity, 0-click cost pages, testing **four distinct hook styles** simultaneously across four matched states with two pure controls.
 
-> **Coordinate with the existing Phase 1 (April 23) meta overrides.** Commit `d8b4ebb` already shipped custom soil/cost-range hook titles for 9 *state directory* pages (PA, NC, IL, MI, OH, TN, GA, MO, VA). Their measurement window opens 2026-05-07. Do not retest adjacent MI/TN/OH/GA cost pages until the existing state-page test is checked — otherwise we risk confusing state-page and cost-page signals.
->
-> **Test states for this PRD's cost-page experiment:**
-> - **Active variants:** California, Oklahoma, Arizona (page-1, 0% CTR, no prior intervention)
-> - **Pure controls (no change, baseline measurement):** Florida, New York
-> - **Excluded:** Michigan, Tennessee, Ohio, Georgia — already in the April 23 state-page experiment; revisit only after May 7 results
+#### Why four styles, not one
 
-Candidate title patterns to test (rotate across the 3 active variants — one per state):
+The May 3 GSC preview of the April 23 state-directory experiment showed a striking result: site-wide impressions doubled and average position improved by 7+ ranks, but per-impression CTR dropped 60%. Translation: Google now considers the content relevant enough to show, but the SERP snippet doesn't give users a reason to pick FoundationScout over Angi/HomeAdvisor. **The problem is not relevance — it's positioning at the snippet level.**
 
-**Benefit-led:**
+The first three hook styles all position FoundationScout as a directory (with various adjectives). At DR 0 fighting DR 90 incumbents in the directory category, that's a familiarity war we can't win. The fourth style — **helper-led** — escapes the directory category entirely by reframing the SERP promise as *information* rather than *connection*.
 
-```text
-California Foundation Repair Cost: Estimate Before You Call
-```
+#### Test allocation
 
-**Outcome-led:**
+| State | Cost-page impressions (3-mo) | Avg position | Hook assignment | Why this pairing |
+|---|---:|---:|---|---|
+| California | 742 | 7.89 | **Helper-led** | Highest impression volume = fastest signal detection on the highest-information variant |
+| Texas | 158 | ~varies | **Outcome-led** | Largest US foundation-repair market (clay soil) + highest commercial intent. Action language fits the buyer mindset there. |
+| Oklahoma | 237 | 6.84 | **Trust-led** | Clay-heavy region with strong contractor-skeptical sentiment. "No paid placement" hook may resonate. |
+| Arizona | 207 | 6.16 | **Benefit-led** | Moderate volume, neutral positioning, anchors the comparison set as the "control-ish" baseline against the more ambitious variants. |
+| Florida | 309 | 7.48 | **Pure control (no change)** | Untouched. Compares against natural ranking drift over the test window. |
+| New York | (no data shown) | — | **Pure control (no change)** | Different climate/geology than the active set. Tests whether any title variant generalizes. |
+| Michigan, Tennessee, Ohio, Georgia | — | — | **Excluded** | Already in the April 23 state-directory experiment. Revisit after May 7 results to avoid confounding state-page and cost-page signals. |
 
-```text
-Oklahoma Foundation Repair Cost + 3 Local Contractor Options
-```
+#### The four hook styles in detail
 
-**Trust-led (added per review feedback — directly differentiates from Angi):**
-
-```text
-Arizona Foundation Repair Cost — Verified Contractors, No Paid Placement
-```
+**Hook 1 — Benefit-led (Arizona)**
+*Promise: a transactional benefit. Compete on action.*
 
 ```text
-Arizona Foundation Repair Cost: $5K–$25K · BBB-Verified Local Contractors
+Arizona Foundation Repair Cost: Estimate Before You Call
 ```
 
-Candidate meta description pattern:
+```text
+See typical Arizona foundation repair costs, then get a free Scout Report with a cost sanity check and local contractor options for your ZIP.
+```
+
+**Hook 2 — Outcome-led (Texas)**
+*Promise: a specific deliverable. Compete on completeness.*
+
+```text
+Texas Foundation Repair Cost + 3 Local Contractor Options
+```
+
+```text
+2026 Texas foundation repair pricing by city + 3 verified local contractor options matched to your ZIP. Free Scout Report, no sales calls.
+```
+
+**Hook 3 — Trust-led (Oklahoma)**
+*Promise: editorial independence. Compete on credibility.*
+
+```text
+Oklahoma Foundation Repair Cost — Verified Contractors, No Paid Placement
+```
+
+```text
+Oklahoma foundation repair costs from $X–$Y. License-verified, BBB-checked contractor options. No paid placement. Free Scout Report explains what's wrong and what fair prices look like.
+```
+
+**Hook 4 — Helper-led (California) ★ added 2026-05-03**
+*Promise: a learning outcome. Compete on usefulness, not category.*
+
+This hook deliberately moves the SERP promise from "directory" to "guide ABOUT the directory category." Three sub-variants worth A/B-testing within California if data warrants over the long term:
+
+*4a — Decision-help (lowest commitment, fastest test):*
+
+```text
+California Foundation Cracks? Here's What It Actually Costs
+```
+
+```text
+Before you call a contractor in California, see typical 2026 prices, what to ask, and how to spot upselling. Free Scout Report. No login.
+```
+
+*4b — Diagnostic-help (medium commitment):*
+
+```text
+California Foundation Repair: Get a Free Scout Report Before You Call
+```
+
+```text
+We'll diagnose what you're seeing, give you a likely cost range for California, and tell you what to ask 3 local contractors. Free, takes 2 minutes.
+```
+
+*4c — Adversarial-help / "watchdog" (highest differentiation, edgiest):*
+
+```text
+Don't Pay for California Foundation Repair Until You Read This
+```
+
+```text
+3 things contractors won't tell you about typical California costs, common upsells, and warranty fine print. Free Scout Report covers the rest.
+```
+
+For the May 7 → May 21 measurement window, **start with Hook 4b (Diagnostic-help) on California.** It's the most balanced of the three sub-variants — promises learning + service without overselling adversarial framing. If 4b underperforms vs. the other three hook styles by May 21, swap to 4a or 4c in a follow-up window.
+
+#### Why "helper-led" is strategically distinct from the other three
+
+| Hook style | Positions FS as | Competes with | Defensible at DR 0? |
+|---|---|---|---|
+| Benefit-led | Faster directory | Angi/HomeAdvisor on speed | ❌ Familiarity loss |
+| Outcome-led | More-complete directory | Angi/HomeAdvisor on deliverable | ❌ Familiarity loss |
+| Trust-led | Honest directory | Angi/HomeAdvisor on integrity | ⚠️ Partial — depends on whether users believe the claim |
+| **Helper-led** | **Guide ABOUT the directory category** | **Bob Vila, Wirecutter, NerdWallet, Reddit** | ✅ **Yes — different category entirely. Angi can't credibly clone helper positioning because helper language exposes their paid-placement model.** |
+
+Helper positioning also matches the rest of the FoundationScout product surface — Scout Report, methodology block, Quote Wizard's diagnostic flow are all already helper-shaped. Updating the SERP promise makes it match the actual post-click experience, which reduces bounce and improves dwell time (NavBoost-positive).
+
+#### Risk inherent to helper positioning
+
+**Helper hooks attract research-phase visitors who don't convert immediately.** A "Find a contractor in California" searcher is closer to ready-to-hire than a "What does foundation repair cost in California" searcher. If we optimize the SERP for the second group, raw lead-conversion-per-click likely drops in the short term — even though qualified-lead-per-click might rise (better fit for the concierge loop).
+
+This is acceptable only if:
+- The 30-day concierge experiment (Phase 1) is genuinely high-value and can serve research-phase users well
+- We track lead quality (per the new `landing_page` / `cta_source` attribution columns shipped 2026-05-03) not just lead count
+- We're patient enough to let the longer conversion cycle play out (research-phase users may convert weeks later)
+
+If those conditions don't hold, helper-led performs worse than benefit-led on raw business metrics even if CTR goes up. **Track BOTH CTR (SERP success) and lead-to-revenue conversion rate (business success) per hook style.**
+
+#### Default meta description pattern (used unless a hook-specific override exists above)
 
 ```text
 See typical {state} foundation repair costs, then get a free Scout Report with a cost sanity check and local contractor options for your ZIP. License-verified, BBB-checked, no paid placement.
 ```
 
-Implementation note:
+#### Implementation note
 
-Current metadata is generated in:
+Metadata is generated in:
 
 ```text
 src/app/cost/[state]/foundation-repair-cost/page.tsx
 ```
 
-Add a small `stateMetaOverrides` map for the test states. Do not change all 50 states until there is a measurable CTR result. Do not change the 4 already-shipped state-directory states until the April 23 experiment resolves on May 7.
+Add entries to a `stateMetaOverrides` map (or extend the existing one) for the four active variant states. Do not change all 50 states until there is a measurable per-hook winner. Do not change Florida or New York during the experiment — they are pure controls. Do not change the 4 already-shipped state-directory states (MI/TN/OH/GA) on the cost-page side until the April 23 experiment resolves on May 7.
 
 ### Phase 5: Above-the-fold copy refinement
 
@@ -478,6 +559,33 @@ src/app/api/scout-report/route.ts
 Important caveat:
 
 > A 50% relative CTR lift from the current overall baseline would still be commercially weak. SEO CTR lift is a supporting signal. Concierge response and monetization signals are the business signal.
+
+### Per-hook SEO evaluation (Phase 4 specific)
+
+The 4-hook directional test (Hook 1: Benefit-led on Arizona, Hook 2: Outcome-led on Texas, Hook 3: Trust-led on Oklahoma, Hook 4: Helper-led on California) requires per-state evaluation, not aggregate. After 14 days of post-ship data:
+
+> **Important caveat on interpretation.** This is a *directional* test, not a statistically controlled A/B test. State-effect confounds (CA's SERP differs from TX's; impression volumes differ; SERP-feature crowding differs; competitors at each position differ) mean that a hook winning in one state isn't proof that hook would win in any state. Read results as "this hook style produced a strong signal in this state" rather than "this hook style is the winner."
+>
+> **Decision rule for declaring a winner:** confirm any apparent winner by extending it to a 2nd state in a follow-up 14-day window before scaling. If helper-led wins on California, ship helper-led to one more comparable state (e.g., Florida loses control status, gets helper) and verify the lift replicates. Only after 2-state confirmation should the winning hook roll out to additional states. This protects against the most likely failure mode: declaring a state-specific lift as a hook-specific lift.
+>
+> **At the impression volumes in play (~200-700 imp per state per 14-day window), only dramatic differences will be detectable.** A 0% → 0.3% CTR lift is 1-2 clicks of difference and is statistical noise. A 0% → 3%+ lift is real signal. Plan for "find the dramatic winner" not "rank all four hooks by performance."
+
+| Per-state metric | Target | What it tells us |
+|---|---:|---|
+| **CTR per hook style** | Best hook reaches >1% CTR at avg pos ≤15 on non-branded queries | Which positioning category wins for FoundationScout |
+| **CTR delta vs Florida/NY controls** | Active states ≥2x control states' CTR over the same window | Confirms the lift is real, not natural drift or seasonal noise |
+| **Lead-quality per hook style** | Helper-led leads convert to monetization conversation at rate ≥ benefit-led leads | Tests whether helper attracts higher-intent users despite lower raw click rate |
+| **Bounce / dwell time per hook style** (Plausible) | Helper-led visitors spend ≥45s on page; benefit-led ≥30s | NavBoost-positive signal — proves the SERP promise matches the post-click experience |
+
+**Decision matrix at 14 days:**
+
+| Result | Action |
+|---|---|
+| One hook clearly wins CTR (>2x the others) AND maintains lead quality | Roll that hook to 5 more states. Kill the other three variants on the test states. |
+| Two hooks tie on CTR but differ on lead quality | Keep both, allocate per state market profile (high-intent states get one, research-heavy states get the other). |
+| Helper-led wins CTR but produces no leads | Helper hooks are SERP-positive but funnel-negative. Switch to trust-led for production while exploring why. |
+| All four lose to controls | The cost-page template itself is the bottleneck, not snippet copy. Pivot Phase 5 (hero refinement) to the highest-priority next move. |
+| Helper-led wins both CTR AND lead quality | This is the strongest-possible outcome — the brand is positioned in a category Angi can't credibly compete in. Roll out aggressively to all 50 states once stable. |
 
 ### Business-readiness indicators
 
@@ -695,17 +803,30 @@ Pull GSC CTR for the 9 states (PA/NC/IL/MI/OH/TN/GA/MO/VA) since Apr 23.
 
   YELLOW (some movement but inconclusive):
     → Wait another 7-14 days, re-evaluate
-    → Begin Phase 4 of THIS PRD on CA/OK/AZ as the alternate hypothesis
-      (different hook style: benefit-led / trust-led, not soil-led)
+    → Begin Phase 4 of THIS PRD on CA/TX/OK/AZ as the alternate hypothesis
+      with the 4-hook directional test (Helper/Outcome/Trust/Benefit-led —
+      different category entirely from the soil-led April 23 hooks)
     → Phase 1 concierge continues
 
   RED (still 0% CTR after 14 days on the state-directory pages):
-    → April 23 hooks failed
+    → April 23 soil-led hooks failed
     → Phase 4 of this PRD becomes the primary alternate hypothesis
-    → Ship cost-page benefit-led / trust-led overrides for CA/OK/AZ
-      (the 3 fresh states), keep FL/NY as untouched controls
+    → Ship the 4-hook directional test on CA/TX/OK/AZ:
+       • CA → Hook 4 (Helper-led, "Here's What It Actually Costs")
+       • TX → Hook 2 (Outcome-led, "+ 3 Local Contractor Options")
+       • OK → Hook 3 (Trust-led, "Verified Contractors, No Paid Placement")
+       • AZ → Hook 1 (Benefit-led, "Estimate Before You Call")
+       Keep FL/NY as untouched controls.
     → Phase 5 hero CTA copy can ship in the same deploy window
+      (helper-led hero copy paired with helper-led SERP snippet on CA)
     → Phase 1 concierge continues; SEO is now clearly secondary
+
+  In all paths, the May 3 GSC preview (site-wide impressions +113%, avg
+  position improved 7+ ranks, but CTR -60% relative) is the supporting
+  evidence: the relevance work is succeeding, but the SERP-level
+  positioning ISN'T. Helper-led on California is the single biggest bet
+  in the 4-hook test because it's the only hook that escapes the
+  directory category Angi/HomeAdvisor dominate.
 
 ═══════════════════════════════════════════════════════════════════════
 2026-05-09 to 2026-05-10 — DECISION POINT #2: Calculator linking results

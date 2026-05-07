@@ -8,20 +8,96 @@ interface Props {
   params: Promise<{ state: string }>
 }
 
+/**
+ * Phase 4 directional test — 4-hook A/B/C/D probe shipped 2026-05-07
+ * (PRD-SERP-PROMISE-CONCIERGE-LOOP.md Section 8 / Section 15).
+ *
+ * Each entry assigns one of 4 hook styles to one cost-page state. The
+ * hypothesis is that snippet-level positioning (not relevance) is the
+ * bottleneck on cost pages — May 1-2 saw 8,850 impressions at avg pos
+ * 13 with zero clicks site-wide. The 4 hooks test different ways to
+ * give users a reason to click a DR-0 result over Angi/HomeAdvisor:
+ *
+ *   - Helper-led    (CA) — escapes the "directory" category entirely;
+ *                          positions FoundationScout as a guide
+ *   - Outcome-led   (TX) — promises a specific deliverable
+ *   - Trust-led     (OK) — competes on editorial independence
+ *   - Benefit-led   (AZ) — promises a faster transactional benefit
+ *
+ * Florida and New York are deliberately untouched as PURE CONTROLS for
+ * this experiment — do NOT add overrides for them. Other state slugs
+ * fall through to the generic template. PA/NC/IL/MI/OH/TN/GA/MO/VA
+ * already have state-DIRECTORY overrides on /[state]/page.tsx from
+ * the April 23 ship; their cost pages use the generic template here.
+ *
+ * Measurement window: 2026-05-07 → 2026-05-21. Decision matrix in
+ * PRD Section 9 ("Per-hook SEO evaluation"). Read as a directional
+ * probe — confirm any apparent winner with a 2nd state before rolling.
+ */
+const costPageMetaOverrides: Record<string, { title: string; description: string; ogTitle?: string; ogDescription?: string }> = {
+  // Hook 4 — Helper-led (Diagnostic-help variant 4b).
+  // Reframes SERP promise from "directory" to "guide ABOUT the directory."
+  // California: highest cost-page impression volume = fastest signal detection.
+  california: {
+    title: `California Foundation Repair: Get a Free Scout Report Before You Call`,
+    description: `Worried about California foundation costs? We'll diagnose what you're seeing, give you a likely cost range, and tell you what to ask 3 local contractors. Free, takes 2 minutes, no sales calls.`,
+    ogTitle: `California Foundation Repair — Free Scout Report Before You Call`,
+    ogDescription: `Diagnose your foundation issue, see typical California costs, get 3 verified local contractor options. Free Scout Report, 2 minutes, no login.`,
+  },
+  // Hook 2 — Outcome-led.
+  // Texas: largest US foundation-repair market (clay soil), high commercial intent.
+  // Action language fits the buyer mindset.
+  texas: {
+    title: `Texas Foundation Repair Cost + 3 Local Contractor Options`,
+    description: `2026 Texas foundation repair pricing by city + 3 verified local contractor options matched to your ZIP. Free Scout Report, no sales calls. Houston, Dallas, Austin, San Antonio coverage.`,
+    ogTitle: `Texas Foundation Repair Cost + 3 Verified Local Contractors`,
+    ogDescription: `See 2026 Texas pricing by city and get 3 license-verified contractor options for your ZIP. Free Scout Report.`,
+  },
+  // Hook 3 — Trust-led.
+  // Oklahoma: clay-heavy region, contractor-skeptical sentiment;
+  // "no paid placement" hook may resonate with rural-trust dynamic.
+  oklahoma: {
+    title: `Oklahoma Foundation Repair Cost — Verified Contractors, No Paid Placement`,
+    description: `Oklahoma foundation repair costs from $3,800–$12,000. License-verified, BBB-checked contractor options. No paid placement. Free Scout Report explains what's wrong and what fair prices look like.`,
+    ogTitle: `Oklahoma Foundation Repair — Verified Contractors, No Paid Placement`,
+    ogDescription: `Free Scout Report with 2026 Oklahoma pricing + license-verified, BBB-checked contractor options. Editorial independence — we don't take paid placements.`,
+  },
+  // Hook 1 — Benefit-led.
+  // Arizona: moderate volume, neutral positioning, anchor-control variant.
+  arizona: {
+    title: `Arizona Foundation Repair Cost: Estimate Before You Call`,
+    description: `See typical Arizona foundation repair costs, then get a free Scout Report with a cost sanity check and local contractor options for your ZIP. Phoenix, Tucson, Mesa, Tempe coverage.`,
+    ogTitle: `Arizona Foundation Repair Cost — Estimate Before You Call`,
+    ogDescription: `2026 Arizona pricing + free Scout Report with cost sanity check and local contractor options for your ZIP.`,
+  },
+}
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { state } = await params
   const stateName = state.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')
   const url = `https://foundationscout.com/cost/${state}/foundation-repair-cost`
 
+  // Phase 4 hook override — falls through to the generic template for any
+  // state not in the directional test (FL/NY controls + 45 untouched states).
+  const override = costPageMetaOverrides[state]
+  const title = override?.title
+    || `Foundation Repair Cost in ${stateName} (2026): $500–$25K+ | Price Guide`
+  const description = override?.description
+    || `How much does foundation repair cost in ${stateName}? Minor repairs start at $500; major piering runs $8K–$25K+. See 2026 local pricing & get free quotes from licensed contractors.`
+  const ogTitle = override?.ogTitle
+    || `Foundation Repair Cost in ${stateName} 2026 | Pricing Guide`
+  const ogDescription = override?.ogDescription
+    || `Complete foundation repair cost guide for ${stateName}. Average prices for pier installation, slab repair, and waterproofing. Get free local estimates.`
+
   return {
-    title: `Foundation Repair Cost in ${stateName} (2026): $500–$25K+ | Price Guide`,
-    description: `How much does foundation repair cost in ${stateName}? Minor repairs start at $500; major piering runs $8K–$25K+. See 2026 local pricing & get free quotes from licensed contractors.`,
+    title,
+    description,
     alternates: {
       canonical: url,
     },
     openGraph: {
-      title: `Foundation Repair Cost in ${stateName} 2026 | Pricing Guide`,
-      description: `Complete foundation repair cost guide for ${stateName}. Average prices for pier installation, slab repair, and waterproofing. Get free local estimates.`,
+      title: ogTitle,
+      description: ogDescription,
       url: url,
       images: [
         {
